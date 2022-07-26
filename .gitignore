@@ -289,3 +289,4 @@ $RECYCLE.BIN/
 
 ### Custom ###
 *.properties
+!/src/main/webapp/WEB-INF/lib/*.jar
