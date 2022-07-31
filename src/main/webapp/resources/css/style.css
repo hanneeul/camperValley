@@ -1,0 +1,22 @@
+@charset "UTF-8";
+body {
+    font-family: 'SUIT-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+#navbarMain {
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50px;
+}
+.nav-item {
+    font-size: 12px;
+}
+.navbar-brand, .bar {
+    font-size: 10px;
+}
+.navbar-brand {
+    cursor: pointer;
+}
