@@ -23,5 +23,8 @@ public class AdvertiserController {
 	@GetMapping("/exit")
 	public void exitAdvertiser() { }
 	
+	@GetMapping("/dashboard")
+	public void advertiserDashBoard() {	}
+	
 
 }
