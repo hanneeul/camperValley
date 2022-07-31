@@ -8,6 +8,6 @@ import com.kh.campervalley.community.review.model.dao.ReviewDao;
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
-	@Autowired
+	// @Autowired
 	private ReviewDao reviewDao;
 }
