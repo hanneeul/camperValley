@@ -6,17 +6,19 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/campsite/campsite.css" />
 <script src="https://kit.fontawesome.com/97c6ec6a69.js" crossorigin="anonymous"></script>
 
 <!-- 캠핑장목록조회(상세검색) 페이지 (작성자:수진) -->
-<section id="campsiteSearchDetail" style="margin: 10px;">
-	<div class="d-flex justify-content-center" style="background-color: lightgray; height: 350px;">
-		<div class="container-md w-75 p-4 m-auto" style="background-color: beige;">
+	<div class="d-flex justify-content-center campsite-search-wrap">
+		<div class="container-md w-75 p-4 m-auto rounded campsite-search">
 			<div class="row m-0">
-				<div class="col">상세검색</div>
+				<div class="col search-header">상세검색</div>
 				<div class="col">
-					<button type="button" class="btn btn-success float-right">테마검색&nbsp;<i class="fa-solid fa-angle-right"></i></button>
-				</div>	
+					<button type="button" class="btn btn-success float-right">
+						테마검색&nbsp;<i class="fa-solid fa-angle-right"></i>
+					</button>
+				</div>
 			</div>
 			<hr />
 			<div class="row m-0">
@@ -24,68 +26,85 @@
 					<label for="location">지역</label>
 					<button type="button" class="btn btn-outline-success">○○도 ○○시</button>
 				</div>
-				<div class="col-md-7 input-group mb-3">
-					<label for="keywordSearch">키워드 검색</label>
+				<div class="col-md-7 input-group">
+					<label for="keywordSearch">키워드 검색</label>&nbsp;
 					<input type="text" class="form-control" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="button-addon2">
 				  	<div class="input-group-append">
-				    	<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+				    	<button class="btn btn-outline-success" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
 				  	</div>
 				</div>
 				<div class="col-md">
-					<button type="button" class="btn btn-success float-right"><i class="fa-regular fa-square-plus"></i>&nbsp;상세조건</button>
+					<button type="button" id="conditions-btn" class="btn btn-success float-right">
+						<i class="fa-regular fa-square-plus"></i>&nbsp;상세조건
+					</button>
 				</div>
+				<!-- modal insert -->
+				<script>
+				document.querySelector("#conditions-btn").addEventListener('click', (e) => {
+					
+				});
+				</script>
 			</div>
 		</div>
 	</div>
-	<div class="d-flex bd-highlight w-75 p-3 m-auto">
-		<div class="p-2 flex-fill bd-highlight">
-			<div class="d-flex bd-highlight m-1" style="border: 1px solid beige;">
-				<div style="width: 150px; height: 150px; background-color: beige;">
+	<div class="d-flex bd-highlight w-100 p-3 m-auto campsite-result-wrap">
+		<div class="p-2 flex-fill bd-highlight campsite-result">
+			<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
+				<div class="result-list-img bg-light">
 					캠핑장 이미지
+					<img src="..." class="img-thumbnail" alt="...">
 				</div>
-				<div style="width: 300px; height: 150px;">
-					<ul style="list-style-type: none;">
-						<li>[○○도 ○○시] ○○캠핑장</li>
-						<li>낭만 가득한 프라이빗 캠핑장</li>
-						<li>
+				<div class="result-list-content">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<h6>[○○도 ○○시] ○○캠핑장</h6>
+						</li>
+						<li class="list-group-item border-bottom-0">낭만 가득한 프라이빗 캠핑장</li>
+						<li class="list-group-item border-top-0">
 							<span>○○도 ○○시</span>
-							<span>070-0000-0000</span>
+							<span class="float-right">070-0000-0000</span>
 						</li>
 					</ul>
 				</div>
 			</div>
-			<div class="d-flex bd-highlight m-1" style="border: 1px solid beige;">
-				<div style="width: 150px; height: 150px; background-color: beige;">
+			<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
+				<div class="result-list-img bg-light">
 					캠핑장 이미지
+					<img src="..." class="img-thumbnail" alt="...">
 				</div>
-				<div style="width: 300px; height: 150px;">
-					<ul style="list-style-type: none;">
-						<li>[○○도 ○○시] ○○캠핑장</li>
-						<li>낭만 가득한 프라이빗 캠핑장</li>
-						<li>
+				<div class="result-list-content">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<h6>[○○도 ○○시] ○○캠핑장</h6>
+						</li>
+						<li class="list-group-item border-bottom-0">낭만 가득한 프라이빗 캠핑장</li>
+						<li class="list-group-item border-top-0">
 							<span>○○도 ○○시</span>
-							<span>070-0000-0000</span>
+							<span class="float-right">070-0000-0000</span>
 						</li>
 					</ul>
 				</div>
 			</div>
-			<div class="d-flex bd-highlight m-1" style="border: 1px solid beige;">
-				<div style="width: 150px; height: 150px; background-color: beige;">
+			<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
+				<div class="result-list-img bg-light">
 					캠핑장 이미지
+					<img src="..." class="img-thumbnail" alt="...">
 				</div>
-				<div style="width: 300px; height: 150px;">
-					<ul style="list-style-type: none;">
-						<li>[○○도 ○○시] ○○캠핑장</li>
-						<li>낭만 가득한 프라이빗 캠핑장</li>
-						<li>
+				<div class="result-list-content">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<h6>[○○도 ○○시] ○○캠핑장</h6>
+						</li>
+						<li class="list-group-item border-bottom-0">낭만 가득한 프라이빗 캠핑장</li>
+						<li class="list-group-item border-top-0">
 							<span>○○도 ○○시</span>
-							<span>070-0000-0000</span>
+							<span class="float-right">070-0000-0000</span>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		<div class="p-2 flex-fill bd-highlight m-auto" style="width: 450px; height: 470px; background-color: beige;">
+		<div class="p-2 flex-fill m-auto bg-light result-map">
 			지도 영역
 		</div>
 	</div>
