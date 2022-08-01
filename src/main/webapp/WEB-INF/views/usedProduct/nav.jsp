@@ -36,8 +36,7 @@
 			</div>
 		</div>
 		<div id="recentlyPaging">
-			<button id="recentlySubPage" class="btn subpage" 
-					onclick=""></button>
+			<button id="recentlySubPage" class="btn subpage" onclick=""></button>
 			<a id="currentPage"></a>
 			
 			<button id="recentlyAddPage" class="btn addpage" onclick=""></button>
