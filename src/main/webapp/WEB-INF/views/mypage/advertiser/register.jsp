@@ -30,12 +30,10 @@
 				</div>
 				<div class="divInputWrapper">
 					<label for="bizLicenseNo">사업자등록번호</label>
-					<div class="row">
-						<div class="col">
-							<input type="text" name="bizLicenseNo" id="bizLicenseNo" class="form-control form-control-sm" placeholder="사업자등록번호를 입력해주세요.">
-						</div>
-						<div class="col-1">
-							<button type="button" class="btn btn-outline-primary btn-sm">확인</button>
+					<div class="input-group">
+						<input type="text" name="bizLicenseNo" id="bizLicenseNo" class="form-control form-control-sm" placeholder="사업자등록번호를 입력해주세요." aria-describedby="button-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-outline-primary btn-sm" type="button" id="button-addon2">확인</button>
 						</div>
 					</div>
 				</div>
