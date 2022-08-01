@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+.navBanner {
+	position: fixed;
+	top: 202px; 
+	right: calc(50% - 578px); 
+	z-index: 9999;
+}
+/* 관심상품 */
+.favorites {    
+	padding: 10px 16px;
+    background: white;
+    margin: 3px -5px;
+    width: 83px;
+    height: 70px;
+    border: 1px solid gray;
+    border-radius: 2px;
+}
+.favoritesCount {
+	text-align: center; 
+	color: #666;
+}
+#wishProduct {
+	margin-left: -7px;
+}
+
+/* 최근 본 상품 */
+#recentlyCnt {
+	display: inline-block;
+	padding-bottom: 6px;
+	width: 30px;
+	border-bottom: 2px dotted rgb(136, 136, 136);
+	margin-bottom: 10px;
+}
+#recentlyPaging button {
+	padding: 1px 5px 3px 5px;
+	border: 1px solid #eee;
+	height: 100%;
+	line-height: 100%;
+}
+#recentlyPaging {
+	width: 100%;
+	text-align: center;
+	display: inline-block;
+	text-align: center;
+}
+.recently {
+	background-color: white;
+    margin: 7px -5px;
+    width: 83px;
+    border: 1px solid gray;
+    border-radius: 2px;
+}
+.recentlyText {
+	font-size: 12px; 
+	text-align: center; 
+	font-weight: 600;
+}
+.recentlyCnt {
+	margin-top: 7px; 
+	font-size: 12px; 
+	text-align: center;
+}
+#currentPage {
+	font-size: 12px !important; 
+	margin-top: 7px; 
+	font-size: 20px;
+}
