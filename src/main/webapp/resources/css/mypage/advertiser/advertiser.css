@@ -1,0 +1,23 @@
+.divInputWrapper {
+	margin: 3rem 0;
+}
+div[name="divNotice"] {
+	background-color: gainsboro;
+	font-size: 0.87rem;
+}
+img {
+	width: 200px;
+	height: 200px;
+}
+.divImgWrapper {
+	border-radius: 0.9rem;
+	width: 8rem;
+	height: 8rem;
+	background-color: #f0f0f0;
+}
+.deepgreen {
+	color: #2B580C;
+}
+.midgreen {
+	color: #639A67;
+}
