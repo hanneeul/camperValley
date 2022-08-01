@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'GoyangIlsan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangIlsan.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+h4.mypageTitle {
+	font-weight: bold;
+	font-family: 'GoyangIlsan';
+}
+ul.sideNav .sideNavMenu a:hover, .nowSideMenu {
+    color: #639a67;
+}
+.sideNavMenu a, .navGroup a {
+	color: #000;
+	text-decoration: none;
+	font-family: 'GoyangIlsan';
+	font-size: 0.87rem;
+}
+.navGroup {
+	border-top: 1.5px solid #888;
+	margin-top: 0.65rem;
+	padding-top: 0.65rem;
+}
+.navGroup a {
+	font-weight: bolder;
+	font-size: 0.9rem;
+}

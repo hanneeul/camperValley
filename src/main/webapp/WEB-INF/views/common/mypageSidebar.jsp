@@ -1,20 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<style>
-ul.sideNav .sideNavMenu a:hover, .nowSideMenu {
-    color: #639a67;
-}
-.sideNavMenu a, .navGroup a {
-	color: #000;
-	text-decoration: none;
-}
-.navGroup a {
-	font-weight: bolder;
-}
-</style>
-	
-<h4 class="px-3">마이페이지</h4>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/sidebar.css" />
+<h4 class="px-3 mypageTitle">마이페이지</h4>
 <ul class="sideNav navbar-nav mt-3 px-3">
     <li class="nav-item navGroup">
     	<a class="nav-link" href="">회원관리</a>

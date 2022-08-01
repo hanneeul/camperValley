@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/campsite")
 public class CampsiteController {
 	
-	@Autowired
+//	@Autowired
 	private CampsiteService campsiteService;
 
 	@GetMapping("/searchDetail")
