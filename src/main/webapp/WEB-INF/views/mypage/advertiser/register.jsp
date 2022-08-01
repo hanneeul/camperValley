@@ -6,41 +6,22 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/advertiser.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <style>
-img {
-	width: 200px;
-	height: 200px;
-}
-div[name="divNotice"] {
-	background-color: gainsboro;
-}
-.divInputWrapper {
-	margin: 3em 0;
-}
-.divImgWrapper {
-	border-radius: 1em;
-	width: 8em;
-	height: 8em;
-	background-color: #f0f0f0;
-}
-.deepgreen {
-	color: #2B580C;
-}
-.midgreen {
-	color: #639A67;
-}
+
 </style>
 
 <script src="https://kit.fontawesome.com/4ade5a15fa.js" crossorigin="anonymous"></script>
 
 <div class="container">
 	<div class="row d-flex justify-content-between">
-		<div class="col-lg-2 mt-5">
+		<div class="col-lg-2">
 			<jsp:include page="/WEB-INF/views/common/mypageSidebar.jsp"/>
 		</div>
-		<div class="col-lg-10 mt-5 px-5">
+		<div class="col-lg-10 px-5">
 			<h2>광고주 등록하기</h2>
 			<form name="enrollAdvertiserFrm" action="" style="width:800px;">
 				<div class="divInputWrapper">
@@ -49,12 +30,10 @@ div[name="divNotice"] {
 				</div>
 				<div class="divInputWrapper">
 					<label for="bizLicenseNo">사업자등록번호</label>
-					<div class="row">
-						<div class="col">
-							<input type="text" name="bizLicenseNo" id="bizLicenseNo" class="form-control form-control-sm" placeholder="사업자등록번호를 입력해주세요.">
-						</div>
-						<div class="col-1">
-							<button type="button" class="btn btn-outline-primary btn-sm">확인</button>
+					<div class="input-group">
+						<input type="text" name="bizLicenseNo" id="bizLicenseNo" class="form-control form-control-sm" placeholder="사업자등록번호를 입력해주세요." aria-describedby="button-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-outline-primary btn-sm" type="button" id="button-addon2">확인</button>
 						</div>
 					</div>
 				</div>
