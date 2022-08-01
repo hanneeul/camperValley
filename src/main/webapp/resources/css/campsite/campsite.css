@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'GoyangIlsan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangIlsan.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+	font-family: 'GoyangIlsan';
+	list-style-type: none;
+}
+
+.campsite-search-wrap {
+	background-image: url("../../images/campsiteSearchBanner3.jpg");
+	height: 350px;
+}
+
+.campsite-search-wrap, .campsite-result-wrap {
+	font-size: .9rem;	
+}
+
+.campsite-search {
+	background-color: white;
+	opacity: .8;
+	font-weight: bold;
+}
+
+.btn-success, .btn-outline-success, .form-control {
+	font-size: .9rem;
+}
+
+.search-header {
+	font-size: 1rem;
+	align-self: center;
+}
+
+label[for=keywordSearch] {
+	align-self: center;	
+}
+
+.result-list-content > ul > li {
+	padding: 1rem;
+}
+
+.result-list-content > ul >li > h6 {
+	font-weight: bold;
+}
+
+.result-list-img {
+	width: 10rem;
+	height: 10rem;
+}
+
+.result-list-content {
+	width: 20rem;
+	height: 10rem;
+}
+
+.result-map {
+	width: 25rem;
+    height: 31rem;
+}
