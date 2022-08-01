@@ -1,12 +1,12 @@
 @charset "UTF-8";
-body {
-    font-family: 'GoyangIlsan';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangIlsan.woff') format('woff');
+body {@font-face {
+    font-family: 'SUIT-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 #navbarMain {
-    height: 130px;
+    height: 80px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50px;
