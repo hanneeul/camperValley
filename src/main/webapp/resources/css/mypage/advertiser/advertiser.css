@@ -21,3 +21,74 @@ img {
 .midgreen {
 	color: #639A67;
 }
+
+/* ----------------------------- dashboard ----------------------------- */
+form[name="chartPeriodFrm"] .form-row > *, .divAdMoney > * {
+	margin: 0 0.2rem;
+}
+#adMoneyCharge {
+	color: #000;
+	text-decoration: none;
+}
+#chartSection {
+	height: 12rem;
+	background-color: #ddd;
+}
+#tblAdList thead {
+	background-color: #f0f0f0;
+	height: 2rem;
+}
+#tblAdList thead td {
+	font-size: 0.9rem;
+}
+#tblAdList td {
+	vertical-align: middle;
+	padding: 0.1rem 0.3rem;
+}
+#tblAdList td input {
+	font-size: 0.9rem;
+}
+#tblAdList td input[type="number"] {
+	width: 6rem;
+}
+.tdAdZone {
+	width: 8.5rem;
+}
+/* ----------------------------- dashboard ----------------------------- */
+
+/* ------------------------------ admoney ------------------------------ */
+.adMoneyWrapper {
+	width: 45rem;
+}
+.divNowAdMoney {
+	margin-top: 2rem;
+}
+.divNowAdMoney * {
+	margin: 0;
+}
+.divNowAdMoney h5 {
+	font-weight: bold;
+	letter-spacing: 0.01rem;
+	color: #639A67;
+}
+.divNowAdMoney small {
+	color: #000;
+}
+form[name="chargeAdmoneyFrm"] {
+	margin: 0.8rem 0;
+	border-top: 1px solid #888;
+	border-bottom: 1px solid #888;
+}
+form[name="chargeAdmoneyFrm"] > * {
+	width: 30rem;
+	margin: 2rem auto;
+}
+#chargeCustom {
+	width: 20rem;
+}
+/* ------------------------------ admoney ------------------------------ */
+
+/* ----------------------------- enroll AD ----------------------------- */
+/* ----------------------------- enroll AD ----------------------------- */
+
+

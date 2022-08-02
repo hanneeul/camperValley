@@ -1,0 +1,134 @@
+/* noticeList */
+#tb-notice th, #tb-notice td {
+	padding: 6px;
+	font-size: 13px;
+}
+
+.container {
+	padding: 0px;
+}
+
+.cs-bar {
+	margin-bottom: 15px;
+}
+
+.cs-bar a {
+	color: #777;
+	font-weight: bold;
+}
+
+.cs-bar a:hover {
+	text-decoration: none;
+}
+
+.cs-header {
+	margin-top: 50px;
+	font-weight: bold;
+}
+
+.bar-notice, .bar-faq {
+	padding-bottom: 5px;
+}
+
+.bar-notice {
+	margin-right: 15px;
+}
+
+.btn-search {
+	border: 1px solid #dee2e6;
+	background-color: #fff;
+}
+
+.input-search {
+	border: 1px solid #dee2e6;
+	padding-left: 10px;
+	width: 170px;
+	margin-right: -7px;
+}
+
+.search-group {
+	display: flex;
+	font-size: 13px;
+	height: 28px;
+}
+
+input:focus {
+	outline: none;
+}
+
+#tb-notice a {
+	color: black;
+}
+
+/* noticeEnroll, noticeUpdate */
+.input-notice {
+	padding-bottom: 30px;
+}
+
+#tb-notice-enroll {
+	font-size: 14px;
+}
+
+textarea {
+	resize: none;
+}
+
+tr:last-child {
+	border-bottom: 1px solid #dee2e6;
+}
+
+/* noticeDetail */
+.noticeDetail_head {
+	border-top: 1px solid #bdbdbd;
+	margin-top: 15px;
+}
+
+.noticeSecond_head {
+	border-top: 1px solid #bdbdbd;
+	border-bottom: 1px solid #bdbdbd;
+	padding: 5px;
+}
+
+.notice__head {
+	font-size: 16px;
+	margin-top: 7px;
+	margin-bottom: 7px;
+	margin-left: 4px;
+}
+
+.noticeDetail_view {
+	border-bottom: 1px solid #dbdbdb;
+	padding: 10px;
+	padding-bottom: 100px;
+}
+
+.noticeDetail_view p {
+	font-size: 14px;
+}
+
+.noticeDetail_date {
+	font-size: 13px;
+}
+
+.noticeDetail_read {
+	font-size: 13px;
+	float: right;
+}
+
+.notice-box {
+	border-bottom: 1px solid #dbdbdb;
+	padding: 5px;
+}
+
+.prev, .next {
+	float: left;
+	margin-left: 90px;
+	margin-right: 130px;
+	color: #777;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.notice-box a {
+	color: black;
+}

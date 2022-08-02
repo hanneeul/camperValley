@@ -1,22 +1,54 @@
 @charset "UTF-8";
+/* web font */
 @font-face {
     font-family: 'GoyangIlsan';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangIlsan.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
+/* container 너비 사용자화 */
+@media (min-width: 1200px) {
+	.container {
+		max-width: 1200px;
+	}
+}
+/* camper color */
+.bg-camper-color {
+	background-color: #639A67
+}
+.camper-color {
+	color: #639A67
+}
+
+body {
+	padding-top: 200px;
+	width: 1200px;
+}
+* {
+    font-family: 'GoyangIlsan';
+    list-style-type: none;
+}
 #navbarMain {
-    height: 80px;
+    height: 100px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50px;
 }
-.nav-item {
-    font-size: 12px;
+.nav-item * {
+    font-size: 15px;
 }
 .navbar-brand, .bar {
-    font-size: 10px;
+    font-size: 12px;
 }
 .navbar-brand {
     cursor: pointer;
 }
+
+/* ----- index.css ----- */
+.shadow-custom {
+	width: 1000px;
+	box-shadow:
+		0 2px 4px 2px rgb(0 0 0 / 10%),
+		0 8px 16px rgb(0 0 0 / 10%);
+}
+.

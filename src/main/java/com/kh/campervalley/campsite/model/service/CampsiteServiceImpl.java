@@ -8,7 +8,7 @@ import com.kh.campervalley.campsite.model.dao.CampsiteDao;
 @Service
 public class CampsiteServiceImpl implements CampsiteService {
 
-	// @Autowired
+	@Autowired
 	private CampsiteDao campsiteDao;
 	
 }
