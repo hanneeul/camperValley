@@ -14,5 +14,14 @@ public class CsController {
 	
 	@GetMapping("/noticeList")
 	public void noticeList() {}
+	
+	@GetMapping("/noticeEnroll")
+	public void noticeEnroll() {}
+
+	@GetMapping("/noticeUpdate")
+	public void noticeUpdate() {}
+
+	@GetMapping("/noticeDetail")
+	public void noticeDetail() {}
 
 }
