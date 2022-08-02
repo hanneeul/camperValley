@@ -9,41 +9,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/advertiser.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<style>
-.form-row > *, .divAdMoney > * {
-	margin: 0 0.2rem;
-}
-#adMoneyCharge {
-	color: #000;
-	text-decoration: none;
-}
-#chartSection {
-	height: 12rem;
-	background-color: #ddd;
-}
-#tblAdList thead {
-	background-color: #f0f0f0;
-	height: 2rem;
-}
-#tblAdList thead td {
-	font-size: 0.9rem;
-}
-#tblAdList td {
-	vertical-align: middle;
-	padding: 0.1rem 0.3rem;
-}
-#tblAdList td input {
-	font-size: 0.9rem;
-}
-#tblAdList td input[type="number"] {
-	width: 6rem;
-}
-.tdAdZone {
-	width: 8.5rem;
-}
-</style>
 
-<div class="container">	
+<div class="container">
 	<div class="row d-flex justify-content-between">
 		<div class="col-lg-2">
 			<jsp:include page="/WEB-INF/views/common/mypageSidebar.jsp" />
@@ -57,7 +24,9 @@
 							<div class="form-group mb-0">
 								<input type="date" class="form-control form-control-sm" name="chartStart" />
 							</div>
-							<div><span>~</span></div>
+							<div>
+								<span>~</span>
+							</div>
 							<div class="form-group mb-0">
 								<input type="date" class="form-control form-control-sm" name="chartEnd" />
 							</div>
@@ -68,8 +37,12 @@
 					</form>
 				</div>
 				<div class="divAdMoney align-self-center">
-					<h5 class="d-inline"><a id="adMoneyCharge" href="">애드머니</a></h5>
-					<h5 class="d-inline">4,200,000<small class="ml-1">원</small></h5>
+					<h5 class="d-inline">
+						<a id="adMoneyCharge" href="${pageContext.request.contextPath}/mypage/advertiser/admoney">애드머니</a>
+					</h5>
+					<h5 class="d-inline">
+						4,200,000<small class="ml-1">원</small>
+					</h5>
 				</div>
 			</div>
 			<div class="my-3" id="chartSection"></div>
@@ -94,51 +67,28 @@
 						<td><button class="btn btn-danger btn-sm">삭제</button></td>
 						<td>
 							<div class="custom-control custom-switch">
-							  <input type="checkbox" class="custom-control-input" name="adStatus" id="customSwitch1">
-							  <label class="custom-control-label" for="customSwitch1"></label>
+								<input type="checkbox" class="custom-control-input" name="adStatus" id="customSwitch1">
+								<label class="custom-control-label" for="customSwitch1"></label>
 							</div>
 						</td>
 						<td>
-							<input type="text" class="form-control-plaintext" name="adName" value="${ad ? ad.adName : '소재명'}" />
+							<input type="text" class="form-control-plaintext"
+								name="adName" value="${ad ? ad.adName : '소재명'}" />
 						</td>
 						<td>
-							<input type="text" class="form-control-plaintext" name="adZone" value="${ad ? ad.adName : '위치'}" />
+							<input type="text" class="form-control-plaintext"
+								name="adZone" value="${ad ? ad.adName : '위치'}" />
 						</td>
 						<td class="text-center">10</td>
 						<td class="text-center">200</td>
 						<td class="text-center">5<small>%</small></td>
 						<td>
-							<input type="number" class="form-control form-control-sm" name="adCpc" value="${ad ? ad.adName : '300'}"/>
+							<input type="number" class="form-control form-control-sm"
+								name="adCpc" value="${ad ? ad.adName : '300'}" />
 						</td>
 						<td>
-							<input type="number" class="form-control form-control-sm" name="adDailyBudget" value="${ad ? ad.adName : '100000'}"/>
-						</td>
-						<td>
-							<button class="btn btn-primary btn-sm">변경</button>
-						</td>
-					</tr>
-					<tr>
-						<td><button class="btn btn-danger btn-sm">삭제</button></td>
-						<td>
-							<div class="custom-control custom-switch">
-							  <input type="checkbox" class="custom-control-input" name="adStatus" id="customSwitch1">
-							  <label class="custom-control-label" for="customSwitch1"></label>
-							</div>
-						</td>
-						<td>
-							<input type="text" class="form-control-plaintext" name="adName" value="${ad ? ad.adName : '소재명'}" />
-						</td>
-						<td>
-							<input type="text" class="form-control-plaintext" name="adZone" value="${ad ? ad.adName : '위치'}" />
-						</td>
-						<td class="text-center">10</td>
-						<td class="text-center">200</td>
-						<td class="text-center">5<small>%</small></td>
-						<td>
-							<input type="number" class="form-control form-control-sm" name="adCpc" value="${ad ? ad.adName : '300'}"/>
-						</td>
-						<td>
-							<input type="number" class="form-control form-control-sm" name="adDailyBudget" value="${ad ? ad.adName : '100000'}"/>
+							<input type="number" class="form-control form-control-sm"
+								name="adDailyBudget" value="${ad ? ad.adName : '100000'}" />
 						</td>
 						<td>
 							<button class="btn btn-primary btn-sm">변경</button>
@@ -149,3 +99,4 @@
 		</div>
 	</div>
 </div>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />

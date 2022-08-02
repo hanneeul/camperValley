@@ -26,5 +26,10 @@ public class AdvertiserController {
 	@GetMapping("/dashboard")
 	public void advertiserDashBoard() {	}
 	
+	@GetMapping("/admoney")
+	public void chargeAdmoney() { }
+	
+	@GetMapping("/enrollAd")
+	public void enrollAd() { };
 
 }
