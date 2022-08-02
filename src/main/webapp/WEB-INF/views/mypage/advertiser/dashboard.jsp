@@ -96,6 +96,9 @@
 					</tr>
 				</tbody>
 			</table>
+			<div class="mt-5">
+				<jsp:include page="/WEB-INF/views/common/pagebar.jsp" />
+			</div>
 		</div>
 	</div>
 </div>
