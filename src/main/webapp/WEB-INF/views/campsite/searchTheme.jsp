@@ -15,7 +15,7 @@
 			<div class="row m-0">
 				<div class="col search-header">테마검색</div>
 				<div class="col">
-					<button type="button" class="btn btn-success float-right">
+					<button type="button" id="searchDetailBtn" class="btn btn-success float-right">
 						상세검색&nbsp;<i class="fa-solid fa-angle-right"></i>
 					</button>
 				</div>	
@@ -60,6 +60,14 @@
 			</div>
 		</div>
 	</div>
+	<script>
+	/**
+	 * 상세검색 페이지로 이동
+	 */
+	document.querySelector("#searchDetailBtn").addEventListener('click', (e) => {
+		location.href = '${pageContext.request.contextPath}/campsite/searchDetail';
+	});
+	</script>
 	<div class="d-flex bd-highlight w-100 p-3 m-auto campsite-result-wrap">
 		<div class="p-2 flex-fill bd-highlight campsite-result">
 			<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
