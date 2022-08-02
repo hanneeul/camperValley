@@ -16,5 +16,8 @@ public class UsedProductController {
 	private UsedProductService usedProductService;
 	
 	@GetMapping("/index")
-	public void usedProductIndex() {};
+	public void index() {};
+	
+	@GetMapping("/searchDisplay")
+	public void searchDisplay() {};
 }
