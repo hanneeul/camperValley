@@ -10,12 +10,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/advertiser.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
-<style>
-
-</style>
-
-<script src="https://kit.fontawesome.com/4ade5a15fa.js" crossorigin="anonymous"></script>
-
 <div class="container">
 	<div class="row d-flex justify-content-between">
 		<div class="col-lg-2">
