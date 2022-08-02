@@ -27,73 +27,70 @@
 	</c:if>
 	</script>
 </head>
-<body>
-	<div class="container p-0 m-0">
-		<header>
-			<div class="container p-0">
-				<nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbarMain" style="background-image: url('${pageContext.request.contextPath}/resources/images/logo.png');">
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse p mr-0" id="navbarText">
-						<ul class="navbar-nav offset-md-4 col-md-6 mt-4 justify-content-start">
-							<!-- 선택시 active -->
-							<li class="nav-item"><a class="mainMenu nav-link text-dark" href="#">캠핑장</a></li>
-							<li class="nav-item"><a class="mainMenu nav-link text-dark" href="#">캠핑용품거래</a></li>
-							<li class="nav-item"><a class="mainMenu nav-link text-dark" href="#">커뮤니티</a></li>
-							<li class="nav-item"><a class="mainMenu nav-link text-dark" href="#">마이페이지</a></li>
-							<li class="nav-item"><a class="mainMenu nav-link text-dark" href="#">고객센터</a></li>
-							<li class="nav-item"><a class="mainMenu nav-link text-dark" href="#">관리자페이지</a></li>
-						</ul>
-						<ul class="navbar-nav mt-4">
-							<!-- 선택시 active -->
-							<li class="nav-item"><a class="nav-link small text-dark" href="#"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
-							<li class="nav-item"><a class="nav-link small text-dark" href="#"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
-						</ul>
-					</div>
-				</nav>
-				<nav class="navbar navbar-light p-1 justify-content-center" id="navbarSub" style="background-color: #639A67"></nav>
+<body class="mx-auto">
+	<header class="container p-0 fixed-top">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light p-0" id="navbarMain" style="background-image: url('${pageContext.request.contextPath}/resources/images/logo.png');">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse p mr-0" id="navbarText">
+				<ul class="navbar-nav offset-md-3 col-md-7 p-0 mt-4 justify-content-start">
+					<!-- 선택시 active -->
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">캠핑장</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">캠핑용품거래</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">커뮤니티</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">마이페이지</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">고객센터</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pl-3" href="#">관리자페이지</a></li>
+				</ul>
+				<ul class="navbar-nav mt-4">
+					<!-- 선택시 active -->
+					<li class="nav-item"><a class="nav-link small text-dark" href="#"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
+					<li class="nav-item"><a class="nav-link small text-dark" href="#"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
+				</ul>
 			</div>
-			<script>
-			const $subNavbar = $(navbarSub);
-			$(document).ready(() => $subNavbar.hide());
-			
-			// // 서브메뉴바보여주기 - mouseenter event
-			$(".mainMenu").mouseenter((menu) => {
-			  	const mainMenu = menu.target.innerHTML;
-			  	switch(mainMenu) {
-					case "커뮤니티" : renderSubMenu(0, "캠퍼모집", "캠핑장후기"); break;
-					case "마이페이지" : renderSubMenu(1,"회원관리", "중고거래", "커뮤니티", "광고주"); break;
-					case "고객센터" : renderSubMenu(2, "공지사항", "Q&A"); break;
-					case "관리자페이지" : renderSubMenu(3, "회원관리", "게시판관리", "신고내역관리"); break;
-					default : $subNavbar.stop().slideUp('fast');
-			  	}
-			});
+		</nav>
+		<nav class="navbar navbar-light p-2 justify-content-center bg-camper-color" id="navbarSub"></nav>
+		<script>
+		const $subNavbar = $(navbarSub);
+		$(document).ready(() => $subNavbar.hide());
 		
-			const renderSubMenu = function(index, ...subMenuList) {
-				$subNavbar.html("");
-				for(let i = 0; i < subMenuList.length; i++) {
-					const aTag = document.createElement("a");
-					aTag.className = "navbar-brand p-0 mr-3 ml-3 text-light position-relative";
-					aTag.style.left = `\${index * 65}px`;
-					
-					aTag.innerHTML = subMenuList[i];
-					$subNavbar.append(aTag);
-					if(i != subMenuList.length - 1) {
-						const spanTag = document.createElement("span");
-						spanTag.className = "bar text-light position-relative";
-						spanTag.innerHTML = "|";
-						spanTag.style.left = `\${index * 65}px`;
-						$subNavbar.append(spanTag);
-					}
+		// // 서브메뉴바보여주기 - mouseenter event
+		$(".mainMenu").mouseenter((menu) => {
+		  	const mainMenu = menu.target.innerHTML;
+		  	switch(mainMenu) {
+				case "커뮤니티" : renderSubMenu(0, "캠퍼모집", "캠핑장후기"); break;
+				case "마이페이지" : renderSubMenu(0.9, "회원관리", "중고거래", "커뮤니티", "광고주"); break;
+				case "고객센터" : renderSubMenu(1.9, "공지사항", "Q&A"); break;
+				case "관리자페이지" : renderSubMenu(3.1, "회원관리", "게시판관리", "신고내역관리"); break;
+				default : $subNavbar.stop().slideUp('fast');
+		  	}
+		});
+	
+		const renderSubMenu = function(index, ...subMenuList) {
+			$subNavbar.html("");
+			for(let i = 0; i < subMenuList.length; i++) {
+				const aTag = document.createElement("a");
+				aTag.className = "navbar-brand p-0 mr-3 ml-3 text-light position-relative";
+				aTag.style.left = `\${-50 + index * 100}px`;
+				
+				aTag.innerHTML = subMenuList[i];
+				$subNavbar.append(aTag);
+				if(i != subMenuList.length - 1) {
+					const spanTag = document.createElement("span");
+					spanTag.className = "bar text-light position-relative";
+					spanTag.innerHTML = "|";
+					spanTag.style.left = `\${-50 + index * 100}px`;
+					$subNavbar.append(spanTag);
 				}
-				$subNavbar.stop().slideDown('fast');
-			};
-		
-			// 서브메뉴바숨기기 - scroll event
-			$(window).scroll(() => {
-			  	$subNavbar.stop().slideUp('fast');
-			});
-			</script>
-		</header>
-		<section id="content">
+			}
+			$subNavbar.stop().slideDown('fast');
+		};
+	
+		// 서브메뉴바숨기기 - scroll event
+		$(window).scroll(() => {
+		  	$subNavbar.stop().slideUp('fast');
+		});
+		</script>
+	</header>
+	<section id="content" class="mx-auto">
