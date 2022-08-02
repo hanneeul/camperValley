@@ -21,10 +21,10 @@
 				</div>
 				<form action="" name="chargeAdmoneyFrm">
 					<input type="hidden" name="amount"/>
-					<button type="button" class="btn btn-primary btn-block" id="charge100000">100,000원 충전</button>
-					<button type="button" class="btn btn-primary btn-block" id="charge250000">250,000원 충전</button>
-					<button type="button" class="btn btn-primary btn-block" id="charge500000">500,000원 충전</button>
-					<button type="button" class="btn btn-primary btn-block" id="charge1000000">1,000,000원 충전</button>
+					<button type="button" class="btn btn-camper-color btn-block" id="charge100000">100,000원 충전</button>
+					<button type="button" class="btn btn-camper-color btn-block" id="charge250000">250,000원 충전</button>
+					<button type="button" class="btn btn-camper-color btn-block" id="charge500000">500,000원 충전</button>
+					<button type="button" class="btn btn-camper-color btn-block" id="charge1000000">1,000,000원 충전</button>
 					<div class="form-group">
 						<label for="">직접입력하기</label>
 						<div class="form-row d-flex justify-content-between">
@@ -37,7 +37,7 @@
 								</div>
 							</div>
 							<div class="col-auto">
-								<button class="btn btn-primary">충전</button>
+								<button class="btn btn-camper-color">충전</button>
 							</div>
 						</div>
 					</div>
