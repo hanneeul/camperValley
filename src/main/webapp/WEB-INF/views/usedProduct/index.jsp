@@ -6,36 +6,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/index.css" />
 <script src="https://kit.fontawesome.com/97c6ec6a69.js" crossorigin="anonymous"></script>
-<style>
-.content {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-#searchProduct {
-	margin-top: -4.5px;
-    margin-left: -31px;
-    position: absolute;
-    top: 56px;
-    left: 875.5px;
-    width: 242px;
-    height: 41px;
-    border: 2.5px solid lightgray;
-    border-radius: 3px;
-    font-size: 12.5px;
-    letter-spacing: 0.9px;
-}
-#searchBtn {    
-	margin-top: 11px;
-    position: relative;
-    top: 51px;
-    left: 1057px;
-    color: #639A67;
-    font-size: 18px;
-}
-</style>
 
 <!-- 검색창 영역 -->
 <div class="search-area">
@@ -49,12 +22,46 @@
 	</div>
 </div>
 
+<!-- 상세 검색 -->
+<div class="dropdown-button"
+					style="margin-top: 20px; height: 25px;">
+	<a id="btn_menu" class="cateList"> <i class="fas fa-bars"></i></a>
+</div>
+
+<div class="dropdown-area"
+					style="display: inline-block; height: 0px;">
+	<div>
+		 <div class="dropmenu">
+			<ul>
+				<li id="category">
+					<p>전체 카테고리</p>
+					<ul>
+						<a href="">텐트/타프</a>
+						<a href="">침낭/매트</a>
+						<a href="">테이블/의자</a>
+						<a href="">조명기구</a>
+						<a href="">주방용품</a>
+						<a href="">화로/버너/BBQ</a>
+						<a href="">안전/위생용품</a>
+						<a href="">전기/전자제품</a>
+						<a href="">캠핑카/카라반/용품</a>
+						<a href="">루프탑/트레일러</a>
+						<a href="">차박용품</a>
+						<a href="">의류/수납용품</a>
+						<a href="">겨울용품</a>
+						<a href="">기타캠핑용품</a>
+						<a href="">기타생활용품</a>
+					</ul>
+				</li>
+			</ul>
+		</div>  
+	</div>
+</div>
 <!-- container -->
-<div class="content"
-		style="" >
+<div class="content">
 
 	<!-- section -->
-	<div id="section" style="margin-left:10px;">
+	<div id="section" style="margin-left:3px;">
 		<div>
 			<c:if test="${not empty display}">
 				<jsp:include page="${display}" />
@@ -71,4 +78,3 @@
 <div id="nav">
 	<jsp:include page="/WEB-INF/views/usedProduct/nav.jsp"/>
 </div>
-

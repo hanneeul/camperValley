@@ -12,6 +12,7 @@
 	list-style-type: none;
 }
 
+/* searhDetail/searchTheme.jsp start */
 .campsite-search-wrap {
 	background-image: url("../../images/campsiteSearchBanner3.jpg");
 	height: 350px;
@@ -62,3 +63,52 @@ label[for=keywordSearch] {
 	width: 25rem;
     height: 31rem;
 }
+/* searhDetail/searchTheme.jsp end */
+
+/* infoView.jsp start */
+.campsite-info-table-wrap, .campsite-info-tab-wrap {
+	font-size: .9rem;
+	width: 95%;
+}
+	
+.campsite-info-tab-wrap button {
+	font-size: .9rem;
+}
+
+.campsite-info-tab-wrap .nav-link.active {
+	background-color: #639A67;
+}
+
+#infoViewTabContent h6 {
+	font-weight: bold;
+}
+
+#infoViewTabContent h6 i {
+	color: #D9BF77;
+}
+
+.basic-info-table th, .basic-info-table td {
+	vertical-align: middle;
+}
+
+.basic-info-table tr:last-child td {
+	text-align: center;
+}
+
+.info-view-title {
+	align-self: center;
+}
+
+#bookmarkBtn {
+	width: 9rem;
+}
+
+#bookmarkBtn i {
+	color: yellow;
+}
+
+.basic-info-img {
+	width: 350px;
+	height: 350px;
+}
+/* infoView.jsp end */

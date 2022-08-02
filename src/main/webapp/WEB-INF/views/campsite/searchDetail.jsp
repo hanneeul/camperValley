@@ -15,7 +15,7 @@
 			<div class="row m-0">
 				<div class="col search-header">상세검색</div>
 				<div class="col">
-					<button type="button" class="btn btn-success float-right">
+					<button type="button" id="searchThemeBtn" class="btn btn-success float-right">
 						테마검색&nbsp;<i class="fa-solid fa-angle-right"></i>
 					</button>
 				</div>
@@ -34,19 +34,68 @@
 				  	</div>
 				</div>
 				<div class="col-md">
-					<button type="button" id="conditions-btn" class="btn btn-success float-right">
+					<button type="button" id="conditions-btn" class="btn btn-success float-right" data-toggle="modal" data-target="#conditionsModal">
 						<i class="fa-regular fa-square-plus"></i>&nbsp;상세조건
 					</button>
 				</div>
-				<!-- modal insert -->
-				<script>
-				document.querySelector("#conditions-btn").addEventListener('click', (e) => {
-					
-				});
-				</script>
 			</div>
 		</div>
 	</div>
+	<!-- modal insert -->
+	<%-- 나중에 파일 분리? --%>
+	<div class="modal fade" id="conditionsModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="conditionsModalLabel" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-scrollable">
+	    	<div class="modal-content">
+		      	<div class="modal-header">
+		        	<h5 class="modal-title" id="conditionsModalLabel">상세조건</h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          	<span aria-hidden="true">&times;</span>
+		        	</button>
+		      	</div>
+		      	<div class="modal-body">
+		        	<h6>운영형태</h6>
+		        	<div class="form-check-inline form-check">
+						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm0" value="지자체">
+						<label for="facltDivNm0" class="form-check-label">지자체</label>&nbsp;
+						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm1" value="국립공원">
+						<label for="facltDivNm1" class="form-check-label">국립공원</label>&nbsp;
+						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm2" value="자연휴양림">
+						<label for="facltDivNm2" class="form-check-label">자연휴양림</label>&nbsp;
+						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm3" value="국민여가">
+						<label for="facltDivNm3" class="form-check-label">국민여가</label>&nbsp;
+						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm4" value="민간">
+						<label for="facltDivNm4" class="form-check-label">민간</label>&nbsp;
+					</div>
+					<hr />
+					<h6>입지구분</h6>
+		        	<div class="form-check-inline form-check">
+						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl0" value="해변">
+						<label for="lctCl0" class="form-check-label">해변</label>&nbsp;
+						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl1" value="계곡">
+						<label for="lctCl1" class="form-check-label">계곡</label>&nbsp;
+						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl2" value="숲">
+						<label for="lctCl2" class="form-check-label">숲</label>&nbsp;
+					</div>
+		      	</div>
+		      	<div class="modal-footer">
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+		        	<button type="button" class="btn btn-success conditions-submit-btns">확인</button>
+		      	</div>
+	    	</div>
+	  	</div>
+	</div>
+	<script>
+	/**
+	 * 테마검색 페이지로 이동
+	 */
+	document.querySelector("#searchThemeBtn").addEventListener('click', (e) => {
+		location.href = '${pageContext.request.contextPath}/campsite/searchTheme';
+	});
+	
+	document.querySelector("#conditions-submit-btns").addEventListener('submit', (e) => {
+		
+	});
+	</script>
 	<div class="d-flex bd-highlight w-100 p-3 m-auto campsite-result-wrap">
 		<div class="p-2 flex-fill bd-highlight campsite-result">
 			<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
