@@ -82,6 +82,7 @@
 					<div class="divInputWrapper adPolicy">
 						<div class="d-flex justify-content-between" id="adPolicyHead">
 							<span>광고 노출 정책 안내</span>
+							<i class="fa-solid fa-angle-down"></i>
 						</div>
 						<div id="adPolicyBody">
 							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quisquam nesciunt obcaecati voluptatem illum alias deserunt ut corporis modi fuga deleniti officiis dolorum temporibus maiores vero saepe repellendus? Nulla porro.
