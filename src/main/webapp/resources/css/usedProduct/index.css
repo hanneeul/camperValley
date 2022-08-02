@@ -1,0 +1,252 @@
+@charset "UTF-8";
+
+.row {
+	margin-right: 0 !important;
+	margin-left: 0 !important;
+}
+.col-3 {
+	width: 20% !important;
+	padding: 0px 5px !important;
+}
+.content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+/* 상세검색 */
+.dropdown-button {
+	margin-top: 20px;
+	text-align: left;
+}
+.dropdown-area {
+	display: inline-block;
+	height: 0px;
+}
+#btn_menu i {
+	color: black;
+    font-size: 21px;
+    font-weight: 900;
+    position: absolute;
+    top: 207px;
+    left: 56px;
+}
+.dropmenu {        
+	height: 100%;
+    width: 100%;
+    position: relative;
+    top: 13px;
+    border-top: none;
+    margin: 0px;
+    padding: 0px;
+    margin-left: 53px;
+    z-index: 9999;
+}
+.dropmenu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.dropmenu li {
+	float: left;
+	padding: 0px;
+}
+.dropmenu li a {
+	font-size: 20px;
+	display: block;
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+	text-decoration: none;
+}
+.dropmenu ul>li>a:hover {
+	color: #000;
+}
+.dropmenu li ul {        
+	display: block;
+    border: 3px solid #eee;
+    width: 200px;
+    background: white;
+    height: 550px;
+    min-height: 430px;
+}
+.dropmenu li:hover ul {
+	display: block;
+}
+.dropmenu li li {
+	display: block;
+	float: none;
+	margin: 0px;
+	padding: 0px;
+	width: 200px;
+}
+.dropmenu li:hover li a {
+	background: none;
+}
+.dropmenu li p {    
+	border: 3px solid #eee;
+    background: white;
+    padding: 12px 30px 12px 30px;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    border-bottom: none;
+    margin-bottom: 0px;
+}
+.dropmenu li ul a {    
+	padding: 6px 30px;
+    display: block;
+    font-size: 11px;
+    margin: 0px;
+    text-align: left;
+    color: black;
+}
+.dropmenu ul li:first-child a.active {
+	border: 0px;
+	color: #ffffff;
+	background: #0d47a1;
+	text-decoration: none;
+}
+.dropmenu ul li:nth-child(2) a:hover {
+	color: #0d47a1;
+	text-decoration: underline;
+}
+.dropmenu p {
+	clear: left;
+	margin-bottom: 0px;
+}
+
+/* display */
+#productTop {
+    margin-top: 15px;
+    margin-left: 4px;
+}
+#productName {
+  font-size:20px;
+  color:#0a58ca;
+  font-weight: bold;
+}
+.productNum {
+	font-size:17px;
+  	color:#0a58ca;
+}
+.productListTop {
+	height: 30px;
+}
+.productListTop a {
+	cursor: pointer;
+}
+.productListTop a.active {
+	color: blue;
+	font-weight: bold;
+}
+.item {
+	cursor: pointer; 
+	margin-bottom: 10px; 
+	margin-right: -52px;
+}
+#itemSolid {
+    border: 1.5px solid #e4e8f0;
+    width: 196px;
+    margin-left: 3px;
+}
+#itemSolid img {
+	width: 100%;
+	height: 185px; 
+	object-fit: cover;
+}
+.img-box {
+	position: relative;
+	width: 100%;
+	height: 220px;
+}
+.text-box {
+	padding: 15px 20px;
+	height: 95px;
+}
+#display-list {
+	width: 100%
+}
+#displayTitle {
+	margin-top: 13px;
+    font-size: 14px;
+    font-weight: 600;
+}
+#displayName {
+	position: relative;
+	font-size: 14px;
+	font-weight: bold;
+	padding-bottom: 15ps;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.displayName {
+	margin-left: 11px; 
+	font-weight: bold; 
+	font-size: 15px;
+}
+.price-time {
+	display: flex;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	-webkit-box-align: center;
+	align-items: center;
+	height: 20px;
+}
+.price-time, .displayTime {    
+	font-size: 12px;
+    color: rgb(136, 136, 136);
+    margin-top: 3px;
+    height: 35px;
+    margin-bottom: -1px;
+}
+
+/* searchDisplay  */
+.group a {
+	color: #2B380C;
+}
+#productName {
+	font-size:20px; 
+	color: #2B380C;
+	font-weight:bold;
+}
+.productNum {
+	 font-size: 17px; 
+	 color:#2B380C;"
+}
+
+/* 검색어 */
+#searchProduct {    
+	margin-top: 0.5px;
+    margin-left: -31px;
+    position: absolute;
+    top: 53px;
+    left: 847.5px;
+    width: 270px;
+    height: 42px;
+    border: 1.5px solid lightgray;
+    border-radius: 3px;
+    font-size: 12.5px;
+    letter-spacing: 0.9px;
+}
+#searchBtn {           
+	margin-top: 11px;
+    position: relative;
+    top: 53px;
+    left: 1052px;
+    color: black;
+    font-size: 20px;
+}
+
+/* 광고 */
+.adPlace {
+	margin-top: 8px;
+    margin-bottom: 21px;
+    width: 1032px;
+    height: 270px;
+    background-color: lightgray;
+}
