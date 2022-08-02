@@ -30,7 +30,7 @@
 						<div class="form-row d-flex justify-content-between">
 							<div class="form-row align-items-center">
 								<div class="col-auto">
-									<input type="number" class="form-control" name="" id="chargeCustom" />
+									<input type="number" class="form-control" name="amountCustom" id="chargeCustom" />
 								</div>
 								<div class="col-auto">
 									<span>원</span>
@@ -43,10 +43,43 @@
 					</div>
 				</form>
 				<div class="text-right">
-					<button class="btn btn-secondary btn-sm">애드머니 환불</button>
+					<button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#refundModal">애드머니 환불</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+
+<div class="modal fade" id="refundModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">애드머니 환불</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="" name="refundAdmoneyFrm">
+				<div class="modal-body px-4">
+					<p>환불가능금액 : </p>
+					<div class="form-row align-items-center">
+						<div class="col-auto">
+							<span>환불금액 지정 : </span>
+						</div>
+						<div class="col-auto">
+							<input type="number" class="form-control" name="" id="refundCustom" />
+						</div>
+						<div class="col-auto">
+							<span>원</span>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">뒤로가기</button>
+					<button type="button" class="btn btn-sm btn-camper-red">환불하기</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

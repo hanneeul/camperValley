@@ -21,7 +21,9 @@ img {
 .midgreen {
 	color: #639A67;
 }
-
+.hide {
+	display: none;
+}
 /* ----------------------------- dashboard ----------------------------- */
 form[name="chartPeriodFrm"] .form-row > *, .divAdMoney > * {
 	margin: 0 0.2rem;

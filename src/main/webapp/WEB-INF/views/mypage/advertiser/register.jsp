@@ -29,9 +29,9 @@
 				<div class="divInputWrapper">
 					<label for="">사업자등록증</label>
 					<div class="divImgWrapper d-flex align-items-center justify-content-center">
+						<input type="file" class="custom-file-input hide" name="adImg" id="validatedCustomFile" accept="image/*" required>
 						<i class="fa-solid fa-circle-plus fa-2x midgreen"></i>
 						<!-- <img class="img-fluid rounded" src="${pageContext.request.contextPath}/resources/images/서강준.jpg" alt=""> -->
-						<!-- <img class="rounded" src="" alt=""> -->
 					</div>
 				</div>
 				<div class="divInputWrapper">
