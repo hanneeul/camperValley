@@ -1,0 +1,117 @@
+@charset "UTF-8";
+
+@CHARSET "UTF-8";
+/*폰트*/
+div{
+    padding: 10px;
+}
+/*모딜창 크기*/
+.modal-content{
+    width: 450px;
+    margin: auto;
+    padding: 0;
+}
+
+/*헤딩 센터로*/
+#loginModal .modal-header{
+    display: block;
+    text-align: center;
+}
+
+
+/*라벨, 아이디찾기, 비밀번호 찾기 부분 flexbox처리*/
+.justify-content-between{
+    display: flex;
+    padding: 0;
+}
+/*체크박스 위치*/
+
+/*체크박스 크기*/
+input[type=checkbox]{
+    margin-left: 1px;
+    zoom: 1.5;
+    margin: 1px ;
+}
+
+/*자동로그인 라벨 위치*/
+.form-check-label{
+    margin-left: 28px;
+}
+/*인풋태그-아이디, 비밀번호*/
+input.form-control{
+    height: 45px;
+    margin-bottom: 18px;
+    
+}
+
+.form-control:focus{
+    box-shadow: none;
+    border: #639A67 2px solid;
+}
+
+/*아이디, 비밀번호 찾기*/
+a{
+    color: black;
+}
+a:hover{
+    color: #2B380C;
+}
+/*로그인btn*/
+.btn{
+    width: 100%;
+    border: #639A67 2px solid;
+    /* border-radius: 0; */
+    height: 45px;
+}
+.btn:hover{
+    border: #2B380C 1px solid;
+    background-color:#2B380C ;
+
+}
+.btn-success{
+    /* text-align: center; */
+    background-color:#639A67 ;
+}
+
+/*회원가입btn*/
+.btn-outline-success{
+    /* text-align: center; */
+
+    color: #639A67;
+}
+
+/*여백조절*/
+#loginModal .modal-header{
+    border: none;
+    padding: 1.4rem 1rem;
+}
+
+#loginModal .modal-header .close{
+    padding-top: 1.5%;
+   
+}
+.modal-body{
+    padding-bottom: 0;
+    padding-top: 0;
+    text-align: center;
+}
+.modal-footer{
+    padding-top: 0;
+    display: block;
+    border: none;
+}
+
+.modal-footer div{
+    padding: 0;
+}
+div.modal-footer .justify-content-between{
+    padding-bottom: 20px;
+}
+div.modal-footer .btn{
+    margin-bottom: 20px;
+}
+
+.modal-footer>:not(:first-child),.modal-footer>:not(:last-child){
+    margin: 0;
+}
+
