@@ -22,4 +22,7 @@ public class CampsiteController {
 	
 	@GetMapping("/searchTheme")
 	public void searchTheme() {}
+	
+	@GetMapping("/infoView")
+	public void infoView() {}
 }
