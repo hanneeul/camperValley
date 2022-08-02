@@ -6,7 +6,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/index.css" />
 <script src="https://kit.fontawesome.com/97c6ec6a69.js" crossorigin="anonymous"></script>
 
@@ -31,10 +30,10 @@
 <div class="dropdown-area"
 					style="display: inline-block; height: 0px;">
 	<div>
-		 <div class="dropmenu">
+		 <div class="dropmenu" style="display: none;">
 			<ul>
 				<li id="category">
-					<p>전체 카테고리</p>
+					<p>카테고리 선택</p>
 					<ul>
 						<a href="">텐트/타프</a>
 						<a href="">침낭/매트</a>
@@ -61,7 +60,7 @@
 <div class="content">
 
 	<!-- section -->
-	<div id="section" style="margin-left:3px;">
+	<div id="section" style="margin-left:-41.5px;">
 		<div>
 			<c:if test="${not empty display}">
 				<jsp:include page="${display}" />
@@ -78,3 +77,16 @@
 <div id="nav">
 	<jsp:include page="/WEB-INF/views/usedProduct/nav.jsp"/>
 </div>
+
+<script>
+// 카테고리 마우스 오버 이벤트
+$("#btn_menu").hover(function(){
+	// 카테고리 보이기
+	$(".dropmenu").show();
+})
+
+// 카테고리 마우스 벗어나면 숨김
+$(".dropmenu").mouseleave(function() {
+	$(".dropmenu").hide();
+})
+</script>

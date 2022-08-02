@@ -7,14 +7,15 @@
 	z-index: 9999;
 }
 /* 관심상품! */ 
-.favorites {            
+.favorites {                    
 	padding: 7px 16px;
     background: white;
-    margin: -19px -6px;
-    width: 85px;
+    width: 80px;
     height: 60px;
     border: 1px solid gray;
-    border-radius: 2px;
+    position: absolute;
+    top: -55px;
+    left: 6px;
 }
 .favoritesCount {
 	text-align: center; 
@@ -46,10 +47,11 @@
 }
 .recently {    
 	background-color: white;
-    margin: 27px -6.2px;
-    width: 85px;
+    width: 80px;
     border: 1px solid gray;
-    border-radius: 2px;
+    position: relative;
+    top: 13px;
+    left: 6px;
 }
 .recentlyText {
 	font-size: 12px; 
