@@ -23,8 +23,8 @@
 <div class="notice-wrap" style="width: 80%; float:none; margin:0 auto">
 	
 	<div class="cs-bar float-left">
-		<a href="#" class="bar-notice">공지사항</a>
-		<a href="${pageContext.request.contextPath}/cs/faqList" class="bar-faq">자주 묻는 질문</a>
+		<a href="${pageContext.request.contextPath}/cs/noticeList" class="bar-notice">공지사항</a>
+		<a href="${pageContext.request.contextPath}/cs/faq" class="bar-faq">자주 묻는 질문</a>
 	</div>
 
 	
@@ -91,4 +91,5 @@
 	<button type="button" class="btn btn-secondary btn-sm float-right" id="btn-nt-enroll" onclick="location.href='${pageContext.request.contextPath}/cs/noticeEnroll';">글등록</button>
 </div>
 </div>
+
 
