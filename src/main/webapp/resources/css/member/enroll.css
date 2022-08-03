@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+.btn{
+  border: 2px #639A67 solid;
+  height: 40px;
+  width: 100%;
+  margin-top: 1%;
+}
+.btn:hover{
+  background-color: #2B380C;
+  border: 2px #2B380C solid;
+
+}
+
+.pointer{
+	cursor:pointer;
+}
+div.header{
+	
+}
+.header{
+	margin-bottom: 1.5rem;
+}
+.header>h4{
+  margin: 1rem 0;
+  font-weight:700 !important; 
+  color: #639A67;	
+}
+
+.line{
+  border: solid 1px #2B380C;
+  background-color: #2B380C;
+  margin-bottom: 10px;
+}
+
+input.form-control{
+	margin-bottom:5px;
+}
+
+input.form-control:focus{
+  box-shadow: none;
+  border: #639A67 2px solid;
+}
+
+table{
+  width: 100%;
+  font-size: 0.8rem;
+}
+th{
+  text-align: left;
+	height: 2rem;
+}
+td>div {
+  position: relative;
+}
+.checkbox{
+  text-align: left;
+  font-weight: 700;
+}
+
+input[type=checkbox]{
+  margin-left: 0.4rem;
+  zoom: 1.1;
+  font-size: 10px;
+}
+::placeholder{
+  font-size: 0.8rem;
+
+}
+.checkbox>.line{
+  border: 1px solid #2B380C;
+  background-color: #2B380C;
+  height: 0;
+}
+hr{
+  background-color: #2B380C;
+  margin: 0 0 10px 0;
+}
+.guide{
+  /* font-size: 0.6rem; */
+  position: absolute;
+  top: 9px;
+  right: 0;
+}
+
+button.btn-camper{
+	background-color: #639A67;	
+    border: 1px solid #639A67;
+    color: #fff ;
+}
+button.btn-camper:hover {
+	background-color: #2B380C;
+    border: 1px solid #2B380C;
+    color: #fff;
+}
+button.btn-outline-camper{	
+    border: 1px solid #639A67;
+    color: #639A67;
+}
+button.btn-outline-camper:hover {
+	background-color: #2B380C;
+    border: 1px solid #2B380C;
+    color: #fff;
+}
