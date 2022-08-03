@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/sidebar.css" />
 <div class="sidebar-header">
-	<h4 class="px-2 mypageTitle mypage-info">마이페이지</h4>
+	<h4 class="px-3 mypageTitle mypage-info">마이페이지</h4>
 </div>
-<ul class="sideNav navbar-nav px-2">
+<ul class="sideNav navbar-nav px-3 mb-3">
     <li class="nav-item navGroup">
     	<a class="nav-link" href="">회원관리</a>
     </li>
@@ -36,7 +36,7 @@
     	<a class="nav-link" href="">작성후기</a>
     </li>
     <li class="nav-item sideNavMenu">
-    	<a class="nav-link" href="">관심캠핑장</a>
+    	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/community/bookmark">관심캠핑장</a>
     </li>
     <li class="nav-item navGroup">
     	<a class="nav-link" href="">광고주</a>

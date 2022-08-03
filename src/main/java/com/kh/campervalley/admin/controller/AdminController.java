@@ -19,5 +19,10 @@ public class AdminController {
 
 	@GetMapping("/sample")
 	public void sample() {}
+	
+	// --------------------- EJ start
+	@GetMapping("/advertiser")
+	public void advertiser() {}
+	// --------------------- EJ end
 
 }
