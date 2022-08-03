@@ -167,6 +167,34 @@
 			<version>21.1.0.0</version>
 		</dependency>
 		
+		<!-- 오라클 클라우드 DB 연결 -->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ucp</artifactId>
+			<version>21.1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.database.security</groupId>
+			<artifactId>oraclepki</artifactId>
+			<version>21.5.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.database.security</groupId>
+			<artifactId>osdt_core</artifactId>
+			<version>21.5.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.database.security</groupId>
+			<artifactId>osdt_cert</artifactId>
+			<version>21.5.0.0</version>
+		</dependency>
+				<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.13</version>
+		</dependency>		
+		
+		
 		<!-- #9. spring-security관련 의존 -->
 		<!-- 필수 core/web/config --> 
 		<dependency>
@@ -215,13 +243,11 @@
 		</dependency>
 		
 		<!-- #15. MessageConvert의 json처리용 빈 -->
-		<!-- 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.5</version>
 		</dependency>
-		 -->
 		
 		<!-- #16. XmlMapper 의존 -->
 		<dependency>
