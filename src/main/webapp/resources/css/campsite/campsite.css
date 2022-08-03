@@ -70,7 +70,7 @@ label[for=keywordSearch] {
 	font-size: .9rem;
 	width: 95%;
 }
-	
+
 .campsite-info-tab-wrap button {
 	font-size: .9rem;
 }
@@ -104,11 +104,6 @@ label[for=keywordSearch] {
 }
 
 #bookmarkBtn i {
-	color: yellow;
-}
-
-.basic-info-img {
-	width: 350px;
-	height: 350px;
+	color: #f7e600;
 }
 /* infoView.jsp end */
