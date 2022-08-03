@@ -171,7 +171,7 @@
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ucp</artifactId>
-			<version>21.1.0.0</version>
+			<version>21.3.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.oracle.database.security</groupId>
@@ -246,7 +246,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.9.5</version>
+			<version>2.13.3</version>
 		</dependency>
 		
 		<!-- #16. XmlMapper 의존 -->
