@@ -19,6 +19,40 @@
 .camper-color {
 	color: #639A67
 }
+/* ---- EJ start ---- */
+.btn-camper-color {
+	color: #fff;
+    background-color: #639A67;
+    border-color: #639A67;
+}
+.btn-camper-color:hover {
+    color: #fff;
+    background-color: #467249;
+    border-color: #467249;
+}
+.btn-camper-red {
+	color: #fff;
+    background-color: #c7392b;
+    border-color: #c7392b;
+}
+.btn-camper-red:hover {
+    color: #fff;
+    background-color: #AD1C0E;
+    border-color: #AD1C0E;
+}
+.border-camper-color {
+	border-color: #639A67
+}
+.btn-outline-camper-color {
+	color: #639A67;
+	border-color: #639A67;
+}
+.btn-outline-camper-color:hover{
+	color: #fff;
+    background-color: #639A67;
+    border-color: #639A67;
+}
+/* ---- EJ end ---- */
 
 body {
 	padding-top: 200px;

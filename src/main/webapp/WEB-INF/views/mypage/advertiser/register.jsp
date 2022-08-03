@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/advertiser.css" />
@@ -27,16 +22,16 @@
 					<div class="input-group">
 						<input type="text" name="bizLicenseNo" id="bizLicenseNo" class="form-control form-control-sm" placeholder="사업자등록번호를 입력해주세요." aria-describedby="button-addon2">
 						<div class="input-group-append">
-							<button class="btn btn-outline-primary btn-sm" type="button" id="button-addon2">확인</button>
+							<button class="btn btn-outline-camper-color btn-sm" type="button" id="button-addon2">확인</button>
 						</div>
 					</div>
 				</div>
 				<div class="divInputWrapper">
 					<label for="">사업자등록증</label>
 					<div class="divImgWrapper d-flex align-items-center justify-content-center">
+						<input type="file" class="custom-file-input hide" name="adImg" id="validatedCustomFile" accept="image/*" required>
 						<i class="fa-solid fa-circle-plus fa-2x midgreen"></i>
 						<!-- <img class="img-fluid rounded" src="${pageContext.request.contextPath}/resources/images/서강준.jpg" alt=""> -->
-						<!-- <img class="rounded" src="" alt=""> -->
 					</div>
 				</div>
 				<div class="divInputWrapper">
@@ -46,7 +41,7 @@
 					</div>
 				</div>
 				<div class="divInputWrapper">
-					<button type="submit" class="btn btn-primary btn-block">광고주승인 요청하기</button>
+					<button type="submit" class="btn btn-camper-color btn-block">광고주승인 요청하기</button>
 				</div>
 			</form>
 		</div>

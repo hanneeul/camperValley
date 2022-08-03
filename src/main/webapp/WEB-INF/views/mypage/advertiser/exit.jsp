@@ -41,7 +41,7 @@
 					</div>
 				</div>
 				<div class="divInputWrapper">
-					<button type="submit" class="btn btn-danger btn-block">광고주 해제하기</button>
+					<button type="submit" class="btn btn-camper-red btn-block">광고주 해제하기</button>
 				</div>
 
 			</form>
