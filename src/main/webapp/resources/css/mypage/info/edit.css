@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+hr {
+    background-color: #2B380C;
+    height: 0.3px;
+}
+
+hr:first-of-type {
+	margin-top: 2.2rem;
+    margin-bottom: 20px;
+}
+
+hr:last-of-type {
+    margin-top: 23px;
+}
+div.col-md-8{
+    width: 44rem;
+}
+.profileImg-btn {
+    border: none;
+    background: none;
+}
+
+td {
+    height: 3.6rem;
+}
+
+form{
+	margin:1.5rem 0 1rem 0;
+	background-color: #fafbfa;
+	padding: 2rem;
+}
+
+button.btn-success {
+    background-color: #639A67;
+    border-color: #639A67;
+}
+button.btn-success:hover{
+    background-color: #2B380C;
+    border-color: #2B380C;
+}
+
+#content .form-control:focus {
+    box-shadow: none;
+    border: #639A67 2px solid;
+}
+
+#content .btn-outline-secondary{
+	border-color:#ced4da;
+	color: #495057;
+
+}
+a.btn {
+    padding-left: 0;
+    padding-right: 0;
+    width: 4rem;
+    font-size: 8px;
+    margin-right: 0.2rem;
+    border-radius:0;
+}
+button.btn-outline-secondary{
+	height: 38px;
+	border-color:#ced4da;
+	color: #495057;
+	font-size: 0.9rem;
+	width: 5.5rem;
+}
+input[type=file]{
+	display: none;
+
+}
+#profileImg{
+	cursor:pointer
+}

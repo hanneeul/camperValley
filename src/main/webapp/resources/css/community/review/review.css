@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+* {
+	font-size: .9rem;
+}
+
+/* reviewList.jsp start */
+.campsite-review-list-wrap {
+	width: 95%;
+}
+
+.review-list-table th, .review-list-table td {
+	font-size: .9rem;
+}
+
+.review-list-table tbody tr:last-child {
+	border-bottom: 1px solid #dee2e6;
+}
+
+.review-title {
+	color: black;
+}
+
+.review-title:hover {
+	color: #639A67;
+}
+/* reviewList.jsp end */
+
+/* reviewErnoll.jsp start */
+.campsite-review-enroll-wrap {
+	width: 95%;
+}
+/* reviewEnroll.jsp end */
