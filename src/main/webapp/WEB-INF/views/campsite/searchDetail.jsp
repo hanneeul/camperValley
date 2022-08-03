@@ -7,7 +7,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/campsite/campsite.css" />
-<script src="https://kit.fontawesome.com/97c6ec6a69.js" crossorigin="anonymous"></script>
 
 <!-- 캠핑장목록조회(상세검색) 페이지 (작성자:수진) -->
 	<div class="d-flex justify-content-center campsite-search-wrap">
