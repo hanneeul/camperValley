@@ -13,12 +13,9 @@
 	}
 }
 /* camper color */
-.bg-camper-color {
-	background-color: #639A67
-}
-.camper-color {
-	color: #639A67
-}
+.bg-camper-color {background-color: #639A67}
+.camper-color {color: #639A67}
+
 /* ---- EJ start ---- */
 .btn-camper-color {
 	color: #fff;
@@ -55,7 +52,7 @@
 /* ---- EJ end ---- */
 
 body {
-	padding-top: 200px;
+	padding-top: 130px;
 	width: 1200px;
 }
 * {
@@ -78,11 +75,16 @@ body {
     cursor: pointer;
 }
 
-/* ----- index.css ----- */
-.shadow-custom {
-	width: 1000px;
-	box-shadow:
-		0 2px 4px 2px rgb(0 0 0 / 10%),
-		0 8px 16px rgb(0 0 0 / 10%);
+/* ----- footer ----- */
+footer div {
+	font-size: 13px;
 }
-.
+#campervalleyInfo img {
+	width: 100px;
+}
+#campervalleyInfo {
+	padding-left: 90px;
+}
+#campervalleyChat {
+	padding-right: 90px;
+}

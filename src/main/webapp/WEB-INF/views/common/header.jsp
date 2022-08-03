@@ -77,6 +77,11 @@
 				aTag.style.left = `\${-50 + index * 100}px`;
 				
 				aTag.innerHTML = subMenuList[i];
+				
+				switch(aTag.innerHTML) {
+					case "캠퍼모집" : aTag.href = "${pageContext.request.contextPath}/community/camper/camperList";
+				}
+				
 				$subNavbar.append(aTag);
 				if(i != subMenuList.length - 1) {
 					const spanTag = document.createElement("span");
