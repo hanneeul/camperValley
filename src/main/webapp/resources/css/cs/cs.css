@@ -1,7 +1,7 @@
 /* noticeList */
 #tb-notice th, #tb-notice td {
-	padding: 6px;
-	font-size: 13px;
+	padding: 18px;
+	font-size: 0.9rem;
 }
 
 .container {
@@ -22,7 +22,7 @@
 }
 
 .cs-header {
-	margin-top: 50px;
+	margin-bottom: 70px;
 	font-weight: bold;
 }
 
@@ -99,7 +99,7 @@ tr:last-child {
 .noticeDetail_view {
 	border-bottom: 1px solid #dbdbdb;
 	padding: 10px;
-	padding-bottom: 100px;
+	padding-bottom: 150px;
 }
 
 .noticeDetail_view p {
@@ -131,4 +131,60 @@ tr:last-child {
 
 .notice-box a {
 	color: black;
+}
+
+/* faq */
+.q_img {
+	float: right;
+}
+
+.icon_a {
+	text-align: center;
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	background: #000000;
+	color: #FFF;
+	line-height: 30px;
+	font-size: 16px;
+	border-radius: 50%;
+}
+
+.icon_q {
+	text-align: center;
+	display: inline-block;
+	font-weight: bold;
+	width: 32px;
+	height: 32px;
+	background: #fff;
+	border: 1px solid #777;
+	color: #777;
+	line-height: 30px;
+	font-size: 16px;
+	border-radius: 50%;
+}
+
+.article {
+	border-top: 1px solid #dbdbdb;
+}
+
+.q {
+	margin: 0px;
+	padding: 10px;
+}
+
+.a {
+	border-top: 1px solid #dbdbdb;
+	background-color: #f8f9fa;
+	padding: 10px;
+	margin: 0px;
+}
+
+.article {
+	list-style: none;
+}
+
+.article a, .article a:hover {
+	text-decoration: none;
+	color: #000;
 }

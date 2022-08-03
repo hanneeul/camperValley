@@ -31,7 +31,7 @@
 								<input type="date" class="form-control form-control-sm" name="chartEnd" />
 							</div>
 							<div>
-								<button class="btn btn-primary btn-sm">조회</button>
+								<button class="btn btn-camper-color btn-sm">조회</button>
 							</div>
 						</div>
 					</form>
@@ -46,7 +46,7 @@
 				</div>
 			</div>
 			<div class="my-3" id="chartSection"></div>
-			<button type="button" class="btn btn-primary btn-sm">광고만들기</button>
+			<button type="button" class="btn btn-camper-color btn-sm" onclick="location.href='${pageContext.request.contextPath}/mypage/advertiser/enrollAd'">광고만들기</button>
 			<table id="tblAdList" class="table my-3">
 				<thead>
 					<tr class="text-center">
@@ -64,9 +64,9 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><button class="btn btn-danger btn-sm">삭제</button></td>
+						<td><button class="btn btn-camper-red btn-sm">삭제</button></td>
 						<td>
-							<div class="custom-control custom-switch">
+							<div class="custom-control custom-switch text-center">
 								<input type="checkbox" class="custom-control-input" name="adStatus" id="customSwitch1">
 								<label class="custom-control-label" for="customSwitch1"></label>
 							</div>
@@ -91,11 +91,14 @@
 								name="adDailyBudget" value="${ad ? ad.adName : '100000'}" />
 						</td>
 						<td>
-							<button class="btn btn-primary btn-sm">변경</button>
+							<button class="btn btn-camper-color btn-sm">변경</button>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			<div class="mt-5">
+				<jsp:include page="/WEB-INF/views/common/pagebar.jsp" />
+			</div>
 		</div>
 	</div>
 </div>

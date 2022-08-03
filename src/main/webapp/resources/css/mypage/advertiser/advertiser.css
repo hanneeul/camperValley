@@ -2,7 +2,7 @@
 	margin: 3rem 0;
 }
 div[name="divNotice"] {
-	background-color: gainsboro;
+	background-color: #f0f0f0;
 	font-size: 0.87rem;
 }
 img {
@@ -21,7 +21,9 @@ img {
 .midgreen {
 	color: #639A67;
 }
-
+.hide {
+	display: none;
+}
 /* ----------------------------- dashboard ----------------------------- */
 form[name="chartPeriodFrm"] .form-row > *, .divAdMoney > * {
 	margin: 0 0.2rem;
@@ -50,6 +52,11 @@ form[name="chartPeriodFrm"] .form-row > *, .divAdMoney > * {
 }
 #tblAdList td input[type="number"] {
 	width: 6rem;
+}
+input.custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #639A67;
+    background-color: #639A67;
 }
 .tdAdZone {
 	width: 8.5rem;
@@ -89,6 +96,42 @@ form[name="chargeAdmoneyFrm"] > * {
 /* ------------------------------ admoney ------------------------------ */
 
 /* ----------------------------- enroll AD ----------------------------- */
+.adDetailWrapper {
+	width: 45rem;
+}
+.optionWrapper > * {
+	cursor: pointer;
+}
+.divAdZoneOptions .imgWrapper {
+	background-color: #f0f0f0;
+	height: 9rem;
+}
+.divAdZoneOptions .selectedImgWapper {
+	border: 0.3rem solid #D8EBB5;
+}
+.divAdZoneOptions p {
+	font-weight: 600;
+	font-size: 0.9rem;	
+}
+.divAdZoneOptions span {
+	font-size: 0.8rem;
+}
+#upFileLabel {
+	font-size: 0.875rem;
+}
+#adPolicyHead {
+	background-color: #D8EBB5;
+	height: 2rem;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+#adPolicyLoad {
+	cursor: pointer;
+}
+#adPolicyBody {
+	display: none;
+	border-bottom: 1px solid #ddd;
+}
 /* ----------------------------- enroll AD ----------------------------- */
 
 
