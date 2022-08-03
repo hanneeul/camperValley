@@ -21,8 +21,8 @@
 	<!-- 사용자작성 css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 	<!-- font awesome -->
-	<%-- <spring:eval var="fontawesomeKey" expression="@customProperties['api.fontawesome']" /> --%>
-	<script src="https://kit.fontawesome.com/535d5e7249.js" crossorigin="anonymous"></script>
+	<spring:eval var="fontawesomeKey" expression="@customProperties['api.fontawesome']" />
+	<script src="https://kit.fontawesome.com/${fontawesomeKey}.js" crossorigin="anonymous"></script>
 	<script>
 	<c:if test="${not empty msg}">
 		alert('${msg}');
