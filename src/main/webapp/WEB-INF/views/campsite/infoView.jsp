@@ -16,16 +16,18 @@
 					<h4 class="font-weight-bold m-0">○○ 캠핑장</h4>
 				</div>
 				<div class="col-md info-view-back-btn">
-					<button class="btn btn-success float-right" onclick="history.go(-1);">목록으로 돌아가기</button>
+					<button class="btn btn-success float-right bg-camper-color" onclick="history.go(-1);">
+						<i class="fa-solid fa-arrow-rotate-left"></i>&nbsp;목록으로 돌아가기
+					</button>
 				</div>
 			</div>
 			<hr />
-			<div class="row m-0 basic-info-wrap p-3">
-				<div class="col-md basic-info-img bg-light">
+			<div class="row m-0 basic-info-wrap p-3 justify-content-center">
+				<div class="col-md basic-info-img bg-light mr-3">
 					<img src="#" class="rounded" alt="">
 				</div>
-				<div class="col-md">
-					<table class="table basic-info-table">
+				<div class="col-md ml-3">
+					<table class="table basic-info-table mb-0">
 				    	<tr>
 				      		<th scope="row">주소</th>
 				      		<td>○○도 ○○시 ○○동</td>
@@ -55,8 +57,8 @@
 				      		<td>전화</td>
 				    	</tr>
 				    	<tr>
-				    		<td scope="col" colspan="2">
-				    			<button type="button" id="bookmarkBtn" class="btn btn-success">
+				    		<td scope="col" colspan="2" class="pb-0">
+				    			<button type="button" id="bookmarkBtn" class="btn btn-success bg-camper-color">
 				    				<i class="fa-solid fa-star"></i>&nbsp;즐겨찾기
 				    			</button>
 				    		</td>

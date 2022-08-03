@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +21,7 @@
 	<!-- 사용자작성 css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 	<!-- font awesome -->
+	<%-- <spring:eval var="fontawesomeKey" expression="@customProperties['api.fontawesome']" /> --%>
 	<script src="https://kit.fontawesome.com/535d5e7249.js" crossorigin="anonymous"></script>
 	<script>
 	<c:if test="${not empty msg}">
@@ -75,6 +77,11 @@
 				aTag.style.left = `\${-50 + index * 100}px`;
 				
 				aTag.innerHTML = subMenuList[i];
+				
+				switch(aTag.innerHTML) {
+					case "캠퍼모집" : aTag.href = "${pageContext.request.contextPath}/community/camper/camperList";
+				}
+				
 				$subNavbar.append(aTag);
 				if(i != subMenuList.length - 1) {
 					const spanTag = document.createElement("span");

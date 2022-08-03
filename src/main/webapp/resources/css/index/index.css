@@ -1,0 +1,61 @@
+@charset "UTF-8";
+/* ----- index.css ----- */
+.text-18 {font-size: 18px;}
+.text-22 {font-size: 22px;}
+.text-35 {font-size: 35px;}
+.width-1000 {width: 1000px;}
+
+/* ----- 캠핑장 검색 ----- */
+form[name=searchFrm] {margin: 100px 0;}
+.shadow-custom {
+	border-radius: 20px;
+	box-shadow:
+		0 2px 4px 2px rgb(0 0 0 / 10%),
+		0 8px 16px rgb(0 0 0 / 10%);
+}
+form[name=searchFrm] .input {
+	height: 30px;
+	width: 280px;
+	font-size: 12px;
+	outline: 1px solid rgba(0, 50, 0, 0.5);
+	border-style: none;
+	
+}
+#inputArea input{
+	width: 150px;
+}
+#searchCampsite {
+	cursor: pointer;
+}
+
+
+/* ----- 날씨 조회 ----- */
+form[name=weatherFrm] {margin: 100px 0;}
+#selectCalendar, #areaWeatherBox {
+	width: 450px;
+	height: 300px;
+}
+form[name=weatherFrm] .input {
+	height: 40px;
+	width: 185px;
+	font-size: 13px;
+	outline: 1px solid rgba(0, 50, 0, 0.5);
+	border-style: none;
+}
+
+/* ----- 광고 조회 ----- */
+.carousel-item {
+	height: 300px;
+}
+
+/* ----- 캠핑장 구분 조회 ----- */
+#campsiteGubun {margin: 100px 0;}
+#campsiteGubun .shadow-custom {
+	height: 430px;
+	width: 430px;
+}
+#glamping, #caravan{
+	background-size: cover;
+	background-position: -250px;
+	cursor: pointer;
+}

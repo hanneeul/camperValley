@@ -1,0 +1,41 @@
+@charset "UTF-8";
+a.btn-camper{
+	width: 120px;
+	height: 30px;
+	border-radius: 0;
+	background-color: #639A67;	
+    border: 1px solid #639A67;
+    color: #fff !important;
+    font-size: 0.8rem;
+}
+a.btn-camper:hover {
+	background-color: #2B380C;
+    border: 1px solid #2B380C;
+    color: #fff;
+}
+#content table{
+	margin: auto;
+	margin-top: 0.5rem;
+	margin-bottom: 2rem;
+	width: 98%;
+	text-align: center;
+
+}
+#content tr > td:nth-child(2){
+	text-align: left;
+}
+#content a.btn-link{
+	color: #639A67;
+}
+#content a.btn-link:hover{
+	color: #2B380C;
+	text-decoration: none;
+	
+}
+#content a{
+	color: #2B380C;
+}
+#content a:hover{
+	text-decoration: none;
+}
+
