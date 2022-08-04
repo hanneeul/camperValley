@@ -24,6 +24,10 @@ div[name="divNotice"] {
 .hide {
 	display: none;
 }
+.invisibleBtn {
+	background: none;
+	border: none;
+}
 /* ----------------------------- dashboard ----------------------------- */
 input.input-daterange {
 	width: 7rem;

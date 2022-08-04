@@ -30,7 +30,9 @@
 					<label for="">사업자등록증</label>
 					<div class="divImgWrapper d-flex align-items-center justify-content-center">
 						<input type="file" class="custom-file-input hide" name="adImg" id="validatedCustomFile" accept="image/*" required>
-						<i class="fa-solid fa-circle-plus fa-2x midgreen"></i>
+						<button type="button" class="invisibleBtn" id="upFileBtn">
+							<i class="fa-solid fa-circle-plus fa-2x midgreen"></i>
+						</button>
 						<!-- <img class="img-fluid rounded" src="${pageContext.request.contextPath}/resources/images/서강준.jpg" alt=""> -->
 					</div>
 				</div>
@@ -48,3 +50,8 @@
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<script>
+document.querySelector("#upFileBtn").addEventListener('click', (e) =>{
+	document.querySelector("#validatedCustomFile").click();
+});
+</script>
