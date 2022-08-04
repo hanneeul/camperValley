@@ -1,0 +1,42 @@
+.bookmarkWrapper:not(:last-of-type) {
+	border-bottom: 1px solid #ddd;
+}
+
+.imgWrapper {
+	width: 9rem;
+	height: 9rem;
+	overflow: hidden;
+	background-color: #f0f0f0;
+}
+
+.campsiteImg {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.campsiteIntro {
+	border-top: 1px solid #ddd;
+}
+
+.detailInfo {
+	font-size: 0.9rem;
+}
+
+.detailInfo>div {
+	margin-right: 3rem;
+}
+
+.campsiteInfo i {
+	color: #D9BF77;
+}
+
+.bmStatusBtn {
+	background: none;
+	border: none;
+}
+
+.btnWrapper i {
+	font-size: 2.4rem;
+	color: #f1c40f;
+}
