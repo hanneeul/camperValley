@@ -19,6 +19,10 @@ public class CamperController {
 	
 	@GetMapping("/camperList")
 	public void camperList() {
-		
+	}
+	
+	@GetMapping("/test")
+	public String test() {
+		return "test";
 	}
 }

@@ -1,11 +1,68 @@
 @charset "UTF-8";
-.text-22{font-size: 22px;}
+.text-13{font-size: 13px;}
 .text-15{font-size: 15px;}
-#communitySection {
-	width: 1000px;
-}
-#active {
-	border-bottom: 2px solid rgb(175, 175, 175);
-	font-weight: bold;
+.text-18{font-size: 18px;}
+.text-20{font-size: 20px;}
+.text-25{font-size: 25px;}
+* {
+	font-size: .9rem;
 }
 
+/* reviewList.jsp start */
+.campsite-review-list-wrap {
+	width: 95%;
+}
+
+.review-list-table th, .review-list-table td {
+	font-size: .9rem;
+}
+
+.review-list-table tbody tr:last-child {
+	border-bottom: 1px solid #dee2e6;
+}
+
+.review-title {
+	color: black;
+}
+
+.review-title:hover {
+	color: #639A67;
+}
+/* reviewList.jsp end */
+
+/* reviewErnoll.jsp start */
+.campsite-review-enroll-wrap {
+	width: 95%;
+}
+/* reviewEnroll.jsp end */
+
+.chk_box { display: block; position: relative; padding-left: 23px; margin-bottom: 10px; cursor: pointer; font-size: 14px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+/* 기본 체크박스 숨기기 */
+.chk_box input[type="checkbox"] { display: none; }
+.off {width: 6px; height: 10px; border: solid rgb(175, 175, 175); border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 2px;  }
+.on {width: 6px; height: 10px; border: solid #639A67; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 2px;  }
+#listSection {
+	width: 40%;
+}
+#listSection {
+	cursor: pointer;
+}
+#detailSection {
+	width: 50%;
+	height: 1000px;
+	position: sticky;
+	top: 0px;
+}
+
+/* boardBox */
+.boardBoxSelect {
+	border: 1px solid black;
+	border-radius: 20px;
+}
+.boardBox {
+	border: 1px solid rgb(175, 175, 175);
+	border-radius: 20px;
+}
+.moreInfo {
+	cursor: pointer;
+}
