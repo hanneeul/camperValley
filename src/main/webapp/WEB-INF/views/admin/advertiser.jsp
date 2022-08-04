@@ -8,7 +8,9 @@
 	<div class="admin-content" style="width: 80%;">
 		<h5 class="admin-hd">광고주회원 관리</h5>
 		<!-- 콘텐츠 영역 -->
-		
+		<div class="filterWrapper">
+			
+		</div>
 		
 	</div>
 </div>

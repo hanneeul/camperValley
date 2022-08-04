@@ -31,5 +31,8 @@ public class AdvertiserController {
 	
 	@GetMapping("/enrollAd")
 	public void enrollAd() { };
+	
+	@GetMapping("/sample")
+	public void sample() { };
 
 }
