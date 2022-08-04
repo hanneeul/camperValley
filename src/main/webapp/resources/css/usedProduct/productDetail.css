@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+a {
+    color: black;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
+}
+a:hover {
+	color: #787878;
+	text-decoration: none;
+}
+button {
+	background-color: transparent;
+	border-color: transparent;
+}
+i {
+	color: 	;
+}
+.cateHome {
+	font-weight: 400;
+    margin-bottom: -7px;
+}
+div {
+display: block;
+    margin: 0px;
+    padding: 0px;
+    vertical-align: baseline;
+}
+/************/
+.detail_area {
+	display: flex;
+    align-content: center;
+    justify-content: center;
+    font-size: 14px;
+}
+.detail_div {
+	width: 1024px;
+}
+/**** 슬라이더 ****/
+.slideshow-container {
+    width: 26rem;
+    height: 28rem;
+}
+.swiper-wrapper img {
+	width: 26rem;
+    height: 25rem;
+}
+.swiper-container {
+	/* display: none */;
+}
+.detail-info__image--prev, .detail-info__image--next {
+    border-radius: 3px 0 0 3px;
+    position: relative;
+    color: white;
+    font-weight: 600;	
+    cursor: pointer;
+}
+.detail-info__image--prev:hover, .detail-info__image--next:hover {
+	color: lightgray;
+	font-weight: 600;	
+}
+.detail-info__div {
+	display: flex;
+}
+.detail-info__image__div {
+	margin-right: 40px;
+	flex-shrink: 0;
+	width: 26rem;
+	height: 28rem;
+}
+.detail-info__image__list {
+	width: 100%;
+    height: 100%;
+    position: relative;
+}
+.detail-info__image--enlg {
+	position: absolute;
+    bottom: 53px;
+    right: 4px;
+    color: white;
+    font-size: 11px;
+    padding: 6px 12px;
+    background-color: rgba(33, 33, 33, 0.35);
+    border: 0;
+    z-index: 1;
+    border-radius: 14px;
+}
+.detail-info__image--enlg:hover {
+	color: black;
+	background-color: white;
+}
+.detail-info__text__div2 {
+	width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.detail-info__text-header {
+	padding-bottom: 30px;
+	width: 100%;
+	border-bottom: 1px solid rgb(238, 238, 238);
+}
+.detail-info__text-header {
+	padding-bottom: 30px;
+	width: 100%;
+	border-bottom: 1px solid rgb(238, 238, 238);
+}
+.detail-info__text-title {
+	font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+.detail-info__price {
+	font-size: 40px;
+	font-weight: 900;
+}

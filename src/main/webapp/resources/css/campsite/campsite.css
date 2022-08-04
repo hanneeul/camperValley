@@ -38,7 +38,12 @@
 }
 
 label[for=keywordSearch] {
-	align-self: center;	
+	align-self: center;
+	margin: 0;
+}
+
+.keyword-search-btn-wrap {
+	height: 2.3rem;
 }
 
 .result-list-content > ul > li {
@@ -105,5 +110,9 @@ label[for=keywordSearch] {
 
 #bookmarkBtn i {
 	color: #f7e600;
+}
+
+.campsite-yellow {
+	color: #D9BF77;
 }
 /* infoView.jsp end */
