@@ -9,13 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/cs/cs.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
-.bar-notice {
-	border-bottom: 2px solid black;
-}
-.bar-notice {
-	color: black !important;
-}
-
+.bar-notice {color: black !important;}
 </style>
 			
 <h5 class="cs-header text-center">공지사항</h5>
@@ -44,7 +38,6 @@
 			<tr>
 				<th class="col-md-1">No.</th>
 				<th>제목</th>
-				<th class="col-md-1">작성자</th>
 				<th class="col-md-2">날짜</th>
 				<th class="col-md-1">조회수</th>
 			</tr>
@@ -53,38 +46,34 @@
 			<tr>
 				<td>01</td>
 				<td><a href="${pageContext.request.contextPath}/cs/noticeDetail">공지사항</a></td>
-				<td>관리자</td>
 				<td>2022-06-08</td>
 				<td>0</td>
 			</tr>
 			<tr>
 				<td>01</td>
 				<td><a href="${pageContext.request.contextPath}/cs/noticeDetail">공지사항</a></td>
-				<td>관리자</td>
 				<td>2022-06-08</td>
 				<td>0</td>
 			</tr>
 			<tr>
 				<td>01</td>
 				<td><a href="${pageContext.request.contextPath}/cs/noticeDetail">공지사항</a></td>
-				<td>관리자</td>
 				<td>2022-06-08</td>
 				<td>0</td>
 			</tr>
 			<tr>
 				<td>01</td>
 				<td><a href="${pageContext.request.contextPath}/cs/noticeDetail">공지사항</a></td>
-				<td>관리자</td>
 				<td>2022-06-08</td>
 				<td>0</td>
 			</tr>
 			<tr>
 				<td>01</td>
 				<td><a href="${pageContext.request.contextPath}/cs/noticeDetail">공지사항</a></td>
-				<td>관리자</td>
 				<td>2022-06-08</td>
 				<td>0</td>
 			</tr>
+			
 			
 		</tbody>
 	</table>
@@ -93,3 +82,4 @@
 </div>
 
 
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

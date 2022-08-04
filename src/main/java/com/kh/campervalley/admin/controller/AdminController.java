@@ -16,13 +16,19 @@ public class AdminController {
 
 	@GetMapping("/memberList")
 	public void memberList() {}
-
-	@GetMapping("/sample")
-	public void sample() {}
 	
 	// --------------------- EJ start
 	@GetMapping("/advertiser")
 	public void advertiser() {}
 	// --------------------- EJ end
+
+	@GetMapping("/camperManagement")
+	public void camperManagement() {}
+
+	@GetMapping("/usedProductManagement")
+	public void usedProductManagement() {}
+
+	@GetMapping("/reportManagement")
+	public void reportManagement() {}
 
 }

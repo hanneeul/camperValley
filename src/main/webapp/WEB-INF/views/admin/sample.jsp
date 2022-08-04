@@ -10,10 +10,11 @@
 	href="${pageContext.request.contextPath}/resources/css/admin/admin.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
-<div class="container" style="display: flex;">
+<div class="container" style="display: flex;" id="admin-container">
 	<jsp:include page="/WEB-INF/views/common/adminSidebar.jsp" />
 	<div class="admin-content" style="width: 80%;">
 		<h5 class="admin-hd">회원관리</h5>
 		<!-- 콘텐츠 영역 -->
 	</div>
 </div>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
