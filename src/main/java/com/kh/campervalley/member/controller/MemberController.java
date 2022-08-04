@@ -9,8 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.campervalley.member.model.dto.Member;
-import com.kh.campervalley.member.model.service.MemberService;
+//import com.kh.campervalley.member.model.dto.Member;
+//import com.kh.campervalley.member.model.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 

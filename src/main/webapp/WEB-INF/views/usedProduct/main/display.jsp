@@ -5,10 +5,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index/index.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/main.css"/>
 <script src="https://kit.fontawesome.com/97c6ec6a69.js" crossorigin="anonymous"></script>
 
+<hr />
 <!-- 광고 -->
 <div class="adPlace">
 	<div id="carouselExampleIndicators" class="carousel slide"
@@ -51,6 +51,58 @@
 
 <div id="display-list" class="row">
 	<!-- for 구문 -->
+		<div class="item col-3"
+			onclick="location.href=''">
+			<div class="item">
+				<div id="itemSolid">
+					<img src="${pageContext.request.contextPath}/resources/images/usedProduct/travlerPouch.jpg" class="rounded float-start" alt="상품이미지">
+					<h5 id="displayTitle">&nbsp&nbsp상품 이름</h5>
+					<div class="price-time">
+						<p class="displayPrice">&nbsp&nbsp000000원</p>
+						<h5 class="displayTime">몇일 전&nbsp&nbsp</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="item col-3"
+			onclick="location.href=''">
+			<div class="item">
+				<div id="itemSolid">
+					<img src="${pageContext.request.contextPath}/resources/images/usedProduct/travlerPouch.jpg" class="rounded float-start" alt="상품이미지">
+					<h5 id="displayTitle">&nbsp상품 제목</h5>
+					<div class="price-time">
+						<p class="displayPrice">&nbsp&nbsp000000원</p>
+						<h5 class="displayTime">몇일 전&nbsp&nbsp</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="item col-3"
+			onclick="location.href=''">
+			<div class="item">
+				<div id="itemSolid">
+					<img src="${pageContext.request.contextPath}/resources/images/usedProduct/travlerPouch.jpg" class="rounded float-start" alt="상품이미지">
+					<h5 id="displayTitle">&nbsp상품 제목</h5>
+					<div class="price-time">
+						<p class="displayPrice">&nbsp&nbsp000000원</p>
+						<h5 class="displayTime">몇일 전&nbsp&nbsp</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="item col-3"
+			onclick="location.href=''">
+			<div class="item">
+				<div id="itemSolid">
+					<img src="${pageContext.request.contextPath}/resources/images/usedProduct/travlerPouch.jpg" class="rounded float-start" alt="상품이미지">
+					<h5 id="displayTitle">&nbsp상품 제목</h5>
+					<div class="price-time">
+						<p class="displayPrice">&nbsp&nbsp000000원</p>
+						<h5 class="displayTime">몇일 전&nbsp&nbsp</h5>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="item col-3"
 			onclick="location.href=''">
 			<div class="item">
@@ -116,11 +168,25 @@
 				</div>
 			</div>
 		</div>
+				<div class="item col-3"
+			onclick="location.href=''">
+			<div class="item">
+				<div id="itemSolid">
+					<img src="${pageContext.request.contextPath}/resources/images/usedProduct/travlerPouch.jpg" class="rounded float-start" alt="상품이미지">
+					<h5 id="displayTitle">&nbsp상품 제목</h5>
+					<div class="price-time">
+						<p class="displayPrice">&nbsp&nbsp000000원</p>
+						<h5 class="displayTime">몇일 전&nbsp&nbsp</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 </div>
 				
 <!-- for문 부분 -->
 
-<div id="moreShow" style="text-align: center; margin-left: 115px;">
+<div id="moreShow" style="text-align: center;">
 	<a id="pe-auto" class="pe-auto" onclick="" 
 		style="cursor: pointer; text-decoration: none; color: #61615b; font-size: 20px; line-height: 0.01em;">더 보기<br>▼
 	</a>
