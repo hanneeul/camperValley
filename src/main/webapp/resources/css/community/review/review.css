@@ -30,4 +30,17 @@
 .campsite-review-enroll-wrap {
 	width: 95%;
 }
+
+#communityEnrollBtn {
+	font-size: .9rem;
+	height: 2.4rem;
+}
+
+.review-grade-list {
+	font-size: .9rem;
+}
+
+.review-grade-list .fa-star {
+	color: #f7e600;
+}
 /* reviewEnroll.jsp end */

@@ -15,9 +15,15 @@ public class UsedProductController {
 	@Autowired
 	private UsedProductService usedProductService;
 	
-	@GetMapping("/index")
+	@GetMapping("/main/mainPage")
 	public void index() {};
 	
-	@GetMapping("/searchDisplay")
+	@GetMapping("/main/searchDisplay")
 	public void searchDisplay() {};
+	
+	@GetMapping("/main/cateDisplay")
+	public void cateDisplay() {};
+	
+	@GetMapping("/product/productDetail")
+	public void productDetail() {};
 }
