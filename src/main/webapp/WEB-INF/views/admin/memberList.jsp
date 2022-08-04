@@ -8,13 +8,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/admin/admin.css" />
+<style>
+.col-form-label {
+	width: 80px;
+	margin-left: 100px;
+}
+</style>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
-<div class="container" style="display: flex;">
+<div class="container" style="display: flex;" id="admin-container">
 	<jsp:include page="/WEB-INF/views/common/adminSidebar.jsp" />
 	<div class="admin-content" style="width: 80%;">
-		<h5 class="admin-hd">회원관리</h5>
-		<div class="search-box">
+		<h5 class="admin-hd">회원 관리</h5>
+		<div class="search-box" style="display: flex;">
 			<input class="ad-input-search" type="text" placeholder="전체 사용자 검색">
 			<button class="ad-btn-search" type="button">
 				<i class="fa fa-search"></i>
@@ -122,8 +128,15 @@
 			  <label for="phone" class="col-form-label">전화번호</label>
 			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="phone" value="010-1234-1234"></input>
 			</div>
+			 <div class="form-group">
+					<label for="role" class="col-form-label">권한</label>
+					<select class="member-role">
+						<option value="">ROLE_USER</option>
+						<option value="">ROLE_ADMIN</option>
+					</select>
+				  </div>
 			<div class="form-group">
-			  <p class="form-check form-check-inline mr-4 ml-6" style="margin-left: 90px;">블랙리스트</p>
+			  <p class="form-check form-check-inline mr-4 ml-6" style="margin-left: 100px;">블랙리스트</p>
 			  <div class="form-check form-check-inline">
 				  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
 				  <label class="form-check-label" for="inlineRadio1">일반</label>
@@ -142,3 +155,4 @@
 	</div>
   </div>
 </div>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

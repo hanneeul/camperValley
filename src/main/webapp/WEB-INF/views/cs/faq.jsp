@@ -9,18 +9,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/cs/cs.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
-.bar-faq {
-	border-bottom: 2px solid black;
-}
-.bar-faq {
-	color: black !important;
-}
-.container {
-	padding: 0px;
-}
-.cs-bar {
-	margin-bottom: 0px;
-}
+.bar-faq {color: black !important;}
+.container {padding: 0px;}
+.cs-bar {margin-bottom: 0px;}
 </style>
 			
 <h5 class="cs-header text-center">자주 묻는 질문</h5>
@@ -41,75 +32,86 @@
 		</div>
 	
 
-
-
 <div class="container">
 	
 		<div class="faq">
 			
-			<p class="test-div" style="color: #FFF; margin-bottom:-9px;">.</p>
+			<p class="test-div" style="color: #FFF; margin-bottom:-12px;">.</p>
 				
 				<ul class="faqBody" style="display: inline;">
                     <li class="article" id="a1" >
                         <p class="q"><a href="#a1">
                         <span class="icon_q">Q</span>
-                        <span style="margin-left : 9px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+                        <span style="margin-left : 25px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
                         <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width:20px" alt=""></span>
                         </a></p>
 
                         <div class="a">
                         <span class="icon_a" >A</span>
-                        <div style="margin-left: 47px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
+                        <div style="margin-left: 62px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
                         </div>
                     </li>                  
                     <li class="article" id="a1" >
                         <p class="q"><a href="#a1">
                         <span class="icon_q">Q</span>
-                        <span style="margin-left : 9px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+                        <span style="margin-left : 25px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
                         <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width:20px" alt=""></span>
                         </a></p>
 
                         <div class="a">
                         <span class="icon_a" >A</span>
-                        <div style="margin-left: 47px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
+                        <div style="margin-left: 62px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
                         </div>
                     </li>                  
                     <li class="article" id="a1" >
                         <p class="q"><a href="#a1">
                         <span class="icon_q">Q</span>
-                        <span style="margin-left : 9px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+                        <span style="margin-left : 25px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
                         <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width:20px" alt=""></span>
                         </a></p>
 
                         <div class="a">
                         <span class="icon_a" >A</span>
-                        <div style="margin-left: 47px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
+                        <div style="margin-left: 62px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
                         </div>
                     </li>                  
                     <li class="article" id="a1" >
                         <p class="q"><a href="#a1">
                         <span class="icon_q">Q</span>
-                        <span style="margin-left : 9px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+                        <span style="margin-left : 25px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
                         <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width:20px" alt=""></span>
                         </a></p>
 
                         <div class="a">
                         <span class="icon_a" >A</span>
-                        <div style="margin-left: 47px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
+                        <div style="margin-left: 62px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
                         </div>
                     </li>                  
                     <li class="article" id="a1" >
                         <p class="q"><a href="#a1">
                         <span class="icon_q">Q</span>
-                        <span style="margin-left : 9px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+                        <span style="margin-left : 25px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
                         <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width:20px" alt=""></span>
                         </a></p>
 
                         <div class="a">
                         <span class="icon_a" >A</span>
-                        <div style="margin-left: 47px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
+                        <div style="margin-left: 62px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
                         </div>
                     </li>                  
+                    <li class="article" id="a1" >
+                        <p class="q"><a href="#a1">
+                        <span class="icon_q">Q</span>
+                        <span style="margin-left : 25px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+                        <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width:20px" alt=""></span>
+                        </a></p>
+
+                        <div class="a">
+                        <span class="icon_a" >A</span>
+                        <div style="margin-left: 62px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
+                        </div>
+                    </li>                  
+                      
                        
                   
                     
@@ -154,3 +156,5 @@
         });
     });
     </script>
+    
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
