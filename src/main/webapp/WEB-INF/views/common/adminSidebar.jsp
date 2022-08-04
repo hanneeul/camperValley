@@ -14,7 +14,7 @@
 				aria-expanded="false" class="dropdown-toggle">회원 관리</a>
 				<ul class="collapse list-unstyled" id="homeSubmenu">
 					<li><a href="${pageContext.request.contextPath}/admin/memberList">회원관리</a></li>
-					<li><a href="#">광고주회원관리</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/advertiser">광고주회원관리</a></li>
 				</ul></li>
 
 			<li><a href="#pageSubmenu" data-toggle="collapse"

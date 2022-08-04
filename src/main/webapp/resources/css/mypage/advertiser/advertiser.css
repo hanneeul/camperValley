@@ -5,7 +5,7 @@ div[name="divNotice"] {
 	background-color: #f0f0f0;
 	font-size: 0.87rem;
 }
-img {
+.container img {
 	width: 200px;
 	height: 200px;
 }
