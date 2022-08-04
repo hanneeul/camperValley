@@ -6,14 +6,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/index.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/main.css"/>
 <script src="https://kit.fontawesome.com/97c6ec6a69.js" crossorigin="anonymous"></script>
-<style>
-</style>
 
-<!-- 컨트롤러부터 넘어온 페이지 -->	
-<div id="search_section" style="margin-left: 55px;">
+<div id="section" style="width: 90%; margin:50px auto"> auto">
 	<div id="productTop">
 		<!-- 상품+개수 -->
 		<div>

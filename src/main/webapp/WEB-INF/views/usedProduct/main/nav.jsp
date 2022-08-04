@@ -5,15 +5,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/nav.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/nav.css"/>
 <script src="https://kit.fontawesome.com/97c6ec6a69.js" crossorigin="anonymous"></script>
 
 <!-- 사이드 배너 시작 -->
 <div class="navBanner">
 	<!-- 찜 하트 수 -->
 	<div class="favorites">
-		<div class="favoritesText" style="font-weight: 600; font-size: 12px;">관심상품</div>
+		<div class="favoritesText" style="font-weight: 600; font-size: 14px;">관심상품</div>
 		<div class="favoritesCount">
 			<p id="toFavorites" class="toFavorites">
 				<i class="fas fa-heart" style="color: red;"></i>&nbsp; <span id="wishProduct">0</span>
