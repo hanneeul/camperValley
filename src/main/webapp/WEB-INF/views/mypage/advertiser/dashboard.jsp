@@ -10,6 +10,11 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/advertiser.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/datepicker.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/jquery-ui.css" />
+
 <div class="container">
 	<div class="row d-flex justify-content-between">
 		<div class="col-lg-2">
@@ -22,13 +27,13 @@
 						<div class="form-row align-items-center">
 							<label for="" class="mb-0">조회기간</label>
 							<div class="form-group mb-0">
-								<input type="date" class="form-control form-control-sm" name="chartStart" />
+								<input type="text" class="form-control form-control-sm input-daterange" name="chartStart" autocomplete="off" readonly />
 							</div>
 							<div>
 								<span>~</span>
 							</div>
 							<div class="form-group mb-0">
-								<input type="date" class="form-control form-control-sm" name="chartEnd" />
+								<input type="text" class="form-control form-control-sm input-daterange" name="chartEnd" autocomplete="off" readonly />
 							</div>
 							<div>
 								<button class="btn btn-camper-color btn-sm">조회</button>
@@ -49,7 +54,7 @@
 			<div class="my-3" id="chartSection"></div>
 			<button type="button" class="btn btn-camper-color btn-sm" onclick="location.href='${pageContext.request.contextPath}/mypage/advertiser/enrollAd'">광고만들기</button>
 			<table id="tblAdList" class="table my-3">
-				<thead>
+				<thead class="adListHead">
 					<tr class="text-center">
 						<td>삭제</td>
 						<td>On/Off</td>
@@ -63,7 +68,7 @@
 						<td>수정</td>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="adListBody">
 					<tr>
 						<td><button class="btn btn-camper-red btn-sm">삭제</button></td>
 						<td>
@@ -104,3 +109,19 @@
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<script>
+window.addEventListener('load', (e) => {
+	$('.input-daterange').datepicker({
+		dateFormat: 'yy-mm-dd',
+		monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+		dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+		dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	    yearSuffix: '년',
+		todayHighlight: true,
+		showMonthAfterYear: true,
+		startDate: '0d'
+	});	
+})
+</script>

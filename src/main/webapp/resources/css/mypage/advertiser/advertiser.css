@@ -25,6 +25,10 @@ img {
 	display: none;
 }
 /* ----------------------------- dashboard ----------------------------- */
+input.input-daterange {
+	width: 7rem;
+	background-color: #fff !important;
+}
 form[name="chartPeriodFrm"] .form-row > *, .divAdMoney > * {
 	margin: 0 0.2rem;
 }
