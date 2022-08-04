@@ -1,7 +1,15 @@
+/* footer 임시 */
+footer {margin-top:70px;}
+
+
 /* noticeList */
 #tb-notice th, #tb-notice td {
-	padding: 18px;
+	padding: 15px;
 	font-size: 0.9rem;
+}
+
+#tb-notice td, #tb-notice td>a {
+	color: #616060;
 }
 
 .container {
@@ -9,7 +17,7 @@
 }
 
 .cs-bar {
-	margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .cs-bar a {
@@ -24,6 +32,7 @@
 .cs-header {
 	margin-bottom: 70px;
 	font-weight: bold;
+	margin-top: 20px;
 }
 
 .bar-notice, .bar-faq {
@@ -99,7 +108,7 @@ tr:last-child {
 .noticeDetail_view {
 	border-bottom: 1px solid #dbdbdb;
 	padding: 10px;
-	padding-bottom: 150px;
+	padding-bottom: 70px;
 }
 
 .noticeDetail_view p {

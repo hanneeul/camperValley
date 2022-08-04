@@ -13,7 +13,7 @@
 <div class="container" style="display: flex;" id="admin-container">
 	<jsp:include page="/WEB-INF/views/common/adminSidebar.jsp" />
 	<div class="admin-content" style="width: 80%;">
-		<h5 class="admin-hd">HOME</h5>
+		<h5 class="admin-hd">캠핑용품거래 관리</h5>
 		<!-- 콘텐츠 영역 -->
 	</div>
 </div>
