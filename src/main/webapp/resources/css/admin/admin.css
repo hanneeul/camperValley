@@ -1,5 +1,13 @@
 @charset "UTF-8";
 
+/* footer 임시 */
+footer {margin-top:70px;}
+
+
+
+#admin-container {
+	margin-top: 20px;
+}
 /* 회원관리 */
 .ad-btn-search {
 	border: 1px solid #dee2e6;
@@ -49,16 +57,70 @@ tr:last-child {
 	border-bottom: 1px solid #dee2e6;
 }
 
-.col-form-label {
-	width: 80px;
-	margin-left: 90px;
-}
-
 .input-member {
 	border: 1px solid #BDBDBD;
 }
 
 .modal-header {
+	background-color: #639A67;
+	color: #fff;
+}
+
+.member-role {
+	border: 1px solid #BDBDBD;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 6px;
+	width: 163px;
+	height: 30px;
+}
+.modal-body {
+    font-size: 0.87rem;
+}
+
+/* report */
+.input-report {
+	border: 1px solid #BDBDBD;
+	width: 230px;
+}
+
+.input-search-report {
+	border: 1px solid #dee2e6;
+	padding-left: 10px;
+	width: 170px;
+	margin-right: -7px;
+}
+
+.search-group-report {
+	display: flex;
+	font-size: 13px;
+	height: 28px;
+}
+
+.report-category {
+	border: 1px solid #dee2e6;
+    width: 150px;
+    height: 26px;
+	margin-left: 5px;
+}
+.report-state {
+	border: 1px solid #dee2e6;
+    width: 85px;
+    height: 26px;
+	margin-left: 5px;
+}
+
+.btn-report-search {
+	border: 1px solid #dee2e6;
+	background-color: #fff;
+}
+
+.btn-report-update {
+	border: none;
+	background-color: #fff;
+}
+
+.btn-report-update:hover {
 	background-color: #639A67;
 	color: #fff;
 }

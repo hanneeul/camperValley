@@ -11,10 +11,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
 .bar-notice {
-	border-bottom: 2px solid black;
-}
-
-.bar-notice {
 	color: black !important;
 }
 .cs-bar {
@@ -61,6 +57,17 @@
 				obcaecati, iure sequi dolores non provident corporis reiciendis
 				recusandae. Provident deleniti esse cupiditate accusantium nam hic
 				pariatur enim vero. Nulla minus in soluta! Dolorem veniam odit error
+				ea quia natus ducimus amet earum labore non, enim hic ab! Sit.
+				 officia voluptatibus, corporis est magnam quis
+				incidunt amet. Placeat. Lorem ipsum dolor sit amet consectetur
+				adipisicing elit. Facilis quis sunt libero, labore ullam placeat
+				maxime officia ea vitae. Esse exercitationem obcaecati minima fugit
+				magni facere vitae aut ipsa repellat! Placeat cumque commodi ipsum
+				eligendi. Adipisci alias magnam excepturi corrupti mollitia nostrum,
+				cupiditate libero molestiae quia quod quidem? Quaerat excepturi quia
+				obcaecati, iure sequi dolores non provident corporis reiciendis
+				recusandae. Provident deleniti esse cupiditate accusantium nam hic
+				pariatur enim vero. Nulla minus in soluta! Dolorem veniam odit error
 				ea quia natus ducimus amet earum labore non, enim hic ab! Sit.</div>
 
 			<div class="notice-box">
@@ -71,9 +78,7 @@
 				<span class="next">다음글</span> <a href="#">Lorem, ipsum dolor sit
 					amet consectetur adipisicing elit.</a>
 			</div>
-
-
 		</div>
-
-
 	</div>
+	
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
