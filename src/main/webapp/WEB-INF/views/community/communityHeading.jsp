@@ -18,7 +18,7 @@
 	<div class="col-md-7 float-left">
 		<ul class="nav community-nav">
 		  	<li class="nav-item">
-		    	<a id="camper" class="nav-link" href="#">캠퍼모집</a>
+		    	<a id="camper" class="nav-link" href="${pageContext.request.contextPath}/community/camper/camperList">캠퍼모집</a>
 		  	</li>
 		  	<li class="nav-item">
 		    	<a id="review" class="nav-link active" href="${pageContext.request.contextPath}/community/review/reviewList">캠핑장후기</a>
