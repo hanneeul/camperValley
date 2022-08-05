@@ -10,10 +10,5 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 
 	@Autowired
 	AdvertiserDao advertiserDao;
-	
-	@Override
-	public int test() {
-		return advertiserDao.test();
-	}
 
 }

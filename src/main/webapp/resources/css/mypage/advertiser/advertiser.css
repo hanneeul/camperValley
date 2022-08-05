@@ -24,11 +24,21 @@ div[name="divNotice"] {
 	color: #639A67;
 }
 .hide {
-	display: none;
+	display: none !important;
 }
 .invisibleBtn {
 	background: none;
 	border: none;
+}
+small.failMsg {
+	color: #c7392b;
+	display: block;
+	margin: .4rem;
+}
+small.SuccessMsg {
+	color: #639A67;
+	display: block;
+	margin: .4rem;
 }
 /* ----------------------------- dashboard ----------------------------- */
 input.input-daterange {
