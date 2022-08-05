@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/review/review.css" />
 
@@ -127,7 +128,7 @@
 		    	</tr>
 		  	</tbody>
 		</table>
-		<!-- CamperValleyUtils에서 가져올 예정! -->
+		<%-- CamperValleyUtils에서 제어? --%>
 		<div class="my-5">
 			<jsp:include page="/WEB-INF/views/common/pagebar.jsp"></jsp:include>
 		</div>
