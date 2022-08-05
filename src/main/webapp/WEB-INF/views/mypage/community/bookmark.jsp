@@ -3,39 +3,7 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-<style>
-.bookmarkWrapper:not(:last-of-type) {
-	border-bottom: 1px solid #ddd;
-}
-.imgWrapper {
-	width: 9rem;
-	height: 9rem;
-	overflow: hidden;
-	background-color: #f0f0f0;
-}
-.campsiteImg {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-.campsiteIntro {
-	border-top: 1px solid #ddd;
-}
-.detailInfo {
-	font-size: 0.9rem;
-}
-.detailInfo > div {
-	margin-right: 3rem;
-}
-.campsiteInfo i {
-	color: #D9BF77;
-}
-.btnWrapper i {	
-	font-size: 2.4rem;
-	color: #f1c40f;
-}
-</style>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/community/bookmark.css" />
 
 <div class="container">
 	<div class="row d-flex justify-content-between">
@@ -67,7 +35,9 @@
 							</div>
 						</div>
 						<div class="col-2 btnWrapper d-flex justify-content-center align-items-center">
-							<i class="fa-solid fa-heart"></i>
+							<button type="button" class="bmStatusBtn">
+								<i class="fa-solid fa-heart"></i><!-- fa-regular -->
+							</button>
 						</div>
 					</div>
 					<div class="row bookmarkWrapper py-4">
@@ -91,7 +61,9 @@
 							</div>
 						</div>
 						<div class="col-2 btnWrapper d-flex justify-content-center align-items-center">
-							<i class="fa-solid fa-heart"></i>
+							<button type="button" class="bmStatusBtn">
+								<i class="fa-solid fa-heart"></i>
+							</button>
 						</div>
 					</div>
 				</div>
