@@ -15,21 +15,21 @@
 		<div class="col-lg-2">
 			<jsp:include page="/WEB-INF/views/common/mypageSidebar.jsp" />
 		</div>
-		<div class="col-lg-10">
+		<div class="col-lg-10 px-5 mt-2">
 		<%-- 본문시작 --%>
 		<h4>
 			회원정보관리
 		</h4>
 		<!-- <hr> -->
-		<form action="">
-            <table style="width: 40rem;">
+		<form action="" class="shadow-sm">
+            <table  style="width: 40rem;">
 			<tbody>
 				<tr>
 					<td rowspan="2" style="width:9.5rem;">
 						<input type="file" accept="image/*" name="" id="file" />
-						<img id="profileImg" alt="누구님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/oo.jpg" class="rounded-circle  mt-2" width="100px" height="100px"/>
+						<img id="profileImg" alt="누구님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/oo.jpg" class="rounded-circle shadow-sm mt-2" width="100px" height="100px"/>
 					</td>
-					<td style="width:6.4rem;">
+					<td style="width:6.4rem;"class="font-weight-bold">
 						아이디
 					</td>
 					<td colspan="2" style="width:14rem;">
@@ -37,7 +37,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td class="font-weight-bold">
 						닉네임
 					</td>
 					<td>
@@ -49,7 +49,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td class="font-weight-bold">
 						이름
 					</td>
 					<td colspan="3">
@@ -57,7 +57,7 @@
 					</td>
                     </tr>
                     <tr >
-					<td>
+					<td class="font-weight-bold">
 						새 비밀번호
 					</td>
 					<td colspan="3">
@@ -65,7 +65,7 @@
 					</td>								
 				</tr>
                     <tr>
-					<td>
+					<td class="font-weight-bold">
 						새 비밀번호 확인
 					</td>
 					<td colspan="3">
@@ -73,7 +73,7 @@
 					</td>								
 					</tr>
                     <tr>
-						<td>
+						<td class="font-weight-bold">
 							이메일
 						</td>
 						<td colspan="2">
@@ -84,7 +84,7 @@
 						</td>							
 					</tr>
                     <tr>
-						<td>
+						<td class="font-weight-bold">
 							전화번호
 						</td>
 						<td colspan="3">
@@ -99,7 +99,7 @@
 				<a href="#" class="btn btn-outline-secondary" type="button">회원탈퇴</a> 
 			</div>
 			<div style="text-align: center;">
-				<button type="button" class="btn btn-success">
+				<button type="button" class="btn btn-success shadow-sm">
 					회원정보 수정하기
 				</button>
 			</div>

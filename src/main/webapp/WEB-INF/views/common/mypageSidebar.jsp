@@ -9,19 +9,19 @@
     	<a class="nav-link" href="">회원관리</a>
     </li>
     <li class="nav-item sideNavMenu">
-    	<a class="nav-link" href="">회원정보관리</a>
+    	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/info/edit"">회원정보관리</a>
     </li>
     <li class="nav-item navGroup">
     	<a class="nav-link" href="">중고거래</a>
    	</li>
     <li class="nav-item sideNavMenu">
-    	<a class="nav-link" href="">구매내역</a>
+    	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/trade/purchased">구매내역</a>
     </li>
     <li class="nav-item sideNavMenu">
-    	<a class="nav-link" href="">판매내역</a>
+    	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/trade/selling">판매내역</a>
     </li>
     <li class="nav-item sideNavMenu">
-    	<a class="nav-link" href="">관심상품</a>
+    	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/trade/wish">관심상품</a>
     </li>
     <li class="nav-item sideNavMenu">
     	<a class="nav-link" href="">나의채팅방</a>
@@ -30,10 +30,10 @@
     	<a class="nav-link" href="">커뮤니티</a>
     </li>
     <li class="nav-item sideNavMenu">
-    	<a class="nav-link" href="">캠퍼모집</a>
+    	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/community/myCamper">캠퍼모집</a>
     </li>
     <li class="nav-item sideNavMenu">
-    	<a class="nav-link" href="">작성후기</a>
+    	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/community/myReview">작성후기</a>
     </li>
     <li class="nav-item sideNavMenu">
     	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/community/bookmark">관심캠핑장</a>

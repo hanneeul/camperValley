@@ -3,36 +3,34 @@
 a {
     color: black;
     cursor: pointer;
-    font-size: 15px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 500;
 }
 a:hover {
-	color: #787878;
+	color: black;
 	text-decoration: none;
 }
 button {
 	background-color: transparent;
 	border-color: transparent;
 }
-i {
-	color: 	;
-}
-.cateHome {
-	font-weight: 400;
-    margin-bottom: -7px;
+.detail_area i {
+    color: #787878;
+    margin-top: 7px;
 }
 div {
-display: block;
+	display: block;
     margin: 0px;
     padding: 0px;
     vertical-align: baseline;
 }
 /************/
 .detail_area {
-	display: flex;
+    display: flex;
     align-content: center;
     justify-content: center;
     font-size: 14px;
+    flex-direction: column;
 }
 .detail_div {
 	width: 1024px;
@@ -103,12 +101,12 @@ display: block;
 	border-bottom: 1px solid rgb(238, 238, 238);
 }
 .detail-info__text-header {
-	padding-bottom: 30px;
-	width: 100%;
-	border-bottom: 1px solid rgb(238, 238, 238);
+    padding-bottom: 3px;
+    width: 570px;
+    border-bottom: 1px solid rgb(238, 238, 238);
 }
 .detail-info__text-title {
-	font-size: 24px;
+	font-size: 25px;
     font-weight: 600;
     margin-bottom: 25px;
     line-height: 1.4;
@@ -116,4 +114,332 @@ display: block;
 .detail-info__price {
 	font-size: 40px;
 	font-weight: 900;
+}
+.detail-info__text-body-top {
+	height: 30px;
+    margin-top: 20.3px;
+    margin-bottom: 31px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin-left: 4px;
+}
+.detail-info__text-body-topL {
+	height: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.detail-info--topL-item {
+	display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(204, 204, 204);
+    font-size: 16px;
+    height: 100%;
+}
+.detail-info--topL-item i {
+	margin-right: 40px;
+    font-size: 17px;
+}
+.detail-info__text-body-bItem {
+	display: flex;
+	margin-bottom: 24px;
+}
+.detail-info__text-body-bItem-title {
+	position: relative;
+    width: 90px;
+    color: black;
+    font-size: 16px;
+}
+.detail-info__text-body-bItem-content {
+	position: relative;
+	display: flex;
+}
+.detail-info__delivery {
+	position:: relative;
+	display: flex;
+	color: rgb(110, 71, 248);
+}
+.detail-info__location {
+	position: relative;
+	display: flex;
+	color: rgb(98, 188, 217);
+}
+.detail-info__btn-list {
+	display: flex;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+}
+.detail-info__btn-list>* {
+	font-weight: 600;
+	margin-right: 10px;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: center;
+	height: 56px;
+	font-size: 18px;
+	-webkit-box-align: center;
+	align-items: center;
+	flex: 1 1 0%;
+}
+/*************** 하단 상품 정보 *******************/
+#btmProdInfo_Wrap1 {
+	display: flex;
+    margin-top: 70px;
+}
+#btmProdInfo_Wrap2 {
+	flex: 1 1 0%;
+}
+.btmProdInfo_TitleWrap {
+	display: flex;
+	height: 50px;
+}
+.btmProdInfo_Title {
+	flex: 1 1 0%;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    display: flex;
+    border-top: 1px solid #646464;
+    border-bottom: 1px solid #646464;
+    border-right: 1px solid rgb(255, 255, 255);
+    border-left: 1px solid rgb(255, 255, 255);
+    background: rgb(255, 255, 255);
+    color: rgb(33, 33, 33);
+    font-weight: 600;
+}
+.btmProdInfo_TitleSpan {
+	margin-left: 10px;
+}
+.prodInfo_RightWrap {
+	width: 330px;
+}
+.prodInfo_storeWrap1 {
+	////
+	height: calc(100% - 50px);
+    border-right: 1px solid rgb(238, 238, 238);
+    padding: 0px 32px 250px;
+    position: relative;
+}
+.storeInfo_Title {
+    font-size: 18px;    
+    padding: 11px 0px 11px;
+    border-bottom: 1px solid #646464;
+    border-top: 1px solid #646464;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-align: center;
+}
+.prodInfo_storeDetailWrap {
+	padding: 0px 10px;
+}
+.storeInfo_product {
+	width: calc(50% - 3px);
+}
+.storeInfo_moreProd {
+	height: 40px;
+    display: flex;
+    -webkit-box-align: center;
+    align-itㄴㅅㅁems: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+.moreProdLink {
+	font-size: 13px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(102, 102, 102);
+}
+.moreProdLink_Num {
+	margin-right: 3px;
+	color: rgb(247, 47, 51);
+}
+.moreProdLink::after {
+	content: "";
+    transform: rotate(-45deg);
+    border-style: solid;
+    border-color: rgb(136, 136, 136);
+    border-image: initial;
+    border-width: 0px 1px 1px 0px;
+    display: inline-block;
+    padding: 2.5px;
+    margin-left: 3px;
+    margin-top: 1.5px;
+}
+.storeScore_title {
+	padding: 10px 0px 14px;
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+.prodInfo_wrap1 {
+	padding-right: 30px;
+    border-right: 1px solid rgb(238, 238, 238);
+    height: calc(100% - 50px);
+}
+.prodInfo_Content_Title {
+	margin-left: 5px;
+	font-size: 18px;
+    padding: 35px 0px 16px;
+    border-bottom: 2px solid rgb(238, 238, 238);
+}
+.content_marginTop {
+	margin-top: 30px;
+}
+.content_marginBottom {
+	margin-top: 250px;
+}
+.prodInfo_contentText {
+    white-space: pre-line;
+    margin-top: -40px;
+    margin-bottom: 40px;
+    margin-left: 6px;
+    font-size: 17px;
+}
+.prodInfo_detailWrap1 {
+	padding: 20px 0px;
+    border-top: 1px solid rgb(238, 238, 238);
+    border-bottom: 1px solid rgb(238, 238, 238);
+    display: flex;
+    
+    bottom: 0px;
+}
+.prodInfo_detailWrap2 {
+	width: 221px;
+    border-right: 1px solid rgb(238, 238, 238);
+}
+.prodInfo_detailWrap2:last-child {
+	border-right: 0px;
+}
+.detailTitleWrap {
+	display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    font-size: 13px;
+    color: rgb(178, 178, 178);
+}
+.detailContentWrap {
+	font-size: 13px;
+    color: rgb(102, 102, 102);
+    padding: 0px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    justify-content: center;
+    line-height: 1.5;
+    min-height: 19px;
+}
+
+.detailTitleWrap img {
+	margin-right: 7px;
+}
+.detailContent_location {
+	color: rgb(98, 177, 217);
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.detailContent_cate {
+	display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(102, 102, 102);
+}
+.detailContent_cate::after {
+	content: "";
+    transform: rotate(-45deg);
+    border-style: solid;
+    border-color: rgb(136, 136, 136);
+    border-image: initial;
+    border-width: 0px 1px 1px 0px;
+    display: inline-block;
+    padding: 2.5px;
+    margin-top: 1px;
+    margin-left: 3px;
+}
+.detailContent_hashtag {
+	margin-right: 5px;
+    color: rgb(102, 102, 102);
+}
+.detailContentWrap_hash {
+	font-size: 13px;
+    color: rgb(102, 102, 102);
+    padding: 0px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    justify-content: center;
+    line-height: 1.5;
+    min-height: 19px;
+}
+.prodDetailImgWrap1 {
+	width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10000;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    display: none; /* none */
+}
+.prodDetailImgWrap2 {
+	width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.detailImg_closeBtn {
+	position: absolute;
+    top: 50px;
+    right: 50px;
+}
+.dtailImg_prodName {
+	padding: 3rem 0px;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    text-align: center;
+}
+.detail-info__zzim, .detail-info__chat {
+	color: white;
+    font-size: 17px;
+}
+#zzim_btn, #chat_btn {    
+    margin-right: -10px;
+    background-color: #3c3c3c;
+    color: white;
+    letter-spacing: 1.7px;
+    width: 282px;
+    height: 50px;
+    border: none;
+}
+.detail-info__zzim i {
+	left: 1px;
+    position: relative;
+    top: 1px;
+    font-size: 17px;
+}
+.detail-info__chat i {
+	color: white;
+    position: relative;
+    top: 1.3px;
+    left: 0px;
+    font-size: 17px;
+}
+#delete_btn, #update_btn {
+	background-color: #FFAA28;
+    float: right;
+    width: 110px;
+    height: 39px;
 }

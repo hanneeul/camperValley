@@ -15,20 +15,21 @@
 		<div class="col-lg-2">
 			<jsp:include page="/WEB-INF/views/common/mypageSidebar.jsp" />
 		</div>
-		<div class="col-lg-10 mt-2">
+		<div class="col-lg-10 pl-5 pr-2 mt-1">
 		<%-- 본문시작 --%>
-		  <div class="row justify-content-between mt-4" >
-                <div class="col-md-6 align-self-center border-right pl-4">
-                    <img alt="누구님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/oo.jpg" class="rounded-circle ml-3 mt-2" width="100px"/>
+		<div class="px">
+		  <div class="row justify-content-between" >
+                <div class="col-md-6 align-self-center border-right pl-4 font-weight-bold">
+                    <img alt="누구님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/oo.jpg" class="rounded-circle ml-3 mt-2 shadow" width="120px" height="120px"/>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 닉네임
-                    <a href="${pageContext.request.contextPath}/mypage/info/edit"  class="btn btn-camper d-block mt-3 ml-2 mb-2">
+                    <a href="${pageContext.request.contextPath}/mypage/info/edit"  class="shadow-sm btn btn-camper d-block mt-3 ml-2 mb-2">
                         회원정보 수정
                     </a>
                 </div>
                 <div class="col-md-6 pl-4 ">
-                    <h5 class="ml-3 mt-1">
+                    <h4 class="ml-3 mt-y mb-3 ">
                         중고거래 내역
-                    </h5>
+                    </h4>
                     <div class="row text-center">
                         <div class="col-md-4 ">
                             <div class="m-4">
@@ -38,7 +39,7 @@
 									</svg>
 								</a>
                             </div>
-                            <a href="${pageContext.request.contextPath}/mypage/trade/selling">
+                            <a href="${pageContext.request.contextPath}/mypage/trade/selling" class="font-weight-bold">
                            		판매내역
                             </a>
                         </div>
@@ -50,7 +51,7 @@
 									</svg>
 								</a>
                             </div>
-                            <a href="${pageContext.request.contextPath}/mypage/trade/purchased">
+                            <a href="${pageContext.request.contextPath}/mypage/trade/purchased" class="font-weight-bold">
                             	구매내역
                             </a>
                         </div>
@@ -62,7 +63,7 @@
 									</svg>
 								</a>
                             </div>
-                            <a href="${pageContext.request.contextPath}/mypage/trade/wish">
+                            <a href="${pageContext.request.contextPath}/mypage/trade/wish" class="font-weight-bold">
                             	관심상품
                             </a>
                         </div>
@@ -71,82 +72,75 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-12 d-flex justify-content-between p-0  mt-5 mb-3">
-                        <h5 class="mb-3">
+                    <div class="col-md-12 d-flex justify-content-between p-0 pt-5 mt-5 mb-3">
+                        <h4 class="mb-3 pt-2 ">
                             즐겨찾기한 캠핑장
-                        </h5> 
+                        </h4> 
                         <a type="button" class="btn btn-link ">
                             >> 더보기
                         </a>
                     </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img class="rounded ml-2" width="110px" alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" />
-                        </div>
-                        <div class="col-md-6 text-left mt-2">
-                            <h6>
-                                [어디]OO캠핑장
-                            </h6>
-                            <br>
-                            <p>
-                                낭만 가득한~
-                            </p>
-                        </div>
-                        <div class="col-md-4 text-right pr-4">
-                            <p>
-                                ~~도 ~~동
-                            </p>
-                            <br>
-                            <p>
-                                070-1111-1111
-                            </p>
-                        </div>
-                    </div>
-                    <hr>
-    
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img class="rounded ml-2" width="110px" alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" />
-                            </div>
-                            <div class="col-md-6 text-left mt-2">
-                                <h6>
-                                    [어디]OO캠핑장
-                                </h6>
-                                <br>
-                                <p>
-                                    낭만 가득한~
-                                </p>
-                            </div>
-                            <div class="col-md-4 text-right pr-4">
-                                <p>
-                                    ~~도 ~~동
-                                </p>
-                                <br>
-                                <p>
-                                    070-1111-1111
-                                </p>
-                            </div>
-                        </div>
-                </div>
-            </div>
-
+                    <div class="listWrapper px-3 py-2">
+					<div class="row bookmarkWrapper py-4">
+						<div class="col-2 pl-3 d-flex align-items-center" id="imgWrapper">
+							<div class="imgWrapper">
+								<img class="campsiteImg" src="${pageContext.request.contextPath}/resources/images/mypage/advertiser/file.png" alt="메인 홈 슬라이드 배너 영역" />
+							</div>
+						</div>
+						<div class="col campsiteInfo p-0 pl-3 pt-2"">
+							<h5 class="mb-3 campsiteName">[ㅁㅁ도 ㅇㅇ시]블라블라숲 캠핑장</h5>
+							<h6 class="pt-2 campsiteIntro">낭만 가득한 프라이빗 캠핑장</h6>
+							<div class="d-flex detailInfo mt-4">
+								<div>
+									<i class="fa-solid fa-location-dot"></i>
+									<span class="campsiteAddr">어쩔도 저쩔시 웅앵동 123</span>
+								</div>
+								<div>
+									<i class="fa-solid fa-phone"></i>
+									<span class="campsiteTel">070-0000-0000</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row bookmarkWrapper py-4">
+						<div class="col-2 pr-3 d-flex align-items-center" id="imgWrapper">
+							<div class="imgWrapper">
+								<img class="campsiteImg" src="${pageContext.request.contextPath}/resources/images/mypage/advertiser/file.png" alt="메인 홈 슬라이드 배너 영역" />
+							</div>
+						</div>
+						<div class="col campsiteInfo  p-0 pl-3 pt-2">
+							<h5 class="mb-3 campsiteName">[ㅁㅁ도 ㅇㅇ시]블라블라숲 캠핑장</h5>
+							<h6 class="pt-2 campsiteIntro">낭만 가득한 프라이빗 캠핑장</h6>
+							<div class="d-flex detailInfo mt-4">
+								<div>
+									<i class="fa-solid fa-location-dot"></i>
+									<span class="campsiteAddr">어쩔도 저쩔시 웅앵동 123</span>
+								</div>
+								<div>
+									<i class="fa-solid fa-phone"></i>
+									<span class="campsiteTel">070-0000-0000</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
             <div class="row">
                 <div class="col-md-12 mt-5">
-                    <div class="col-md-12  d-flex justify-content-between p-0">
-                        <h5 class="mb-3">
+                    <div class="col-md-12  d-flex justify-content-between p-0 mt-5">
+                        <h4 class="mb-4">
                             작성후기
-                        </h5> 
-                        <a type="button" class="btn btn-link">
+                        </h4> 
+                        <a href="${pageContext.request.contextPath}/mypage/community/myReview" type="button" class="btn btn-link">
                             >> 더보기
                         </a>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <table class="table table-hover table-sm">
+                    <table class="table table-hover border-bottom">
                         <thead>
                             <tr>
                                 <th>
-                                    번호
+                                    No.
                                 </th>
                                 <th>
                                     제목
@@ -174,7 +168,7 @@
                                     1
                                 </td>
                                 <td>
-                                    제목제목
+                                    <a href="">제목제목</a>
                                 </td>
                                 <td>
                                     닉네임
@@ -239,26 +233,22 @@
                                 <td>
                                     01/04/2012
                                 </td>
-
                             </tr>
-                            
-                            
- 
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="row mt-3 mb-5">
                 <div class="col-md-12">
-                    <div class="col-md-12 d-flex justify-content-between p-0">
-                        <h5 class="mb-3">
+                    <div class="col-md-12 d-flex justify-content-between p-0 mt-5">
+                        <h4 class="mb-4">
                             캠퍼모집
-                        </h5> 
+                        </h4> 
                         <a type="button" class="btn btn-link">
                             >> 더보기
                         </a>
                     </div>
-                    <table class="table table-hover table-sm">
+                    <table class="table table-hover border-bottom">
                         <thead>
                             <tr>
                                 <th>
@@ -304,7 +294,7 @@
                                     Approved
                                 </td>
                             </tr>
-                                                        <tr class="table-active">
+							<tr class="table-active">
                                 <td>
                                     1
                                 </td>
@@ -322,7 +312,7 @@
                     </table>
                 </div>
             </div>
-                   
+         </div>          
                       
 		<%-- 본문끝 --%>
 		</div>

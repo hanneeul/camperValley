@@ -7,18 +7,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/productDetail.css"/>
-<script src="https://kit.fontawesome.com/97c6ec6a69.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
+
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
 <div id="section" style="width: 90%; margin:50px auto">
 	<div class="detail_area">
 	<div class="detail_div">
-        <div class="cateHome">
-        	 <i class="fa-solid fa-house-chimney"></i>
-        	 <a href="${pageContext.request.contextPath}/usedProduct/main/index">중고거래 홈 &#10095;</a>
-        </div>	
-        <hr />
+        <div class="delete_update">
+        	 <button id="delete_btn">삭제하기</button>
+        	 <button id="update_btn" style="margin-right: 9px; background-color: #D8EBB5">수정하기</button>
+        </div>
+        <hr style="margin-top: 3rem; margin-bottom: 1rem;"/>
 		<!----------------------------- 상단 상품정보 ----------------------------->
 		<div class="detail-info__area">
 			<div class="detail-info__div">
@@ -41,7 +42,6 @@
 							<!-- 슬라이더 버튼 수 -->
 							<div class="swiper-pagination">
 								<div class="paginationBtn" style="">
-									<p>슬라이드쇼 페이지버튼</p>
 									<!-- productDetail.js -->
 								</div>
 							</div>
@@ -75,8 +75,7 @@
 								<div class="detail-info__text-title">실리만 캠핑 트래블러 파우치 세트</div>
 								<div class="detail-info__text-price__div">
 									<!-- 상품가격 -->
-									<div class="detail-info__price" id="product_price">
-									59,000원</div>
+									<div class="detail-info__price" id="product_price">59,000원</div>
 								</div>
 							</div>
 							<div class="detail-info__text-body">
@@ -84,34 +83,54 @@
 									<!-- 찜, 조회수, 시간 -->
 									<div class="detail-info__text-body-topL">
 										<div class="detail-info--topL-item">
-											<i class="fas fa-heart" style="width: 16px; height: 16px;"></i>
+											<i class="fa-regular fa-heart"></i>
 											<!-- 찜 수 -->
 											<div id="zzim"></div>
 										</div>
 										<div class="detail-info--topL-item">
-											<i class="fa-solid fa-eye"></i>
+											<i class="fa-regular fa-eye"></i>
 											<!-- 상품 조회수 -->
 											<div id="view"></div>
 										</div>
 										<div class="detail-info--topL-item">
-											<i class="fa-solid fa-clock-rotate-left"></i>
+											<i class="fa-regular fa-clock"></i>
 											<!-- 시간 -->
 											<div id="product_logtime"></div> 
 										</div>
 									</div>
 								</div>
 								<div class="detail-info__text-body-bottom">
-									<!-- 아이템 한개 -->
 									<div class="detail-info__text-body-bItem">
-										<div class="detail-info__text-body-bItem-title">배송비</div>
+										<div class="detail-info__text-body-bItem-title">▪카테고리</div>
+											<!-- 카테고리 -->
+											<div class="detail-info__category" id="product_category"></div>
+										</div>
+									</div>
+									<div class="detail-info__text-body-bItem">
+										<div class="detail-info__text-body-bItem-title">▪배송비</div>
 										<!-- 배송비 -->
 										<div class="detail-info__delivery" id="product_delivery_fee"></div>
 									</div>
 									<div class="detail-info__text-body-bItem">
-										<div class="detail-info__text-body-bItem-title">거래지역</div>
+										<div class="detail-info__text-body-bItem-title">▪거래지역</div>
 										<!-- 거래지역 -->
 										<div class="detail-info__location" id="product_location"></div>
 									</div>
+									<div class="detail-info__text-body-bottom">
+										<div class="detail-info__zzim-chat" style="display: flex;">
+										 <!-- zzim버튼 -->
+										   <div class="detail-info__zzim">
+												<button type="submit" value="2" id="zzim_btn" style="margin-right: 10px; background-color: #3c3c3c;">
+													<i class="fa-solid fa-heart" style="color: white"></i>							 
+												관심상품</button>
+										   </div>
+										   <div class="detail-info__chat">
+												<button type="submit" id="chat_btn" style="background-color: #2B380C">
+													<i class="fa-solid fa-comment"></i>			 	
+												채팅하기</button>
+										   </div>
+										 </div>
+									 </div>
 								</div>
 							</div>
 						</div>
@@ -130,10 +149,10 @@
 			<div id="btmProdInfo_Wrap2">
 				<!-- '상품정보'-->
 				<div class="btmProdInfo_TitleWrap">
-					<div class="btmProdInfo_Title" style="font-weight: bold; font-size:20px;">
-						상품정보 <span class="btmProdInfo_TitleSpan"></span>
+					<div class="btmProdInfo_Title" style="font-weight: bold; font-size:20px; letter-spacing: 3px;">
+						상품정보<span class="btmProdInfo_TitleSpan"></span>
 					</div>
-				</div><!-- // TitleWrap -->
+				</div>
 				
 				<!-- 상품정보  -->
 				<div class="prodInfo_wrap1">
@@ -143,7 +162,18 @@
 							<div class="content_marginTop"></div>
 							<!-- 상품내용 -->
 							<div class="prodInfo_contentText">
-								<!-- productDetail.js -->
+								▶️ 야외용 캠핑용 선풍기 무선선풍기 써큘레이터
+								모델명: 스위스밀리터리 코브라이트
+							
+								▶️  판매상품은 미개봉 새상품입니다.
+								번개페이로 구매하시면 11시이전 거래 다음날 수령가능!!
+								
+								❤필독❤  제품 궁굼사항 번개톡 메세지주세요
+								
+								😁누적 판매건수  4000건  / 거래후기 800건
+								번장 최다판매 샵입니다
+								
+								미개봉새상품입니다
 							</div>
 							<!-- 지역, 카테고리, 상품태그 -->
 							<div class="prodInfo_detailWrap1">
@@ -186,26 +216,65 @@
 							</div>
 						</div>
 					</div>
-				</div><!-- //prodInfo_wrap1 -->
-			</div><!-- //btmProdInfo_Wrap2 -->
+				</div>
+			</div>
 				
 			<div class="prodInfo_RightWrap">
-				<!-- 판매자가 올린 최신 상품 3개  -->
-				<div class="storeInfo_productWrap">
-					<!-- productDetail.js -->
-				</div>
-				<div class="storeInfo_moreProd">
-					<a class="moreProdLink" href="#">
-						<span class="moreProdLink_Num"></span>
-						상품 더보기
-					</a>
+				<!-- 상점정보 -->
+				<div class="prodInfo_storeWrap1">
+					<div class="prodInfo_storeWrap2">
+						<div class="storeInfo_Title">판매자정보</div>
+					</div><!-- //storeWrap2 -->
+					<div class="prodInfo_storeDetailWrap">
+						<!-- 프로필 & 판매자닉네임 & 상품 개수 -->
+						<div class="store">
+							<a class="storeProfileImg_Link" href="#">
+								<!-- productDetail.js -->
+							</a>
+							<div class="storeInfoWrap">
+								<a class="storeInfo_name" href="#" style="font-size:12pt;"><!-- productDetail.js --></a>
+								<div class="storeInfo_productNum">
+									<a class="productNumLink" href="#"><!-- productDetail.js --></a>
+								</div>
+							</div>
+						</div><!-- //store -->
+						<!-- 판매자가 올린 최신 상품 2개  -->
+						<div class="storeInfo_productWrap">
+							<!-- productDetail.js -->
+						</div>
+						<div class="storeInfo_moreProd">
+							<a class="moreProdLink" href="#">
+								<span class="moreProdLink_Num"></span>
+								판매상품 더보기
+							</a>
+						</div>
+						<!-- 별점 & 평점 -->
+						<div class="storeInfo_IndiWrap">
+							<!-- 상점평점 -->
+							<div class="storeScore_title">
+								<div style="margin-bottom:1px;">상점평점</div>
+								<div class="storeStar"> 
+									<img width="25" height="24" class="star1" alt="별 " src="" >
+									<img width="25" height="24" class="star2" alt="별" src="" >
+									<img width="25" height="24" class="star3" alt="별" src="" >
+									<img width="25" height="24" class="star4" alt="별" src="" >
+									<img width="25" height="24" class="star5" alt="별" src="" >
+								</div>
+							</div>
+						
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+	
+ 	 <!-- nav -->
+	 <div id="nav">
+		 <jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 	 </div>
    </div>
 </div>
-
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 <script>
 // 슬라이더 관련
 var slideIndex = 0; // slide index

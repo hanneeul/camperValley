@@ -18,7 +18,7 @@
 <body>
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
 		aria-labelledby="loginModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -46,16 +46,16 @@
 							<label for="remember-me" class="form-check-label">자동로그인</label>
 						</div>				
 						<div>
-                            <a href="">아이디찾기</a> /
-                            <a href="">비밀번호찾기</a>
+                            <a href="${pageContext.request.contextPath}/member/searchId">아이디찾기</a> /
+                            <a href="${pageContext.request.contextPath}/member/searchPassword">비밀번호찾기</a>
 						</div>
                     </div>
                     <div>				
 						<div>
-                            <button type="submit" class="btn btn-success">로그인</button>
+                            <button type="submit" class="btn btn-camper-color">로그인</button>
                         </div>
                         <div>
-							<button type="button" class="btn btn-outline-success" >회원가입</button>
+							<button type="button" class="btn btn-outline-camper-color bg-white">회원가입</button>
 						</div>
 					</div>
                 </div>

@@ -24,7 +24,10 @@ public class AdvertiserController {
 	public void exitAdvertiser() { }
 	
 	@GetMapping("/dashboard")
-	public void advertiserDashBoard() {	}
+	public void advertiserDashBoard() {
+		int result = advertiserService.test();
+		log.debug("result = {}", result);
+	}
 	
 	@GetMapping("/admoney")
 	public void chargeAdmoney() { }

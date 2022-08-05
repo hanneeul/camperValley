@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-* {
-	font-size: .9rem;
-}
-
 /* reviewList.jsp start */
 .campsite-review-list-wrap {
 	width: 95%;
@@ -31,6 +27,19 @@
 	width: 95%;
 }
 
+.review-enroll-heading span {
+	font-size: .9rem;
+}
+
+form[name=reviewEnrollFrm] {
+	font-size: .9rem;
+}
+
+.form-group.row {
+	padding: 1rem 0 1rem 0;
+    margin: 1rem 0 1rem 0;
+}
+
 #communityEnrollBtn {
 	font-size: .9rem;
 	height: 2.4rem;
@@ -38,9 +47,59 @@
 
 .review-grade-list {
 	font-size: .9rem;
+	align-self: center;
 }
 
 .review-grade-list .fa-star {
 	color: #f7e600;
 }
+
+.display-contents {
+	display: contents;
+}
+
+textarea[name=content] {
+	resize: none;
+	height: 15rem;
+}
+
+.required-red {
+	color: red;
+	align-self: center;
+}
 /* reviewEnroll.jsp end */
+
+/* reviewUpdate.jsp start */
+.campsite-review-update-wrap {
+	width: 95%;
+}
+
+.review-update-heading span {
+	font-size: .9rem;
+}
+
+form[name=reviewUpdateFrm] {
+	font-size: .9rem;
+}
+
+.btn-outline-camper-red {
+	color: #c7392b;
+	border-color: #c7392b;
+}
+
+.btn-outline-camper-red:hover {
+	color: #fff;
+    background-color: #c7392b;
+    border-color: #c7392b;
+}
+
+.btn-outline-danger:not(:disabled):not(.disabled).active {
+	color: #fff;
+    background-color: #c7392b;
+    border-color: #c7392b;
+}
+
+.delete-file-ckb-wrap {
+	width: 27rem;
+}
+/* reviewUpdate.jsp end */
