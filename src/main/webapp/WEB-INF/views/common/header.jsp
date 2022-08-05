@@ -42,13 +42,13 @@
 					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/campsite/searchTheme">캠핑장</a></li>
 					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/usedProduct/main/mainPage">캠핑용품거래</a></li>
 					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/community/camper/camperList">커뮤니티</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/mypage/main">마이페이지</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/mypage/info/main">마이페이지</a></li>
 					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">고객센터</a></li>
 					<li class="nav-item"><a class="mainMenu nav-link text-dark pl-3" href="${pageContext.request.contextPath}/admin/memberList">관리자페이지</a></li>
 				</ul>
 				<ul class="navbar-nav mt-4">
 					<!-- 선택시 active -->
-					<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/login"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
+					<li class="nav-item"><a class="nav-link small text-dark" href="#" data-toggle="modal" data-target="#loginModal"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
 					<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/enroll"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
 				</ul>
 			</div>
@@ -84,7 +84,7 @@
 					case "캠핑장후기" 	: aTag.href = "${pageContext.request.contextPath}/community/review/reviewList"; break;
 					case "회원정보" 	: aTag.href = "${pageContext.request.contextPath}/mypage/info/main"; break;
 					case "중고거래" 	: aTag.href = "${pageContext.request.contextPath}/mypage/trade/purchased"; break;
-					case "커뮤니티" 	: aTag.href = "${pageContext.request.contextPath}/mypage/community/"; break;
+					case "커뮤니티" 	: aTag.href = "${pageContext.request.contextPath}/mypage/community/myCamper"; break;
 					case "광고주" 	: aTag.href = "${pageContext.request.contextPath}/mypage/advertiser/register"; break;
 					case "공지사항" 	: aTag.href = "${pageContext.request.contextPath}/cs/noticeList"; break;
 					case "FAQ" : aTag.href = "${pageContext.request.contextPath}/cs/faq"; break;
@@ -111,4 +111,5 @@
 		});
 		</script>
 	</header>
+	<jsp:include page="/WEB-INF/views/member/login.jsp" />
 	<section id="content" class="mx-auto">
