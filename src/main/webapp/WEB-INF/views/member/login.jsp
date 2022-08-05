@@ -24,7 +24,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h5 class="modal-title" id="loginModalLabel">&nbsp;&nbsp;&nbsp;로그인</h5>
+					<h4 class="modal-title mt-2 font-weight-bold" id="loginModalLabel">&nbsp;&nbsp;&nbsp;로그인</h4>
 				</div>
 				<form:form method="post">
 					<div class="modal-body">
@@ -32,7 +32,7 @@
 							  <span class="text-danger">아이디 또는 비밀번호가 일치하지 않습니다.</span>
 						</c:if>
 						<input 
-							type="text" class="form-control" name="memberId"
+							type="text" class="form-control mt-2" name="memberId"
 							placeholder="아이디" required> 
 						
 						<input

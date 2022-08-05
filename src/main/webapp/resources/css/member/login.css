@@ -13,7 +13,7 @@
 }
 
 /*헤딩 센터로*/
-#loginModal #loginModal .modal-header{
+#loginModal .modal-header{
     display: block;
     text-align: center;
 }
