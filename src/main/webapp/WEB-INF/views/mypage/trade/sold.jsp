@@ -15,9 +15,9 @@
 		<div class="col-lg-2">
 			<jsp:include page="/WEB-INF/views/common/mypageSidebar.jsp" />
 		</div>
-		<div class="col-lg-10">
+		<div class="col-lg-10 px-5">
 		<%-- 본문시작 --%>
-		<h4 class="mt-3 mb-5">판매내역</h4>
+		<h3 class="mt-1 mb-5">판매내역</h3>
 	    <div class="border-bottom mb-5 d-flex ">
 	        <a href="${pageContext.request.contextPath}/mypage/trade/selling" class="d-block btn btn-outline-dark">판매중</a>
 	        <a href="${pageContext.request.contextPath}/mypage/trade/sold" class="d-block btn btn-dark">판매완료</a>
@@ -25,11 +25,11 @@
 		    <div >
 		        <div class="d-flex justify-content-between class="mt-3 mb-5">
 		            <div class="d-flex">
-		            <img src="${pageContext.request.contextPath}/resources/upload/member/oo.jpg" alt="" width="120px" class="mr-3 ml-3">
+		            <a href=""><img src="${pageContext.request.contextPath}/resources/upload/member/oo.jpg" alt="" width="120px" class="mr-3 ml-3"></a>
 		                <div class="d-flex">
 		                    <ul class="list-unstyled mt-2">
 		                        <li>
-		                            상품이름
+		                            <a href="" class="text-dark font-weight-bold">상품이름</a>
 		                        </li>
 		                        <li>100원</li>
 		                        <br>
@@ -55,6 +55,7 @@
 		            </div>
 		        </div>
 		    </div>
+		   
 		<%-- 본문끝 --%>
 		</div>
 	</div>
