@@ -15,7 +15,7 @@
 		<div class="col-lg-2">
 			<jsp:include page="/WEB-INF/views/common/mypageSidebar.jsp" />
 		</div>
-		<div class="col-lg-10 pl-5 pr-2 mt-1">
+		<div class="col-lg-10 pl-5 pr-2 mt-1" id="mypage-main-container">
 		<%-- 본문시작 --%>
 		<div class="px">
 		  <div class="row justify-content-between" >
