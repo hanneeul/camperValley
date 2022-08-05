@@ -18,5 +18,13 @@ public class MypageCommunityController {
 	@GetMapping("/bookmark")
 	public void bookmarkList() {}
 	// --------------------- EJ end
+	// --------------------- JE start
+	@GetMapping("/myReview")
+	public void searchId() {
+	}
 	
+	@GetMapping("/myCamper")
+	public void memberDetail() {
+	// --------------------- JE end
+	}
 }
