@@ -21,8 +21,7 @@ public class CamperController {
 	public void camperList() {
 	}
 	
-	@GetMapping("/test")
-	public String test() {
-		return "test";
+	@GetMapping("/camperEnroll")
+	public void camperEnroll() {
 	}
 }

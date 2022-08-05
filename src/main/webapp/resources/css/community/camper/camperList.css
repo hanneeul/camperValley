@@ -42,16 +42,12 @@
 .off {width: 6px; height: 10px; border: solid rgb(175, 175, 175); border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 2px;  }
 .on {width: 6px; height: 10px; border: solid #639A67; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 2px;  }
 #listSection {
-	width: 40%;
-}
-#listSection {
-	cursor: pointer;
+	width: 400px;
 }
 #detailSection {
-	width: 50%;
-	height: 1000px;
+	width: 600px;
 	position: sticky;
-	top: 0px;
+	top: 130px;
 }
 
 /* boardBox */
@@ -63,6 +59,22 @@
 	border: 1px solid rgb(175, 175, 175);
 	border-radius: 20px;
 }
+.baordBoxSelectInfo, #dropdown {
+	cursor: pointer
+}
 .moreInfo {
 	cursor: pointer;
+}
+#detailBody {
+	border-top: 1px solid rgb(175, 175, 175);
+	border-bottom: 1px solid rgb(175, 175, 175);
+	overflow: auto;
+	height: 280px;
+}
+#detailFooter label {
+	color: #d9bf77;
+}
+#openURL {
+	cursor: pointer;
+	background-color: white;
 }
