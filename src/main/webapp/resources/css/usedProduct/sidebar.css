@@ -14,7 +14,7 @@
     height: 60px;
     border: 1px solid gray;
     position: absolute;
-    top: 32px;
+    top: 7px;
     left: 11px;
 }
 .favoritesCount {
@@ -50,7 +50,7 @@
     width: 80px;
     border: 1px solid gray;
     position: relative;
-    top: 101px;
+    top: 74px;
     left: 11px;
 }
 .recentlyText {
