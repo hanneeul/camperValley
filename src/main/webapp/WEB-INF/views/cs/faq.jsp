@@ -16,7 +16,7 @@
 			
 <h5 class="cs-header text-center">자주 묻는 질문</h5>
 
-<div class="notice-wrap" style="width: 80%; float:none; margin:0 auto">
+<div class="notice-wrap" style="width: 85%; float:none; margin:0 auto">
 	
 	<div class="cs-bar float-left">
 		<a href="${pageContext.request.contextPath}/cs/noticeList" class="bar-notice">공지사항</a>

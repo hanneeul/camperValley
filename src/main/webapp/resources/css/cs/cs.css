@@ -1,6 +1,7 @@
 /* footer 임시 */
-footer {margin-top:70px;}
-
+footer {
+	margin-top: 70px;
+}
 
 /* noticeList */
 #tb-notice th, #tb-notice td {
@@ -17,7 +18,7 @@ footer {margin-top:70px;}
 }
 
 .cs-bar {
-    margin-bottom: 12px;
+	margin-bottom: 12px;
 }
 
 .cs-bar a {
@@ -100,9 +101,11 @@ tr:last-child {
 
 .notice__head {
 	font-size: 16px;
-	margin-top: 7px;
-	margin-bottom: 7px;
-	margin-left: 4px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	padding: 12px;
+	padding-left: 4px;
+	font-weight: bold;
 }
 
 .noticeDetail_view {
