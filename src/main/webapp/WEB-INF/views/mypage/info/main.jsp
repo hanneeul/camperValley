@@ -248,68 +248,102 @@
                             >> 더보기
                         </a>
                     </div>
-                    <table class="table table-hover border-bottom">
-                        <thead>
-                            <tr>
-                                <th>
-                                    #
-                                </th>
-                                <th>
-                                    Product
-                                </th>
-                                <th>
-                                    Payment Taken
-                                </th>
-                                <th>
-                                    Status
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    01/04/2012
-                                </td>
-                                <td>
-                                    Default
-                                </td>
-                            </tr>
-                            <tr class="table-active">
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    01/04/2012
-                                </td>
-                                <td>
-                                    Approved
-                                </td>
-                            </tr>
-							<tr class="table-active">
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    01/04/2012
-                                </td>
-                                <td>
-                                    Approved
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+			<table class="table table-hover text-center border-bottom" id="#my-camper-table">
+            	<thead>
+                	<tr>
+                        <th>
+                          상태
+                        </th>
+                        <th>
+                          제목
+                         </th>
+                         <th>
+                            작성자
+                    	 </th>
+                         <th>
+                            캠핑기간
+                        </th>
+                        <th>
+                            지역
+                        </th>
+                        <th>
+                            모집인원
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                           	<select class="recruitment-status">
+								<option value="">모집중</option>
+								<option value="">모집완료</option>
+							</select>
+                        </td>
+                        <td class="text-left">
+                            <span class="title" data-toggle="modal" data-target="#camper-detail">제천 캠핑장 놀러가실분들...</span>
+                        </td>
+                        <td>
+                            최강길동
+                        </td>
+                        <td>
+                            2022-07-19 ~ 2022-07-20
+                        </td>
+                        <td>
+                            충청북도 제천시
+                        </td>
+                        <td>
+                            4명
+                        </td>
+	                    </tr>
+                        <tr>
+                        <td>
+                           	<select class="recruitment-status">
+								<option value="">모집중</option>
+								<option value="">모집완료</option>
+							</select>
+                        </td>
+                        <td class="text-left">
+                            <span class="title" data-toggle="modal" data-target="#camper-detail">제천 캠핑장 놀러가실분들...</span>
+                        </td>
+                        <td>
+                            최강길동
+                        </td>
+                        <td>
+                            2022-07-19 ~ 2022-07-20
+                        </td>
+                        <td>
+                            충청북도 제천시
+                        </td>
+                        <td>
+                            4명
+                        </td>
+	                    </tr>
+	                    <tr>
+                        <td>
+                           	<select class="recruitment-status">
+								<option value="">모집중</option>
+								<option value="">모집완료</option>
+							</select>
+                        </td>
+                        <td class="text-left">
+                            <span class="title" data-toggle="modal" data-target="#camper-detail">제천 캠핑장 놀러가실분들...</span>
+                        </td>
+                        <td>
+                            최강길동
+                        </td>
+                        <td>
+                            2022-07-19 ~ 2022-07-20
+                        </td>
+                        <td>
+                            충청북도 제천시
+                        </td>
+                        <td>
+                            4명
+                        </td>
+	                    </tr>
+                  </tbody>
+              </table>          
+		</div>
                 </div>
             </div>
          </div>          
