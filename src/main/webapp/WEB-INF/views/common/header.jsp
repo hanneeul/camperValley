@@ -6,6 +6,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,17 +39,17 @@
 			<div class="collapse navbar-collapse p mr-0" id="navbarText">
 				<ul class="navbar-nav offset-md-3 col-md-7 p-0 mt-4 justify-content-start">
 					<!-- 선택시 active -->
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">캠핑장</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">캠핑용품거래</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">커뮤니티</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">마이페이지</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/campsite/searchTheme">캠핑장</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/usedProduct/main/mainPage">캠핑용품거래</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/community/camper/camperList">커뮤니티</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/mypage/main">마이페이지</a></li>
 					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">고객센터</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pl-3" href="#">관리자페이지</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pl-3" href="${pageContext.request.contextPath}/admin/memberList">관리자페이지</a></li>
 				</ul>
 				<ul class="navbar-nav mt-4">
 					<!-- 선택시 active -->
-					<li class="nav-item"><a class="nav-link small text-dark" href="#"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
-					<li class="nav-item"><a class="nav-link small text-dark" href="#"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
+					<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/login"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
+					<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/enroll"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -62,8 +63,8 @@
 		  	const mainMenu = menu.target.innerHTML;
 		  	switch(mainMenu) {
 				case "커뮤니티" : renderSubMenu(0, "캠퍼모집", "캠핑장후기"); break;
-				case "마이페이지" : renderSubMenu(0.9, "회원관리", "중고거래", "커뮤니티", "광고주"); break;
-				case "고객센터" : renderSubMenu(1.9, "공지사항", "Q&A"); break;
+				case "마이페이지" : renderSubMenu(0.9, "회원정보", "중고거래", "커뮤니티", "광고주"); break;
+				case "고객센터" : renderSubMenu(1.9, "공지사항", "FAQ"); break;
 				case "관리자페이지" : renderSubMenu(3.1, "회원관리", "게시판관리", "신고내역관리"); break;
 				default : $subNavbar.stop().slideUp('fast');
 		  	}
@@ -79,7 +80,17 @@
 				aTag.innerHTML = subMenuList[i];
 				
 				switch(aTag.innerHTML) {
-					case "캠퍼모집" : aTag.href = "${pageContext.request.contextPath}/community/camper/camperList";
+					case "캠퍼모집" 	: aTag.href = "${pageContext.request.contextPath}/community/camper/camperList"; break;
+					case "캠핑장후기" 	: aTag.href = "${pageContext.request.contextPath}/community/review/reviewList"; break;
+					case "회원정보" 	: aTag.href = "${pageContext.request.contextPath}/mypage/info/main"; break;
+					case "중고거래" 	: aTag.href = "${pageContext.request.contextPath}/mypage/trade/purchased"; break;
+					case "커뮤니티" 	: aTag.href = "${pageContext.request.contextPath}/mypage/community/"; break;
+					case "광고주" 	: aTag.href = "${pageContext.request.contextPath}/mypage/advertiser/register"; break;
+					case "공지사항" 	: aTag.href = "${pageContext.request.contextPath}/cs/noticeList"; break;
+					case "FAQ" : aTag.href = "${pageContext.request.contextPath}/cs/faq"; break;
+					case "회원관리" 	: aTag.href = "${pageContext.request.contextPath}/admin/memberList"; break;
+					case "게시판관리" 	: aTag.href = "${pageContext.request.contextPath}/admin/camperManagement"; break;
+					case "신고내역관리"	: aTag.href = "${pageContext.request.contextPath}/admin/reportManagement"; break;
 				}
 				
 				$subNavbar.append(aTag);
