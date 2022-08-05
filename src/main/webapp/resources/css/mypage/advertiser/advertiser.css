@@ -5,14 +5,16 @@ div[name="divNotice"] {
 	background-color: #f0f0f0;
 	font-size: 0.87rem;
 }
-.container img {
-	width: 200px;
-	height: 200px;
+.container #preview {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 .divImgWrapper {
 	border-radius: 0.9rem;
-	width: 8rem;
-	height: 8rem;
+	width: 10rem;
+	height: 12rem;
+	overflow: hidden;
 	background-color: #f0f0f0;
 }
 .deepgreen {
