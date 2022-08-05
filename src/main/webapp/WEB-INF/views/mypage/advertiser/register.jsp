@@ -28,10 +28,14 @@
 				</div>
 				<div class="divInputWrapper">
 					<label for="">사업자등록증</label>
-					<div class="divImgWrapper d-flex align-items-center justify-content-center">
-						<input type="file" class="custom-file-input hide" name="adImg" id="validatedCustomFile" accept="image/*" required>
-						<i class="fa-solid fa-circle-plus fa-2x midgreen"></i>
-						<!-- <img class="img-fluid rounded" src="${pageContext.request.contextPath}/resources/images/서강준.jpg" alt=""> -->
+					<input type="file" class="custom-file-input hide" name="adImg" id="validatedCustomFile" accept="image/*" required>
+					<div class="divImgWrapper d-flex align-items-center justify-content-center" id="upFileWrapper">
+						<button type="button" class="invisibleBtn" id="upFileBtn">
+							<i class="fa-solid fa-circle-plus fa-2x midgreen"></i>
+						</button>
+					</div>
+					<div class="divImgWrapper hide" id="previewWrapper">
+						<img class="img-fluid rounded" id="preview" src="" alt="">
 					</div>
 				</div>
 				<div class="divInputWrapper">
@@ -48,3 +52,49 @@
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<script>
+
+document.querySelector("#upFileBtn").addEventListener('click', (e) =>{
+	document.querySelector("#validatedCustomFile").click();
+});
+document.querySelector("#preview").addEventListener('click', (e) =>{
+	document.querySelector("#validatedCustomFile").click();
+});
+
+document.querySelector("#validatedCustomFile").addEventListener('change', (e) =>{
+	const input = e.target;
+	const upFileWrapper = document.getElementById('upFileWrapper');
+	const previewWrapper = document.getElementById('previewWrapper');
+	
+	if (input.files && input.files[0]) {
+		const reader = new FileReader();
+		reader.onload = function(e) {
+			document.getElementById('preview').src = e.target.result;
+		};
+		reader.readAsDataURL(input.files[0]);
+		
+		previewWrapper.classList.remove('hide');
+		previewWrapper.classList.add('d-flex');
+		previewWrapper.classList.add('align-items-center');
+		previewWrapper.classList.add('ustify-content-center');
+		
+		upFileWrapper.classList.add('hide');
+		upFileWrapper.classList.remove('d-flex');
+		upFileWrapper.classList.remove('align-items-center');
+		upFileWrapper.classList.remove('ustify-content-center');
+		
+	} else {
+		document.getElementById('preview').src = "";
+		
+		previewWrapper.classList.add('hide');
+		previewWrapper.classList.remove('d-flex');
+		previewWrapper.classList.remove('align-items-center');
+		previewWrapper.classList.remove('ustify-content-center');
+		
+		upFileWrapper.classList.remove('hide');
+		upFileWrapper.classList.add('d-flex');
+		upFileWrapper.classList.add('align-items-center');
+		upFileWrapper.classList.remove('ustify-content-center');
+	}
+});
+</script>

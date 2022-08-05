@@ -14,17 +14,17 @@
 				aria-expanded="false" class="dropdown-toggle">회원 관리</a>
 				<ul class="collapse list-unstyled" id="homeSubmenu">
 					<li><a href="${pageContext.request.contextPath}/admin/memberList">회원관리</a></li>
-					<li><a href="#">광고주회원관리</a></li>
+					<li><a href="${pageContext.request.contextPath}/admin/advertiser">광고주회원관리</a></li>
 				</ul></li>
 
 			<li><a href="#pageSubmenu" data-toggle="collapse"
 				aria-expanded="false" class="dropdown-toggle">게시판 관리</a>
 				<ul class="collapse list-unstyled" id="pageSubmenu">
-					<li><a href="#">공지사항</a></li>
-					<li><a href="#">자주묻는질문</a></li>
+					<li><a href="${pageContext.request.contextPath}/cs/noticeList">공지사항</a></li>
+					<li><a href="${pageContext.request.contextPath}/cs/faq">자주묻는질문</a></li>
 					<li><a href="${pageContext.request.contextPath}/admin/usedProductManagement">캠핑용품거래</a></li>
 					<li><a href="${pageContext.request.contextPath}/admin/camperManagement">캠퍼모집</a></li>
 				</ul></li>
-			<li><a href="${pageContext.request.contextPath}/admin/reportManagement">신고 내역 관리</a></li>
+			<li><a href="${pageContext.request.contextPath}/admin/reportManagement">신고 관리</a></li>
 		</ul>
 	</nav>

@@ -19,7 +19,7 @@
 <div class="container" style="display: flex;" id="admin-container">
 	<jsp:include page="/WEB-INF/views/common/adminSidebar.jsp" />
 	<div class="admin-content" style="width: 80%;">
-			<h5 class="admin-hd">신고 관리</h5>
+			<h5 class="admin-hd">신고 내역 관리</h5>
 
 				<div class="report-hd" style="margin-top:40px;">
 
@@ -39,9 +39,9 @@
 							<option>처리</option>
 						</select>
 					</div>
-					<div class="search-group-report float-right mb-2">
-						<input class="input-search-report" type="text" placeholder="사용자 검색">
-						<button class="btn-report-search" type="button">
+					<div class="search-group float-right mb-2">
+						<input class="input-search" type="text" placeholder="사용자 검색">
+						<button class="btn-search" type="button">
 							<i class="fa fa-search"></i>
 						</button>
 					</div>
@@ -68,7 +68,7 @@
 						<td>2022-08-04 10:00:12</td>
 						<td>미처리</td>
 						<td>
-							<button type="button" class="btn-report-update" data-toggle="modal" data-target="#adminReportModal">
+							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminReportModal">
 								<i class="fa-solid fa-ellipsis"></i>
 							</button>
 						</td>
@@ -81,7 +81,7 @@
 						<td>2022-08-04 10:00:12</td>
 						<td>미처리</td>
 						<td>
-							<button type="button" class="btn-report-update" data-toggle="modal" data-target="#adminReportModal">
+							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminReportModal">
 								<i class="fa-solid fa-ellipsis"></i>
 							</button>
 						</td>
@@ -94,7 +94,7 @@
 						<td>2022-08-04 10:00:12</td>
 						<td>미처리</td>
 						<td>
-							<button type="button" class="btn-report-update" data-toggle="modal" data-target="#adminReportModal">
+							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminReportModal">
 								<i class="fa-solid fa-ellipsis"></i>
 							</button>
 						</td>
@@ -107,7 +107,7 @@
 						<td>2022-08-04 10:00:12</td>
 						<td>미처리</td>
 						<td>
-							<button type="button" class="btn-report-update" data-toggle="modal" data-target="#adminReportModal">
+							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminReportModal">
 								<i class="fa-solid fa-ellipsis"></i>
 							</button>
 						</td>
@@ -120,7 +120,7 @@
 						<td>2022-08-04 10:00:12</td>
 						<td>미처리</td>
 						<td>
-							<button type="button" class="btn-report-update" data-toggle="modal" data-target="#adminReportModal">
+							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminReportModal">
 								<i class="fa-solid fa-ellipsis"></i>
 							</button>
 						</td>

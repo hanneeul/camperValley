@@ -1,20 +1,8 @@
 @charset "UTF-8";
 
-@font-face {
-    font-family: 'GoyangIlsan';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangIlsan.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-* {
-	font-family: 'GoyangIlsan';
-	list-style-type: none;
-}
-
 /* searhDetail/searchTheme.jsp start */
 .campsite-search-wrap {
-	background-image: url("../../images/campsiteSearchBanner3.jpg");
+	background-image: url("../../images/campsite/campsiteSearchBanner.jpg");
 	height: 350px;
 }
 

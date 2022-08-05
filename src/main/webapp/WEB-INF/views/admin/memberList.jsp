@@ -47,7 +47,7 @@
 					<td>블랙</td>
 					<td>2022.08.03</td>
 					<td>
-						<button type="button" class="btn-member-update" data-toggle="modal" data-target="#adminMemberModal">
+						<button type="button" class="btn-update" data-toggle="modal" data-target="#adminMemberModal">
 								<i class="fa-solid fa-ellipsis"></i>
 							</button>
 					</td>
@@ -60,7 +60,7 @@
 					<td>블랙</td>
 					<td>2022.08.03</td>
 					<td>
-						<button type="button" class="btn-member-update" data-toggle="modal" data-target="#adminMemberModal">
+						<button type="button" class="btn-update" data-toggle="modal" data-target="#adminMemberModal">
 								<i class="fa-solid fa-ellipsis"></i>
 							</button>
 					</td>
@@ -73,7 +73,7 @@
 					<td>블랙</td>
 					<td>2022.08.03</td>
 					<td>
-						<button type="button" class="btn-member-update" data-toggle="modal" data-target="#adminMemberModal">
+						<button type="button" class="btn-update" data-toggle="modal" data-target="#adminMemberModal">
 								<i class="fa-solid fa-ellipsis"></i>
 							</button>
 					</td>
@@ -86,7 +86,7 @@
 					<td>블랙</td>
 					<td>2022.08.03</td>
 					<td>
-						<button type="button" class="btn-member-update" data-toggle="modal" data-target="#adminMemberModal">
+						<button type="button" class="btn-update" data-toggle="modal" data-target="#adminMemberModal">
 								<i class="fa-solid fa-ellipsis"></i>
 							</button>
 					</td>

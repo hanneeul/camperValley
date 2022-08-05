@@ -15,19 +15,19 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-<!-- 캠핑장후기등록 페이지 (작성자:SJ) -->
-<div class="container-md campsite-review-enroll-wrap pt-2">
+<!-- 캠핑장후기수정 페이지 (작성자:SJ) -->
+<div class="container-md campsite-review-update-wrap pt-2">
 	<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
 	</div>
 	<hr />
-	<div class="d-flex px-2 review-enroll-heading">
-		<h5 class="font-weight-bold m-0">캠핑장 후기 등록</h5>
+	<div class="d-flex px-2 review-update-heading">
+		<h5 class="font-weight-bold m-0">캠핑장 후기 수정</h5>
 		<span class="ml-3 required-red">* 표시가 된 곳은 필수 입력사항입니다.</span>
 	</div>
 	<hr />
-	<div class="review-enroll-form-wrap mb-4 pb-4">
+	<div class="review-update-form-wrap mb-4 pb-4">
 		<form 
-			name="reviewEnrollFrm" 
+			name="reviewUpdateFrm" 
 			method="POST" 
 			action=""
 			enctype="multipart/form-data">
@@ -48,7 +48,7 @@
 		        		<span class="fa fa-star-o" data-rating="3"></span>
 		        		<span class="fa fa-star-o" data-rating="4"></span>
 		        		<span class="fa fa-star-o" data-rating="5"></span>
-		        		<input type="hidden" class="review-grade" id="reviewGrade" name="reviewGrade" value="3">
+		        		<input type="hidden" class="review-grade" id="reviewGrade" name="reviewGrade" value="4">
 		      		</div>
 				</div>
 			</div>
@@ -63,7 +63,7 @@
 				  			class="form-control text-left" 
 				  			id="facltNm" 
 				  			name="facltNm" 
-				  			value="이용하신 캠핑장을 선택해주세요."
+				  			value="○○야영장"
 				  			data-toggle="modal" 
 				  			data-target="#facltNmModal"
 				  			required/>
@@ -101,7 +101,7 @@
 						    	id="stay"
 						    	name="stay" 
 						    	value=""
-						    	placeholder="이용기간을 선택하세요."
+						    	placeholder="08/04/2022 - 08/04/2022"
 						    	required/>
 						</div>
 				  	</div>
@@ -111,7 +111,7 @@
 				<label class="col col-form-label font-weight-bold">이런 점이 좋았어요.</label>
 				<div class="col py-3">
 					<div class="form-check form-check-inline">
-				  		<input class="form-check-input" type="checkbox" name="merit" id="merit0" value="merit0">
+				  		<input class="form-check-input" type="checkbox" name="merit" id="merit0" value="merit0" checked>
 				  		<label class="form-check-label" for="merit0">시설물이 깨끗해요.</label>
 					</div>
 					<div class="form-check form-check-inline">
@@ -119,7 +119,7 @@
 				  		<label class="form-check-label" for="merit1">사장님이 친절해요.</label>
 					</div>
 					<div class="form-check form-check-inline">
-				  		<input class="form-check-input" type="checkbox" name="merit" id="merit2" value="merit2">
+				  		<input class="form-check-input" type="checkbox" name="merit" id="merit2" value="merit2" checked>
 				  		<label class="form-check-label" for="merit2">매너타임이 잘 준수되고 있어요.</label>
 					</div>
 					<div class="form-check form-check-inline">
@@ -143,7 +143,7 @@
 			    		class="form-control" 
 			    		id="title" 
 			    		name="title" 
-			    		value="" 
+			    		value="○○야영장 후기" 
 			    		placeholder="제목을 입력해주세요."
 			    		required/>
 			  	</div>
@@ -153,22 +153,32 @@
 			  		내용<sup class="required-red">*</sup>
 			  	</label>
 			  	<div class="col-md-11">
-			    	<textarea class="form-control" name="content" placeholder="내용을 입력해주세요." required></textarea>
+			    	<textarea class="form-control" name="content" placeholder="내용을 입력해주세요." required>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint ad culpa veniam fugit aliquid sequi soluta vitae eligendi rem eos sapiente aut optio maiores! Assumenda dolore illo sed saepe velit!</textarea>
 			  	</div>
 			</div>
 			<div class="form-group row">
 			  	<label for="name" class="col-md-1 col-form-label font-weight-bold">첨부파일</label>
-				<div class="input-group col-md-5">
-				  	<div class="custom-file">
-				    	<input type="file" class="custom-file-input" name="reviewPhoto" multiple>
-				    	<label class="custom-file-label" for="reviewPhoto">첨부파일을 선택해주세요.</label>
-				  	</div>
+				<div class="form-group col-md-5 mx-3 mb-0">
+					<div class="input-group row mb-3">
+						<div class="btn-group-toggle" data-toggle="buttons">
+							<label class="btn btn-outline-danger btn-outline-camper-red delete-file-ckb-wrap" title="삭제할파일임.jpg 삭제">
+								<input type="checkbox" id="delFile" name="delFile" value="삭제할파일임.jpg">
+								삭제할파일임.jpg... 삭제
+							</label>
+		                </div>
+		            </div>
+					<div class="input-group row my-3">
+					  	<div class="custom-file">
+					    	<input type="file" class="custom-file-input" name="reviewPhoto" multiple>
+					    	<label class="custom-file-label" for="reviewPhoto">첨부파일을 선택해주세요.</label>
+					  	</div>
+					</div>
 				</div>
 			</div>
 			<hr />
 			<div class="text-center m-3 p-3">
 				<input type="reset" class="btn btn-outline-secondary px-4" value="작성취소">
-				<input type="submit" class="btn btn-outline-success btn-outline-camper-color ml-1 px-4" value="후기등록" >
+				<input type="submit" class="btn btn-outline-success btn-outline-camper-color ml-1 px-4" value="후기수정" >
 			</div>
 		</form>
 	</div>
