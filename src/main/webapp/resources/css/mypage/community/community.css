@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+#my-community-header button.btn-outline-camper{
+	border: 2px #639A67 solid;
+	border-left: 0;
+	border-radius: 0px 4px 4px 0;
+	height:35px;	
+}
+#my-community-header input.form-control{
+	border: 2px #639A67 solid;
+	height:35px;	
+}
+#my-community-header input.form-control:hover{
+	border: #467249 2px solid;	
+}
+#my-community-header input.form-control:focus{
+    box-shadow: none;
+    border: #467249 2px solid;
+}
+#my-community-header button.dropdown-toggle{
+	border-radius: 4px 0 0 4px;
+	color: #fff;
+	background-color: #639A67;
+	height:35px;
+}
+
+#my-community-header a{
+	height:35px;
+	padding: 0 1.3rem;
+	font-weight:700;
+}
+#my-community-header a:hover, #my-community-body a:hover{
+	color:#2B580C !important;
+}
+#my-community-header .btn:focus, #my-community-header .btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+#my-community-body a{
+	color:#212529;:
+}
+#my-community-body table{
+	font-size: 0.87rem;
+}
+#my-community-body th{
+	border-left-width: 2px;
+}

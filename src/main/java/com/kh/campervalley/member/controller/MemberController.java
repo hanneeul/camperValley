@@ -2,14 +2,9 @@ package com.kh.campervalley.member.controller;
 
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,13 +23,17 @@ public class MemberController {
 	@GetMapping("/enroll")
 	public void memberEnroll() {}
 	
+	@GetMapping("/enrollSuccess")
+	public void memberEnrollSuccess() {}
+	
 	@GetMapping("/login")
 	public void memberLogin() {}
 	
+	@GetMapping("/resetPassword")
+	public void resetPassword(){}
 	
 	@GetMapping("/searchId")
-	public void searchId() {
-	}
+	public void searchId() {}
 	
 	@GetMapping("/searchPassword")
 	public void memberDetail() {

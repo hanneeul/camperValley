@@ -1,8 +1,7 @@
 @charset "UTF-8";
 a.btn-camper{
-	width: 120px;
-	height: 30px;
-	border-radius: 0;
+	width: 140px;
+	height: 33px;
 	background-color: #639A67;	
     border: 1px solid #639A67;
     color: #fff !important;
@@ -19,7 +18,9 @@ a.btn-camper:hover {
 	margin-bottom: 2rem;
 	width: 98%;
 	text-align: center;
-
+}
+#content h5{
+	font-weight: 700;
 }
 #content tr > td:nth-child(2){
 	text-align: left;
@@ -29,13 +30,47 @@ a.btn-camper:hover {
 }
 #content a.btn-link:hover{
 	color: #2B380C;
-	text-decoration: none;
-	
+	text-decoration: none;	
 }
 #content a{
 	color: #2B380C;
 }
 #content a:hover{
 	text-decoration: none;
+	font-weight: 700;
+}
+svg:hover{
+
+	fill: #2B380C;
+}
+.bookmarkWrapper:not(:last-of-type) {
+	border-bottom: 1px solid #ddd;
+}
+.imgWrapper {
+	width: 9rem;
+	height: 9rem;
+	overflow: hidden;
+	background-color: #f0f0f0;
+}
+.campsiteImg {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.campsiteIntro {
+	border-top: 1px solid #ddd;
+}
+.detailInfo {
+	font-size: 0.9rem;
+}
+.detailInfo > div {
+	margin-right: 3rem;
+}
+.campsiteInfo i {
+	color: #D9BF77;
+}
+.btnWrapper i {	
+	font-size: 2.4rem;
+	color: #f1c40f;
 }
 
