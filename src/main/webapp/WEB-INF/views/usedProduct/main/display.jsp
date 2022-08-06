@@ -6,7 +6,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/main.css"/>
-<script src="https://kit.fontawesome.com/97c6ec6a69.js" crossorigin="anonymous"></script>
 
 <hr />
 <!-- 광고 -->

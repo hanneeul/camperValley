@@ -7,7 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/main.css"/>
-<script src="https://kit.fontawesome.com/97c6ec6a69.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
 
 <div id="section" style="width: 90%; margin:50px auto">
 	<div id="productTop">
@@ -21,7 +21,7 @@
 	
 	<div class="productListTop" style="height: 30px;">
 		<div class="listTopInner">
-			<div class="group" style="float: right;">
+			<div class="group" style="float: right; margin-right: 50px;">
 				<!-- DB-카테고리 정렬 -->
 				<a class="groupChecked">최신순</a> <a
 					class="groupOther">인기순</a> <a
@@ -45,6 +45,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<!-- sidebar -->
+	<div id="nav">
+		 <jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 	</div>
 </div>
 
