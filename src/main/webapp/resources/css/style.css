@@ -6,6 +6,28 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'GoYangIlSan';
+    font-weight: 300;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanLight.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanLight.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanLight.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanLight.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanLight.ttf') format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: 'GoYangIlSan';
+    font-weight: 400;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanRegular.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanRegular.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanRegular.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanRegular.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanRegular.ttf') format("truetype");
+    font-display: swap;
+}
 /* container 너비 사용자화 */
 @media (min-width: 1200px) {
 	.container {
@@ -56,7 +78,7 @@ body {
 	width: 1200px;
 }
 * {
-    font-family: 'GoyangIlsan';
+    font-family: 'GoYangIlSan';
     list-style-type: none;
 }
 #navbarMain {
