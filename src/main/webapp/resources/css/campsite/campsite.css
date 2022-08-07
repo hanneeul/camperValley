@@ -32,6 +32,7 @@ label[for=keywordSearch] {
 
 .keyword-search-btn-wrap {
 	height: 2.3rem;
+	border-radius: 4px 0 0 4px!important;
 }
 
 .result-list-content > ul > li {
@@ -55,6 +56,14 @@ label[for=keywordSearch] {
 .result-map {
 	width: 25rem;
     height: 31rem;
+}
+
+.btn-outline-success:not(:disabled):not(.disabled).active, 
+.btn-outline-success:not(:disabled):not(.disabled):active, 
+.show>.btn-outline-success.dropdown-toggle {
+    color: #fff;
+    background-color: #639A67;
+    border-color: #639A67;
 }
 /* searhDetail/searchTheme.jsp end */
 
@@ -97,7 +106,7 @@ label[for=keywordSearch] {
 }
 
 #bookmarkBtn i {
-	color: #f7e600;
+	color: #f7c63a;
 }
 
 .campsite-yellow {

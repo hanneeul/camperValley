@@ -23,6 +23,9 @@
 	background-color: #639A67;
 	height:35px;
 }
+#my-community-header .camper-color {
+	color: #639A67 !important;
+}
 
 #my-community-header a{
 	height:35px;
@@ -37,11 +40,37 @@
   box-shadow: none !important;
 }
 #my-community-body a{
-	color:#212529;:
+	color:#212529;
 }
 #my-community-body table{
 	font-size: 0.87rem;
 }
+#my-community-body .title{
+	cursor:pointer;
+}
+
 #my-community-body th{
 	border-left-width: 2px;
+}
+#my-community-body select, #camper-detail select.recruitment-status{
+	width:74px;
+	outline: 0;
+    border: 0;
+	box-shadow: none;
+	cursor: pointer;
+	background-color: inherit;
+	
+}
+#my-community-body tr > td:nth-child(2){
+	text-align: left;
+}
+#my-camper-table tr > td:first-child{
+	text-align: right;
+}
+#my-camper-table tr > th:first-child{
+	width: 6.2rem;
+}
+#camper-detail div.modal-footer .btn{
+	width:48.7%;
+	border: 2px solid #639A67 !important;
 }

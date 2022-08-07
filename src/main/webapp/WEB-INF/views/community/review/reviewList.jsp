@@ -9,13 +9,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/review/review.css" />
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
-<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/i18n/defaults-*.min.js"></script>
-
 <!-- 캠핑장후기목록조회 페이지 (작성자:SJ) -->
 <div class="container-md campsite-review-list-wrap pt-2">
 	<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
@@ -27,9 +20,9 @@
 				   	<option value="title">제목</option>
 				    <option value="content">내용</option>
 				</select>
-				<input type="text" name="searchKeyword" class="form-control border-camper-color community-search-input rounded" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
+				<input type="text" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
 			  	<div class="input-group-append">
-			    	<button class="btn btn-outline-success btn-outline-camper-color rounded" type="button" id="communitySearchBtn">
+			    	<button class="btn btn-outline-success btn-outline-camper-color" type="button" id="communitySearchBtn">
 			    		<i class="fa-solid fa-magnifying-glass camper-color"></i>
 			    	</button>
 			  	</div>

@@ -8,6 +8,65 @@ footer {
 #admin-container {
 	margin-top: 20px;
 }
+
+/* 대시보드 */
+
+.a-title {
+	font-size: 17px;
+	font-weight: bold;
+	border-bottom: 2px solid #E6E9ED;
+	padding-bottom: 10px;
+}
+
+.se-box {
+	border: 2px solid #dee2e6;
+	padding: 10px 17px;
+	margin: 10px;
+}
+
+.sub-title a {
+	font-size: 16px;
+	color: #777;
+}
+
+.write-content {
+	font-size: 13px;
+}
+
+.write-ul {
+	border-left: 3px solid #e8e8e8;
+	padding-left: 25px;
+	padding-right: 10px;
+}
+
+.write-div {
+	margin-left: 15px;
+	padding-top: 15px;
+}
+
+.timeline {
+	position: relative;
+	left: -34px;
+    top: 16px;
+	display: block;
+	width: 14px;
+	height: 14px;
+	border: 3px solid #d2d3d2;
+	border-radius: 14px;
+	background: #f9f9f9;
+}
+
+.x-icon {
+	background-color: #fff;
+	border: none;
+	color: red;
+	float: right;
+}
+
+.tb-todo tr:first-child>td, .tb-todo tr:first-child>th {
+	border: none;
+}
+
 /* 회원관리 */
 .ad-btn-search {
 	border: 1px solid #dee2e6;
