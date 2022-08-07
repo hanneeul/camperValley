@@ -26,6 +26,10 @@
 							<input type="text" class="form-control form-control-sm" name="memberId"/>
 						</div>
 						<div class="col px-0 d-flex align-items-center justify-content-center divInputWrapper">
+							<label for="memberId">광고계정명</label>
+							<input type="text" class="form-control form-control-sm" name="bisName"/>
+						</div>
+						<div class="col px-0 d-flex align-items-center justify-content-center divInputWrapper">
 							<label for="bizLicenseNo">사업자등록번호</label>
 							<input type="text" class="form-control form-control-sm" name="bizLicenseNo"/>
 						</div>
@@ -42,6 +46,7 @@
 					<tr class="text-center">
 						<td>상태</td>
 						<td>회원ID</td>
+						<td>광고계정명</td>
 						<td>사업자등록번호</td>
 						<td>사업자등록증</td>
 						<td>승인요청일</td>
@@ -52,6 +57,7 @@
 					<tr data-advertiser-no="">
 						<td class="permission">승인완료</td>
 						<td>아이디</td>
+						<td>스노우피크</td>
 						<td>123-12-12345</td>
 						<td><a href=""><i class="fa-solid fa-download"></i></a></td>
 						<td>2022-04-12</td>
@@ -62,6 +68,7 @@
 					<tr data-advertiser-no="">
 						<td class="waiting">승인대기</td>
 						<td>아이디</td>
+						<td>어쩌고텐트마켓</td>
 						<td>123-12-12345</td>
 						<td><a href=""><i class="fa-solid fa-download"></i></a></td>
 						<td>2022-04-12</td>

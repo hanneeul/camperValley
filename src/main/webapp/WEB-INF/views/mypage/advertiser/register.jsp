@@ -23,6 +23,7 @@
 				<div class="divInputWrapper">
 					<label for="bizName">광고계정 이름</label>
 					<input type="text" name="bizName" id="bizName" class="form-control form-control-sm" placeholder="광고계정명을 입력해주세요.">
+					<small id="bizNameMsg" class="resultMsg hide"></small>
 				</div>
 				<div class="divInputWrapper">
 					<label for="bizLicenseNo">사업자등록번호</label>
@@ -33,8 +34,7 @@
 							<button class="btn btn-outline-camper-color btn-sm" type="button" id="ckBizNoBtn">확인</button>
 						</div>
 					</div>
-					<small id="bizNoFailMsg" class="failMsg hide">사업자등록번호 검증에 실패하였습니다.</small>
-					<small id="bizNoSuccessMsg" class="SuccessMsg hide">사업자등록번호 검증에 성공하였습니다.</small>
+					<small id="bizNoMsg" class="resultMsg hide"></small>
 				</div>
 				<div class="divInputWrapper">
 					<label for="">사업자등록증</label>
@@ -47,6 +47,7 @@
 					<div class="divImgWrapper hide" id="previewWrapper">
 						<img class="img-fluid rounded" id="preview" src="" alt="">
 					</div>
+					<small id="bizImgMsg" class="resultMsg hide"></small>
 				</div>
 				<div class="divInputWrapper">
 					<div name="divNotice" class="p-3">
@@ -64,12 +65,37 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 <spring:eval var="ckBusinessNo" expression="@customProperties['api.ckBusinessNo']" />
 <script>
+// 폼제출 유효성검사
+document.enrollAdvertiserFrm.addEventListener('submit', (e) => {
+	e.preventDefault();
+	
+	let result = true;
+	if(!/^[a-zA-Z가-힣0-9].{0,20}[^ \t\n]$/.test(bizName.value)){
+		
+	} else resetMsg("#bizNameMsg");
+	
+	console.log("제출!");
+	
+});
 
-document.querySelector("#ckBizNoBtn").addEventListener('click', (e) =>{
+const printErrSmall = (target, msg) => {
+    const msgSmall = document.querySelector(target);
+    msgSmall.innerHTML = msg;
+    msgSmall.classList.add('failMsg');
+    msgSmall.classList.remove('SuccessMsg');
+    msgSmall.classList.remove('hide');
+};
+
+const resetMsg = (target) => {
+	const msgSmall = document.querySelector(target);
+	msgSmall.innerHTML = "";
+};
+
+// 사업자등록번호 검증
+document.querySelector("#ckBizNoBtn").addEventListener('click', (e) => {
 	const inputData = document.querySelector("#bizLicenseNo").value;
 	let result = document.querySelector("#bizNoResult").value;
-	const failMsg = document.querySelector("#bizNoFailMsg");
-	const PassMsg = document.querySelector("#bizNoSuccessMsg");
+	const msg = document.querySelector("#bizNoMsg");
 	
 	// 테스트(배민사업자번호) : 1208765763
 	var data = {
@@ -86,13 +112,16 @@ document.querySelector("#ckBizNoBtn").addEventListener('click', (e) =>{
 		success(response) {
 			if(response.match_cnt) {
 				result = "true";
-				failMsg.classList.add('hide');
-				PassMsg.classList.remove('hide');
+				msg.innerHTML = "사업자등록번호 검증에 성공하였습니다.";
+				msg.classList.add('SuccessMsg');
+				msg.classList.remove('failMsg');
 			} else {
 				result = "false";
-				failMsg.classList.remove('hide');
-				PassMsg.classList.add('hide');
+				msg.innerHTML = "사업자등록번호 검증에 실패하였습니다.";
+				msg.classList.add('failMsg');
+				msg.classList.remove('SuccessMsg');
 			}
+			msg.classList.remove('hide');
 		},
 		error: console.log
 	});
