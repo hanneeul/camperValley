@@ -21,7 +21,6 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	@Override
 	public int insertAdvertiser(AdvertiserExt advertiser) {
 		int result = advertiserDao.insertAdvertiser(advertiser);
-		log.debug("advertiser#service = {}", advertiser);
 
 		LicenseFile licenseFile = advertiser.getLicenseFile();
 		licenseFile.setAdvertiserNo(advertiser.getAdvertiserNo());

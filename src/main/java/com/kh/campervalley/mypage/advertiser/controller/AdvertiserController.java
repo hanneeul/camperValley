@@ -38,6 +38,7 @@ public class AdvertiserController {
 	public String registerAdvertiser(AdvertiserExt advertiser, @RequestParam("adImg") MultipartFile upFile) {
 		try {
 			String saveDirectory = application.getRealPath("/resources/upload/mypage/advertiser/license");
+			log.debug("saveDirectory = {}", saveDirectory);
 
 			if (upFile.getSize() > 0) {
 				String originalFilename = upFile.getOriginalFilename();
