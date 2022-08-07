@@ -15,21 +15,21 @@
 		<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
 			<div class="col-md float-right">
 				<div class="input-group align-items-center community-search-enroll">
-			    	<select id="searchType" class="selectpicker" data-style="btn-success bg-camper-color">
-						<option value="" disabled selected>선택</option>
-						<option value="memberId">작성자</option>
-					   	<option value="title">제목</option>
-					    <option value="content">내용</option>
-					</select>
-					<input type="text" name="searchKeyword" class="form-control community-search-input rounded" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
-				  	<div class="input-group-append">
-				    	<button class="btn btn-outline-success rounded" type="button" id="communitySearchBtn">
-				    		<i class="fa-solid fa-magnifying-glass camper-color"></i>
-				    	</button>
-				  	</div>
-					<div class="ml-1">
-						<button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/community/camper/camperEnroll'">글쓰기</button>
-					</div>
+			    	<select id="searchType" class="selectpicker" data-style="btn-outline-success btn-outline-camper-color">
+					<option value="" disabled selected>선택</option>
+					<option value="memberId">작성자</option>
+				   	<option value="title">제목</option>
+				    <option value="content">내용</option>
+				</select>
+				<input type="text" name="searchKeyword" class="form-control border-camper-color community-search-input rounded" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
+			  	<div class="input-group-append">
+			    	<button class="btn btn-outline-success btn-outline-camper-color rounded" type="button" id="communitySearchBtn">
+			    		<i class="fa-solid fa-magnifying-glass camper-color"></i>
+			    	</button>
+			  	</div>
+				<div class="ml-1">
+					<button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/community/camper/camperEnroll'">글쓰기</button>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -41,29 +41,17 @@
 					모집중 게시글만 조회
 				</label>
 				<div class="boardBoxSelect my-4 p-4">
-					<div class="text-right">
-							<i class="fa-solid fa-ellipsis-vertical"></i>
-					</div>
-				
-				<!-- 
-						<label for="dropMenu">
-						</label>
-						<select name="dropMenu" id="dropMenu">
-							
-						</select>
-						<div class="dropdown d-none">
-							<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-							</button>
-							<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">수정</a>
-							<a class="dropdown-item" href="#">삭제</a>
-							</div>
+					<div class="drop-down drop-down-1">
+						<div class="selected text-right">
+							<i class="fa-solid fa-ellipsis-vertical d-block"></i>
+						</div>
+						<div class="options text-right">
+							<ul>
+								<li onclick="location.href='${pageContext.request.contextPath}/community/camper/camperUpdate'">수정</li>
+								<li>삭제</li>
+							</ul>
 						</div>
 					</div>
-				 -->
-					
-					
-					
 					<div class="boardBoxSelectInfo">
 						<div class="font-weight-bold text-20 pb-4">제천 캠핑장 놀러가실분들 모집합니다!</div>
 						<div class="font-weight-bold text-13">충청북도 제천시</div>
@@ -180,6 +168,27 @@ document.querySelector(".chk_box").addEventListener('change', ()=> {
 	} else {
 		$(".chk_box > span").removeClass("on").addClass("off");
 	}
+});
+
+//토글 ul
+$(".drop-down .selected i").click(function() {
+    //$(".drop-down .options ul").toggle();
+    const $options = $(this).parent().siblings('.options');
+    $options.find('> ul').toggle();
+});
+
+//옵션 선택 및 선택 후 옵션 숨기기
+$(".drop-down .options ul li").click(function() {
+    $(this).closest('ul').hide();
+}); 
+
+
+//페이지의 다른 위치를 클릭하면 옵션 숨기기
+$(document).bind('click', function(e) {
+    const $clicked = $(e.target);
+    if (!$clicked.parents().hasClass("drop-down")){
+            $(".drop-down .options ul").hide();
+        }
 });
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

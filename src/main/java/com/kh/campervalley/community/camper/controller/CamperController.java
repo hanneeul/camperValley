@@ -18,10 +18,11 @@ public class CamperController {
 	private CamperService camperSerivce;
 	
 	@GetMapping("/camperList")
-	public void camperList() {
-	}
+	public void camperList() {}
 	
 	@GetMapping("/camperEnroll")
-	public void camperEnroll() {
-	}
+	public void camperEnroll() {}
+	
+	@GetMapping("/camperUpdate")
+	public void camperUpdate() {}
 }

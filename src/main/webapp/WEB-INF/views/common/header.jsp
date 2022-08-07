@@ -12,6 +12,12 @@
 <head>
 	<meta charset="UTF-8">
 	<title>campervalley</title>
+	<!-- favicon_io -->
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 	<!-- jquery js -->
 	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 	<!-- bootstrap js -->
@@ -32,21 +38,22 @@
 </head>
 <body class="mx-auto">
 	<header class="container p-0 fixed-top">
-		<nav class="navbar navbar-expand-lg navbar-light bg-light p-0" id="navbarMain" style="background-image: url('${pageContext.request.contextPath}/resources/images/logo.png');">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light p-0" id="navbarMain">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse p mr-0" id="navbarText">
-				<ul class="navbar-nav offset-md-3 col-md-7 p-0 mt-4 justify-content-start">
+				<img class="col-md-3 ml-3 p-5" src="${pageContext.request.contextPath}/resources/images/logo.png" onclick="location.href='${pageContext.request.contextPath}'" alt="logo" />
+				<ul class="navbar-nav col-md-6 p-0 mt-4 justify-content-start">
 					<!-- 선택시 active -->
 					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/campsite/searchTheme">캠핑장</a></li>
 					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/usedProduct/main/mainPage">캠핑용품거래</a></li>
 					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/community/camper/camperList">커뮤니티</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/mypage/main">마이페이지</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="#">고객센터</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pl-3" href="${pageContext.request.contextPath}/admin/memberList">관리자페이지</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/mypage/info/main">마이페이지</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/cs/noticeList">고객센터</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark pl-3" href="${pageContext.request.contextPath}/admin/dashboard">관리자페이지</a></li>
 				</ul>
-				<ul class="navbar-nav mt-4">
+				<ul class="navbar-nav mt-4 ml-5">
 					<!-- 선택시 active -->
 					<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/login"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
 					<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/enroll"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
@@ -75,7 +82,7 @@
 			for(let i = 0; i < subMenuList.length; i++) {
 				const aTag = document.createElement("a");
 				aTag.className = "navbar-brand p-0 mr-3 ml-3 text-light position-relative";
-				aTag.style.left = `\${-50 + index * 100}px`;
+				aTag.style.left = `\${-40 + index * 100}px`;
 				
 				aTag.innerHTML = subMenuList[i];
 				
@@ -98,7 +105,7 @@
 					const spanTag = document.createElement("span");
 					spanTag.className = "bar text-light position-relative";
 					spanTag.innerHTML = "|";
-					spanTag.style.left = `\${-50 + index * 100}px`;
+					spanTag.style.left = `\${-40 + index * 100}px`;
 					$subNavbar.append(spanTag);
 				}
 			}
