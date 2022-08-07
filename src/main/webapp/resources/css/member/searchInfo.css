@@ -15,8 +15,11 @@ div.container{
 #search-my-info p{
 	font-size: smaller;
 }
-.resend{
+#search-my-info .resend{
 	font-size: smaller;
+	color: #D9BF77;
 }
-
+#search-my-info button.resend:focus{
+	box-shadow: none;
+}
 

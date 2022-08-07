@@ -70,6 +70,7 @@
 #my-camper-table tr > th:first-child{
 	width: 6.2rem;
 }
-#my-community-body table{
-	
+#camper-detail div.modal-footer .btn{
+	width:48.7%;
+	border: 2px solid #639A67 !important;
 }

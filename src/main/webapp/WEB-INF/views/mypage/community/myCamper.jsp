@@ -152,34 +152,36 @@
 		<div class="modal fade" id="camper-detail" tabindex="-1" role="dialog"
 		aria-labelledby="camper-detail-label" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered px-5 modal-dialog-scrollable modal-lg" role="document">
-				<div class="modal-content px-2">
-					<div class="modal-header  d-block">
-						<h4 class="text-center mb-4">캠퍼모집 제목</h4>
-						<div class="d-flex justify-content-between">
-							<div>
-								충청북도 제천시
-								<br />
+				<div class="modal-content px-3  pt-3">
+					<div class="modal-header  d-block  pb-4">
+						<h4 class="text-center mb-4 font-weight-bold">캠퍼모집 제목</h4>
+						<div class="d-flex justify-content-between font-weight-bold" >
+							<div class="align-self-bottom align-self-end">
 								2022-07-19 ~ 2022-07-20
+								<br />
+								충청북도 제천시
 							</div>
 							<div>
 							<br />
-								<select class="recruitment-status">
-									<option value="">모집중</option>
+								<div class="text-center">4명</div>
+								<select class="recruitment-status font-weight-bold">
+									<option value="" >모집중</option>
 									<option value="">모집완료</option>
 								</select>
 							</div>
 						</div>
 					</div>
-					<div class="modal-body px-0">
-						<h6>상세내용</h6>
+					<div class="modal-body py-4">
+						<h6 class="font-weight-bold">상세내용</h6>
 						<p>캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.</p>
-						<h6>이용수칙</h6>
+						<h6 class="font-weight-bold">이용수칙</h6>
 						<p>캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.</p>
-						<h6>예상비용</h6>
+						<h6 class="font-weight-bold">예상비용</h6>
 						<p>캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.</p>
 					</div>
-					<div class="modal-footer px-0">
-							<button class="btn btn-camper-color btn-block">닫기</button>
+					<div class="modal-footer px-0 pt-4">
+							<a class="btn btn-outline-camper-color btn-lg border-2 shadow-sm">수정</a>
+							<button class="btn btn-camper-color btn-lg shadow-sm" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
 	        </div>

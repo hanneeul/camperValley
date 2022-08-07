@@ -96,7 +96,7 @@
 		</form>
 		<!-- <hr> -->
 			<div style="text-align: right; ">
-				<a href="#" class="btn btn-outline-secondary" type="button">회원탈퇴</a> 
+				<a href="${pageContext.request.contextPath}/mypage/info/withdrawal" class="btn btn-outline-secondary" type="button">회원탈퇴</a> 
 			</div>
 			<div style="text-align: center;">
 				<button type="button" class="btn btn-success shadow-sm">
