@@ -15,7 +15,7 @@
 		<div class="col-lg-2">
 			<jsp:include page="/WEB-INF/views/common/mypageSidebar.jsp" />
 		</div>
-		<div class="col-lg-10 px-5 mt-2">
+		<div class="col-lg-10 px-5 mt-2" id="edit-container">
 		<%-- 본문시작 --%>
 		<h4>
 			회원정보관리
@@ -41,7 +41,7 @@
 						닉네임
 					</td>
 					<td>
-						<input type="text" class="form-control" name="name" id="name" placeholder="닉네임" required>
+						<input type="text" class="form-control" name="name" id="name" placeholder="닉네임" autocomplete="off" required>
 						<input type="hidden" id="idValid" value="0" /> <!-- 0-사용불가 1-사용가능 -->
 					</td>
 					<td style="width:6.6rem; text-align: right;">
@@ -53,7 +53,7 @@
 						이름
 					</td>
 					<td colspan="3">
-						<input type="text" class="form-control" name="name" id="name" placeholder="이름" required>
+						<input type="text" class="form-control" name="name" id="name" placeholder="이름" autocomplete="off" required>
 					</td>
                     </tr>
                     <tr >
@@ -61,7 +61,7 @@
 						새 비밀번호
 					</td>
 					<td colspan="3">
-						<input type="password" class="form-control" name="password" id="password" placeholder="새 비밀번호" required>
+						<input type="password" class="form-control" name="password" id="password" placeholder="새 비밀번호" autocomplete="off" required>
 					</td>								
 				</tr>
                     <tr>
@@ -69,7 +69,7 @@
 						새 비밀번호 확인
 					</td>
 					<td colspan="3">
-						<input type="password" class="form-control" id="passwordCheck" placeholder="새 비밀번호확인" required>
+						<input type="password" class="form-control" id="passwordCheck" placeholder="새 비밀번호확인" autocomplete="off" required>
 					</td>								
 					</tr>
                     <tr>
@@ -77,7 +77,7 @@
 							이메일
 						</td>
 						<td colspan="2">
-							<input type="email" class="form-control" placeholder="이메일" name="email" id="email">
+							<input type="email" class="form-control" placeholder="이메일" name="email" id="email" autocomplete="off" required>
 						</td>
 						<td style="width:6.6rem; text-align: right;">
 							<button class="btn btn-outline-secondary">중복확인</button>
@@ -88,7 +88,7 @@
 							전화번호
 						</td>
 						<td colspan="3">
-							<input type="tel" class="form-control" placeholder="-없이 입력하세요" name="phone" id="phone" maxlength="11" required>
+							<input type="tel" class="form-control" placeholder="-없이 입력하세요" name="phone" id="phone" maxlength="11" autocomplete="off" required>
 						</td>								
 					</tr>
 				</tbody>
@@ -96,7 +96,7 @@
 		</form>
 		<!-- <hr> -->
 			<div style="text-align: right; ">
-				<a href="#" class="btn btn-outline-secondary" type="button">회원탈퇴</a> 
+				<a href="${pageContext.request.contextPath}/mypage/info/withdrawal" class="btn btn-outline-secondary" type="button">회원탈퇴</a> 
 			</div>
 			<div style="text-align: center;">
 				<button type="button" class="btn btn-success shadow-sm">

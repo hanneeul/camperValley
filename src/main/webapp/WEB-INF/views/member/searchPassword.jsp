@@ -28,7 +28,7 @@
 				<hr class="my-4" />
 				<div class="p-0 d-flex">
 					<input type="text" class="form-control authentication-number" name="" placeholder="인증번호"/>
-					<button class=" btn w-25 btn-block resend resend-btn camper-color text-right">재전송</button>
+					<button class=" btn w-25 btn-block resend resend-btn font-weight-bold camper-color text-right">재전송</button>
 				</div>	
 					<button class="my-3 btn btn-camper-color btn-block btn-lg font-weight-bold">확인</button>
 			</div>			
