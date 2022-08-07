@@ -17,7 +17,7 @@
 	<div class="detail_div">
         <div class="delete_update">
         	 <button id="delete_btn">삭제하기</button>
-        	 <button id="update_btn" style="margin-right: 9px; background-color: #D8EBB5">수정하기</button>
+        	 <button id="update_btn" style="margin-right: 8px; background-color: #D8EBB5">수정하기</button>
         </div>
         <hr style="margin-top: 3rem; margin-bottom: 1rem;"/>
 		<!----------------------------- 상단 상품정보 ----------------------------->
@@ -118,17 +118,22 @@
 									</div>
 									<div class="detail-info__text-body-bottom">
 										<div class="detail-info__zzim-chat" style="display: flex;">
-										 <!-- zzim버튼 -->
-										   <div class="detail-info__zzim">
-												<button type="submit" value="2" id="zzim_btn" style="margin-right: 10px; background-color: #3c3c3c;">
-													<i class="fa-solid fa-heart" style="color: white"></i>							 
-												관심상품</button>
-										   </div>
-										   <div class="detail-info__chat">
-												<button type="submit" id="chat_btn" style="background-color: #2B380C">
-													<i class="fa-solid fa-comment"></i>			 	
-												채팅하기</button>
-										   </div>
+										   <!-- 관심상품(찜) -->
+											   <div class="detail-info__zzim">
+													<button type="submit" value="2" id="zzim_btn" style="margin-right: 10px; background-color: #3c3c3c;">
+														<i class="fa-solid fa-heart" style="color: white"></i>							 
+													관심상품</button>
+											   </div>
+										   <!-- 채팅하기 -->
+										   <!-- post 날린 요청의 결과 chatRoom(윈도우 팝업창)에서 볼 수 있음 -->
+										   <form 
+										   		id="productDetailForm" method="post" action="/campervalley/usedProduct/chat/chat" target="chat">
+										   		<div class="detail-info__chat" >
+													<button type="submit" id="chat_btn" style="background-color: #2B380C">
+														<i class="fa-solid fa-comment"></i>			 	
+													채팅하기</button>
+										   		</div>
+										   </form>
 										 </div>
 									 </div>
 								</div>
@@ -136,8 +141,6 @@
 						</div>
 						<div class="detail-info__btn-list">
 							<!-- productDetail.js -->
-							<!-- 찜 메세지 -->
-							
 						</div>
 					</div>
 				</div>
@@ -149,7 +152,7 @@
 			<div id="btmProdInfo_Wrap2">
 				<!-- '상품정보'-->
 				<div class="btmProdInfo_TitleWrap">
-					<div class="btmProdInfo_Title" style="font-weight: bold; font-size:20px; letter-spacing: 3px;">
+					<div class="btmProdInfo_Title" style="font-weight: bold; font-size: 1.2rem; letter-spacing: 3px;">
 						상품정보<span class="btmProdInfo_TitleSpan"></span>
 					</div>
 				</div>
@@ -157,7 +160,6 @@
 				<!-- 상품정보  -->
 				<div class="prodInfo_wrap1">
 					<div class="prodInfo_wrap2">
-						<div class="prodInfo_Content_Title">상품정보</div>
 						<div class="prodInfo_contentWrap">
 							<div class="content_marginTop"></div>
 							<!-- 상품내용 -->
@@ -174,48 +176,49 @@
 								번장 최다판매 샵입니다
 								
 								미개봉새상품입니다
-							</div>
-							<!-- 지역, 카테고리, 상품태그 -->
-							<div class="prodInfo_detailWrap1">
-								<!-- 지역 -->
-								<div class="prodInfo_detailWrap2">
-									<div class="detailTitleWrap">
-										<img src="" width="16" height="18" alt="거래지역 아이콘">
-										거래지역
-									</div>
-									<div class="detailContentWrap">
-										<div class="detailContent_location">
-											<!-- productDetail.js -->
-										</div>
-									</div>
+						 </div>
+						 <!-- 지역, 카테고리, 상품태그 -->
+						 <div class="prodInfo_detailWrap1">
+							<!-- 지역 -->
+							<div class="prodInfo_detailWrap2">
+								<div class="detailTitleWrap">
+									<i class="fa-solid fa-location-dot"></i>
+									거래지역
 								</div>
-								<!-- 카테고리 -->
-								<div class="prodInfo_detailWrap2">
-									<div class="detailTitleWrap">
-										<img src="" width="16" height="18" alt="카테고리 아이콘">
-										카테고리
-									</div>
-									<div class="detailContentWrap">
-										<a href="#">
-											<span class="detailContent_cate">
-												<!-- productDetail.js -->
-											</span>
-										</a>
-									</div>
-								</div>
-								<!-- 상품태그 -->
-								<div class="prodInfo_detailWrap2">
-									<div class="detailTitleWrap">
-										<img src="" width="15" height="18" alt="상품태그 아이콘">
-										상품태그
-									</div>
-									<div class="detailContentWrap_hash">
+								<div class="detailContentWrap">
+									<div class="detailContent_location">
 										<!-- productDetail.js -->
+										<p>서울시 강남구 학동로 지하 102</p>
 									</div>
+								</div>
+							</div>
+							<!-- 카테고리 -->
+							<div class="prodInfo_detailWrap2">
+								<div class="detailTitleWrap">
+									<i class="fa-solid fa-align-justify"></i>
+									카테고리
+								</div>
+								<div class="detailContentWrap">
+									<div class="detailContent_cate">
+										<!-- productDetail.js -->
+										<p>주방용품</p>
+									</div>
+								</div>
+							</div>
+							<!-- 상품태그 -->
+							<div class="prodInfo_detailWrap2">
+								<div class="detailTitleWrap">
+									<i class="fa-solid fa-tag"></i>
+									상품태그
+								</div>
+								<div class="detailContentWrap_hash">
+									<!-- productDetail.js -->
+									<p>#주방용품 #파우치 #수저 #세트</p>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 			</div>
 				
@@ -230,9 +233,11 @@
 						<div class="store">
 							<a class="storeProfileImg_Link" href="#">
 								<!-- productDetail.js -->
+								<img src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="float-start" alt="상품이미지">
 							</a>
 							<div class="storeInfoWrap">
-								<a class="storeInfo_name" href="#" style="font-size:12pt;"><!-- productDetail.js --></a>
+								<a class="storeInfo_name" href="#" 
+										style="font-size: 14px;">홍길동길동<!-- productDetail.js --></a>
 								<div class="storeInfo_productNum">
 									<a class="productNumLink" href="#"><!-- productDetail.js --></a>
 								</div>
@@ -244,21 +249,20 @@
 						</div>
 						<div class="storeInfo_moreProd">
 							<a class="moreProdLink" href="#">
-								<span class="moreProdLink_Num"></span>
-								판매상품 더보기
+								<span style="color: rgb(247, 47, 51);">9개</span><span class="moreProdLink_Num">&nbsp판매상품 더보기</span>		 
 							</a>
 						</div>
 						<!-- 별점 & 평점 -->
 						<div class="storeInfo_IndiWrap">
 							<!-- 상점평점 -->
 							<div class="storeScore_title">
-								<div style="margin-bottom:1px;">상점평점</div>
+								<div style="margin-bottom:1px;">판매자평점</div>
 								<div class="storeStar"> 
-									<img width="25" height="24" class="star1" alt="별 " src="" >
-									<img width="25" height="24" class="star2" alt="별" src="" >
-									<img width="25" height="24" class="star3" alt="별" src="" >
-									<img width="25" height="24" class="star4" alt="별" src="" >
-									<img width="25" height="24" class="star5" alt="별" src="" >
+									<i class="star fa-solid fa-star"></i>
+									<i class="star fa-solid fa-star"></i>
+									<i class="star fa-solid fa-star"></i>
+									<i class="star fa-solid fa-star"></i>
+									<i class="star fa-solid fa-star"></i>
 								</div>
 							</div>
 						
@@ -267,15 +271,26 @@
 				</div>
 			</div>
 		</div>
-	
- 	 <!-- nav -->
-	 <div id="nav">
-		 <jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
+	 	<!-- nav -->
+		<div id="nav">
+			 <jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
+		 </div>
 	 </div>
-   </div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 <script>
+// 채팅하기 관련
+
+$('#chat_btn').click(function() {
+	var popupWidth = 750;
+	var popupHeight = 500;
+
+	var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
+	var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
+
+	window.open('', 'chat', 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	
+});
+
 // 슬라이더 관련
 var slideIndex = 0; // slide index
 function currentSlide(n) {
