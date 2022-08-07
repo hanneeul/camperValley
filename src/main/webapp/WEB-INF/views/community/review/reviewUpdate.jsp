@@ -163,7 +163,8 @@
 						<div class="btn-group-toggle" data-toggle="buttons">
 							<label class="btn btn-outline-danger btn-outline-camper-red delete-file-ckb-wrap" title="삭제할파일임.jpg 삭제">
 								<input type="checkbox" id="delFile" name="delFile" value="삭제할파일임.jpg">
-								삭제할파일임.jpg... 삭제
+									<span class="float-left">삭제할파일임.jpg...</span>
+									<span class="float-right">삭제</span>
 							</label>
 		                </div>
 		            </div>
@@ -178,7 +179,7 @@
 			<hr />
 			<div class="text-center m-3 p-3">
 				<input type="reset" class="btn btn-outline-secondary px-4" value="작성취소">
-				<input type="submit" class="btn btn-outline-success btn-outline-camper-color ml-1 px-4" value="후기수정" >
+				<input type="submit" class="btn btn-outline-success btn-outline-camper-color ml-1 px-4" value="수정등록" >
 			</div>
 		</form>
 	</div>

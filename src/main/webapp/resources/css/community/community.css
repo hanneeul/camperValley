@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-/* 커뮤니티 헤딩 (작성자:수진) */
+/* 커뮤니티 헤딩 (작성자:SJ) */
 .community-heading h4 {
 	color: #b74846;
 }
@@ -22,6 +22,17 @@
 	color: #d9bf77;
 }
 
+.community-search-input {
+	font-size: .9rem;
+	border-left: hidden;
+	border-right: hidden;
+}
+
+#communitySearchBtn {
+	font-size: .9rem;
+	border-radius: 0 4px 4px 0;
+}
+
 #communitySearchBtn:hover {
 	background-color: #639A67;
 }
@@ -32,6 +43,20 @@
 
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
 	width: 6rem!important;
-	height: 2.4rem!important;
-	display: inline-grid;
+	height: 2.2rem!important;
+}
+
+.bootstrap-select>.dropdown-toggle {
+	border-radius: 4px 0 0 4px;
+	font-size: .9rem;
+}
+
+.bootstrap-select>.dropdown-toggle.bs-placeholder:focus,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+	color: white!important;
+}
+
+#communityEnrollBtn {
+	font-size: .9rem;
+	height: 2.2rem;
 }
