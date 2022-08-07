@@ -6,10 +6,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/main.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
-
-<script src="https://kit.fontawesome.com/97c6ec6a69.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/main.css"/>
 
 <div id="section" style="width: 90%; margin:50px auto">
 	<div class="container">
@@ -22,7 +20,7 @@
 		    <input type="search" id="form1" class="form-control" 
 		    				placeholder="상품명, @닉네임 검색" style="border: 1px solid gray;"/>
 		  </div>
-		  <button type="button" class="btn btn-primary" style="background-color: #2B380C;">
+		  <button type="button" class="btn btn-primary" style="background-color: #639A67;">
 		    <i class="fas fa-search"></i>
 		  </button>
 		</div>
