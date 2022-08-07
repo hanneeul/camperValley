@@ -280,6 +280,9 @@
     font-weight: bold;
     letter-spacing: 3px;
 }
+.chatTitle img {
+
+}
 .chatTitleUnderline {
 	border: solid 1px #0a58ca;
 }

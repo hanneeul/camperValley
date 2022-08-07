@@ -63,7 +63,8 @@
 		<!-- 채팅방 목록 -->
 		<div id="chatList_container">
 			<div class="chatTitle">
-		 		<div class="titleText">전체목록</div>
+		 		<div class="titleText">전체목록<img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" class="float-start" alt="화살표"
+		 											style="	width: 9px; height: 7px; font-weight: 900; margin-left: 3px;"></div>
  			</div>
 			<div class="one_member">
 				<!-- 읽지 않은 메세지 개수 -->

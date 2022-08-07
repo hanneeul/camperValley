@@ -280,7 +280,9 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 <script>
 // 채팅하기 관련
-
+document.querySelector("#update_btn").addEventListener('click', (e) => {
+	location.href = '${pageContext.request.contextPath}/usedProduct/product/productUpdate';
+});
 $('#chat_btn').click(function() {
 	var popupWidth = 750;
 	var popupHeight = 500;
