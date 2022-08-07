@@ -83,9 +83,12 @@ body {
 }
 #navbarMain {
     height: 100px;
-    background-size: contain;
+  /*   background-size: contain;
     background-repeat: no-repeat;
-    background-position: 50px;
+    background-position: 50px; */
+}
+#navbarMain img {
+	cursor: pointer;
 }
 .nav-item * {
     font-size: 15px;

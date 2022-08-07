@@ -59,11 +59,8 @@
 	border: 1px solid rgb(175, 175, 175);
 	border-radius: 20px;
 }
-.baordBoxSelectInfo, #dropdown {
+.boardBoxSelectInfo, #dropdown {
 	cursor: pointer
-}
-.moreInfo {
-	cursor: pointer;
 }
 #detailBody {
 	border-top: 1px solid rgb(175, 175, 175);
@@ -77,4 +74,50 @@
 #openURL {
 	cursor: pointer;
 	background-color: white;
+}
+
+
+/* ----------- dropdown custom --------------*/
+.drop-down {
+    position: relative;
+}
+
+.drop-down-1 {
+    z-index: 1;
+}
+
+.drop-down .selected i {
+    background: #fff no-repeat scroll right center;
+    cursor: pointer;
+}
+
+.drop-down .options ul {
+    background: #fff none repeat scroll 0 0;
+    display: none;
+    list-style: none;
+    padding: 0px 0px;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    box-sizing: border-box;
+    border: 1px solid #363636;
+    border-top: none;
+}
+
+.drop-down .options span.value {
+    display: none;
+}
+
+.drop-down .options ul li {
+    padding: 5px;
+    display: block;
+    text-decoration: none;
+    box-sizing: border-box;
+    padding: 6px 20px;
+    cursor: pointer;
+}
+
+.drop-down .options ul li:hover {
+    color: #639A67;
+    transition: 0.2s ease;
 }

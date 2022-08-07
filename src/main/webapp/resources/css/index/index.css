@@ -1,5 +1,6 @@
 @charset "UTF-8";
 /* ----- index.css ----- */
+.text-15 {font-size: 15px;}
 .text-18 {font-size: 18px;}
 .text-22 {font-size: 22px;}
 .text-35 {font-size: 35px;}
@@ -28,6 +29,27 @@ form[name=searchFrm] .input {
 	cursor: pointer;
 }
 
+/* ------- 달력 ------- */
+.nav-btn {cursor: pointer;}
+.days {display: flex;}
+.day {
+    width: calc(100% / 7);
+    text-align: center;
+}
+.dates {
+    display: flex;
+    flex-flow: row wrap;
+    height: 230px;
+}
+.date {
+    width: calc(100%/7);
+    text-align: center;
+    vertical-align: center;
+}
+.day:nth-child(7n + 1), .date:nth-child(7n + 1) {color: red;}
+.day:nth-child(7n), .date:nth-child(7n) {color: blue;}
+.other {opacity: 0.3;}
+.this {cursor: pointer;}
 
 /* ----- 날씨 조회 ----- */
 form[name=weatherFrm] {margin: 70px 0;}
