@@ -15,8 +15,11 @@ form[name="searchAdvertiserFrm"] {
 	margin: 0 .65rem 0 0;
 }
 
-.filterWrapper input, .filterWrapper select {
-	width: 9rem;
+.filterWrapper input{
+	width: 6rem;
+}
+.filterWrapper select {
+	width: 7rem;
 }
 
 #tblAdvertiserList thead {

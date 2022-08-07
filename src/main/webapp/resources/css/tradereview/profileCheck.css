@@ -1,0 +1,48 @@
+@charset "UTF-8";
+.text-13{font-size: 13px;}
+.text-14{font-size: 14px;}
+.text-15{font-size: 15px;}
+.text-18{font-size: 18px;}
+.text-20{font-size: 20px;}
+.text-25{font-size: 25px;}
+
+@media (min-width: 576px) {
+	.modal-dialog {
+		max-width: 600px;
+	}
+}
+.profile-nav li {
+	color: black;
+	cursor: pointer;
+}
+
+.profile-nav li.active {
+	color: #d9bf77;
+	border-bottom: 1px solid #d9bf77;
+}
+
+.fa-star {
+	color: rgb(230, 185, 20);
+}
+/* productBox */
+.productBox {
+	cursor: pointer;
+}
+.productBox img {
+	width: 100px;
+	height: 100px;
+	border-radius: 4px;
+}
+.info {
+	width: 100%;
+}
+
+/* reviewBox */
+.reviewBox i {
+}
+.report {
+	cursor: pointer;
+}
+.fa-lightbulb {
+	top: 2px;
+}

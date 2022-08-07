@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
-.logo{
+#content .logo{
     margin-right: 0;
     width: 40rem;
     padding-top: 44%;
@@ -15,16 +15,16 @@
     background-size: contain;
     font-size: 16px;
   }
-.btn{
+#content .btn{
   width: 250px;
   border: 2px #639A67 solid;
 }
-.btn:hover{
+#content .btn:hover{
   background-color: #2B380C;
   border: 2px #2B380C solid;
-  
+  color: white;
 }
-p{
+#content p{
  font-size: 22px;
 }
 </style>
@@ -36,7 +36,7 @@ p{
             	<p class="font-weight-bold m-1 mt-3">회원가입이 완료되었습니다.</p>
                 <div class="my-4">
                     <a href="${pageContext.request.contextPath}/" class="btn btn-camper-color btn-lg m-3 border-2" >홈으로 이동</a>
-                    <a class="btn btn-outline-camper-color btn-lg m-3 border-2" >로그인</a><%--  모달창 연결예정 --%> 
+                    <a class="btn btn-outline-camper-color btn-lg m-3 border-2" data-toggle="modal" data-target="#loginModal">로그인</a><%--  모달창 연결예정 --%> 
                 </div>
             </div>
         </div>

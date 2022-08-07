@@ -21,13 +21,13 @@
 		 
 		<div class="d-flex justify-content-between align-items-center" id="my-community-header">
 			<div class="d-flex">
-				<a class="pr2 text-dark">캠퍼모집</a>
-				<a class="pl-2 camper-color">작성후기</a>
+				<a href="${pageContext.request.contextPath}/mypage/community/myCamper" class="pr2 text-dark">캠퍼모집</a>
+				<a href="${pageContext.request.contextPath}/mypage/community/myReview" class="pl-2 camper-color">작성후기</a>
 			</div>
 			<div class="d-flex mr-2">
 				<div class="input-group mb-3">
 				  <div class="input-group-prepend">
-				    <button id="search-option" class="btn btn-outline-camper dropdown-toggle pb-4" type="button" data-toggle="dropdown" aria-expanded="false">제목&nbsp;&nbsp;&nbsp;</button>
+				    <button id="search-option" class="btn btn-outline-camper dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">제목&nbsp;&nbsp;&nbsp;</button>
 					  <ul id="search-option-item" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 					    <li><a class="dropdown-item" href="#" value="title">제목&nbsp;&nbsp;&nbsp;</a></li>
 					    <li><a class="dropdown-item" href="#" value="content">내용&nbsp;&nbsp;&nbsp;</a></li>
@@ -42,9 +42,8 @@
 				</div>
 			</div>
 		</div>
-		<hr class="m-0"/>
-		<div class="review-list py-3" id="my-community-body">
-			<table class="table table-hover mt-2 text-center border-bottom">
+		<div class="review-list pb-3" id="my-community-body">
+			<table class="table table-hover text-center border-bottom">
             	<thead>
                 	<tr>
                         <th>
