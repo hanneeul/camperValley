@@ -1,0 +1,285 @@
+@charset "UTF-8";
+@font-face {
+    font-family: 'GoyangIlsan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangIlsan.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'GoYangIlSan';
+    font-weight: 300;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanLight.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanLight.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanLight.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanLight.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanLight.ttf') format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: 'GoYangIlSan';
+    font-weight: 400;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanRegular.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanRegular.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanRegular.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanRegular.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/goyang/GoYangIlSanRegular.ttf') format("truetype");
+    font-display: swap;
+}
+* {
+    font-family: 'GoYangIlSan';
+    list-style-type: none;
+}
+
+#chatroom_container {
+	width: 68%; 
+	float: right; 
+	margin: 0px auto;    
+	height: 500px;
+	border-left: 1px solid lightgray;
+	overflow-x: hidden;
+}
+.info_container {
+	border-bottom: 1px solid lightgray;
+    height: 50px;
+}
+.member-info_container {
+	margin-left: 10px;
+	height: 15px;
+}
+.member-info_container > img {
+	width:40px;
+	height:40px;
+	border-radius: 50%;
+}
+.member-info_text-body {
+    position: relative;
+    left: 48px;
+    font-size: 0.65rem;
+    top: -46px;
+    line-height: 0.4rem;
+}
+.product-info_container {
+	font-size: 0.65rem;
+    float: right;
+    margin-top: -12px;
+    margin-right: 5px;
+    line-height: 1.05rem;
+}
+.transaction_btn {
+    font-size: 0.1rem;
+    float: right;
+    margin-top: -14px;
+    border: none;
+    border-radius: 2px;
+    background-color: #D9BF77;
+    height: 16px;
+}
+.product-info_text-price {
+	position: relative;
+    top: 3px;
+    left: 1px;
+}
+
+#chat_container {
+    vertical-align: bottom;
+    padding: 10px 0;
+    width: 100%;
+    min-height: 395px;
+    max-height: 395px;
+    overflow: scroll;
+    overflow-x: hidden;
+    background-color: #f4f4f4;
+    display: inline-block;
+}
+/* 하단 */
+#bottom-container {
+	padding-top: 5px;
+    padding-left: 5px;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+}
+#inputMessage {
+    box-sizing: border-box;
+    width: 424px;
+    height: 25px;
+    background-color: #f4f4f4;
+    border: 1px solid #639A67;
+    border-radius: 10px;
+    margin-left: 12px;
+    font-size: 0.8rem;
+}
+#inputMessage:focus, #inputMessage:hover {
+	outline: none;
+	border-width: 2px;
+}
+#sendBtn {
+    background-color: #639A67;
+    color: #f4f4f4;
+    border: none;
+    border-radius: 7px;
+    font-size: 0.1rem;
+    font-weight: 600;
+    width: 32px;
+    height: 19px;
+}
+.extra-menu {
+    display: flex;
+    margin: -17px -7px;
+    padding: 0px;
+    width: 100%;
+}
+.plusOption {
+	width: 100%;
+    padding-left: 23px;
+    padding-top: 25px;
+    display: flex;
+}
+.option img {
+    display: flex;
+    width: 14px;
+    height: 13px;
+    cursor: pointer;
+    position: relative;
+    top: -2px;
+    float: right;
+    left: 298px;
+}
+.option img:hover {
+	color: black;
+}
+.option {
+	padding-right:10px;
+}
+#uploadImg {
+	font-size: 0.1rem;
+    position: relative;
+    right: -486px;
+    top: -6px;
+    opacity: 0;
+    cursor: pointer;
+}
+/* 채팅방 */
+.chat{
+    font-size: 0.8rem;
+    color: black;
+    background: lightgray;
+    margin: 3px;
+    padding: 7px;
+    min-width: 18px;
+    min-height: 15px;
+    width: auto;
+    height: auto;
+    text-align: left;
+    word-break: break-all;
+    display: inline-block;
+    border-radius: 5px 30px 30px 30px;
+}
+
+.my-chat{
+    text-align: left;
+    color: rgb(255, 255, 255);
+    background: #2B380C;
+    border-radius: 30px 5px 30px 30px;
+}
+
+.chat-box{
+	text-align:left;
+	padding-left: 5px;
+}
+
+.my-chat-box{
+	text-align: right;
+	padding-right: 5px;
+}
+
+
+/* 채팅방 목록 */
+/* 1단계 */
+.one_member {
+    display: flex;
+    margin-bottom: 10px;
+    margin-left: 9px;
+}
+#chatList_container  {
+    z-index: 1;
+    height: 5rem;
+    background: rgb(255, 255, 255);
+    color: rgb(94, 92, 107);
+    border: none;
+    width: 31%;
+    overflow: scroll;
+    overflow-x: hidden;
+    min-height: 495px;
+    max-height: 495px;
+}
+.chatRoom_profile {
+	display: flex;
+    margin-bottom: 10px;
+    margin-left: -21px;
+}
+.other_member_img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+.other_member_nickname {
+	display: inline-block;
+    color: black;
+    font-size: 0.1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.last_message {
+    display: block;
+    font-size: 0.1rem;
+    min-width: 9.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 12px;
+    max-width: 9.5rem;
+}
+.chat_logtime {
+    font-size: 0.1rem;
+    position: relative;
+    right: 36px;
+    top: 4px;
+}
+.red_circle {
+    background-color: #EB0000;
+    width: 12px;
+    height: 10px;
+    position: relative;
+    left: 184px;
+    margin: 0px;
+    padding: 0px;
+    border-radius: 2px;
+    top: 22px;
+}
+.unread-count {
+    display: flex;
+    font-size: 1px;
+    justify-content: center;
+    align-items: center;
+    color: rgb(233, 233, 233);
+	
+}
+.chatTitle {
+	width: 100%;
+    height: 50px;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 19px;
+}
+.titleText {
+	padding-top: 13px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+.chatTitleUnderline {
+	border: solid 1px #0a58ca;
+}
