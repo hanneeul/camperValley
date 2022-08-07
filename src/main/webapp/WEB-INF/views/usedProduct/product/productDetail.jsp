@@ -120,7 +120,7 @@
 										<div class="detail-info__zzim-chat" style="display: flex;">
 										   <!-- 관심상품(찜) -->
 											   <div class="detail-info__zzim">
-													<button type="submit" value="2" id="zzim_btn" style="margin-right: 10px; background-color: #3c3c3c;">
+													<button type="submit" value="2" id="zzim_btn" style="margin-right: 10px; margin-right: 10px; background-color: #a0a0a0;">
 														<i class="fa-solid fa-heart" style="color: white"></i>							 
 													관심상품</button>
 											   </div>
@@ -129,7 +129,7 @@
 										   <form 
 										   		id="productDetailForm" method="post" action="/campervalley/usedProduct/chat/chat" target="chat">
 										   		<div class="detail-info__chat" >
-													<button type="submit" id="chat_btn" style="background-color: #2B380C">
+													<button type="submit" id="chat_btn" style="background-color: #639A67;">
 														<i class="fa-solid fa-comment"></i>			 	
 													채팅하기</button>
 										   		</div>
@@ -284,13 +284,14 @@ document.querySelector("#update_btn").addEventListener('click', (e) => {
 	location.href = '${pageContext.request.contextPath}/usedProduct/product/productUpdate';
 });
 $('#chat_btn').click(function() {
-	var popupWidth = 750;
-	var popupHeight = 500;
+	// var popupWidth = 850;
+	// var popupHeight = 500;
 
-	var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
-	var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
+	// var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
+	// var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
 
-	window.open('', 'chat', 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	
+	// window.open('', 'chat', 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY, resizable=no);	
+	window.open('', 'chat', resizable=no);	
 });
 
 // 슬라이더 관련

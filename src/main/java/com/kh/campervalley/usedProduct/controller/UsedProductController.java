@@ -36,4 +36,7 @@ public class UsedProductController {
 	
 	@PostMapping("/chat/chat")
 	public void chat() {};
+	
+	@PostMapping("/chat/chatList")
+	public void chatList() {};
 }

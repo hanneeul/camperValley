@@ -20,9 +20,12 @@
 		    <input type="search" id="form1" class="form-control" 
 		    				placeholder="상품명, @닉네임 검색" style="border: 1px solid gray;"/>
 		  </div>
-		  <button type="button" class="btn btn-primary" style="background-color: #639A67;">
-		    <i class="fas fa-search"></i>
+		  <button type="button" class="btn btn-primary" style="border: 1px solid #639A67; background-color: white;">
+		      <i class="fas fa-search" style="color: #639A67;"></i>
 		  </button>
+		  <div class="ml-1">
+			  <button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/usedProduct/product/productEnroll'">글쓰기</button>
+		  </div>
 		</div>
 			
 		<!-- 카테고리 선택 -->
