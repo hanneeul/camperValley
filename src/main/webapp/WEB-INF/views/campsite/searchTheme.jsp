@@ -23,38 +23,38 @@
 		<hr />
 		<div class="row m-0">
 			<div class="btn-group-toggle col" data-toggle="buttons">
-			  	<label class="btn btn-outline-success active btn-camper-color">
-			    	<input type="checkbox" checked>#테마1
+			  	<label class="btn btn-outline-success btn-outline-camper-color">
+			    	<input type="checkbox">#테마1
 			  	</label>
 			</div>
 			<div class="btn-group-toggle col" data-toggle="buttons">
-			  	<label class="btn btn-outline-success active btn-camper-color">
-			    	<input type="checkbox" checked>#테마2
+			  	<label class="btn btn-outline-success btn-outline-camper-color">
+			    	<input type="checkbox">#테마2
 			  	</label>
 			</div>
 			<div class="btn-group-toggle col" data-toggle="buttons">
-			  	<label class="btn btn-outline-success active btn-camper-color">
-			    	<input type="checkbox" checked>#테마3
+			  	<label class="btn btn-outline-success btn-outline-camper-color">
+			    	<input type="checkbox">#테마3
 			  	</label>
 			</div>
 			<div class="btn-group-toggle col" data-toggle="buttons">
-			  	<label class="btn btn-outline-success active btn-camper-color">
-			    	<input type="checkbox" checked>#테마4
+			  	<label class="btn btn-outline-success btn-outline-camper-color">
+			    	<input type="checkbox">#테마4
 			  	</label>
 			</div>
 			<div class="btn-group-toggle col" data-toggle="buttons">
-			  	<label class="btn btn-outline-success active btn-camper-color">
-			    	<input type="checkbox" checked>#테마5
+			  	<label class="btn btn-outline-success btn-outline-camper-color">
+			    	<input type="checkbox">#테마5
 			  	</label>
 			</div>
 			<div class="btn-group-toggle col" data-toggle="buttons">
-			  	<label class="btn btn-outline-success active btn-camper-color">
-			    	<input type="checkbox" checked>#테마6
+			  	<label class="btn btn-outline-success btn-outline-camper-color">
+			    	<input type="checkbox">#테마6
 			  	</label>
 			</div>
 			<div class="btn-group-toggle col" data-toggle="buttons">
-			  	<label class="btn btn-outline-success active btn-camper-color">
-			    	<input type="checkbox" checked>#테마7
+			  	<label class="btn btn-outline-success btn-outline-camper-color">
+			    	<input type="checkbox">#테마7
 			  	</label>
 			</div>
 		</div>

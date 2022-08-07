@@ -40,18 +40,13 @@ form[name=reviewEnrollFrm] {
     margin: 1rem 0 1rem 0;
 }
 
-#communityEnrollBtn {
-	font-size: .9rem;
-	height: 2.4rem;
-}
-
 .review-grade-list {
 	font-size: .9rem;
 	align-self: center;
 }
 
 .review-grade-list .fa-star {
-	color: #f7e600;
+	color: #f7c63a;
 }
 
 .display-contents {
@@ -85,6 +80,7 @@ form[name=reviewUpdateFrm] {
 .btn-outline-camper-red {
 	color: #c7392b;
 	border-color: #c7392b;
+	font-size: inherit;
 }
 
 .btn-outline-camper-red:hover {
@@ -103,3 +99,68 @@ form[name=reviewUpdateFrm] {
 	width: 27rem;
 }
 /* reviewUpdate.jsp end */
+
+/* reviewDetail.jsp start */
+.campsite-review-detail-wrap {
+	width: 95%;
+}
+
+.review-detail-heading span {
+	font-size: .9rem;
+}
+
+.review-detail-heading i {
+	color: #D9BF77;
+}
+
+.review-detail-content-wrap {
+	width: 90%;
+	font-size: .9rem;
+}
+
+.detail-tag-list {
+	align-self: center;
+}
+
+.detail-tag-list li {
+	background-color: #f7c63a;
+	font-size: .9rem;
+	margin: 1rem 0 1rem 0;
+}
+
+.detail-content {
+	border: 1px solid #dee2e6;
+	height: 15rem;
+}
+
+.btn-outline-camper-blue {
+	color: #3a84c3;
+	border-color: #3a84c3;
+	font-size: inherit;
+}
+
+.btn-outline-camper-blue:hover {
+	color: #fff;
+    background-color: #3a84c3;
+    border-color: #3a84c3;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled).active {
+	color: #fff;
+    background-color: #3a84c3;
+    border-color: #3a84c3;
+}
+
+.review-detail-comment-wrap {
+	font-size: .9rem;
+}
+
+textarea[name=commentContent] {
+	resize: none;
+	font-size: .9rem;
+}
+
+.review-detail-comment-wrap .card-text i {
+	color: #D9BF77;
+}
+/* reviewDetail.jsp end */
