@@ -39,18 +39,20 @@
 			<p class="test-div" style="color: #FFF; margin-bottom:-12px;">.</p>
 				
 				<ul class="faqBody" style="display: inline;">
+				<c:forEach var="list" items="${list}">
                     <li class="article" id="a1" >
                         <p class="q"><a href="#a1">
                         <span class="icon_q">Q</span>
-                        <span style="margin-left : 25px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+                        <span style="margin-left : 25px;">${list.title}</span>
                         <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width:20px" alt=""></span>
                         </a></p>
 
                         <div class="a">
                         <span class="icon_a" >A</span>
-                        <div style="margin-left: 62px; display: inline-flex; margin-top: -28px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates ipsum at pariatur aut odio architecto repellendus assumenda illo atque nulla consequuntur nam cum quas voluptas non exercitationem dignissimos quos quae.</div>
+                        <div style="margin-left: 62px; display: inline-flex; margin-top: -28px;">${list.content}</div>
                         </div>
                     </li>
+                    </c:forEach>
                 </ul>
 
 
