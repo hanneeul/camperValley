@@ -1,10 +1,13 @@
 package com.kh.campervalley.mypage.advertiser.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
@@ -26,5 +29,14 @@ public interface AdvertiserDao {
 
 	@Select("select * from license_file where license_file_no = #{no}")
 	LicenseFile selectOneLicenseFile(int no);
+
+	@Update("update advertiser set biz_status = 'Y' where advertiser_no = #{advertiserNo}")
+	int updateAdvertiserStatus(int advertiserNo);
+
+	@Insert("insert into authority values (#{auth}, #{memberId})")
+	int insertAuthority(Map<String, Object> map);
+
+	@Delete("delete from authority where member_id = #{memberId} and auth = #{auth}")
+	int deleteAuthority(Map<String, Object> map);
 	
 }

@@ -63,7 +63,7 @@
 				</thead>
 				<tbody class="listBody">
 					<c:forEach items="${list}" var="advertiser" varStatus="vs">
-						<tr data-advertiser-no="${advertiser.advertiserNo}">
+						<tr data-advertiser-no="${advertiser.advertiserNo}" data-member-id="${advertiser.memberId}">
 							<c:if test="${advertiser.bizStatus eq 'N'}">
 								<td class="waiting">승인대기</td>
 							</c:if>
@@ -97,15 +97,15 @@
 							</td>
 							<td>
 								<c:if test="${advertiser.bizStatus eq 'N'}">
-									<button class="btn btn-sm btn-camper-color" value="${advertiser.advertiserNo}">승인</button>
+									<button class="updateBtn btn btn-sm btn-camper-color" value="${advertiser.advertiserNo}">승인</button>
 								</c:if>
 								<c:if test="${advertiser.bizStatus eq 'Y'}">
 									<c:if test="${fn:contains(advertiser.authorities, 'ROLE_AD')}">
-										<button class="btn btn-sm btn-camper-red" value="${advertiser.advertiserNo}">회수</button>
+										<button class="updateBtn btn btn-sm btn-camper-red" value="${advertiser.advertiserNo}">회수</button>
 									</c:if>
 									<c:if test="${not fn:contains(advertiser.authorities, 'ROLE_AD')}">
 										<c:if test="${empty advertiser.deletedAt}">
-											<button class="btn btn-sm btn-camper-color" value="${advertiser.advertiserNo}">승인</button>
+											<button class="updateBtn btn btn-sm btn-camper-color" value="${advertiser.advertiserNo}">승인</button>
 										</c:if>
 										<c:if test="${not empty advertiser.deletedAt}">
 											<button class="btn btn-sm btn-secondary" disabled>탈퇴</button>
@@ -122,3 +122,30 @@
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+
+<script>
+document.querySelectorAll(".updateBtn").forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		const advertiserNo = e.target.value;
+		const actionType = e.target.innerHTML == "승인" ? "PERMISSION" : "PAUSE";
+
+		const tr = document.querySelector(`[data-advertiser-no="\${advertiserNo}"]`);
+		const memberId = tr.dataset.memberId;
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/admin/advertiser/updateRole",
+			method : "POST",
+			data : {
+				advertiserNo,
+				memberId,
+				actionType
+			},
+			success(response) {
+				console.log(response);
+				location.reload();
+			},
+			error : console.log
+		});
+	});
+});
+</script>
