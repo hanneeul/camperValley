@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+/* 버튼 */
+button.btn-primary, button.btn-primary:hover {
+	background-color: #639A67;
+	border: #639A67;
+}
+
 /* footer 임시 */
 footer {
 	margin-top: 70px;
@@ -10,7 +16,6 @@ footer {
 }
 
 /* 대시보드 */
-
 .a-title {
 	font-size: 17px;
 	font-weight: bold;
@@ -47,7 +52,7 @@ footer {
 .timeline {
 	position: relative;
 	left: -34px;
-    top: 16px;
+	top: 16px;
 	display: block;
 	width: 14px;
 	height: 14px;
@@ -182,20 +187,22 @@ tr:last-child {
 	height: 35px;
 	border: 1px solid #ced4da;
 }
+
 .product-state {
 	border: 1px solid #dee2e6;
-    width: 85px;
-    height: 26px;
+	width: 85px;
+	height: 26px;
 	margin-left: 5px;
 }
+
 #searchType {
 	border: 1px solid #dee2e6;
-    width: 77px;
-    height: 28px;
+	width: 77px;
+	height: 28px;
 	font-size: 0.87rem;
-    color: #777;
+	color: #777;
 }
 
-#tb-modal, #tb-modal td > input {
+#tb-modal, #tb-modal td>input {
 	font-size: 0.87rem;
 }

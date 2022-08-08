@@ -3,6 +3,12 @@ footer {
 	margin-top: 70px;
 }
 
+/* 버튼 */
+button.btn-primary, button.btn-primary:hover {
+	background-color: #639A67;
+	border: #639A67;
+}
+
 /* noticeList */
 #tb-notice th, #tb-notice td {
 	padding: 15px;
@@ -27,7 +33,7 @@ footer {
 }
 
 .cs-bar a:hover {
-	text-decoration: none;
+	color: #777;
 }
 
 .cs-header {
