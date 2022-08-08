@@ -14,7 +14,32 @@
 	<!-- static자원은 security filter처리하지 않음 -->
 	<http security="none" pattern="/resources/**" />
 	<http auto-config="true">
-		<intercept-url pattern="/" access="permitAll"/>		
+	
+		<intercept-url pattern="/" access="permitAll"/>
+		<intercept-url pattern="/index.jsp" access="permitAll"/>
+		<intercept-url pattern="/member/login" access="isAnonymous()"/>
+ 		<intercept-url pattern="/**" access="isAuthenticated()"/> 
+
+		
+<!-- 			always-use-default-target="false"  -->
+<!-- 					default-target-url="/" -->
+		<form-login
+					login-page="/member/login"
+					login-processing-url="/member/login"
+					default-target-url="/"
+					always-use-default-target="false"
+					username-parameter="memberId" 
+					password-parameter="password"
+		/>
+		
+<!-- 		<logout logout-url="/member/logout"
+				invalidate-session="true"
+				delete-cookies="JSESSIONID"
+				logout-success-url="/"/>	 -->
+		
+		<remember-me 
+			data-source-ref="dataSource"
+			token-validity-seconds="1209600"/>	
 	</http>
 	
 	<authentication-manager>
@@ -23,8 +48,7 @@
 		</authentication-provider>
 	</authentication-manager>
 	
-	<!-- 
 	<context:component-scan base-package="com.kh.security" />
-	 -->
+
 	
 </beans:beans>
