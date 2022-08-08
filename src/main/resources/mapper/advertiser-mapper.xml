@@ -26,15 +26,21 @@
 
 <select id="selectAdvertiserList" resultMap="AdvertiserCollectionMap">
 	select
-		a.*,
+		ader.*,
+		a.auth,
+		m.withdrawal,
 		l.license_file_no,
 		l.original_filename,
 		l.renamed_filename,
 		l.created_at file_created_at
 	from
-		advertiser a join license_file l
-			on a.advertiser_no = l.advertiser_no
-	order by a.created_at desc
+		advertiser ader join license_file l
+			on ader.advertiser_no = l.advertiser_no
+		join authority a
+			on ader.member_id = a.member_id
+		join member m
+			on ader.member_id = m.member_id
+	order by ader.created_at desc
 </select>
 
 <resultMap type="AdvertiserExt" id="AdvertiserCollectionMap">
@@ -45,6 +51,7 @@
 	<result column="biz_status" property="bizStatus"/>
 	<result column="created_at" property="createdAt"/>
 	<result column="deleted_at" property="deletedAt"/>
+	<result column="withdrawal" property="withdrawal"/>
 	
 	<association property="licenseFile" javaType="licenseFile">
 		<id column="license_file_no" property="licenseFileNo"/>
@@ -53,6 +60,12 @@
 		<result column="renamed_filename" property="renamedFilename"/>		
 		<result column="file_created_at" property="createdAt"/>
 	</association>
+	
+	<collection property="authorities" ofType="simpleGrantedAuthority">
+		<constructor>
+			<arg column="auth" javaType="string"/>
+		</constructor>
+	</collection>
 </resultMap>
 
 </mapper>
