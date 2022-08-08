@@ -40,7 +40,6 @@
 	font-weight: 700;
 }
 #mypage-main-container svg:hover{
-
 	fill: #2B380C;
 }
 #mypage-main-container .bookmarkWrapper:not(:last-of-type) {
@@ -74,8 +73,6 @@
 	color: #f1c40f;
 }
 
-
-
 #my-camper-table tr > td:first-child{
 	text-align: right;
 }
@@ -88,4 +85,32 @@ select.recruitment-status{
 	cursor: pointer;
 	background-color: inherit;
 	
+}
+.fa-heart:before{
+	font-size: 40px;
+}
+ #mypage-main-container .fa-heart:hover{
+ 	color: #2B380C;
+ }
+ #profileImg-wrp{
+	position: relative;
+	width: 120px;
+	height: 120px;
+	overflow: hidden;
+ 	left: 1.4rem; 
+}
+#profileImg{
+      height:105%;
+      width:initial;
+      max-height:100%;
+      max-width: initial;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+}
+#nickname{
+	position: absolute;
+	top: 30%;
+	left: 40%
 }

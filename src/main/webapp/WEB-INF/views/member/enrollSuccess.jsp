@@ -9,7 +9,7 @@
     margin-right: 0;
     width: 40rem;
     padding-top: 44%;
-    background-image: url('${pageContext.request.contextPath}/resources/images/logo.png');
+    background-image: url('${pageContext.request.contextPath}/resources/images/logo_high_definition.png');
     background-repeat: no-repeat;
     background-attachment: local;
     background-size: contain;
@@ -36,7 +36,7 @@
             	<p class="font-weight-bold m-1 mt-3">회원가입이 완료되었습니다.</p>
                 <div class="my-4">
                     <a href="${pageContext.request.contextPath}/" class="btn btn-camper-color btn-lg m-3 border-2" >홈으로 이동</a>
-                    <a class="btn btn-outline-camper-color btn-lg m-3 border-2" data-toggle="modal" data-target="#loginModal">로그인</a><%--  모달창 연결예정 --%> 
+                    <a class="btn btn-outline-camper-color btn-lg m-3 border-2" data-toggle="modal" data-target="#loginModal">로그인</a> 
                 </div>
             </div>
         </div>

@@ -30,7 +30,6 @@
 	background-color: #fafbfa;
 	padding: 2rem;
 }
-
 #edit-container button.btn-success {
     background-color: #639A67;
     border-color: #639A67;
@@ -39,16 +38,13 @@
     background-color: #2B380C;
     border-color: #2B380C;
 }
-
 #edit-container input.form-control:focus {
     box-shadow: none;
     border: #639A67 2px solid;
 }
-
 #edit-container .btn-outline-secondary{
 	border-color:#ced4da;
 	color: #495057;
-
 }
 #edit-container a.btn {
     padding-left: 0;
@@ -67,8 +63,23 @@
 }
 #edit-container input[type=file]{
 	display: none;
-
+}
+#profileImg-wrp{
+	position: absolute;
+	width: 105px;
+	height: 105px;
+	overflow: hidden;
+	transform:translate(-50%,-50%);
+	left: 13.1%;
 }
 #profileImg{
-	cursor:pointer
+      cursor:pointer;
+      height:105%;
+      width:initial;
+      max-height:100%;
+      max-width: initial;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 }

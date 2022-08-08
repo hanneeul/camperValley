@@ -35,9 +35,7 @@
 		                </div>
 		            </div>
 		            <button class="border-0 bg-transparent">
-			            <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="rgb(241, 196, 15)" class="m2-1 mr-2 bi bi-heart-fill" viewBox="0 0 16 16">
-							  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-						</svg>
+						<i class="fa-solid fa-heart"></i>
 					</button>
 		        </div>
 		        <hr />
@@ -56,9 +54,8 @@
 		                </div>
 		            </div>
 		            <button class="border-0 bg-transparent">
-		            <svg xmlns="http://www.w3.org/2000/svg" width="42.5" height="42.5" fill="rgb(241, 196, 15)" class="bi bi-heart-fill mt-1 mr-2" viewBox="0 0 16 16">
-						<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-					</svg>
+						<i class="fa-solid fa-heart"></i>
+					</button>
 		        </div>
 		    </div>
 
@@ -66,3 +63,4 @@
 		</div>
 	</div>
 </div>
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -15,18 +15,19 @@
 	align-items: center;
 }
 .usedProduct-title {
-    font-size: 1.85rem;
+    font-size: 1.6rem;
     font-weight: 700;
     letter-spacing: 10px;
-    text-align: center;
     position: relative;
     top: 73px;
+    width: 499px;
+    left: 376px;
 }
 .line {
-	width: 1018px;
+	width: 1005px;
     position: relative;
-    top: -13px;
-    left: 9px;
+    top: -8px;
+    left: -1px;
 }
 
 /* 상세검색 */
@@ -42,16 +43,16 @@
     color: #2B380C;
     font-size: 1.5rem;
     font-weight: 900;
-    position: absolute;
-    top: 16.2rem;
-    left: 6rem;
+    position: relative;
+    top: -2.5rem;
+    left: 1.5rem;
     cursor: pointer;
 }
 .dropmenu {          
     height: 100%;
     width: 100%;
     position: relative;
-    top: -4rem;
+    top: -3rem;
     left: -2rem;
     border-top: none;
     margin: 0px;
@@ -241,7 +242,7 @@
     align-content: space-around;
     justify-content: flex-end;
     position: relative;
-    top: -5.6rem;
+    top: -5.1rem;
     right: 1.6rem;
 }
 /* 광고 */

@@ -14,7 +14,7 @@
 	<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
 		<div class="col-md float-right">
 			<div class="input-group align-items-center community-search-enroll">
-		    	<select id="searchType" class="selectpicker" data-style="btn-outline-success btn-outline-camper-color">
+		    	<select id="searchType" class="custom-select btn-outline-success btn-outline-camper-color">
 					<option value="" disabled selected>선택</option>
 					<option value="memberId">작성자</option>
 				   	<option value="title">제목</option>

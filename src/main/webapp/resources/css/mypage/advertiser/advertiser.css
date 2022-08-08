@@ -40,6 +40,16 @@ small.SuccessMsg {
 	display: block;
 	margin: .4rem;
 }
+
+.page-item .page-link {
+	color: #2B380C;
+}
+.page-item.active span.page-link {
+	background-color: #639A67;
+    border-color: #639A67;
+}
+
+
 /* ----------------------------- dashboard ----------------------------- */
 input.input-daterange {
 	width: 7rem;

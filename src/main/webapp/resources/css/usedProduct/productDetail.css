@@ -225,12 +225,13 @@ div {
     left: -17px;
 }
 .storeInfo_Title {
-	font-size: 1.2rem;
-	padding: 9px 0px 10px;
+    font-size: 1.19rem;
+    padding: 40px 0px 8px;
     border-bottom: 3px solid rgb(238, 238, 238);
     font-weight: 600;
     letter-spacing: 3px;
     text-align: center;
+    margin-top: -29.5px;
 }
 .prodInfo_storeDetailWrap {
 	border-bottom: 1px solid lightgray;
