@@ -37,22 +37,33 @@
 		max-width: 1200px;
 	}
 }
+.container {
+	margin-bottom: 48px;
+}
+h5 {
+	font-size: 1.25rem;
+    font-weight: 600;
+    margin-left: 77px;
+    margin-top: 16px;
+    letter-spacing: 2px;
+    margin-bottom: -4px;
+}
 .chat_container {
-	width: 85%;
-    margin: 50px auto;
-    margin-bottom: 74px;
+    margin-bottom: 35px;
+    margin: 10px auto;
 }
 #chatroom_container {
-	width: 72%; 
-	float: right; 
-	margin: 0px auto;    
-	height: 500px;
-	border-left: 1px solid lightgray;
-	overflow-x: hidden;
+    width: 67%;
+    float: right;
+    height: 500px;
+    overflow-x: hidden;
+    margin-right: 37px;
+}
+.chatRoom_content {
+	 margin-left: 14px;
 }
 .info_container {
-	border-bottom: 1px solid lightgray;
-    height: 50px;
+    height: 49px;
     margin-right: 12px;
 }
 .member-info_container {
@@ -79,14 +90,14 @@ font-size: 0.9rem;
     line-height: 1.05rem;
 }
 .transaction_btn {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     float: right;
-    margin-top: -14px;
+    margin-top: -9px;
     border: none;
     border-radius: 2px;
     background-color: #D9BF77;
-    height: 20px;
-    width: 57px;
+    height: 30px;
+    width: 70px;
 }
 .product-info_text-price {
 	position: relative;
@@ -95,15 +106,17 @@ font-size: 0.9rem;
 }
 
 #chat_container {
-	vertical-align: bottom;
-    padding: 10px 0;
+    vertical-align: bottom;
+    padding: 9px 0px;
     width: 100%;
     min-height: 79%;
     max-height: 79%;
     overflow: scroll;
     overflow-x: hidden;
     display: inline-block;
+    background-color: #f4f4f4;
 }
+
 /* 하단 */
 #bottom-container {
 	padding-top: 5px;
@@ -113,27 +126,27 @@ font-size: 0.9rem;
 }
 #inputMessage {
     box-sizing: border-box;
-    width: 600px;
-    height: 32px;
+    width: 680px;
+    height: 29px;
     background-color: #f4f4f4;
-    border: 1px solid #639A67;
-    border-radius: 10px;
-    margin-left: 26px;
-    font-size: 0.8rem;
+    border: 1px solid #f4f4f4;
+    border-radius: 3px;
+    margin-left: 31px;
+    ont-size: 0.85rem;
 }
 #inputMessage:focus, #inputMessage:hover {
 	outline: none;
 	border-width: 2px;
 }
 #sendBtn {
-    background-color: #639A67;
-    color: #f4f4f4;
+	background-color: lightgray;
     border: none;
     border-radius: 7px;
-    font-size: 0.1rem;
+    font-size: 0.7rem;
     font-weight: 600;
-    width: 32px;
-    height: 19px;
+    width: 37px;
+    height: 24px;
+    color: gray;
 }
 .extra-menu {
     display: flex;
@@ -147,15 +160,16 @@ font-size: 0.9rem;
     padding-top: 25px;
     display: flex;
 }
-.option img {
-	display: flex;
-    width: 20px;
-    height: 18px;
+.option i {
+    display: flex;
+    width: 17px;
+    height: 16px;
     cursor: pointer;
     position: relative;
-    top: -7px;
+    top: -5.5px;
     float: right;
-    left: 493px;
+    left: 503px;
+    color: lightgray;
 }
 .option img:hover {
 	color: black;
@@ -166,18 +180,18 @@ font-size: 0.9rem;
 #uploadImg {
 	font-size: 0.1rem;
     position: relative;
-    right: -486px;
-    top: -6px;
+    right: -526px;
+    top: -8px;
     opacity: 0;
     cursor: pointer;
 }
 /* 채팅방 */
 .chat{
-    font-size: 0.8rem;
+	font-size: 0.83rem;
     color: black;
     background: lightgray;
     margin: 3px;
-    padding: 7px;
+    padding: 5px;
     min-width: 18px;
     min-height: 15px;
     width: auto;
@@ -193,7 +207,7 @@ font-size: 0.9rem;
     color: rgb(255, 255, 255);
     background: #2B380C;
     border-radius: 30px 5px 30px 30px;
-    margin-right: 23px;
+    margin-right: 1px;
 }
 
 .chat-box{
@@ -210,83 +224,86 @@ font-size: 0.9rem;
 /* 채팅방 목록 */
 /* 1단계 */
 .one_member {
-	display: flex;
+    display: flex;
     margin-bottom: 10px;
-    margin-left: 11px;
+    margin-left: 30px;
     min-width: 100%;
     align-content: center;
     justify-content: center;
 }
 #chatList_container  {
     z-index: 1;
-    height: 5rem;
     background: rgb(255, 255, 255);
     color: rgb(94, 92, 107);
     border: none;
-    width: 27.8%;
+    width: 29.8%;
     overflow: scroll;
     overflow-x: hidden;
-    min-height: 456px;
-    max-height: 456px;
-    margin-top: 24px;
+    min-height: 435px;
+    max-height: 435px;
+    margin-top: 26px;
+    border-right: 1px solid lightgray;
 }
 .chatRoom_profile {
-	display: flex;
-    margin-bottom: 10px;
+    display: flex;
+    margin-top: 4px;
     margin-left: -21px;
 }
 .other_member_img {
-    width: 35px;
-    height: 35px;
+	width: 39px;
+    height: 37px;
     border-radius: 50%;
 }
 .other_member_nickname {
 	display: inline-block;
     color: black;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-weight: bold;
-    margin-bottom: 5px;
 }
 .last_message {
     display: block;
-    font-size: 0.65rem;
-    min-width: 11.5rem;
+    font-size: 0.75rem;
+    min-width: 14.9rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-bottom: 12px;
-    max-width: 11.5rem;
+    max-width: 14.9rem;
 }
 .chat_logtime {
-    font-size: 0.1rem;
+    font-size: 0.76rem;
     position: relative;
-    right: 36px;
-    top: 4px;
+    right: 50px;
+    top: 5px; 
 }
 .red_circle {
-    background-color: #EB0000;
-    width: 11px;
-    height: 10px;
     position: relative;
-    left: 217px;
+    left: 21px;
     margin: 0px;
     padding: 0px;
-    border-radius: 2px;
-    top: 22px;
+    border-radius: 40px;
+    top: 4.6px;
 }
 .unread-count {
     display: flex;
-    font-size: 1px;
+    font-size: 0.45rem;
     justify-content: center;
-    align-items: center;
     color: rgb(233, 233, 233);
+    text-align: center;
+    margin-top: -3px;
+    width: 12px;
+    height: 13px;
+    border-radius: 59px;
+    background-color: #E80000;
 }
 .titleText {
-	padding-top: 13px;
+    padding-top: -5px;
     font-size: 0.9rem;
     font-weight: bold;
-    letter-spacing: 3px;
+    letter-spacing: 1px;
     padding-left: 10px;
+    color: gray;
+    text-align: center;
 }
 .titleText img {
 	width: 9px; 

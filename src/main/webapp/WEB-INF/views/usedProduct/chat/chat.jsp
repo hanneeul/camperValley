@@ -16,6 +16,7 @@
 </head>
 <body>	
 	<div class="container">
+		<hr />
 		<div class="chat_container">
 			<div id="chatroom_container">
 				<div class="info_container">
@@ -83,7 +84,7 @@
 					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
 				</div>
 				<!-- 하단 (입력창) -->
-				<div id="bottom_container" style="margin-top: 9px;">
+				<div id="bottom_container" style="margin-top: 10.4px;">
 					<!-- 메세지 입력창 -->
 					<!-- autofocus -> 페이지가 로드될 때 자동으로 포커스(focus) <input> 요소로 이동 -->
 					<input type="text" id="inputMessage" onkeypress="" autofocus/>
@@ -92,7 +93,7 @@
 					<!-- 추가 옵션 -->
 					<div class="extra-menu">
 						<div class="option" id="imgOption">
-							<img id="inputImg" src="${pageContext.request.contextPath}/resources/images/usedProduct/chatFiles.png" class="rounded float-start" alt="첨부파일">
+							<i class="fa-solid fa-camera"></i>
 							<input type="file" id="uploadImg"/>
 						</div>
 					</div>
@@ -113,165 +114,15 @@
 					<div class="chatRoom_profile">
 						<img class="other_member_img" src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="rounded float-start" alt="다른사람프로필">
 					</div>
-					<div class="chatRoom_content" style="margin-left: 5px;">
+					<div class="chatRoom_content">
 						<div class="other_member_nickname">홍길동</div>
 						<div class="last_message">안녕하세용 상품에 관심 있어서 채팅드립니다.</div>
 					</div>
 					<div class="chat_logtime">2022.08.07</div>
-				</div>
-							<div class="one_member">
-					<!-- 읽지 않은 메세지 개수 -->
-					<div class="unread_message">
-						<div class="red_circle">
-							<span class="badge badge-danger unread-count">1</span>
-						</div>
-					</div>
-					<div class="chatRoom_profile">
-						<img class="other_member_img" src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="rounded float-start" alt="다른사람프로필">
-					</div>
-					<div class="chatRoom_content" style="margin-left: 5px;">
-						<div class="other_member_nickname">홍길동</div>
-						<div class="last_message">안녕하세용 상품에 관심 있어서 채팅드립니다.dddddddddddddddddddddddddddddddddddddddddddd</div>
-					</div>
-					<div class="chat_logtime">2022.08.07</div>
-				</div>
-							<div class="one_member">
-					<!-- 읽지 않은 메세지 개수 -->
-					<div class="unread_message">
-						<div class="red_circle">
-							<span class="badge badge-danger unread-count">1</span>
-						</div>
-					</div>
-					<div class="chatRoom_profile">
-						<img class="other_member_img" src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="rounded float-start" alt="다른사람프로필">
-					</div>
-					<div class="chatRoom_content" style="margin-left: 5px;">
-						<div class="other_member_nickname">홍길동</div>
-						<div class="last_message">안녕하세용 상품에 관심 있어서 채팅드립니다.</div>
-					</div>
-					<div class="chat_logtime">2022.08.07</div>
-				</div>
-				
-							<div class="one_member">
-					<!-- 읽지 않은 메세지 개수 -->
-					<div class="unread_message">
-						<div class="red_circle">
-							<span class="badge badge-danger unread-count">1</span>
-						</div>
-					</div>
-					<div class="chatRoom_profile">
-						<img class="other_member_img" src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="rounded float-start" alt="다른사람프로필">
-					</div>
-					<div class="chatRoom_content" style="margin-left: 5px;">
-						<div class="other_member_nickname">홍길동</div>
-						<div class="last_message">안녕하세용 상품에 관심 있어서 채팅드립니다.</div>
-					</div>
-					<div class="chat_logtime">2022.08.07</div>
-				</div>
-							<div class="one_member">
-					<!-- 읽지 않은 메세지 개수 -->
-					<div class="unread_message">
-						<div class="red_circle">
-							<span class="badge badge-danger unread-count">1</span>
-						</div>
-					</div>
-					<div class="chatRoom_profile">
-						<img class="other_member_img" src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="rounded float-start" alt="다른사람프로필">
-					</div>
-					<div class="chatRoom_content" style="margin-left: 5px;">
-						<div class="other_member_nickname">홍길동</div>
-						<div class="last_message">안녕하세용 상품에 관심 있어서 채팅드립니다.</div>
-					</div>
-					<div class="chat_logtime">2022.08.07</div>
-				</div>
-							<div class="one_member">
-					<!-- 읽지 않은 메세지 개수 -->
-					<div class="unread_message">
-						<div class="red_circle">
-							<span class="badge badge-danger unread-count">1</span>
-						</div>
-					</div>
-					<div class="chatRoom_profile">
-						<img class="other_member_img" src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="rounded float-start" alt="다른사람프로필">
-					</div>
-					<div class="chatRoom_content" style="margin-left: 5px;">
-						<div class="other_member_nickname">홍길동</div>
-						<div class="last_message">안녕하세용 상품에 관심 있어서 채팅드립니다.</div>
-					</div>
-					<div class="chat_logtime">2022.08.07</div>
-				</div>
-				
-							<div class="one_member">
-					<!-- 읽지 않은 메세지 개수 -->
-					<div class="unread_message">
-						<div class="red_circle">
-							<span class="badge badge-danger unread-count">1</span>
-						</div>
-					</div>
-					<div class="chatRoom_profile">
-						<img class="other_member_img" src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="rounded float-start" alt="다른사람프로필">
-					</div>
-					<div class="chatRoom_content" style="margin-left: 5px;">
-						<div class="other_member_nickname">홍길동</div>
-						<div class="last_message">안녕하세용 상품에 관심 있어서 채팅드립니다.</div>
-					</div>
-					<div class="chat_logtime">2022.08.07</div>
-				</div>
-							<div class="one_member">
-					<!-- 읽지 않은 메세지 개수 -->
-					<div class="unread_message">
-						<div class="red_circle">
-							<span class="badge badge-danger unread-count">1</span>
-						</div>
-					</div>
-					<div class="chatRoom_profile">
-						<img class="other_member_img" src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="rounded float-start" alt="다른사람프로필">
-					</div>
-					<div class="chatRoom_content" style="margin-left: 5px;">
-						<div class="other_member_nickname">홍길동</div>
-						<div class="last_message">안녕하세용 상품에 관심 있어서 채팅드립니다.</div>
-					</div>
-					<div class="chat_logtime">2022.08.07</div>
-				</div>
-				
-							<div class="one_member">
-					<!-- 읽지 않은 메세지 개수 -->
-					<div class="unread_message">
-						<div class="red_circle">
-							<span class="badge badge-danger unread-count">1</span>
-						</div>
-					</div>
-					<div class="chatRoom_profile">
-						<img class="other_member_img" src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="rounded float-start" alt="다른사람프로필">
-					</div>
-					<div class="chatRoom_content" style="margin-left: 5px;">
-						<div class="other_member_nickname">홍길동</div>
-						<div class="last_message">안녕하세용 상품에 관심 있어서 채팅드립니다.</div>
-					</div>
-					<div class="chat_logtime">2022.08.07</div>
-				</div>
-							<div class="one_member">
-					<!-- 읽지 않은 메세지 개수 -->
-					<div class="unread_message">
-						<div class="red_circle">
-							<span class="badge badge-danger unread-count">1</span>
-						</div>
-					</div>
-					<div class="chatRoom_profile">
-						<img class="other_member_img" src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="rounded float-start" alt="다른사람프로필">
-					</div>
-					<div class="chatRoom_content" style="margin-left: 5px;">
-						<div class="other_member_nickname">홍길동</div>
-						<div class="last_message">안녕하세용 상품에 관심 있어서 채팅드립니다.</div>
-					</div>
-					<div class="chat_logtime">2022.08.07</div>
-				</div>
+				</div>		
 			</div>
 		</div>
-	</div>
-	<!-- nav -->
-	<div id="nav">
-		<jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
+		<hr />
 	</div>
 </body>
 </html>
