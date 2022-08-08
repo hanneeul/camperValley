@@ -31,6 +31,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AdminController {
 	
+	@Autowired
+	ServletContext application;
+
+	@Autowired
+	ResourceLoader resourceLoader;
+
 	@GetMapping("/dashboard")
 	public void dashboard() {}
 
@@ -38,12 +44,6 @@ public class AdminController {
 	public void memberList() {}
 	
 	// --------------------- EJ start
-	@Autowired
-	ServletContext application;
-	
-	@Autowired
-	ResourceLoader resourceLoader;
-	
 	@Autowired
 	private AdvertiserService advertiserService;
 	
