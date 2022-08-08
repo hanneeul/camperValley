@@ -20,6 +20,7 @@
 				method="POST"
 				enctype="multipart/form-data"
 				style="width:800px;">
+				<input type="hidden" name="memberId" value="honggd" required> <!-- ${loginMember.memberId}로 변경하기 -->
 				<div class="divInputWrapper">
 					<label for="bizName">광고계정 이름</label>
 					<input type="text" name="bizName" id="bizName" class="form-control form-control-sm" placeholder="광고계정명을 입력해주세요.">
@@ -38,7 +39,7 @@
 				</div>
 				<div class="divInputWrapper">
 					<label for="">사업자등록증</label>
-					<input type="file" class="custom-file-input hide" name="adImg" id="upFile" accept="image/*" required>
+					<input type="file" class="custom-file-input hide" name="adImg" id="upFile" accept="image/*, .pdf">
 					<div class="divImgWrapper d-flex align-items-center justify-content-center" id="upFileWrapper">
 						<button type="button" class="invisibleBtn" id="upFileBtn">
 							<i class="fa-solid fa-circle-plus fa-2x midgreen"></i>
@@ -51,6 +52,7 @@
 				</div>
 				<div class="divInputWrapper">
 					<div name="divNotice" class="p-3">
+						사업자등록증 내에 기재된 생년월일, 자택주소, 휴대폰번호 등 사업주의 개인정보는 광고주님의 개인 정보 보호를 위해 삭제하여 주시기바랍니다.
 						광고주 관련 기능은 관리자의 승인 후 이용하실 수 있습니다. 광고주 승인은 영업일 기준 최대 10일이 소요됩니다.
 						광고관리 페이지에서 등록하신 광고는 충전된 애드머니 잔액과 해당 광고소재의 일예산, 클릭당 비용을 기준으로 노출됩니다.
 					</div>
@@ -66,18 +68,28 @@
 <spring:eval var="ckBusinessNo" expression="@customProperties['api.ckBusinessNo']" />
 <script>
 // 폼제출 유효성검사
-document.enrollAdvertiserFrm.addEventListener('submit', (e) => {
-	e.preventDefault();
-	
+document.enrollAdvertiserFrm.onsubmit = () => {
 	let result = true;
-	if(!/^[a-zA-Z가-힣0-9].{0,20}[^ \t\n]$/.test(bizName.value)){
-		
+	
+	if(!/^[a-zA-Z가-힣0-9]{5,20}$/.test(bizName.value)) {
+		printErrSmall("#bizNameMsg", "광고계정명은 5자 이상 20자 이내의 영문/한글/숫자로 구성되어야합니다.");
+		result = false;
 	} else resetMsg("#bizNameMsg");
 	
-	console.log("제출!");
+	if(bizNoResult.value != "true") {
+		printErrSmall("#bizNoMsg", "사업자등록번호 확인이 필요합니다.");
+		result = false;
+	}
 	
-});
+	if(upFile.files.length == 0) {
+		printErrSmall("#bizImgMsg", "사업자등록증 파일을 추가해주세요.");
+		result = false;
+	} else resetMsg("#bizImgMsg");
+	
+	return result;
+};
 
+// 유효성검사 실패 메세지 출력
 const printErrSmall = (target, msg) => {
     const msgSmall = document.querySelector(target);
     msgSmall.innerHTML = msg;
@@ -86,15 +98,16 @@ const printErrSmall = (target, msg) => {
     msgSmall.classList.remove('hide');
 };
 
+// 유효성검사결과 메세지 초기화
 const resetMsg = (target) => {
 	const msgSmall = document.querySelector(target);
 	msgSmall.innerHTML = "";
 };
 
 // 사업자등록번호 검증
-document.querySelector("#ckBizNoBtn").addEventListener('click', (e) => {
+const checkBizNo = () => {
 	const inputData = document.querySelector("#bizLicenseNo").value;
-	let result = document.querySelector("#bizNoResult").value;
+	const result = document.querySelector("#bizNoResult");
 	const msg = document.querySelector("#bizNoMsg");
 	
 	// 테스트(배민사업자번호) : 1208765763
@@ -111,12 +124,12 @@ document.querySelector("#ckBizNoBtn").addEventListener('click', (e) => {
 		accept: "application/json",
 		success(response) {
 			if(response.match_cnt) {
-				result = "true";
+				result.value = "true";
 				msg.innerHTML = "사업자등록번호 검증에 성공하였습니다.";
 				msg.classList.add('SuccessMsg');
 				msg.classList.remove('failMsg');
 			} else {
-				result = "false";
+				result.value = "false";
 				msg.innerHTML = "사업자등록번호 검증에 실패하였습니다.";
 				msg.classList.add('failMsg');
 				msg.classList.remove('SuccessMsg');
@@ -125,16 +138,26 @@ document.querySelector("#ckBizNoBtn").addEventListener('click', (e) => {
 		},
 		error: console.log
 	});
+};
+
+// 사업자등록번호 검증 상태 변경
+document.querySelector("#bizLicenseNo").addEventListener('change', (e) => {
+	document.querySelector("#bizNoResult").value = "false";
+});
+// 사업자등록번호 검증 호출
+document.querySelector("#ckBizNoBtn").addEventListener('click', (e) => {
+	checkBizNo();
 });
 
-document.querySelector("#upFileBtn").addEventListener('click', (e) =>{
+// 파일 업로드 & 업로드 파일 취소
+document.querySelector("#upFileBtn").addEventListener('click', (e) => {
 	document.querySelector("#upFile").click();
 });
-document.querySelector("#preview").addEventListener('click', (e) =>{
+document.querySelector("#preview").addEventListener('click', (e) => {
 	document.querySelector("#upFile").click();
 });
 
-document.querySelector("#upFile").addEventListener('change', (e) =>{
+document.querySelector("#upFile").addEventListener('change', (e) => {
 	const input = e.target;
 	const upFileWrapper = document.getElementById('upFileWrapper');
 	const previewWrapper = document.getElementById('previewWrapper');
