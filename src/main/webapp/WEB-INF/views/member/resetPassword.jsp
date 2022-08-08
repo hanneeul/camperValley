@@ -6,7 +6,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/searchInfo.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberCommon.css" />
-	<div class="mx-auto mt-5 container p-5 shadow-sm border"  id="search-my-info">
+	<div class="mx-auto mt-5 container p-5 shadow-sm border" id="search-my-info">
 		<h5 class="font-weight-bold pb-3 camper-color text-center m-0">비밀번호 재설정</h5>
 	<%-- 들여쓰기 수정 --%>
 		<form:form method="post" >

@@ -27,7 +27,9 @@
 				<tr>
 					<td rowspan="2" style="width:9.5rem;">
 						<input type="file" accept="image/*" name="" id="file" />
-						<img id="profileImg" alt="누구님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/oo.jpg" class="rounded-circle shadow-sm mt-2" width="100px" height="100px"/>
+						<div class="rounded-circle" id="profileImg-wrp">
+							<img id="profileImg" alt="누구님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/kj.png"/>
+						</div>
 					</td>
 					<td style="width:6.4rem;"class="font-weight-bold">
 						아이디
@@ -124,3 +126,4 @@
 		</div>
 	</div>
 </div>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

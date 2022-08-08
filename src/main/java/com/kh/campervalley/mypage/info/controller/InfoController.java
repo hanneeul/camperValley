@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.campervalley.member.controller.MemberController;
+import com.kh.campervalley.member.model.dto.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,8 +18,14 @@ public class InfoController {
 	@GetMapping("/edit")
 	public void mypageUpdate() {
 	}
+
+	
 	@GetMapping("/main")
-	public void mypage() {
+	public void mypage(@AuthenticationPrincipal Member member) {
+		log.debug("member = {}", member);
 	}
+	
+	@GetMapping("/withdrawal")
+	public void withdrawal() {}
 
 }
