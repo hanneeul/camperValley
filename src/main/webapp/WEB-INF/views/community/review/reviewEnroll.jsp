@@ -157,11 +157,11 @@
 			  	</div>
 			</div>
 			<div class="form-group row">
-			  	<label for="name" class="col-md-1 col-form-label font-weight-bold">첨부파일</label>
+			  	<label for="reviewPhoto" class="col-md-1 col-form-label font-weight-bold">첨부파일</label>
 				<div class="input-group col-md-5">
 				  	<div class="custom-file">
-				    	<input type="file" class="custom-file-input" name="reviewPhoto" multiple>
-				    	<label class="custom-file-label" for="reviewPhoto">첨부파일을 선택해주세요.</label>
+				    	<input type="file" class="custom-file-input" name="upFile" id="upFile" multiple>
+				    	<label class="custom-file-label" for="upFile">첨부파일을 선택해주세요.</label>
 				  	</div>
 				</div>
 			</div>
