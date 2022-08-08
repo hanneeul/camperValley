@@ -140,7 +140,7 @@
 									<div class="tagInputWrap">
 										<div class="tagInputArea">
 											<input type="text" placeholder="연관태그를 입력해주세요. (최대 5개)"
-												value="" id="tagInput" autocomplete="off">
+												value="" id="tagInput" autocomplete="off" style="border: none;">
 										</div>
 									</div>
 								</div>

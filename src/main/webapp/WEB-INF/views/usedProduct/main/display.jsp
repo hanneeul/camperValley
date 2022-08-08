@@ -51,7 +51,7 @@
 <div id="display-list" class="row">
 	<!-- for 구문 -->
 		<div class="item col-3"
-			onclick="location.href=''">
+			onclick="location.href='/campervalley/usedProduct/product/productDetail'">
 			<div class="item">
 				<div id="itemSolid">
 					<img src="${pageContext.request.contextPath}/resources/images/usedProduct/travlerPouch.jpg" class="rounded float-start" alt="상품이미지">
@@ -64,7 +64,7 @@
 			</div>
 		</div>
 		<div class="item col-3"
-			onclick="location.href=''">
+			onclick="">
 			<div class="item">
 				<div id="itemSolid">
 					<img src="${pageContext.request.contextPath}/resources/images/usedProduct/travlerPouch.jpg" class="rounded float-start" alt="상품이미지">
