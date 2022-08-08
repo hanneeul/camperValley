@@ -20,6 +20,22 @@
 	font-size: .9rem;
 }
 
+#sido1, #gugun1 {
+	height: inherit;
+    max-width: max-content;
+	font-size: .9rem;
+}
+
+select.custom-select {
+    background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23639A67' d='M7,10L12,15L17,10H7Z'/%3E%3C/svg%3E") no-repeat right .3rem center;
+    background-size: 25px 50px;
+}
+
+select.custom-select:focus,
+select.custom-select:hover {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFFFFF' d='M7,10L12,15L17,10H7Z'/%3E%3C/svg%3E");
+}
+
 .search-header {
 	font-size: 1rem;
 	align-self: center;
