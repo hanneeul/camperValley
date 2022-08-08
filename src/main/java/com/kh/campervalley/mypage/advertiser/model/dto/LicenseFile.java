@@ -15,6 +15,6 @@ public class LicenseFile {
 	private int advertiserNo;
 	private String originalFilename;
 	private String renamedFilename;
-	private LocalDateTime created_at;
+	private LocalDateTime createdAt;
 
 }

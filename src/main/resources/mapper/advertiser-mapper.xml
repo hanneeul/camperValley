@@ -24,4 +24,35 @@
 	</selectKey>
 </insert>
 
+<select id="selectAdvertiserList" resultMap="AdvertiserCollectionMap">
+	select
+		a.*,
+		l.license_file_no,
+		l.original_filename,
+		l.renamed_filename,
+		l.created_at file_created_at
+	from
+		advertiser a join license_file l
+			on a.advertiser_no = l.advertiser_no
+	order by a.created_at desc
+</select>
+
+<resultMap type="AdvertiserExt" id="AdvertiserCollectionMap">
+	<id column="advertiser_no" property="advertiserNo"/>
+	<result column="member_id" property="memberId"/>
+	<result column="biz_license_no" property="bizLicenseNo"/>
+	<result column="biz_name" property="bizName"/>
+	<result column="biz_status" property="bizStatus"/>
+	<result column="created_at" property="createdAt"/>
+	<result column="deleted_at" property="deletedAt"/>
+	
+	<association property="licenseFile" javaType="licenseFile">
+		<id column="license_file_no" property="licenseFileNo"/>
+		<result column="advertiser_no" property="advertiserNo"/>		
+		<result column="original_filename" property="originalFilename"/>		
+		<result column="renamed_filename" property="renamedFilename"/>		
+		<result column="file_created_at" property="createdAt"/>
+	</association>
+</resultMap>
+
 </mapper>

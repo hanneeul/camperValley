@@ -6,7 +6,7 @@
 }
 
 form[name="searchAdvertiserFrm"] {
-	width: 55rem;
+	width: 54rem;
 	margin: 0;
 }
 
@@ -16,10 +16,10 @@ form[name="searchAdvertiserFrm"] {
 }
 
 .filterWrapper input{
-	width: 6rem;
+	width: 7rem;
 }
 .filterWrapper select {
-	width: 7rem;
+	width: 6rem;
 }
 
 #tblAdvertiserList thead {
@@ -55,4 +55,13 @@ form[name="searchAdvertiserFrm"] {
 
 .pagebar a {
 	font-weight: normal;
+}
+
+.page-item .page-link {
+	color: #2B380C;
+}
+
+.page-item.active span.page-link {
+	background-color: #639A67;
+    border-color: #639A67;
 }

@@ -1,5 +1,8 @@
 package com.kh.campervalley.mypage.advertiser.model.service;
 
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,5 +30,23 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		result = advertiserDao.insertLicenseFile(licenseFile);
 
 		return result;
+	}
+	
+	@Override
+	public List<AdvertiserExt> selectAdvertiserList(int cPage, int numPerPage) {
+		int offset = (cPage - 1) * numPerPage;
+		int limit = numPerPage;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return advertiserDao.selectAdvertiserList(rowBounds);
+	}
+	
+	@Override
+	public int selectTotalAdvertiser() {
+		return advertiserDao.selectTotalAdvertiser();
+	}
+	
+	@Override
+	public LicenseFile selectOneLicenseFile(int no) {
+		return advertiserDao.selectOneLicenseFile(no);
 	}
 }
