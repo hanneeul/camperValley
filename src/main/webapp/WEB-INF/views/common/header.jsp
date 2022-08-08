@@ -56,7 +56,7 @@
 				</ul>
 				<ul class="navbar-nav mt-4 ml-5">
 					<!-- 선택시 active -->
-					<li class="nav-item"><a class="nav-link small text-dark" href="#" data-toggle="modal" data-target="#loginModal"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
+					<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/login"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
 					<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/enroll"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
 				</ul>
 			</div>
@@ -119,5 +119,4 @@
 		});
 		</script>
 	</header>
-	<jsp:include page="/WEB-INF/views/member/login.jsp" />
 	<section id="content" class="mx-auto">

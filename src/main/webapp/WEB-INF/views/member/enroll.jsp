@@ -12,7 +12,7 @@
 
 <div class="container">	
 	<%-- 본문시작 --%>
-	<div id="enroll-container" class="mx-auto text-center" style="width: 24%;">
+	<div id="enroll-container" class="mx-auto text-center" style="width: 33rem;">
 		<div class="row">
 			<div class="col-md-12" >
 				<div class="header">

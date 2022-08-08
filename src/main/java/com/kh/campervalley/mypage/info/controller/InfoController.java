@@ -18,8 +18,12 @@ public class InfoController {
 	@GetMapping("/edit")
 	public void mypageUpdate() {
 	}
+	
 	@GetMapping("/main")
 	public void mypage() {
 	}
+	
+	@GetMapping("/withdrawal")
+	public void withdrawal() {}
 
 }

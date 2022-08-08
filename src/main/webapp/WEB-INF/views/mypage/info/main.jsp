@@ -15,13 +15,15 @@
 		<div class="col-lg-2">
 			<jsp:include page="/WEB-INF/views/common/mypageSidebar.jsp" />
 		</div>
-		<div class="col-lg-10 pl-5 pr-2 mt-1" id="mypage-main-container">
+		<div class="col-lg-10 pl-5 mt-4" id="mypage-main-container">
 		<%-- 본문시작 --%>
-		<div class="px">
+		<div class="px-4">
 		  <div class="row justify-content-between" >
                 <div class="col-md-6 align-self-center border-right pl-4 font-weight-bold">
-                    <img alt="누구님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/oo.jpg" class="rounded-circle ml-3 mt-2 shadow" width="120px" height="120px"/>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 닉네임
+                    <div class="rounded-circle" id="profileImg-wrp">
+                    	<img alt="누구님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/kj.png" id="profileImg" class="" />
+                    </div >
+                    	<span id="nickname" class="d-block">홍길동</span>
                     <a href="${pageContext.request.contextPath}/mypage/info/edit"  class="shadow-sm btn btn-camper d-block mt-3 ml-2 mb-2">
                         회원정보 수정
                     </a>
@@ -58,9 +60,7 @@
                         <div class="col-md-4">
                             <div class="m-4">
 	                            <a href="${pageContext.request.contextPath}/mypage/trade/wish">
-	                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#639A67" class="bi bi-heart-fill" viewBox="0 0 16 16">
-									  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-									</svg>
+									<i class="fa-solid fa-heart camper-color"></i>
 								</a>
                             </div>
                             <a href="${pageContext.request.contextPath}/mypage/trade/wish" class="font-weight-bold">
@@ -87,7 +87,7 @@
 								<img class="campsiteImg" src="${pageContext.request.contextPath}/resources/images/mypage/advertiser/file.png" alt="메인 홈 슬라이드 배너 영역" />
 							</div>
 						</div>
-						<div class="col campsiteInfo p-0 pl-3 pt-2"">
+						<div class="col campsiteInfo p-0 pl-3 pt-2">
 							<h5 class="mb-3 campsiteName">[ㅁㅁ도 ㅇㅇ시]블라블라숲 캠핑장</h5>
 							<h6 class="pt-2 campsiteIntro">낭만 가득한 프라이빗 캠핑장</h6>
 							<div class="d-flex detailInfo mt-4">
@@ -352,3 +352,5 @@
 		</div>
 	</div>
 </div>
+</div>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -13,5 +13,8 @@ a.btn-dark, a.btn-outline-dark{
 a.btn-dark{
 	background-color: #2B380C;
 }
-
+.fa-heart:before{
+	color: #e5c619;
+	font-size: 40px
+}
 
