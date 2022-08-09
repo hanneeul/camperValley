@@ -8,11 +8,21 @@ label {
 	font-size: 15px;
 	width: 120px;
 }
-input, textarea {
+input, textarea, select {
 	margin: 10px 0 10px 20px;
 	font-size: 12px;
 	outline: 1px solid rgba(0, 50, 0, 0.5);
 	border-style: none;
+	padding: 10px;
+}
+input.input-daterange {
+	background-color: #fff !important;
+	outline: 1px solid rgba(0, 50, 0, 0.5);
+	border-style: none;
+	border-radius: 0;
+}
+select {
+	width: 20%;
 }
 textarea {
 	resize: none;
