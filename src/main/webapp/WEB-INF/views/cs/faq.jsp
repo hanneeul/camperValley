@@ -24,12 +24,15 @@
 	</div>
 
 	
+	<form id="faqSearchFrm" method="POST" action="${pageContext.request.contextPath}/cs/faqSearch" class="faqSearchFrm">
 		<div class="search-group float-right">
-			<input class="input-search" type="text" placeholder="search">
-			<button class="btn-search" type="button">
+			<input type="hidden" name="searchType" value="title">
+			<input class="input-search" type="text" placeholder="search" name="searchKeyword" id="searchKeyword">
+			<button class="btn-search" type="submit">
 				<i class="fa fa-search"></i>
 			</button>
 		</div>
+	</form>
 		<button type="button" class="mr-2 btn btn-primary btn-sm float-right" onclick="location.href='${pageContext.request.contextPath}/cs/faqEnroll';">글등록</button>
 	
 

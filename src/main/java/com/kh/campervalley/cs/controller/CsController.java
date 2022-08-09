@@ -49,6 +49,8 @@ public class CsController {
 		return "cs/faq";
 	}
 	
+	
+	
 	@PostMapping("/faqDelete")
 	public String faqDelete(@RequestParam int noticeNo, Notice notice, RedirectAttributes redirectAttr) {
 		try {
