@@ -1,6 +1,7 @@
 package com.kh.campervalley.mypage.advertiser.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
@@ -13,7 +14,11 @@ public interface AdvertiserService {
 
 	List<AdvertiserExt> selectAdvertiserList(int cPage, int numPerPage);
 
+	List<AdvertiserExt> selectAdvertiserFilteredList(Map<String, Object> param, int cPage, int numPerPage);
+
 	int selectTotalAdvertiser();
+
+	int selectFilteredTotalAdvertiser(Map<String, Object> param);
 
 	LicenseFile selectOneLicenseFile(int no);
 

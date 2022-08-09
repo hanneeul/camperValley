@@ -21,11 +21,13 @@ public interface AdvertiserDao {
 	@Insert("insert into license_file values (seq_license_file_no.nextval, #{advertiserNo}, #{originalFilename}, #{renamedFilename}, default)")
 	int insertLicenseFile(LicenseFile licenseFile);
 
-	
 	List<AdvertiserExt> selectAdvertiserList(RowBounds rowBounds);
+	
+	List<AdvertiserExt> selectAdvertiserFilteredList(Map<String, Object> param, RowBounds rowBounds);
 
-	@Select("select count(*) from advertiser")
 	int selectTotalAdvertiser();
+	
+	int selectFilteredTotalAdvertiser(Map<String, Object> param);
 
 	@Select("select * from license_file where license_file_no = #{no}")
 	LicenseFile selectOneLicenseFile(int no);
@@ -38,5 +40,5 @@ public interface AdvertiserDao {
 
 	@Delete("delete from authority where member_id = #{memberId} and auth = #{auth}")
 	int deleteAuthority(Map<String, Object> map);
-	
+
 }

@@ -44,8 +44,21 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	}
 	
 	@Override
+	public List<AdvertiserExt> selectAdvertiserFilteredList(Map<String, Object> param, int cPage, int numPerPage) {
+		int offset = (cPage - 1) * numPerPage;
+		int limit = numPerPage;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return advertiserDao.selectAdvertiserFilteredList(param, rowBounds);
+	}
+	
+	@Override
 	public int selectTotalAdvertiser() {
 		return advertiserDao.selectTotalAdvertiser();
+	}
+	
+	@Override
+	public int selectFilteredTotalAdvertiser(Map<String, Object> param) {
+		return advertiserDao.selectFilteredTotalAdvertiser(param);
 	}
 	
 	@Override

@@ -36,10 +36,57 @@
 	from
 		advertiser ader join license_file l
 			on ader.advertiser_no = l.advertiser_no
-		join authority a
+		left join (select * from authority where auth = 'ROLE_AD') a
 			on ader.member_id = a.member_id
 		join member m
 			on ader.member_id = m.member_id
+	order by ader.created_at desc
+</select>
+
+<select id="selectAdvertiserFilteredList" parameterType="map" resultMap="AdvertiserCollectionMap">
+	select
+		ader.*,
+		a.auth,
+		m.withdrawal,
+		l.license_file_no,
+		l.original_filename,
+		l.renamed_filename,
+		l.created_at file_created_at
+	from
+		advertiser ader join license_file l
+			on ader.advertiser_no = l.advertiser_no
+		left join (select * from authority where auth = 'ROLE_AD') a
+			on ader.member_id = a.member_id
+		join member m
+			on ader.member_id = m.member_id
+	<where>
+		<if test="status != null and status != ''">
+			<if test="status != 'all'">
+				m.withdrawal != 'Y'
+				and ader.deleted_at is null
+			</if>
+			<if test="status == 'waiting'">
+				and ader.biz_status = 'N'
+			</if>
+			<if test="status == 'permission'">
+				and ader.biz_status = 'Y'
+				and a.auth = 'ROLE_AD'
+			</if>
+			<if test="status == 'pause'">
+				and ader.biz_status = 'Y'
+				and a.auth is null
+			</if>
+		</if>
+		<if test="memberId != null and memberId != ''">
+			and ader.member_id like '%' || #{memberId} || '%'
+		</if>
+		<if test="bizName != null and bizName != ''">
+			and ader.biz_name like '%' || #{bizName} || '%'
+		</if>
+		<if test="bizLicenseNo != null and bizLicenseNo != ''">
+			and biz_license_no like '%' || #{bizLicenseNo} || '%'
+		</if>
+	</where>
 	order by ader.created_at desc
 </select>
 
@@ -67,5 +114,57 @@
 		</constructor>
 	</collection>
 </resultMap>
+
+<select id="selectTotalAdvertiser" resultType="_int">
+	select
+		count(*)
+	from
+		advertiser ader join license_file l
+			on ader.advertiser_no = l.advertiser_no
+		left join (select * from authority where auth = 'ROLE_AD') a
+			on ader.member_id = a.member_id
+		join member m
+			on ader.member_id = m.member_id
+</select>
+
+<select id="selectFilteredTotalAdvertiser" resultType="_int">
+	select
+		count(*)
+	from
+		advertiser ader join license_file l
+			on ader.advertiser_no = l.advertiser_no
+		left join (select * from authority where auth = 'ROLE_AD') a
+			on ader.member_id = a.member_id
+		join member m
+			on ader.member_id = m.member_id
+	<where>
+		<if test="status != null and status != ''">
+			<if test="status != 'all'">
+				m.withdrawal != 'Y'
+				and ader.deleted_at is null
+			</if>
+			<if test="status == 'waiting'">
+				and ader.biz_status = 'N'
+			</if>
+			<if test="status == 'permission'">
+				and ader.biz_status = 'Y'
+				and a.auth = 'ROLE_AD'
+			</if>
+			<if test="status == 'pause'">
+				and ader.biz_status = 'Y'
+				and a.auth is null
+			</if>
+		</if>
+		<if test="memberId != null and memberId != ''">
+			and ader.member_id like '%' || #{memberId} || '%'
+		</if>
+		<if test="bizName != null and bizName != ''">
+			and ader.biz_name like '%' || #{bizName} || '%'
+		</if>
+		<if test="bizLicenseNo != null and bizLicenseNo != ''">
+			and biz_license_no like '%' || #{bizLicenseNo} || '%'
+		</if>
+	</where>
+</select>
 
 </mapper>

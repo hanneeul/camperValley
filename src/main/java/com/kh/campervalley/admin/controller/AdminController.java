@@ -62,17 +62,17 @@ public class AdminController {
 
 			List<AdvertiserExt> list = null;
 			int totalAdvertiser = 0;
-			String url = "";
+			String url = request.getRequestURI();
 			String pagebar = "";
 			if(param.isEmpty()) {
 				list = advertiserService.selectAdvertiserList(cPage, numPerPage);
 				totalAdvertiser = advertiserService.selectTotalAdvertiser();
-				url = request.getRequestURI();
 				pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalAdvertiser, url);
 			} else {
-				String tail = param.toString().replaceAll(", ", "&");
-				log.debug(url + "?" + tail);
-				pagebar = CamperValleyUtils.getMultiParamPagebar(cPage, numPerPage, totalAdvertiser, url + "?" + tail);
+				String tail = "?" + param.toString().replaceAll(", ", "&").replace("{", "").replace("}", "");
+				list = advertiserService.selectAdvertiserFilteredList(param, cPage, numPerPage);
+				totalAdvertiser = advertiserService.selectFilteredTotalAdvertiser(param);
+				pagebar = CamperValleyUtils.getMultiParamPagebar(cPage, numPerPage, totalAdvertiser, url + tail);
 			}
 			
 			mav.addObject("list", list);
