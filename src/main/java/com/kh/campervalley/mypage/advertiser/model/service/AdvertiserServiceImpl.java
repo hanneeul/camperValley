@@ -1,6 +1,8 @@
 package com.kh.campervalley.mypage.advertiser.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.campervalley.mypage.advertiser.model.dao.AdvertiserDao;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.BizStatus;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 
 import lombok.extern.slf4j.Slf4j;
@@ -49,4 +52,28 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	public LicenseFile selectOneLicenseFile(int no) {
 		return advertiserDao.selectOneLicenseFile(no);
 	}
+
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int updateAdvertiserPermission(int advertiserNo, String memberId) {
+		int result = advertiserDao.updateAdvertiserStatus(advertiserNo);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberId", memberId);
+		map.put("auth", "ROLE_AD");
+		result = advertiserDao.insertAuthority(map);
+		
+		return result;
+	}
+	
+	@Override
+	public int updateAdvertiserPause(int advertiserNo, String memberId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberId", memberId);
+		map.put("auth", "ROLE_AD");
+		int result = advertiserDao.deleteAuthority(map);
+		
+		return result;
+	}
+
 }

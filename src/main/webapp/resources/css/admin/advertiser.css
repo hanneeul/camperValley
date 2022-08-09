@@ -52,6 +52,12 @@ form[name="searchAdvertiserFrm"] {
 .waiting {
 	color: #D9BF77;
 }
+.pause {
+	color: #AD1C0E;
+}
+.withdrawal {
+	color: #aaa;
+}
 
 .pagebar a {
 	font-weight: normal;

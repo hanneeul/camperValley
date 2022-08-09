@@ -7,7 +7,11 @@
 .width-1000 {width: 1000px;}
 
 /* ----- 캠핑장 검색 ----- */
-form[name=searchFrm] {margin: 40px 0;}
+#searchWeatherBox {
+	padding: 40px 0;
+	background-size: cover;
+}
+/* form[name=searchFrm] {: 40px 0;} */
 .shadow-custom {
 	border-radius: 20px;
 	box-shadow:
@@ -22,12 +26,22 @@ form[name=searchFrm] .input {
 	border-style: none;
 	
 }
-#inputArea input{
+#inputArea option {
+	cursor: pointer;
+}
+#inputArea option:hover {
+	background-color: #639A67;
+	color: white;
+}
+#inputArea .input{
 	width: 150px;
+	cursor: pointer;
+	color: rgb(105, 105, 105);
 }
 #searchCampsite {
 	cursor: pointer;
 }
+
 
 /* ------- 달력 ------- */
 .nav-btn {cursor: pointer;}
@@ -64,20 +78,38 @@ form[name=weatherFrm] .input {
 	outline: 1px solid rgba(0, 50, 0, 0.5);
 	border-style: none;
 }
-
+#selectArea select, #selectArea option {
+	cursor: pointer;
+}
+.date > div {
+	width: 30px;
+	height: 30px;
+	padding-top: 5px;
+	margin: auto;
+	border-radius: 50%;
+}
+#weather-btn {
+	cursor: pointer;
+}
 /* ----- 광고 조회 ----- */
 .carousel-item {
 	height: 300px;
+	background-color: rgb(225, 225, 225);
 }
 
+
 /* ----- 캠핑장 구분 조회 ----- */
-#campsiteGubun {margin: 70px 0;}
+#gubunBox {
+	background-size: cover;
+}
+#campsiteGubun {padding: 70px 0;}
 #campsiteGubun .shadow-custom {
 	height: 430px;
 	width: 430px;
 }
-#glamping, #caravan{
+.campsite {
 	background-size: cover;
 	background-position: -250px;
 	cursor: pointer;
+	opacity: 0.7;
 }

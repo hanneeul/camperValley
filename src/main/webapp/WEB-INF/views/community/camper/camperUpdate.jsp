@@ -121,6 +121,7 @@
 	$("#camperUpdate")
 	.modal()
 	.on('hide.bs.modal', (e) => {
+		location.href = '${header.referer}';
 	});
 </script>
 </html>

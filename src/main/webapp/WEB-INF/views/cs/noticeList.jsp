@@ -77,7 +77,7 @@
 			
 		</tbody>
 	</table>
-	<button type="button" class="btn btn-secondary btn-sm float-right" id="btn-nt-enroll" onclick="location.href='${pageContext.request.contextPath}/cs/noticeEnroll';">글등록</button>
+	<button type="button" class="btn btn-primary btn-sm float-right" id="btn-nt-enroll" onclick="location.href='${pageContext.request.contextPath}/cs/noticeEnroll';">글등록</button>
 </div>
 </div>
 
