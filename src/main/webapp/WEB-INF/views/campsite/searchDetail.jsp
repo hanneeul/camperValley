@@ -152,60 +152,26 @@ document.querySelector("#conditionsSubmitBtn").addEventListener('submit', (e) =>
 </script>
 <div class="d-flex bd-highlight w-100 p-3 m-auto campsite-result-wrap">
 	<div class="p-2 flex-fill bd-highlight campsite-result">
-		<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
-			<div class="result-list-img bg-light">
-				캠핑장 이미지
-				<img src="..." class="img-thumbnail" alt="...">
+		<c:forEach items="${list}" var="camp">
+			<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
+				<div class="result-list-img bg-light">
+					캠핑장 이미지
+					<img src="${camp.firstImageUrl}" class="img-thumbnail" alt="${camp.facltNm} 대표이미지">
+				</div>
+				<div class="result-list-content">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<h6>${camp.facltNm}</h6>
+						</li>
+						<li class="list-group-item border-bottom-0">${camp.lineIntro}</li>
+						<li class="list-group-item border-top-0">
+							<span><i class="fa-solid fa-location-dot campsite-yellow"></i>&nbsp;${camp.addr1}</span>
+							<span class="float-right"><i class="fa-solid fa-phone campsite-yellow"></i>&nbsp;${camp.tel}</span>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<div class="result-list-content">
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">
-						<h6>[○○도 ○○시] ○○캠핑장</h6>
-					</li>
-					<li class="list-group-item border-bottom-0">낭만 가득한 프라이빗 캠핑장</li>
-					<li class="list-group-item border-top-0">
-						<span><i class="fa-solid fa-location-dot campsite-yellow"></i>&nbsp;○○도 ○○시</span>
-						<span class="float-right"><i class="fa-solid fa-phone campsite-yellow"></i>&nbsp;070-0000-0000</span>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
-			<div class="result-list-img bg-light">
-				캠핑장 이미지
-				<img src="..." class="img-thumbnail" alt="...">
-			</div>
-			<div class="result-list-content">
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">
-						<h6>[○○도 ○○시] ○○캠핑장</h6>
-					</li>
-					<li class="list-group-item border-bottom-0">낭만 가득한 프라이빗 캠핑장</li>
-					<li class="list-group-item border-top-0">
-						<span><i class="fa-solid fa-location-dot campsite-yellow"></i>&nbsp;○○도 ○○시</span>
-						<span class="float-right"><i class="fa-solid fa-phone campsite-yellow"></i>&nbsp;070-0000-0000</span>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
-			<div class="result-list-img bg-light">
-				캠핑장 이미지
-				<img src="..." class="img-thumbnail" alt="...">
-			</div>
-			<div class="result-list-content">
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">
-						<h6>[○○도 ○○시] ○○캠핑장</h6>
-					</li>
-					<li class="list-group-item border-bottom-0">낭만 가득한 프라이빗 캠핑장</li>
-					<li class="list-group-item border-top-0">
-						<span><i class="fa-solid fa-location-dot campsite-yellow"></i>&nbsp;○○도 ○○시</span>
-						<span class="float-right"><i class="fa-solid fa-phone campsite-yellow"></i>&nbsp;070-0000-0000</span>
-					</li>
-				</ul>
-			</div>
-		</div>
+		</c:forEach>
 	</div>
 	<div class="p-2 flex-fill m-auto bg-light result-map" id="map"></div>
 	<script src="${pageContext.request.contextPath}/resources/js/campsite/kakaoMap.js"></script>
