@@ -57,14 +57,13 @@ public class AdminController {
 	public ModelAndView advertiser(@RequestParam Map<String, Object> param, @RequestParam(defaultValue = "1") int cPage, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		try {
-			log.debug("mav = {}", mav);
 			int numPerPage = AdvertiserService.ADVERTISER_NUM_PER_PAGE;
 
 			List<AdvertiserExt> list = null;
 			int totalAdvertiser = 0;
 			String url = request.getRequestURI();
 			String pagebar = "";
-			if(param.isEmpty()) {
+			if (param.isEmpty()) {
 				list = advertiserService.selectAdvertiserList(cPage, numPerPage);
 				totalAdvertiser = advertiserService.selectTotalAdvertiser();
 				pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalAdvertiser, url);
@@ -74,7 +73,7 @@ public class AdminController {
 				totalAdvertiser = advertiserService.selectFilteredTotalAdvertiser(param);
 				pagebar = CamperValleyUtils.getMultiParamPagebar(cPage, numPerPage, totalAdvertiser, url + tail);
 			}
-			
+
 			mav.addObject("list", list);
 			mav.addObject("pagebar", pagebar);
 			mav.setViewName("admin/advertiser");
@@ -84,7 +83,7 @@ public class AdminController {
 		}
 		return mav;
 	}
-	
+
 	@GetMapping("/advertiser/fileDownload")
 	@ResponseBody
 	public Resource licenseFileDownload(@RequestParam int no, HttpServletResponse response) throws Exception {
@@ -129,22 +128,6 @@ public class AdminController {
 
 		return ResponseEntity.ok(map);
 	}
-	
-	// @GetMapping("/advertiser/filter")
-	public ModelAndView searchAdvertiserList(@RequestParam Map<String, Object> param, 
-			@RequestParam(defaultValue = "1") int cPage, HttpServletRequest request) {
-		log.debug("param = {} ", param);
-		ModelAndView mav = null;
-		try {
-
-		} catch (Exception e) {
-			log.error("조건일치 광고주 검색 오류", e);
-			throw e;
-		}
-
-		return mav;
-	}
-	
 	// --------------------- EJ end
 
 	@GetMapping("/camperManagement")
