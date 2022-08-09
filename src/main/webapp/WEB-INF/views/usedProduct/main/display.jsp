@@ -190,5 +190,8 @@
 		style="cursor: pointer; text-decoration: none; color: #61615b; font-size: 20px; line-height: 0.01em;">더 보기<br>▼
 	</a>
 </div>
+<script>
 
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

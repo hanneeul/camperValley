@@ -175,17 +175,6 @@
 				  <label class="form-check-label" for="inlineRadio2">블랙</label>
 				</div>
 			</div>
-			<div class="form-group">
-			  <p class="form-check form-check-inline mr-4 ml-6" style="margin-left: 70px;">처리 상태&nbsp;<span style="color:red;">*</span></p>
-			  <div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option1">
-				  <label class="form-check-label" for="inlineRadio3">미처리</label>
-				</div>
-				<div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option2">
-				  <label class="form-check-label" for="inlineRadio4">처리완료</label>
-				</div>
-			</div>
 
 		  </form>
 		</div>

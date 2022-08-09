@@ -17,15 +17,16 @@
 		<h5 class="admin-hd">광고주회원 관리</h5>
 		<!-- 콘텐츠 영역 -->
 		<div class="formBox my-5 d-flex align-items-center justify-content-center">
-			<form name="searchAdvertiserFrm" action="">
+			<form:form name="searchAdvertiserFrm" action="${pageContext.request.contextPath}/admin/advertiser" method="GET">
 				<div class="row">
 					<div class="col row filterWrapper">
 						<div class="px-0 d-flex align-items-center justify-content-center divInputWrapper">
 							<label for="">승인상태</label>
 							<select class="custom-select custom-select-sm" name="status">
 								<option value="all" selected>전체</option>
-								<option value="Y">승인완료</option>
-								<option value="N">승인대기</option>
+								<option value="permission">승인완료</option>
+								<option value="waiting">승인대기</option>
+								<option value="pause">권한정지</option>
 							</select>
 						</div>
 						<div class="col px-0 d-flex align-items-center justify-content-center divInputWrapper">
@@ -45,7 +46,7 @@
 						<button type="submit" class="btn btn-camper-color btn-sm">검색</button>
 					</div>
 				</div>
-			</form>
+			</form:form>
 		</div>
 		<div class="listBox">
 			<table id="tblAdvertiserList" class="table mt-5 mb-3">
@@ -57,15 +58,28 @@
 						<td>사업자등록번호</td>
 						<td>사업자등록증</td>
 						<td>승인요청일</td>
-						<td>권한관리</td> <!-- 승인/회수 -->
+						<td>권한관리</td>
 					</tr>
 				</thead>
 				<tbody class="listBody">
 					<c:forEach items="${list}" var="advertiser" varStatus="vs">
-						<tr data-advertiser-no="${advertiser.advertiserNo}">
-							<td class="${advertiser.bizStatus eq 'N' ? 'waiting' : 'permission'}">
-								${advertiser.bizStatus eq 'N' ? '승인대기' : '승인완료'}
-							</td>
+						<tr data-advertiser-no="${advertiser.advertiserNo}" data-member-id="${advertiser.memberId}">
+							<c:if test="${advertiser.bizStatus eq 'N'}">
+								<td class="waiting">승인대기</td>
+							</c:if>
+							<c:if test="${advertiser.bizStatus eq 'Y'}">
+								<c:if test="${fn:contains(advertiser.authorities, 'ROLE_AD')}">
+									<td class="permission">승인완료</td>
+								</c:if>
+								<c:if test="${not fn:contains(advertiser.authorities, 'ROLE_AD')}">
+									<c:if test="${empty advertiser.deletedAt}">
+										<td class="pause">권한정지</td>
+									</c:if>
+									<c:if test="${not empty advertiser.deletedAt}">
+										<td class="withdrawal">탈퇴회원</td>
+									</c:if>
+								</c:if>
+							</c:if>
 							<td>${advertiser.memberId}</td>
 							<td>${advertiser.bizName}</td>
 							<td>
@@ -73,14 +87,31 @@
 								${fn:substring(bizLicenseNo, 0, 3)}-${fn:substring(bizLicenseNo, 3, 5)}-${fn:substring(bizLicenseNo, 5, 10)}
 							</td>
 							<td>
-								<a href="${pageContext.request.contextPath}/admin/advertiser/fileDownload?no=${advertiser.licenseFile.licenseFileNo}"><i class="fa-solid fa-download"></i></a>
+								<a href="${pageContext.request.contextPath}/admin/advertiser/fileDownload?no=${advertiser.licenseFile.licenseFileNo}">
+									<i class="fa-solid fa-download"></i>
+								</a>
 							</td>
 							<td>
 								<fmt:parseDate value="${advertiser.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt" />
 								<fmt:formatDate value="${createdAt}" pattern="yy-MM-dd HH:mm"/>
 							</td>
 							<td>
-								<button class="btn btn-sm ${advertiser.bizStatus eq 'N' ? 'btn-camper-color' : 'btn-camper-red'}">${advertiser.bizStatus eq 'N' ? '승인' : '회수'}</button>
+								<c:if test="${advertiser.bizStatus eq 'N'}">
+									<button class="updateBtn btn btn-sm btn-camper-color" value="${advertiser.advertiserNo}">승인</button>
+								</c:if>
+								<c:if test="${advertiser.bizStatus eq 'Y'}">
+									<c:if test="${fn:contains(advertiser.authorities, 'ROLE_AD')}">
+										<button class="updateBtn btn btn-sm btn-camper-red" value="${advertiser.advertiserNo}">회수</button>
+									</c:if>
+									<c:if test="${not fn:contains(advertiser.authorities, 'ROLE_AD')}">
+										<c:if test="${empty advertiser.deletedAt}">
+											<button class="updateBtn btn btn-sm btn-camper-color" value="${advertiser.advertiserNo}">승인</button>
+										</c:if>
+										<c:if test="${not empty advertiser.deletedAt}">
+											<button class="btn btn-sm btn-secondary" disabled>탈퇴</button>
+										</c:if>
+									</c:if>
+								</c:if>
 							</td>
 						</tr>
 					</c:forEach>
@@ -91,3 +122,30 @@
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+
+<script>
+document.querySelectorAll(".updateBtn").forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		const advertiserNo = e.target.value;
+		const actionType = e.target.innerHTML == "승인" ? "PERMISSION" : "PAUSE";
+
+		const tr = document.querySelector(`[data-advertiser-no="\${advertiserNo}"]`);
+		const memberId = tr.dataset.memberId;
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/admin/advertiser/updateRole",
+			method : "POST",
+			data : {
+				advertiserNo,
+				memberId,
+				actionType
+			},
+			success(response) {
+				console.log(response);
+				location.reload();
+			},
+			error : console.log
+		});
+	});
+});
+</script>
