@@ -79,14 +79,13 @@
 			<result column="created_at" property="createdAt"/>
 			<result column="read_count" property="readCount"/>
 			
-			<!--   <association property="member" javaType="member"> javaType은 클래스
+			<!--   <association property="member" javaType="member">
 				<id column="member_id" property="memberId"/>
 				<result column="name" property="name"/>
 				<result column="email" property="email"/>
 			</association>  -->
 			
-			<!-- mybatis에 별칭 처리가 되어 있어서 arrayList -> arraylist 소문자로 작성 -->
-			<!-- <collection property="attachments" javaType="arraylist" ofType="attachment"> attachment(oftype)의 attach_no(id-column)를 찾기
+			<!-- <collection property="attachments" javaType="arraylist" ofType="attachment">
 				<id column="attach_no" property="no"/>
 				<result column="original_filename" property="originalFilename"/>
 				<result column="renamed_filename" property="renamedFilename"/>
