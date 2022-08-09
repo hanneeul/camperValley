@@ -83,21 +83,16 @@ body {
 }
 #navbarMain {
     height: 100px;
-  /*   background-size: contain;
-    background-repeat: no-repeat;
-    background-position: 50px; */
 }
 #navbarMain img {
 	cursor: pointer;
 }
-.nav-item * {
-    font-size: 15px;
-}
-.navbar-brand, .bar {
-    font-size: 12px;
-}
-.navbar-brand {
-    cursor: pointer;
+.nav-item * {font-size: 15px;}
+.navbar-brand, .bar {font-size: 12px;}
+.navbar-brand {cursor: pointer;}
+
+#logout {
+	font-size: 12px;
 }
 
 /* ----- footer ----- */

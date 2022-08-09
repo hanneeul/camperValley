@@ -46,6 +46,7 @@
 }
 #detailSection {
 	width: 600px;
+	height: 80vh;
 	position: sticky;
 	top: 130px;
 }
@@ -66,7 +67,7 @@
 	border-top: 1px solid rgb(175, 175, 175);
 	border-bottom: 1px solid rgb(175, 175, 175);
 	overflow: auto;
-	height: 280px;
+	height: 350px;
 }
 #detailFooter label {
 	color: #d9bf77;
@@ -118,6 +119,7 @@
 }
 
 .drop-down .options ul li:hover {
-    color: #639A67;
+    color: white;
+    background-color: #639A67;
     transition: 0.2s ease;
 }
