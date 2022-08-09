@@ -17,4 +17,8 @@ public interface AdvertiserService {
 
 	LicenseFile selectOneLicenseFile(int no);
 
+	int updateAdvertiserPermission(int advertiserNo, String memberId);
+
+	int updateAdvertiserPause(int advertiserNo, String memberId);
+
 }
