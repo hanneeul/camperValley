@@ -38,7 +38,7 @@
 		</tr>
 	</table>
 	<div class="d-flex justify-content-center">
-	<button class="btn btn-dark btn-sm" type="button" style="margin-right:10px;">취소</button>
+	<button class="btn btn-secondary btn-sm" type="button" style="margin-right:10px;" onclick="location.href='${pageContext.request.contextPath}/cs/faq';">취소</button>
 	<button class="btn btn-primary btn-sm" type="submit">등록하기</button>
 	</div>
 </form>

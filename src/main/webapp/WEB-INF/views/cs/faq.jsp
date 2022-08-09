@@ -12,6 +12,7 @@
 .bar-faq {color: black !important;}
 .container {padding: 0px;}
 .cs-bar {margin-bottom: 0px;}
+
 </style>
 			
 <h5 class="cs-header text-center">자주 묻는 질문</h5>
@@ -24,16 +25,18 @@
 	</div>
 
 	
-	<form id="faqSearchFrm" method="POST" action="${pageContext.request.contextPath}/cs/faqSearch" class="faqSearchFrm">
 		<div class="search-group float-right">
+		<select id="search-type">
+            <option value="title" ${map.searchType eq 'title' ? 'selected' : ''}>제목</option>
+            <option value="content" ${map.searchType eq 'content' ? 'selected' : ''}>내용</option>
+        </select>
 			<input type="hidden" name="searchType" value="title">
-			<input class="input-search" type="text" placeholder="search" name="searchKeyword" id="searchKeyword">
-			<button class="btn-search" type="submit">
+			<input type="hidden" name="searchType" value="content">
+			<input class="input-search" type="text" placeholder="검색어를 입력하세요." name="searchKeyword" id="searchKeyword">
+			<button class="btn-search" type="button" id="searchButton">
 				<i class="fa fa-search"></i>
 			</button>
 		</div>
-	</form>
-		<button type="button" class="mr-2 btn btn-primary btn-sm float-right" onclick="location.href='${pageContext.request.contextPath}/cs/faqEnroll';">글등록</button>
 	
 
 <div class="container">
@@ -63,9 +66,11 @@
                 </ul>
 
 		
-</div> 
+</div>
+<button type="button" class="mr-2 btn btn-primary btn-sm float-right" onclick="location.href='${pageContext.request.contextPath}/cs/faqEnroll';">글등록</button>
 </div> 
 </div>
+    	<div class="mt-5" id="pageBar">${pagebar}</div>
 <form action="${pageContext.request.contextPath}/cs/faqDelete" method="POST" name="deleteFaqFrm">
 <input type="hidden" name="noticeNo" id="deleteNo" />
 </form>
@@ -84,16 +89,27 @@ document.querySelectorAll('.btn-update').forEach((btn) => {
 		
 	})
 })
+
+document.querySelectorAll('.btn-search').forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		let keyword = document.getElementById('searchKeyword').value;
+		let searchType = document.getElementById('search-type').value;
+
+		let url = "${pageContext.request.contextPath}/cs/faq";
+		url = url + "?searchType=" + searchType;
+		url = url + "&searchKeyword=" + keyword;
+		location.href = url;
+		console.log(url);
+		
+	})
+})
 </script>
 
 <script>
     jQuery(function($){
-        // Frequently Asked Question
         var article = $('.faq>.faqBody>.article');
         article.addClass('hide');
         article.find('.a').hide();
-        article.eq(0).removeClass('hide');
-        article.eq(0).find('.a').show();
         $('.faq>.faqBody>.article>.q>a').click(function(){
             var myArticle = $(this).parents('.article:first');
             if(myArticle.hasClass('hide')){

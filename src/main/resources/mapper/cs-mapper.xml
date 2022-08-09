@@ -4,8 +4,37 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.campervalley.cs.model.dao.CsDao">
 
-<select id="selectFaqList" resultType="notice">
-	select * from notice where category = 'FAQ' order by notice_no desc
+<select id="selectFaqList" resultMap="noticeMap">
+	select 
+		* 
+	from 
+		notice 
+	<where>
+		<if test="searchType == 'title'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'content'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+			and category = 'FAQ'
+	</where>
+	order by notice_no desc
+</select>
+
+<select id="selectTotalFaqList" resultType="_int">
+	select
+		count(*)
+	from
+		notice
+	<where>
+	<if test="searchType == 'title'">
+		${searchType} like '%' || #{searchKeyword} || '%'
+	</if>
+	<if test="searchType == 'content'">
+		${searchType} like '%' || #{searchKeyword} || '%'
+	</if>
+		and category = 'FAQ'
+	</where>
 </select>
 
 <insert id="faqInsert">
@@ -41,4 +70,27 @@
 	where 
 		notice_no = #{noticeNo}
 </update>
+
+<resultMap type="notice" id="noticeMap">
+		<id column="notice_no" property="noticeNo"/>
+			<result column="member_id" property="memberId"/>
+			<result column="title" property="title"/>
+			<result column="content" property="content"/>
+			<result column="created_at" property="createdAt"/>
+			<result column="read_count" property="readCount"/>
+			
+			<!--   <association property="member" javaType="member"> javaType은 클래스
+				<id column="member_id" property="memberId"/>
+				<result column="name" property="name"/>
+				<result column="email" property="email"/>
+			</association>  -->
+			
+			<!-- mybatis에 별칭 처리가 되어 있어서 arrayList -> arraylist 소문자로 작성 -->
+			<!-- <collection property="attachments" javaType="arraylist" ofType="attachment"> attachment(oftype)의 attach_no(id-column)를 찾기
+				<id column="attach_no" property="no"/>
+				<result column="original_filename" property="originalFilename"/>
+				<result column="renamed_filename" property="renamedFilename"/>
+				<result column="download_count" property="downloadCount"/>
+			</collection> -->
+	</resultMap>
 </mapper>
