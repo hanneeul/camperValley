@@ -114,7 +114,7 @@
 								<div class="price_sub">가격<span>*</span></div>
 								<div class="price_con">
 									<div class="priceBox">
-										<input type="text" placeholder="숫자만 입력해주세요." class="input-price" id="product_price" name="product_price">원
+										<input type="text" placeholder="숫자만 입력해주세요." class="input-price" id="input-price" name="input-price"">원
 									</div>
 		
 									<!-- 배송비 포함 여부 -->
@@ -136,29 +136,7 @@
 									<textarea placeholder="상품 설명을 입력해주세요." rows="6" class="instruction" id="product_content" name="product_content"></textarea>
 									<div class="limit">최대 1000자</div>
 								</div>
-							</li><!-- 설명 -->
-		
-		
-							<!-- 연관 태그 -->
-							<li class="list">
-								<div class="tag_usb">연관태그</div>
-								<div class="tag_con">
-									<div class="contentDiv">
-										<div class="tagInputWrap">
-											<div class="tagInputArea">
-												<input type="text" placeholder="연관태그를 입력해주세요. (최대 5개)"
-													value="" id="input-tag" autocomplete="off">
-											</div>
-										</div>
-									</div>
-									<ul class="tag_comment">
-										<li><p>태그는 띄어쓰기로 구분되며 최대 8자 까지 입력할 수 있습니다.</p></li>
-										<li><p>태그는 검색의 부가정보로 사용 되지만, 검색 결과 노출을 보장하지는 않습니다.</p></li>
-										<li><p>검색 광고는 태그정보를 기준으로 노출됩니다.</p></li>
-										<li><p>상품과 직접 관련이 없는 다른 상품명, 브랜드, 스팸성 키워드 등을 입력하면 노출이 중단되거나 상품이 삭제될 수 있습니다.</p></li>
-									</ul>
-								</div>
-							</li>
+							</li><!-- 설명 -->					
 						</ul>
 					</section>
 				</main>
@@ -178,7 +156,9 @@
 </div>
 
 <script>
-/***************** 이미지 등록 (미리보기) *****************/
+$('#enrollForm').ready(function() {
+});
+/* 이미지 등록 (미리보기) */
 $('#input-image').on('change', readImage); // 파일 올릴떄마다 readImage함수 호출
 const fileBuffer = []; // 파일 저장 변수
 
@@ -242,7 +222,8 @@ function readImage() {
 		reader.readAsDataURL(input.files[index]);
 	}
 }
-/* 이미지 삭제 */
+
+// 이미지 삭제 
 function deleteImage() {
 	// 배열에 있는 파일 제거
 	// closest() - 자신부터 부모 요소 단위로 출발하여 각 요소가 지정한 선택자에 만족할 때까지 탐색
@@ -258,10 +239,10 @@ function deleteImage() {
 }
 
 
-/****************** 제목 ******************/
+/* 제목 */
  
  
-/***************** 카테고리 *****************/
+/* 카테고리 */
 $('.category >.cate_btn').on("click", function(){
 	var cate_no = null;
 	var cate_name = null;
@@ -280,7 +261,7 @@ $('.category >.cate_btn').on("click", function(){
 });
 
 
-/***************** 거래지역 *****************/
+/* 거래지역 */
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
        mapOption = {
            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
@@ -327,6 +308,30 @@ $('#search_address').click(function() {
         }).open();
 });
 
+/* 가격 */
+$('.input-price').on('keyup', function(e) {
+	const val = $(this).val();
+	if(!(/^[0-9]$/g.test(val))) { // 숫자만 입력되지 않았다면
+		$(this).val(val.replace(/[^0-9]/g, '')); // 숫자 제외한 문자 공백으로 대체
+	}
+});
+
+/* 등록하기 */
+ $('#enrollBtn').click(function() {
+		$('#div-image').hide();
+		$('#div-subject').hide();
+		$('#div-category').hide();
+		$('#div-price').hide();
+		$('#div-location').hide();
+		
+		if(confirm()) return false;
+		
+		function confirm() {
+			if(!fileBuffer.length) {$('#div-image').show(); $('#input-image').focus(); return true;}
+			else if($('#div-subject').val()=='') {$('#div-image').show(); $('#input-image').focus(); return true;}
+		}
+		 
+ });
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
