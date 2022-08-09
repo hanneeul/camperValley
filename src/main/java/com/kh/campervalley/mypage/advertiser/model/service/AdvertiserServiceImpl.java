@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.campervalley.mypage.advertiser.model.dao.AdvertiserDao;
+import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.BizStatus;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 
@@ -88,6 +90,16 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		int result = advertiserDao.deleteAuthority(map);
 		
 		return result;
+	}
+
+	@Override
+	public AdvertiserMoneyExt selectOneAdvertiserMoney(String memberId) {
+		return advertiserDao.selectOneAdvertiserMoney(memberId);
+	}
+	
+	@Override
+	public Admoney selectOneAdmoney(int advertiserNo) {
+		return advertiserDao.selectOneAdmoney(advertiserNo);
 	}
 
 }

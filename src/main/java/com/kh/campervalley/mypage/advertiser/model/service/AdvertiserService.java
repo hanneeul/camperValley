@@ -3,7 +3,9 @@ package com.kh.campervalley.mypage.advertiser.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 
 public interface AdvertiserService {
@@ -25,5 +27,9 @@ public interface AdvertiserService {
 	int updateAdvertiserPermission(int advertiserNo, String memberId);
 
 	int updateAdvertiserPause(int advertiserNo, String memberId);
+
+	AdvertiserMoneyExt selectOneAdvertiserMoney(String memberId);
+
+	Admoney selectOneAdmoney(int advertiserNo);
 
 }

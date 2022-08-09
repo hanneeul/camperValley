@@ -10,7 +10,9 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
+import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 
 @Mapper
@@ -43,5 +45,10 @@ public interface AdvertiserDao {
 
 	@Delete("delete from authority where member_id = #{memberId} and auth = #{auth}")
 	int deleteAuthority(Map<String, Object> map);
+
+	AdvertiserMoneyExt selectOneAdvertiserMoney(String memberId);
+
+	@Select("select * from admoney where advertiser_no = #{advertiserNo}")
+	Admoney selectOneAdmoney(int advertiserNo);
 
 }
