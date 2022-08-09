@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
@@ -69,7 +70,18 @@ public class AdvertiserController {
 	public void exitAdvertiser() { }
 	
 	@GetMapping("/dashboard")
-	public void advertiserDashBoard() { }
+	public ModelAndView advertiserDashBoard(ModelAndView mav) {
+		// 매개변수 변경해야됨 @AuthenticationPrincipal Member loginMember
+		String memberId = "honggd";
+		try {
+			
+		} catch(Exception e) {
+			log.error("광고주 대시보드 조회 오류", e);
+			throw e;
+		}
+		
+		return mav;
+	}
 	
 	@GetMapping("/admoney")
 	public void chargeAdmoney() { }

@@ -17,6 +17,9 @@ import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 public interface AdvertiserDao {
 
 	int insertAdvertiser(AdvertiserExt advertiser);
+	
+	@Insert("insert into admoney values (seq_admoney_no.nextval, #{advertiserNo}, default)")
+	int insertAdmoney(int advertiserNo);
 
 	@Insert("insert into license_file values (seq_license_file_no.nextval, #{advertiserNo}, #{originalFilename}, #{renamedFilename}, default)")
 	int insertLicenseFile(LicenseFile licenseFile);
