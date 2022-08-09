@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.campervalley.usedProduct.model.dao.UsedProductDao">
+
+<!-- 상품 등록 -->
+<insert id="productInsert" parameterType="usedProduct">
+	insert into 
+		used_product 
+	values(
+		seq_used_product_no.nextval,
+		#{product_no},
+		#{seller_id},
+		#{cate_no},
+		#{product_title},
+		#{product_content},
+		#{product_img1},
+		#{product_img2},
+		#{product_img3},
+		#{product_img4},
+		#{product_img5},
+		#{product_price},
+		#{product_location},
+		#{product_delivery_fee},
+		SYSDATE,
+		0,
+		#{transaction_date},
+		#{buyer_id},
+		N
+	)
+</insert>
+
+<!-- 상품 번호 가져오기-->
+<select id="getProductNo" resultType="Integer">
+	select last_number
+	from user_sequences
+	where sequence_name = 'SEQ_USED_PRODUCT_NO'
+</select>
+
+
+</mapper>
