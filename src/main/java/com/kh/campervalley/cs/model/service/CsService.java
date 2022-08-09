@@ -8,4 +8,12 @@ public interface CsService {
 
 	List<Notice> selectFaqList();
 
+	int faqDelete(int noticeNo);
+
+	Notice selectOneFaq(int noticeNo);
+
+	int faqUpdate(Notice notice);
+
+	int faqInsert(Notice notice);
+
 }

@@ -1,12 +1,23 @@
 /* footer 임시 */
 footer {
-	margin-top: 70px;
+	margin-top: 200px;
 }
 
 /* 버튼 */
 button.btn-primary, button.btn-primary:hover {
 	background-color: #639A67;
 	border: #639A67;
+}
+
+button.btn-outline-primary {
+	color: #639A67;
+    border-color: #639A67;
+}
+
+button.btn-outline-primary:hover {
+	background-color: #639A67;
+	color: #fff;
+	border-color: #639A67;
 }
 
 /* noticeList */

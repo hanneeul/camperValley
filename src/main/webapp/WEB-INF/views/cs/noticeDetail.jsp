@@ -28,8 +28,8 @@
 	</div>
 
 		<div class="float-right">
-			<button class="btn btn-primary btn-sm" onclick="location.href='${pageContext.request.contextPath}/cs/noticeUpdate';">수정</button>
-			<button class="btn btn-danger btn-sm">삭제</button>
+			<button class="btn btn-outline-primary btn-update btn-sm" onclick="location.href='${pageContext.request.contextPath}/cs/noticeUpdate';">수정</button>
+			<button class="btn btn-outline-danger btn-delete btn-sm">삭제</button>
 		</div>
 
 		<div class="container" style="display: inline">

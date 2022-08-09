@@ -17,11 +17,11 @@
 	color: black !important;
 }
 
-a:hover, a:focus {
+#sidebar a:hover, #sidebar a:focus {
 	text-decoration: none;
 }
 
-a {
+#sidebar a {
 	color: #000;
 	font-weight: bold;
 }

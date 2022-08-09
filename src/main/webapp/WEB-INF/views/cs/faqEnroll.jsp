@@ -19,7 +19,7 @@
 </style>
 <div class="container" style="width: 870px;">            
 	<h5 class="cs-header text-center">FAQ 등록</h5>                          
-<form action="" method="post" class="form-horizontal">
+<form action="${pageContext.request.contextPath}/cs/faqEnroll" method="POST" class="form-horizontal">
 
 	<div class="notice-wrap" style="width: 50%; float:none; margin:0 auto"></div>
 	<table class="table" id="tb-notice-enroll" style="margin-top: 47px;">
@@ -38,7 +38,7 @@
 		</tr>
 	</table>
 	<div class="d-flex justify-content-center">
-	<button class="btn btn-dark btn-sm" type="submit" style="margin-right:10px;">취소</button>
+	<button class="btn btn-dark btn-sm" type="button" style="margin-right:10px;">취소</button>
 	<button class="btn btn-primary btn-sm" type="submit">등록하기</button>
 	</div>
 </form>

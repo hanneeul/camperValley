@@ -8,4 +8,37 @@
 	select * from notice where category = 'FAQ' order by notice_no desc
 </select>
 
+<insert id="faqInsert">
+	insert into
+		notice
+	values (
+		seq_notice_no.nextval, 'honggd', 'FAQ', #{title}, #{content}, default, default
+	)
+</insert>
+
+<delete id="faqDelete">
+		delete from
+			notice
+		where
+			notice_no = #{noticeNo}
+	</delete>
+
+<select id="selectOneFaq" resultType="notice">
+	select
+		*
+	from
+		notice
+	where
+		notice_no = #{noticeNo} and category = 'FAQ'
+</select>
+
+<update id="faqUpdate">
+	update
+		notice
+	set
+		 title = #{title}, 
+		 content = #{content} 
+	where 
+		notice_no = #{noticeNo}
+</update>
 </mapper>

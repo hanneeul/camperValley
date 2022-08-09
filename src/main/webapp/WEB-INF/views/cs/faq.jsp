@@ -30,11 +30,11 @@
 				<i class="fa fa-search"></i>
 			</button>
 		</div>
+		<button type="button" class="mr-2 btn btn-primary btn-sm float-right" onclick="location.href='${pageContext.request.contextPath}/cs/faqEnroll';">글등록</button>
 	
 
 <div class="container">
-	
-		<div class="faq">
+<div class="faq">
 			
 			<p class="test-div" style="color: #FFF; margin-bottom:-12px;">.</p>
 				
@@ -42,24 +42,46 @@
 				<c:forEach var="list" items="${list}">
                     <li class="article" id="a1" >
                         <p class="q"><a href="#a1">
-                        <span class="icon_q">Q</span>
-                        <span style="margin-left : 25px;">${list.title}</span>
-                        <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width:20px" alt=""></span>
+                        <span class="icon_q ml-2">Q</span>
+                        <span style="margin-left : 20px;">${list.title}</span>
+                        <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width: 15px;" alt="" class="mt-1 mr-2"></span>
                         </a></p>
 
                         <div class="a">
-                        <span class="icon_a" >A</span>
-                        <div style="margin-left: 62px; display: inline-flex; margin-top: -28px;">${list.content}</div>
+                        <span class="icon_a ml-2" >A</span>
+                        <div style="margin-left: 65px; margin-top: -28px;">${list.content}</div>
+                        <div class="faq-btn mt-3 mb-2" style="text-align: center;">
+								<button class="btn-update btn btn-outline-primary btn-sm" value="${list.noticeNo}">수정</button>
+								<button class="btn-delete btn-sm btn btn-outline-danger" data-notice-no="${list.noticeNo}">삭제</button>	
+							</div>
                         </div>
                     </li>
                     </c:forEach>
                 </ul>
 
-
 		
 </div> 
 </div> 
 </div>
+<form action="${pageContext.request.contextPath}/cs/faqDelete" method="POST" name="deleteFaqFrm">
+<input type="hidden" name="noticeNo" id="deleteNo" />
+</form>
+<script>
+document.querySelectorAll('.btn-delete').forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		//if(confirm("등록한 질문을 삭제하시겠습니까?"))
+		document.deleteFaqFrm.noticeNo.value = e.target.dataset.noticeNo;
+		document.deleteFaqFrm.submit();
+	})
+});
+
+document.querySelectorAll('.btn-update').forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		location.href = `${pageContext.request.contextPath}/cs/faqUpdate?noticeNo=\${e.target.value}`;
+		
+	})
+})
+</script>
 
 <script>
     jQuery(function($){

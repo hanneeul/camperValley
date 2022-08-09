@@ -21,5 +21,25 @@ public class CsServiceImpl implements CsService {
 	public List<Notice> selectFaqList() {
 		return csDao.selectFaqList();
 	}
+	
+	@Override
+	public int faqDelete(int noticeNo) {
+		return csDao.faqDelete(noticeNo);
+	}
+	
+	@Override
+	public Notice selectOneFaq(int noticeNo) {
+		return csDao.selectOneFaq(noticeNo);
+	}
+	
+	@Override
+	public int faqUpdate(Notice notice) {
+		return csDao.faqUpdate(notice);
+	}
+	
+	@Override
+	public int faqInsert(Notice notice) {
+		return csDao.faqInsert(notice);
+	}
 
 }
