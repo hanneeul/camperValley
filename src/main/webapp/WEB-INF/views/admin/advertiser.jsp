@@ -17,7 +17,7 @@
 		<h5 class="admin-hd">광고주회원 관리</h5>
 		<!-- 콘텐츠 영역 -->
 		<div class="formBox my-5 d-flex align-items-center justify-content-center">
-			<form name="searchAdvertiserFrm" action="">
+			<form:form name="searchAdvertiserFrm" action="${pageContext.request.contextPath}/admin/advertiser" method="GET">
 				<div class="row">
 					<div class="col row filterWrapper">
 						<div class="px-0 d-flex align-items-center justify-content-center divInputWrapper">
@@ -46,7 +46,7 @@
 						<button type="submit" class="btn btn-camper-color btn-sm">검색</button>
 					</div>
 				</div>
-			</form>
+			</form:form>
 		</div>
 		<div class="listBox">
 			<table id="tblAdvertiserList" class="table mt-5 mb-3">
