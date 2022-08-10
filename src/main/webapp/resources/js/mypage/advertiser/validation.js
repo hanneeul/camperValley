@@ -51,3 +51,6 @@ if(document.searchAdvertiserFrm != null) {
 		return result;
 	};
 };
+
+if(document.refundAdmoneyFrm != null) {
+}

@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/advertiser.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-
 <!-- iamport -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <!-- jquery-confirm -->
@@ -70,22 +70,33 @@
 			</div>
 			<form action="" name="refundAdmoneyFrm">
 				<div class="modal-body px-4">
-					<p>환불가능금액 : </p>
-					<div class="form-row align-items-center">
-						<div class="col-auto">
-							<span>환불금액 지정 : </span>
-						</div>
-						<div class="col-auto">
-							<input type="number" class="form-control" name="" id="refundCustom" />
-						</div>
-						<div class="col-auto">
-							<span>원</span>
-						</div>
+					<p>환불가능금액 : <span class="camper-color mx-1">${admoney.balance}</span><small>원</small></p>
+					<div class="d-flex justify-content-center" id="payListWrapper">
+						<table id="payListTbl" class="table">
+							<thead>
+								<tr>
+									<td class="text-center px-3">선택</td>
+									<td class="text-center px-3">결제번호</td>
+									<td class="text-center px-3">환불가능액</td>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${payList}" var="pay">
+									<tr>
+										<td class="text-center">
+											<input type="checkbox" class="" name="cancelTarget" value="${pay.merchantUid}">
+										</td>
+										<td class="text-center">${pay.merchantUid}</td>
+										<td class="text-center">${pay.paidAmount}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">뒤로가기</button>
-					<button type="button" class="btn btn-sm btn-camper-red">환불하기</button>
+					<button type="button" onclick="cancelPay();" class="btn btn-sm btn-camper-red">환불하기</button>
 				</div>
 			</form>
 		</div>
@@ -139,15 +150,50 @@ const clickChargeBtn = (amount) => {
 			}).done(function(data) {
 				console.log(data);
 				const {balance : afterBalace} = data;
-				document.querySelector("#balance").innerText = afterBalace;
 				$.alert({
 					title: '결제완료',
 					content: '애드머니가 정상적으로 충전되었습니다.',
 				});
+				location.reload();
 			});
 		} else {
 			console.log(rsp.error_msg);
 		}
 	});
 }
+</script>
+<script>
+const cancelPay = () => {
+	
+	const headers = {
+		"${_csrf.headerName}" : "${_csrf.token}"
+	};
+	
+	const merchantUidList = [];
+	document.querySelectorAll("input[name=cancelTarget]:checked").forEach((checked, index) => {
+		merchantUidAll[index] = checked.value;
+	});
+	console.log(merchantUidList);
+
+	/*
+	*/
+	$.ajax({
+		url : '${pageContext.request.contextPath}/mypage/advertiser/refund',
+		method : 'post',
+		headers,
+		data : {
+			merchantUidList,
+			advertiserNo : '${admoney.advertiserNo}',
+			reason : '테스트 결제 환불'
+		}
+	});
+
+};
+
+
+document.refundAdmoneyFrm.onsubmit = (e) => {
+	e.preventDefault();
+	cancelPay();
+}
+
 </script>

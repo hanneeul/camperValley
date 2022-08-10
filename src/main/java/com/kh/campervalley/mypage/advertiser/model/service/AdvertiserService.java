@@ -33,6 +33,8 @@ public interface AdvertiserService {
 
 	Admoney selectOneAdmoney(int advertiserNo);
 
+	List<Pay> selectNotCancelPayByAdvertiserNo(int advertiserNo);
+
 	int chargeAdmoney(Pay pay);
 
 }

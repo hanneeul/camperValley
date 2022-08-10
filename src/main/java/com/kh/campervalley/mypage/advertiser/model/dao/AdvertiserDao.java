@@ -58,4 +58,7 @@ public interface AdvertiserDao {
 	@Update("update admoney set balance = balance + #{paidAmount} where advertiser_no = #{advertiserNo}")
 	int updateAdmoneyCharge(Pay pay);
 
+	@Select("select * from pay where status != 'cancel' and advertiser_no = #{advertiserNo} order by paid_at desc")
+	List<Pay> selectNotCancelPayByAdvertiserNo(int advertiserNo);
+
 }

@@ -102,6 +102,11 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	public Admoney selectOneAdmoney(int advertiserNo) {
 		return advertiserDao.selectOneAdmoney(advertiserNo);
 	}
+	
+	@Override
+	public List<Pay> selectNotCancelPayByAdvertiserNo(int advertiserNo) {
+		return advertiserDao.selectNotCancelPayByAdvertiserNo(advertiserNo);
+	}
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override

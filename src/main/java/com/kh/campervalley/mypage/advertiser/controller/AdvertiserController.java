@@ -2,6 +2,7 @@ package com.kh.campervalley.mypage.advertiser.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -105,11 +107,12 @@ public class AdvertiserController {
 	@GetMapping("/admoney")
 	public ModelAndView loadAdmoneyPage(@RequestParam("no") int advertiserNo, ModelAndView mav) {
 		try {
-			Admoney admoney = advertiserService.selectOneAdmoney(advertiserNo);
 			// Member loginMember = memberService.selectMemberByMemberId();
-			log.debug("admoney = {}", admoney);
+			Admoney admoney = advertiserService.selectOneAdmoney(advertiserNo);
+			List<Pay> payList = advertiserService.selectNotCancelPayByAdvertiserNo(advertiserNo);
 			mav.addObject("admoney", admoney);
-		} catch(Exception e) {
+			mav.addObject("payList", payList);
+		} catch (Exception e) {
 			log.error("애드머니충전 페이지 요청 오류", e);
 			throw e;
 		}
@@ -123,14 +126,29 @@ public class AdvertiserController {
 		try {
 			int result = advertiserService.chargeAdmoney(pay);
 			admoney = advertiserService.selectOneAdmoney(pay.getAdvertiserNo());
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error("애드머니 충전내역 저장 오류", e);
-			return ResponseEntity
-					.status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
 					.body(admoney);
 		}
 		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(admoney);
 	};
+	
+	@ResponseBody
+	@PostMapping("/refund")
+	public ResponseEntity<?> refundAdmoney(@RequestParam(value="merchantUidList[]") List<String> merchantUidList, int advertiserNo, String reason) {
+		log.debug("merchantUidList = {}", merchantUidList);
+		log.debug("advertiserNo = {}", advertiserNo);
+		log.debug("reason = {}", reason);
+		Admoney admoney = null;
+		try {
+			
+		} catch(Exception e) {
+			log.error("애드머니 환불처리 오류", e);
+			throw e;
+		}
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(admoney);
+	}
 	
 	@GetMapping("/enrollAd")
 	public void enrollAd() { }
