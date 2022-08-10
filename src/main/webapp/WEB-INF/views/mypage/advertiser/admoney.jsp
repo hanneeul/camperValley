@@ -6,8 +6,11 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/advertiser.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> -->
+<!-- iamport -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<!-- jquery-confirm -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
 <div class="container">
 	<div class="row d-flex justify-content-between">
@@ -19,9 +22,10 @@
 				<h2>애드머니</h2>
 				<div class="divNowAdMoney d-flex justify-content-between">
 					<h6 class="d-inline">현재 보유 애드머니</h6>
-					<h5 class="d-inline">
-						${admoney.balance}<small class="ml-1">원</small>
-					</h5>
+					<div>
+						<h5 class="d-inline" id="balance">${admoney.balance}</h5>
+						<small class="ml-1">원</small>
+					</div>
 				</div>
 				<div class="selectBtnWrapper">
 					<button type="button" class="btn btn-camper-color btn-block" onclick="clickChargeBtn(100000);">100,000원 충전</button>
@@ -133,7 +137,13 @@ const clickChargeBtn = (amount) => {
 					pgProvider
 				}
 			}).done(function(data) {
-				console.log("결제정보 처리 완료");
+				console.log(data);
+				const {balance : afterBalace} = data;
+				document.querySelector("#balance").innerText = afterBalace;
+				$.alert({
+					title: '결제완료',
+					content: '애드머니가 정상적으로 충전되었습니다.',
+				});
 			});
 		} else {
 			console.log(rsp.error_msg);

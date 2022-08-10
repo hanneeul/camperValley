@@ -2,30 +2,26 @@ package com.kh.campervalley.mypage.advertiser.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.campervalley.common.CamperValleyUtils;
+import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
@@ -88,9 +84,8 @@ public class AdvertiserController {
 	public void exitAdvertiser() { }
 	
 	@GetMapping("/dashboard")
-	public ModelAndView advertiserDashBoard(ModelAndView mav) {
-		// 매개변수 변경해야됨 @AuthenticationPrincipal Member loginMember
-		String memberId = "honggd";
+	public ModelAndView advertiserDashBoard(ModelAndView mav, @AuthenticationPrincipal Member loginMember) {
+		String memberId = loginMember.getMemberId();
 		try {
 			// 광고주 계정 상태
 			AdvertiserMoneyExt advertiser = advertiserService.selectOneAdvertiserMoney(memberId);
@@ -111,6 +106,7 @@ public class AdvertiserController {
 	public ModelAndView loadAdmoneyPage(@RequestParam("no") int advertiserNo, ModelAndView mav) {
 		try {
 			Admoney admoney = advertiserService.selectOneAdmoney(advertiserNo);
+			// Member loginMember = memberService.selectMemberByMemberId();
 			log.debug("admoney = {}", admoney);
 			mav.addObject("admoney", admoney);
 		} catch(Exception e) {
@@ -122,19 +118,18 @@ public class AdvertiserController {
 	
 	@PostMapping("/admoneyCharge")
 	public ResponseEntity<?> chargeAdmoney(Pay pay) {
-		Map<String, Object> map = new HashMap<>();
+		Admoney admoney = null;
 		log.debug("pay = {}", pay);
 		try {
 			int result = advertiserService.chargeAdmoney(pay);
-			
+			admoney = advertiserService.selectOneAdmoney(pay.getAdvertiserNo());
 		} catch(Exception e) {
 			log.error("애드머니 충전내역 저장 오류", e);
-			map.put("msg", "애드머니 충전내역 저장 오류");
 			return ResponseEntity
 					.status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
-					.body(map);
+					.body(admoney);
 		}
-		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(admoney);
 	};
 	
 	@GetMapping("/enrollAd")

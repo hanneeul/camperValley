@@ -15,14 +15,13 @@
 		</div>
 		<div class="col-lg-10 px-5">
 			<h2>광고주 등록하기</h2>
-			<form
+			<form:form
 				name="enrollAdvertiserFrm"
 				action="${pageContext.request.contextPath}/mypage/advertiser/register"
 				method="POST"
 				enctype="multipart/form-data"
 				style="width:800px;">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-				<input type="hidden" name="memberId" value="honggd" required> <!-- ${loginMember.memberId}로 변경하기 -->
+				<input type="hidden" name="memberId" value=<sec:authentication property="principal.username"/> required>
 				<div class="divInputWrapper">
 					<label for="bizName">광고계정 이름</label>
 					<input type="text" name="bizName" id="bizName" class="form-control form-control-sm" placeholder="광고계정명을 입력해주세요.">
@@ -62,7 +61,7 @@
 				<div class="divInputWrapper">
 					<button type="submit" class="btn btn-camper-color btn-block">광고주승인 요청하기</button>
 				</div>
-			</form>
+			</form:form>
 		</div>
 	</div>
 </div>
