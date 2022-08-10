@@ -162,9 +162,10 @@ create table camper (
 	read_count number default 0,
 	created_at date default sysdate,
 	updated_at date,
-	status varchar2(20) not null,
+	status varchar2(20) default 'I',
   constraint pk_camper_no primary key(camper_no),
-  constraint fk_camper_member_id foreign key(member_id) references member(member_id) on delete cascade
+  constraint fk_camper_member_id foreign key(member_id) references member(member_id) on delete cascade,
+  constraint ck_camper_status check(state in ('C', 'I'))
 );
 create sequence seq_camper_join_no;
 

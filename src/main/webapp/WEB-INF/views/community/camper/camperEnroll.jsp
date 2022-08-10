@@ -27,7 +27,7 @@
 				<div class="text-danger text-13 pl-4 pt-1">*표시는 필수 입력사항입니다.</div>
 			</div>
 			<hr />
-			<form action="" name="camperEnrollFrm" method="POST">
+			<form action="${pageContext.request.contextPath}/community/camper/camperEnroll" name="camperEnrollFrm" method="POST">
 				<table>
 					<tbody>
 						<tr>
@@ -37,6 +37,7 @@
 							<td class="col-md-10 px-0">
 								<select name="sido1" id="sido1" class="input p-2"></select>
 								<select name="gugun1" id="gugun1" class="input p-2 ml-3"></select>
+								<input type="hidden" name="area"></button>
 							</td>
 						</tr>
 						<tr>
@@ -45,13 +46,13 @@
 							</td>
 							<td class=" px-0 form-row align-items-center mx-0">
 								<div class="form-group mb-0">
-									<input type="text" class="input form-control form-control-sm input-daterange" style="margin: 10px 5px 10px 20px; width:95%;"name="deDate" autocomplete="off" placeholder="0000-00-00" readonly />
+									<input type="text" class="input form-control form-control-sm input-daterange" style="margin: 10px 5px 10px 20px; width:95%;"name="departureDate" autocomplete="off" placeholder="0000-00-00" readonly />
 								</div>
 								<div>
 									<span class="ml-3">-</span>
 								</div>
 								<div class="form-group mb-0">
-									<input type="text" class="input form-control form-control-sm input-daterange" style="margin: 10px 5px 10px 3px; width:104%;"name="arDate" autocomplete="off" placeholder="0000-00-00" readonly />
+									<input type="text" class="input form-control form-control-sm input-daterange" style="margin: 10px 5px 10px 3px; width:104%;"name="arrivalDate" autocomplete="off" placeholder="0000-00-00" readonly />
 								</div>
 							
 							
@@ -86,7 +87,7 @@
 						</tr>
 						<tr>
 							<td class="label col-md-2 px-0 pt-2">
-								<label for="purpose">모임취지</label>
+								<label for="purpose">모임취지<span class="text-danger">*</span></label>
 							</td>
 							<td class="col-md-10 px-0">
 								<textarea name="purpose" cols="30" rows="2" style="width:98%" placeholder="모임취지를 입력해주세요."></textarea>
@@ -94,7 +95,7 @@
 						</tr>
 						<tr>
 							<td class="label col-md-2 px-0 pt-2">
-								<label for="expectedCost">예상비용</label>
+								<label for="expectedCost">예상비용<span class="text-danger">*</span></label>
 							</td>
 							<td class="col-md-10 px-0">
 								<textarea name="expectedCost" cols="30" rows="2" style="width:98%" placeholder="예상비용과 비용내용 입력해주세요."></textarea>
@@ -102,10 +103,10 @@
 						</tr>
 						<tr>
 							<td class="label col-md-2 px-0 pt-2">
-								<label for="openURL">오픈채팅 URL<span class="text-danger">*</span></label>
+								<label for="chatUrl">오픈채팅 URL<span class="text-danger">*</span></label>
 							</td>
 							<td class="col-md-10 px-0">
-								<input type="text" name="openURL" class="input" style="width:98%" placeholder="오픈채팅방 URL을 입력해주세요."/>
+								<input type="text" name="chatUrl" class="input" style="width:98%" placeholder="오픈채팅방 URL을 입력해주세요."/>
 							</td>
 						</tr>
 					</tbody>
@@ -183,6 +184,28 @@ window.addEventListener('load', (e) => {
 		showMonthAfterYear: true,
 		startDate: '0d'
 	});	
-})
+});
+
+const frm = document.camperEnrollFrm;
+frm.addEventListener("submit", (e) => {
+	frm.area.value = frm.sido1.value + " " + frm.gugun1.value;
+	
+	if(!frm.area.value || !frm.memberCount.value || !frm.title.value || !frm.content.value || !frm.chatUrl.value) {
+		alert("필수항목을 모두 입력해주세요.");
+		e.preventDefault();
+		return;
+	}
+	
+	if(frm.departureDate.value > frm.arrivalDate.value || !frm.departureDate.value || !frm.arrivalDate.value) {
+		alert("기간을 정확히 선택해주세요.");
+		e.preventDefault();
+		return;
+	}
+	if(!/^(https?:\/\/open.kakao.com\/)/.test(frm.chatUrl.value)) {
+		alert("오픈채팅방 url을 정확히 입력해주세요.");
+		e.preventDefault();
+		return;
+	}
+});
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

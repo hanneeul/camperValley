@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.campervalley.community.camper.model.dao.CamperDao">
+
+<insert id="insertCamper">
+	insert into
+		camper
+	values(
+		seq_camper_no.nextval,
+		#{member_id},
+		#{title},
+		#{content},
+		#{purpose},
+		#{expected_cost},
+		#{chat_url},
+		#{departure_date},
+		#{arrival_date},
+		#{area},
+		#{member_count},
+		default,
+		default,
+		null,
+		default)
+</insert>
+
+</mapper>
