@@ -23,23 +23,23 @@
 						<div class="px-0 d-flex align-items-center justify-content-center divInputWrapper">
 							<label for="">승인상태</label>
 							<select class="custom-select custom-select-sm" name="status">
-								<option value="all" selected>전체</option>
-								<option value="permission">승인완료</option>
-								<option value="waiting">승인대기</option>
-								<option value="pause">권한정지</option>
+								<option value="all" ${(param.status eq 'all') || (empty param.status) ? 'selected' : ''}>전체</option>
+								<option value="permission" ${param.status eq 'permission' ? 'selected' : ''}>승인완료</option>
+								<option value="waiting" ${param.status eq 'waiting' ? 'selected' : ''}>승인대기</option>
+								<option value="pause" ${param.status eq 'pause' ? 'selected' : ''}>권한정지</option>
 							</select>
 						</div>
 						<div class="col px-0 d-flex align-items-center justify-content-center divInputWrapper">
 							<label for="memberId">회원ID</label>
-							<input type="text" class="form-control form-control-sm" name="memberId"/>
+							<input type="text" class="form-control form-control-sm" name="memberId" value="${param.memberId}"/>
 						</div>
 						<div class="col px-0 d-flex align-items-center justify-content-center divInputWrapper">
-							<label for="memberId">광고계정명</label>
-							<input type="text" class="form-control form-control-sm" name="bisName"/>
+							<label for="bizName">광고계정명</label>
+							<input type="text" class="form-control form-control-sm" name="bizName" value="${param.bizName}"/>
 						</div>
 						<div class="col px-0 d-flex align-items-center justify-content-center divInputWrapper">
 							<label for="bizLicenseNo">사업자등록번호</label>
-							<input type="text" class="form-control form-control-sm" name="bizLicenseNo"/>
+							<input type="text" class="form-control form-control-sm" name="bizLicenseNo" id="searchBizLicenseNo" value="${param.bizLicenseNo}"/>
 						</div>
 					</div>
 					<div class="col-1 divInputWrapper">
@@ -62,6 +62,10 @@
 					</tr>
 				</thead>
 				<tbody class="listBody">
+					<c:if test="${empty list}">
+						<tr><td colspan="7">조회결과가 없습니다.</td></tr>
+					</c:if>
+					<c:if test="${not empty list}">
 					<c:forEach items="${list}" var="advertiser" varStatus="vs">
 						<tr data-advertiser-no="${advertiser.advertiserNo}" data-member-id="${advertiser.memberId}">
 							<c:if test="${advertiser.bizStatus eq 'N'}">
@@ -76,7 +80,12 @@
 										<td class="pause">권한정지</td>
 									</c:if>
 									<c:if test="${not empty advertiser.deletedAt}">
-										<td class="withdrawal">탈퇴회원</td>
+										<c:if test="${advertiser.withdrawal eq 'N'}">
+											<td class="withdrawal">광고주탈퇴</td>
+										</c:if>
+										<c:if test="${advertiser.withdrawal eq 'Y'}">
+											<td class="withdrawal">회원탈퇴</td>
+										</c:if>
 									</c:if>
 								</c:if>
 							</c:if>
@@ -115,14 +124,17 @@
 							</td>
 						</tr>
 					</c:forEach>
+					</c:if>
 				</tbody>
 			</table>
-			<div class="mt-5 pagebar">${pagebar}</div>
+			<c:if test="${not empty list}">
+				<div class="mt-5 pagebar">${pagebar}</div>
+			</c:if>
 		</div>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-
+<script src="${pageContext.request.contextPath}/resources/js/mypage/advertiser/validation.js"></script>
 <script>
 document.querySelectorAll(".updateBtn").forEach((btn) => {
 	btn.addEventListener('click', (e) => {

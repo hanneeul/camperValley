@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.campervalley.mypage.advertiser.model.dao.AdvertiserDao;
+import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.BizStatus;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 
@@ -27,6 +29,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	@Override
 	public int insertAdvertiser(AdvertiserExt advertiser) {
 		int result = advertiserDao.insertAdvertiser(advertiser);
+		result = advertiserDao.insertAdmoney(advertiser.getAdvertiserNo());
 
 		LicenseFile licenseFile = advertiser.getLicenseFile();
 		licenseFile.setAdvertiserNo(advertiser.getAdvertiserNo());
@@ -44,8 +47,21 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	}
 	
 	@Override
+	public List<AdvertiserExt> selectAdvertiserFilteredList(Map<String, Object> param, int cPage, int numPerPage) {
+		int offset = (cPage - 1) * numPerPage;
+		int limit = numPerPage;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return advertiserDao.selectAdvertiserFilteredList(param, rowBounds);
+	}
+	
+	@Override
 	public int selectTotalAdvertiser() {
 		return advertiserDao.selectTotalAdvertiser();
+	}
+	
+	@Override
+	public int selectFilteredTotalAdvertiser(Map<String, Object> param) {
+		return advertiserDao.selectFilteredTotalAdvertiser(param);
 	}
 	
 	@Override
@@ -74,6 +90,16 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		int result = advertiserDao.deleteAuthority(map);
 		
 		return result;
+	}
+
+	@Override
+	public AdvertiserMoneyExt selectOneAdvertiserMoney(String memberId) {
+		return advertiserDao.selectOneAdvertiserMoney(memberId);
+	}
+	
+	@Override
+	public Admoney selectOneAdmoney(int advertiserNo) {
+		return advertiserDao.selectOneAdmoney(advertiserNo);
 	}
 
 }
