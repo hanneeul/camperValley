@@ -36,39 +36,26 @@
 
 
 			<div class="noticeDetail_head">
-				<h4 class="notice__head">올해 야영장 사업자 안전교육 매뉴얼 배포</h4>
+				<h4 class="notice__head">${notice.title}</h4>
 			</div>
 
 			<div class="noticeSecond_head">
-				<span class="noticeDetail_date">2022-06-08</span> <span
-					class="noticeDetail_read">조회수 10</span>
+				<span class="noticeDetail_date">
+				<fmt:parseDate value="${notice.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+					<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
+			</span> <span
+					class="noticeDetail_read">${notice.readCount}</span>
 			</div>
 
-			<div class="noticeDetail_view">Lorem ipsum dolor sit, amet
-				consectetur adipisicing elit. Excepturi sapiente necessitatibus
-				quisquam, laboriosam quae voluptatem cumque et modi corrupti
-				doloribus impedit officia voluptatibus, corporis est magnam quis
-				incidunt amet. Placeat. Lorem ipsum dolor sit amet consectetur
-				adipisicing elit. Facilis quis sunt libero, labore ullam placeat
-				maxime officia ea vitae. Esse exercitationem obcaecati minima fugit
-				magni facere vitae aut ipsa repellat! Placeat cumque commodi ipsum
-				eligendi. Adipisci alias magnam excepturi corrupti mollitia nostrum,
-				cupiditate libero molestiae quia quod quidem? Quaerat excepturi quia
-				obcaecati, iure sequi dolores non provident corporis reiciendis
-				recusandae. Provident deleniti esse cupiditate accusantium nam hic
-				pariatur enim vero. Nulla minus in soluta! Dolorem veniam odit error
-				ea quia natus ducimus amet earum labore non, enim hic ab! Sit.
-				 officia voluptatibus, corporis est magnam quis
-				incidunt amet. Placeat. Lorem ipsum dolor sit amet consectetur
-				adipisicing elit. Facilis quis sunt libero, labore ullam placeat
-				maxime officia ea vitae. Esse exercitationem obcaecati minima fugit
-				magni facere vitae aut ipsa repellat! Placeat cumque commodi ipsum
-				eligendi. Adipisci alias magnam excepturi corrupti mollitia nostrum,
-				cupiditate libero molestiae quia quod quidem? Quaerat excepturi quia
-				obcaecati, iure sequi dolores non provident corporis reiciendis
-				recusandae. Provident deleniti esse cupiditate accusantium nam hic
-				pariatur enim vero. Nulla minus in soluta! Dolorem veniam odit error
-				ea quia natus ducimus amet earum labore non, enim hic ab! Sit.</div>
+			<div class="noticeDetail_view">
+<c:if test="${not empty notice.attachments}">
+		<c:forEach items="${notice.attachments}" var="attach" varStatus="vs">
+			<img src="${pageContext.request.contextPath}/resources/upload/cs/${attach.renamedFilename}" alt="" class="mt-3"/>
+			</c:forEach>
+	</c:if>
+			<p>${notice.content}</p>
+			
+			</div>
 
 			<div class="notice-box">
 				<span class="prev">이전글</span> <a href="#">Lorem, ipsum dolor sit
