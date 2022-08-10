@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/main.css"/>
 
-<div id="section" style="width: 90%; margin:50px auto">
+<div id="section" style="margin-top:150px">
 	<div class="container">
 		<p class="usedProduct-title">캠퍼밸리 중고거래</p>
 		<hr class="line"/>
@@ -79,13 +79,12 @@
 			</div>
 			<!-- 아이템  -->
 		</div>
-		
+	</div>
+</div>
 		<!-- nav -->
 		<div id="nav">
 			<jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 		</div>
-	</div>
-</div>
 <script>
 // 카테고리 마우스 오버 이벤트
 $("#btn_menu").hover(function(){

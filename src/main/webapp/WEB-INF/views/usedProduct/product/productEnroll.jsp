@@ -348,7 +348,7 @@ $('#enrollBtn').click(function() {
 			enctype: 'multipart/form-data',
 			processData: false, // 데이터 컨텐트 타입에 맞게 변환 여부
 			contentType: false, // 요청 컨텐트 타입
-			url: "/campervalley/usedProduct/product/productEnroll",
+			url: "${pageContext.request.contextPath}/usedProduct/product/productEnroll",
 			dataType: 'json',
 			beforeSubmit: function(data, form, option) { // submit 전 실행
 				// 이미지 정보 동적 할당
@@ -378,7 +378,7 @@ $('#enrollBtn').click(function() {
 			},
 			success: function(data) {
 				alert('상품이 등록되었습니다.');
-				location.href="/campervalley/usedProduct/product/productDetail?no"+data.no;
+				location.href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no"+data.no;
 			},
 			error: function(error) {
 				console.log('error : ', error);

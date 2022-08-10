@@ -14,5 +14,5 @@ public interface UsedProductDao {
 
 	int getProductNo();
 
-	List<UsedProduct> getProductList(Map<String, Object> map);
+	List<UsedProduct> getProductList(Map<String, Object> param);
 }

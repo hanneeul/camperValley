@@ -55,24 +55,24 @@ public class UsedProductController  {
 				e.printStackTrace();
 			}
 			
-			if(i == 0) usedProduct.setProduct_img1(fileName);
-			if(i == 1) usedProduct.setProduct_img2(fileName);
-			if(i == 2) usedProduct.setProduct_img3(fileName);
-			if(i == 3) usedProduct.setProduct_img4(fileName);
-			if(i == 4) usedProduct.setProduct_img5(fileName);
+			if(i == 0) usedProduct.setProductImg1(fileName);
+			if(i == 1) usedProduct.setProductImg2(fileName);
+			if(i == 2) usedProduct.setProductImg3(fileName);
+			if(i == 3) usedProduct.setProductImg4(fileName);
+			if(i == 4) usedProduct.setProductImg5(fileName);
 		}
 		
 		// 로그인한 회원의 아이디
-		usedProduct.setSeller_id(principal.getName()); 
+		usedProduct.setSellerId(principal.getName()); 
 		
 		// DB 
 		usedProductService.productInsert(usedProduct);
 		
 		// 최근 거래지역
-		String seller_id = principal.getName();
-		String recentLocation = usedProduct.getProduct_location();
+		String sellerId = principal.getName();
+		String recentLocation = usedProduct.getProductLocation();
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("seller_id", seller_id);
+		map.put("sellerId", sellerId);
 		map.put("recentLocation", recentLocation);
 		
 		// 등록한 상품 no 가져오기
