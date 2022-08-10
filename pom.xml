@@ -275,6 +275,24 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
+		<!-- 18. Json  의존 -->
+		<dependency>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20220320</version>
+		</dependency>
+		
+		<!-- 19. JDOM 의존 -->
+		<dependency>
+		    <groupId>org.jdom</groupId>
+		    <artifactId>jdom2</artifactId>
+		    <version>2.0.6</version>
+		</dependency>
 	</dependencies>
 	
     <build>

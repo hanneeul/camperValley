@@ -100,7 +100,7 @@ $('document').ready(function() {
 	var area1 = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"];
 	var area2 = ["계양구","남구","남동구","동구","부평구","서구","연수구","중구","강화군","옹진군"];
 	var area3 = ["대덕구","동구","서구","유성구","중구"];
-	var area4 = ["광산구","남구","동구",     "북구","서구"];
+	var area4 = ["광산구","남구","동구","북구","서구"];
 	var area5 = ["남구","달서구","동구","북구","서구","수성구","중구","달성군"];
 	var area6 = ["남구","동구","북구","중구","울주군"];
 	var area7 = ["강서구","금정구","남구","동구","동래구","부산진구","북구","사상구","사하구","서구","수영구","연제구","영도구","중구","해운대구","기장군"];
@@ -152,60 +152,40 @@ document.querySelector("#conditionsSubmitBtn").addEventListener('submit', (e) =>
 </script>
 <div class="d-flex bd-highlight w-100 p-3 m-auto campsite-result-wrap">
 	<div class="p-2 flex-fill bd-highlight campsite-result">
-		<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
-			<div class="result-list-img bg-light">
-				캠핑장 이미지
-				<img src="..." class="img-thumbnail" alt="...">
+		<c:forEach items="${list}" var="camp">
+			<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
+				<div class="result-list-img bg-light">
+					<c:if test="${not empty camp.firstImageUrl}">
+						<img src="${camp.firstImageUrl}" class="img-thumbnail" alt="${camp.facltNm} 대표이미지">
+					</c:if>
+					<c:if test="${empty camp.firstImageUrl}">
+						<img src="${pageContext.request.contextPath}/resources/images/noImg.png" class="img-thumbnail" alt="${camp.facltNm} 대표이미지">
+					</c:if>
+				</div>
+				<div class="result-list-content">
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<h6>${camp.facltNm}</h6>
+						</li>
+						<li class="list-group-item border-bottom-0">${camp.lineIntro}</li>
+						<li class="list-group-item border-top-0">
+							<span>
+								<i class="fa-solid fa-location-dot campsite-yellow"></i>&nbsp;
+								<c:if test="${fn:length(camp.addr1) ge 15}">
+									${fn:substring(camp.addr1, 0, 15)}...
+			                   	</c:if> 
+			                   	<c:if test="${fn:length(camp.addr1) lt 15}">
+			                   		${camp.addr1}
+			                   	</c:if>
+							</span>
+							<c:if test="${not empty camp.tel}">
+								<span class="float-right"><i class="fa-solid fa-phone campsite-yellow"></i>&nbsp;${camp.tel}</span>
+							</c:if>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<div class="result-list-content">
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">
-						<h6>[○○도 ○○시] ○○캠핑장</h6>
-					</li>
-					<li class="list-group-item border-bottom-0">낭만 가득한 프라이빗 캠핑장</li>
-					<li class="list-group-item border-top-0">
-						<span><i class="fa-solid fa-location-dot campsite-yellow"></i>&nbsp;○○도 ○○시</span>
-						<span class="float-right"><i class="fa-solid fa-phone campsite-yellow"></i>&nbsp;070-0000-0000</span>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
-			<div class="result-list-img bg-light">
-				캠핑장 이미지
-				<img src="..." class="img-thumbnail" alt="...">
-			</div>
-			<div class="result-list-content">
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">
-						<h6>[○○도 ○○시] ○○캠핑장</h6>
-					</li>
-					<li class="list-group-item border-bottom-0">낭만 가득한 프라이빗 캠핑장</li>
-					<li class="list-group-item border-top-0">
-						<span><i class="fa-solid fa-location-dot campsite-yellow"></i>&nbsp;○○도 ○○시</span>
-						<span class="float-right"><i class="fa-solid fa-phone campsite-yellow"></i>&nbsp;070-0000-0000</span>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="d-flex bd-highlight m-1 result-list-wrap border border-light">
-			<div class="result-list-img bg-light">
-				캠핑장 이미지
-				<img src="..." class="img-thumbnail" alt="...">
-			</div>
-			<div class="result-list-content">
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">
-						<h6>[○○도 ○○시] ○○캠핑장</h6>
-					</li>
-					<li class="list-group-item border-bottom-0">낭만 가득한 프라이빗 캠핑장</li>
-					<li class="list-group-item border-top-0">
-						<span><i class="fa-solid fa-location-dot campsite-yellow"></i>&nbsp;○○도 ○○시</span>
-						<span class="float-right"><i class="fa-solid fa-phone campsite-yellow"></i>&nbsp;070-0000-0000</span>
-					</li>
-				</ul>
-			</div>
-		</div>
+		</c:forEach>
 	</div>
 	<div class="p-2 flex-fill m-auto bg-light result-map" id="map"></div>
 	<script src="${pageContext.request.contextPath}/resources/js/campsite/kakaoMap.js"></script>

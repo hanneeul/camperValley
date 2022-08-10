@@ -16,6 +16,17 @@
 	font-weight: bold;
 }
 
+.campsite-result {
+	height: 31rem;
+	overflow-y: scroll;
+	-ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.campsite-result::-webkit-scrollbar {
+    display: none;
+}
+
 .btn-success, .btn-outline-success, .form-control {
 	font-size: .9rem;
 }
@@ -64,13 +75,8 @@ label[for=keywordSearch] {
 	height: 10rem;
 }
 
-.result-list-content {
-	width: 20rem;
-	height: 10rem;
-}
-
 .result-map {
-	width: 25rem;
+	width: 31rem;
     height: 31rem;
 }
 
@@ -80,6 +86,14 @@ label[for=keywordSearch] {
     color: #fff;
     background-color: #639A67;
     border-color: #639A67;
+}
+
+.img-thumbnail {
+	height: -webkit-fill-available;
+}
+
+.result-list-content>.list-group-flush>.list-group-item {
+    width: 25rem!important;
 }
 /* searhDetail/searchTheme.jsp end */
 
