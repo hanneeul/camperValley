@@ -1,7 +1,9 @@
 package com.kh.campervalley.cs.model.service;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +20,11 @@ public class CsServiceImpl implements CsService {
 	private CsDao csDao;
 	
 	@Override
-	public List<Notice> selectFaqList() {
-		return csDao.selectFaqList();
+	public List<Notice> selectFaqList(Map<String, Object> map) {
+		int offset = (int)map.get("offset");
+		int numPerPage = (int)map.get("numPerPage");
+		RowBounds rowBounds = new RowBounds(offset, numPerPage);
+		return csDao.selectFaqList(map, rowBounds);
 	}
 	
 	@Override
@@ -40,6 +45,11 @@ public class CsServiceImpl implements CsService {
 	@Override
 	public int faqInsert(Notice notice) {
 		return csDao.faqInsert(notice);
+	}
+	
+	@Override
+	public int selectTotalFaqList(Map<String, Object> map) {
+		return csDao.selectTotalFaqList(map);
 	}
 
 }

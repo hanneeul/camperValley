@@ -3,6 +3,19 @@ footer {
 	margin-top: 200px;
 }
 
+/* 페이지바 */
+.page-item.active span.page-link {
+	background-color: #639A67;
+    border-color: #639A67;
+}
+
+.page-item .page-link {
+	color: #2B380C;
+}
+.page-item .page-link:hover {
+	color: #2B380C;
+}
+
 /* 버튼 */
 button.btn-primary, button.btn-primary:hover {
 	background-color: #639A67;
@@ -78,6 +91,12 @@ button.btn-outline-primary:hover {
 	font-size: 13px;
 	height: 28px;
 }
+
+#search-type {
+	border: 1px solid #dee2e6;
+	color: #777;
+}
+
 
 input:focus {
 	outline: none;
