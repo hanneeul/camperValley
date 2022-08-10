@@ -341,6 +341,12 @@ $('#enrollBtn').click(function() {
 		 if($('#input-price').val()=='') { $('#div-price').show(); $('#input-price').focus(); return true;}
 	 }
 	 
+	 var token = $("meta[name='_csrf']").attr("content");
+	 var header = $("meta[name='_csrf_header']").attr("content");
+	 $(document).ajaxSend(function(e, xhr, options) {
+	     xhr.setRequestHeader(header, token);
+	 });
+
 	 // 동적 파일 업로드를 위한 ajaxForm 
 	 function enrollAction() {
 		$('#enrollForm').ajaxForm({
@@ -355,7 +361,7 @@ $('#enrollBtn').click(function() {
 				fileBuffer.forEach(function(e, i) {
 					const imgObj = {
 							name : 'img',
-							id : 'product_img'+i,
+							id : 'productImg'+i,
 							type : 'file',
 							value : e
 					}
@@ -371,7 +377,7 @@ $('#enrollBtn').click(function() {
 				
 				// 배송비 
 				const deliveryFeeObj = {
-					name : 'product_delivery_fee',
+					name : 'productDeliveryFee',
 					value : $('#freeDelivery').prop('checked') ? 1 : 0
 				} 
 				data.push(deliveryFeeObj);

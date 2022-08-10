@@ -259,6 +259,7 @@ body {
 /* 더보기 */
 #moreShow {
 	text-align: center;
+	margin-bottom: 15px;
 }
 #more {
 	cursor: pointer; 

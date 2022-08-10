@@ -5,12 +5,11 @@
 <mapper namespace="com.kh.campervalley.usedProduct.model.dao.UsedProductDao">
 
 <!-- 상품 등록 -->
-<insert id="productInsert" parameterType="usedProduct">
+<insert id="productInsert" parameterType="com.kh.campervalley.usedProduct.model.dto.UsedProduct">
 	insert into 
 		used_product 
 	values(
 		seq_used_product_no.nextval,
-		#{product_no},
 		#{seller_id},
 		#{cate_no},
 		#{product_title},
@@ -27,7 +26,7 @@
 		0,
 		#{transaction_date},
 		#{buyer_id},
-		N
+		'N'
 	)
 </insert>
 
@@ -74,5 +73,4 @@ select *
 	)
 	where rnum between nvl(#{start}, 0) and nvl(#{end}, 10) order by product_enroll_time asc
 </select>
-
 </mapper>

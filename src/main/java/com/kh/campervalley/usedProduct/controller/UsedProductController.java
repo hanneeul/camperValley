@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,8 +35,11 @@ public class UsedProductController  {
 	private UsedProductService usedProductService;
 
 	/* 상품 등록 */
-	@GetMapping("/product/productEnroll")
-	public void productEnrollPage() {};
+	@GetMapping("/product/getProductEnroll")
+	public String getProductEnroll(Model model) {
+		model.addAttribute("display", "/usedProduct/product/productEnroll.jsp");
+		return "/usedProduct/product/productEnroll";
+	};
 	
 	@PostMapping("/product/productEnroll")
 	@ResponseBody // json
@@ -63,17 +67,17 @@ public class UsedProductController  {
 		}
 		
 		// 로그인한 회원의 아이디
-		usedProduct.setSellerId(principal.getName()); 
+//		usedProduct.setSellerId(principal.getName()); 
 		
 		// DB 
 		usedProductService.productInsert(usedProduct);
 		
 		// 최근 거래지역
-		String sellerId = principal.getName();
-		String recentLocation = usedProduct.getProductLocation();
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sellerId", sellerId);
-		map.put("recentLocation", recentLocation);
+//		String sellerId = principal.getName();
+//		String recentLocation = usedProduct.getProductLocation();
+//		Map<String, String> map = new HashMap<String, String>();
+//		map.put("sellerId", sellerId);
+//		map.put("recentLocation", recentLocation);
 		
 		// 등록한 상품 no 가져오기
 		int no = usedProductService.getProductNo();

@@ -24,7 +24,7 @@
 		      <i class="fas fa-search" style="color: #639A67;"></i>
 		  </button>
 		  <div class="ml-1">
-			  <button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/usedProduct/product/productEnroll'">글쓰기</button>
+			  <button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/usedProduct/product/getProductEnroll'">글쓰기</button>
 		  </div>
 		</div>
 			

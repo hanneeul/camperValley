@@ -1,12 +1,17 @@
 package com.kh.campervalley.usedProduct.model.dto;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
+
+import com.kh.campervalley.cs.model.dto.Category;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UsedProduct {
 
 	private int productNo;
