@@ -23,9 +23,6 @@
 						${admoney.balance}<small class="ml-1">원</small>
 					</h5>
 				</div>
-				<!-- <form action="" name="chargeAdmoneyFrm">
-					<input type="hidden" name="amount" id="chargeAmount"/>
-				</form> -->
 				<div class="selectBtnWrapper">
 					<button type="button" class="btn btn-camper-color btn-block" onclick="clickChargeBtn(100000);">100,000원 충전</button>
 					<button type="button" class="btn btn-camper-color btn-block" onclick="clickChargeBtn(250000);">250,000원 충전</button>
@@ -99,7 +96,7 @@ const clickChargeBtn = (amount) => {
 	const merchantUid = '${admoney.advertiserNo}_' + new Date().getTime()
 
 	IMP.request_pay({
-		pg : 'inicis',
+		pg : 'html5_inicis.INIpayTest', // 일반결제 테스트 상점아이디 : INIpayTest
 		pay_method : 'card',
 		merchant_uid : merchantUid,
 		name : '애드머니충전',
@@ -111,13 +108,32 @@ const clickChargeBtn = (amount) => {
 	}, function (rsp) {
 		if(rsp.success) {
 			console.log(rsp);
+			const {imp_uid : impUid, pay_method : payMethod, paid_amount : paidAmount, status, 
+				buyer_email : buyerEmail, buyer_name : buyerName, buyer_tel : buyerTel, paid_at : paidAt, pg_provider : pgProvider} = rsp;
+			
+			const headers = {
+				"${_csrf.headerName}" : "${_csrf.token}"
+			};
+			
 			$.ajax({
 				url : '${pageContext.request.contextPath}/mypage/advertiser/admoneyCharge',
 				method : 'POST',
-				dataType : 'json',
+				headers,
 				data : {
-					
+					merchantUid,
+					advertiserNo : '${admoney.advertiserNo}',
+					impUid,
+					payMethod,
+					paidAmount,
+					status,
+					buyerEmail,
+					buyerName,
+					buyerTel,
+					paidAt,
+					pgProvider
 				}
+			}).done(function(data) {
+				console.log("결제정보 처리 완료");
 			});
 		} else {
 			console.log(rsp.error_msg);

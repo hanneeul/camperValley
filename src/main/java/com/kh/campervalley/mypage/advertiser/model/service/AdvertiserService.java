@@ -7,6 +7,7 @@ import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
+import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
 
 public interface AdvertiserService {
 	
@@ -31,5 +32,7 @@ public interface AdvertiserService {
 	AdvertiserMoneyExt selectOneAdvertiserMoney(String memberId);
 
 	Admoney selectOneAdmoney(int advertiserNo);
+
+	int chargeAdmoney(Pay pay);
 
 }

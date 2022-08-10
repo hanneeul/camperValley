@@ -2,13 +2,24 @@ package com.kh.campervalley.mypage.advertiser.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,12 +30,14 @@ import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
+import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
 import com.kh.campervalley.mypage.advertiser.model.service.AdvertiserService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/mypage/advertiser")
+//@PropertySource("classpath:datasource.properties")
 @Slf4j
 public class AdvertiserController {
 	
@@ -33,6 +46,9 @@ public class AdvertiserController {
 	
 	@Autowired
 	ServletContext application;
+	
+	@Autowired
+	ResourceLoader resourceLoader;
 	
 	@GetMapping("/register")
 	public void registerAdvertiser() { }
@@ -92,7 +108,7 @@ public class AdvertiserController {
 	}
 	
 	@GetMapping("/admoney")
-	public ModelAndView chargeAdmoney(@RequestParam("no") int advertiserNo, ModelAndView mav) {
+	public ModelAndView loadAdmoneyPage(@RequestParam("no") int advertiserNo, ModelAndView mav) {
 		try {
 			Admoney admoney = advertiserService.selectOneAdmoney(advertiserNo);
 			log.debug("admoney = {}", admoney);
@@ -103,6 +119,23 @@ public class AdvertiserController {
 		}
 		return mav;
 	}
+	
+	@PostMapping("/admoneyCharge")
+	public ResponseEntity<?> chargeAdmoney(Pay pay) {
+		Map<String, Object> map = new HashMap<>();
+		log.debug("pay = {}", pay);
+		try {
+			int result = advertiserService.chargeAdmoney(pay);
+			
+		} catch(Exception e) {
+			log.error("애드머니 충전내역 저장 오류", e);
+			map.put("msg", "애드머니 충전내역 저장 오류");
+			return ResponseEntity
+					.status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
+					.body(map);
+		}
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	};
 	
 	@GetMapping("/enrollAd")
 	public void enrollAd() { }

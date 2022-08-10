@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
@@ -14,12 +15,13 @@
 		</div>
 		<div class="col-lg-10 px-5">
 			<h2>광고주 등록하기</h2>
-			<form:form
+			<form
 				name="enrollAdvertiserFrm"
 				action="${pageContext.request.contextPath}/mypage/advertiser/register"
 				method="POST"
 				enctype="multipart/form-data"
 				style="width:800px;">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<input type="hidden" name="memberId" value="honggd" required> <!-- ${loginMember.memberId}로 변경하기 -->
 				<div class="divInputWrapper">
 					<label for="bizName">광고계정 이름</label>
@@ -60,7 +62,7 @@
 				<div class="divInputWrapper">
 					<button type="submit" class="btn btn-camper-color btn-block">광고주승인 요청하기</button>
 				</div>
-			</form:form>
+			</form>
 		</div>
 	</div>
 </div>
@@ -78,11 +80,16 @@ const checkBizNo = () => {
 	var data = {
 		"b_no" : [ inputData ]
 	};
-	
+
+	const headers = {
+		"${_csrf.headerName}" : "${_csrf.token}"
+	};
+
 	$.ajax({
 		url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${ckBusinessNo}",
 		type: "POST",
 		data: JSON.stringify(data),
+		headers,
 		dataType: "JSON",
 		contentType: "application/json",
 		accept: "application/json",

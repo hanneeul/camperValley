@@ -14,6 +14,7 @@ import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
+import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
 
 @Mapper
 public interface AdvertiserDao {
@@ -50,5 +51,11 @@ public interface AdvertiserDao {
 
 	@Select("select * from admoney where advertiser_no = #{advertiserNo}")
 	Admoney selectOneAdmoney(int advertiserNo);
+
+	@Insert("insert into pay values (#{merchantUid}, #{advertiserNo}, #{impUid}, #{payMethod}, #{paidAmount}, #{status}, #{buyerEmail}, #{buyerName}, #{buyerTel}, #{paidAt}, #{pgProvider})")
+	int insertPay(Pay pay);
+
+	@Update("update admoney set balance = balance + #{paidAmount} where advertiser_no = #{advertiserNo}")
+	int updateAdmoneyCharge(Pay pay);
 
 }
