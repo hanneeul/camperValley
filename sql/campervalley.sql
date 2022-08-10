@@ -97,11 +97,11 @@ create table admoney (
 );
 create sequence seq_admoney_no;
 
--- pk 자료형 수정함(8/9)
+-- pk, imp_uid 자료형 수정함(8/9)
 create table pay (
 	merchant_uid varchar2(16) not null,
 	advertiser_no number not null,
-	imp_uid number not null,
+	imp_uid varchar2(16) not null,
 	pay_method varchar2(50) not null,
 	paid_amount number not null,
 	pay_statement varchar2(15) not null,

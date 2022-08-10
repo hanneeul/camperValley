@@ -23,9 +23,9 @@
 						${admoney.balance}<small class="ml-1">원</small>
 					</h5>
 				</div>
-				<form action="" name="chargeAdmoneyFrm">
+				<!-- <form action="" name="chargeAdmoneyFrm">
 					<input type="hidden" name="amount" id="chargeAmount"/>
-				</form>
+				</form> -->
 				<div class="selectBtnWrapper">
 					<button type="button" class="btn btn-camper-color btn-block" onclick="clickChargeBtn(100000);">100,000원 충전</button>
 					<button type="button" class="btn btn-camper-color btn-block" onclick="clickChargeBtn(250000);">250,000원 충전</button>
@@ -93,22 +93,32 @@
 
 <spring:eval var="impStoreCode" expression="@customProperties['api.impStoreCode']" />
 <script>
-IMP.init("${impStoreCode}");
+IMP.init('${impStoreCode}');
 
 const clickChargeBtn = (amount) => {
-	// document.chargeAdmoneyFrm.chargeAmount.value = amount;
-	const merchantUid = "${admoney.advertiserNo}_" + new Date().getTime()
+	const merchantUid = '${admoney.advertiserNo}_' + new Date().getTime()
 
 	IMP.request_pay({
 		pg : 'inicis',
 		pay_method : 'card',
 		merchant_uid : merchantUid,
-		name : '애드머니',
-		amount : amount,
-		buyer_tel : "01011111111" // loginMember.tel
+		name : '애드머니충전',
+		digital: true,
+		amount : 10, // 임의결제금액
+		buyer_name : '홍길동', // loginMember.name
+		buyer_tel : '01011111111', // loginMember.tel
+		buyer_email : 'honggd@gmail.com' // loginMember.email
 	}, function (rsp) {
 		if(rsp.success) {
 			console.log(rsp);
+			$.ajax({
+				url : '${pageContext.request.contextPath}/mypage/advertiser/admoneyCharge',
+				method : 'POST',
+				dataType : 'json',
+				data : {
+					
+				}
+			});
 		} else {
 			console.log(rsp.error_msg);
 		}
