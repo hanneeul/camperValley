@@ -9,9 +9,10 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
-public class CampsiteImage extends Campsite {
+public class CampsiteImage {
 	@NonNull
 	private long serialnum;
+	@NonNull
+	private long contentId;
 	private String imageUrl;
 }

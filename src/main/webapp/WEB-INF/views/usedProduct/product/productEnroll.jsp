@@ -8,8 +8,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
-<!-- 다음 우편번호API -->
+<!-- ajaxForm -->
+<script defer src="${pageContext.request.contextPath}/resources/js/usedProduct/jquery.form.js"></script>
+<!-- 다음 우편번호 API -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- 다음 지도좌표 API -->
 <spring:eval var="kakaoLocation" expression="@customProperties['api.kakaoLocation']" />
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoLocation}&libraries=services"></script>
 
@@ -36,7 +39,7 @@
 											<input type="file" id="input-image">
 										</li>
 									</ul>
-									<div class="div-image" id="div-image" style="margin-left: 2.5rem;">
+									<div class="div-image" id="div-image">
 												상품 사진을 등록해주세요.</div>
 									<div class="add_description" style="">
 										<b>* 상품 이미지는 640x640에 최적화 되어 있습니다.</b><br>
@@ -65,7 +68,7 @@
 								
 							<li class="list">
 								<div class="category_sub">카테고리<span>*</span></div>
-								<div class="category_con">
+								<div class="category_con" style="margin-left: -40px;">
 									<div class="contentDiv">
 										<div class="categoryStep">
 											<ul class="categories" id="large_categories">
@@ -98,7 +101,6 @@
 								<div class="location_con">
 									<div class="contentDiv">
 										<button type="button" id="search_address">주소 검색</button>
-										<button type="button" id="recent_location">최근 지역</button>
 									</div>
 									<input placeholder="거래할 지역을 입력해주세요." class="input-location" id="input-location" name="input-location">
 									<div class="div-location" id="div-location">거래지역을 선택해주세요.</div>
@@ -114,7 +116,7 @@
 								<div class="price_sub">가격<span>*</span></div>
 								<div class="price_con">
 									<div class="priceBox">
-										<input type="text" placeholder="숫자만 입력해주세요." class="input-price" id="input-price" name="input-price"">원
+										<input type="text" placeholder="숫자만 입력해주세요." class="input-price" id="input-price" name="input-price">원
 									</div>
 		
 									<!-- 배송비 포함 여부 -->
@@ -123,7 +125,7 @@
 											<label for="freeDelivery" class="freeDelivery">
 												<input id="freeDelivery" type="checkbox">배송비 포함
 											</label>
-										</div>
+									</div>
 									</div>
 									<div class="div-price" id="div-price">0원 이상 입력해주세요. (무료 나눔 시 0원으로 설정해주세요)</div>
 								</div>
@@ -157,7 +159,13 @@
 
 <script>
 $('#enrollForm').ready(function() {
+	 $('#div-image').hide();
+	 $('#div-subject').hide();
+	 $('#div-category').hide();
+	 $('#div-price').hide();
+	 $('#div-location').hide();
 });
+
 /* 이미지 등록 (미리보기) */
 $('#input-image').on('change', readImage); // 파일 올릴떄마다 readImage함수 호출
 const fileBuffer = []; // 파일 저장 변수
@@ -196,7 +204,7 @@ function readImage() {
 			
 			// 이미지 태그 생성
 			const $li = $('<li></li>').addClass('registImages');
-			const $div = $('<div></div>');
+			const $div = $('<div></div>').addClass('regist-div');
 			const $img = $('<img/>').attr({'src':this.result, alt: '상품이미지'});
 			const $button = $('<button></button>');
 			
@@ -243,9 +251,9 @@ function deleteImage() {
  
  
 /* 카테고리 */
+var cate_no = null;
+var cate_name = null;
 $('.category >.cate_btn').on("click", function(){
-	var cate_no = null;
-	var cate_name = null;
 	
 	//클릭한 카테고리의 id값 가져오기
 	cate_no = $(this).attr("id");
@@ -310,28 +318,77 @@ $('#search_address').click(function() {
 
 /* 가격 */
 $('.input-price').on('keyup', function(e) {
-	const val = $(this).val();
-	if(!(/^[0-9]$/g.test(val))) { // 숫자만 입력되지 않았다면
-		$(this).val(val.replace(/[^0-9]/g, '')); // 숫자 제외한 문자 공백으로 대체
-	}
+   const val = $(this).val();
+   if(!(/^[0-9]$/g.test(val))) { // 숫자만 입력되지 않았다면
+      $(this).val(val.replace(/[^0-9]/g, '')); // 숫자 제외한 문자 공백으로 대체
+   }
 });
 
 /* 등록하기 */
- $('#enrollBtn').click(function() {
-		$('#div-image').hide();
-		$('#div-subject').hide();
-		$('#div-category').hide();
-		$('#div-price').hide();
-		$('#div-location').hide();
-		
-		if(confirm()) return false;
-		
-		function confirm() {
-			if(!fileBuffer.length) {$('#div-image').show(); $('#input-image').focus(); return true;}
-			else if($('#div-subject').val()=='') {$('#div-image').show(); $('#input-image').focus(); return true;}
-		}
+$('#enrollBtn').click(function() {
+	 
+	 // 필수 입력값 입력하지 않았을 경우 
+	 // true면 제출X
+	 if(confirm()) return false;
+	 
+	 enrollAction.call(this);
+	
+	 function confirm() {
+		 if(!fileBuffer.length) { $('#div-image').show(); $('#input-image').focus(); return true;}
+		 else if($('#input-subject').val()=='') {$('#div-subject').show(); $('#input-subject').focus(); return true;}
+		 else if(cate_no == null) { $('#div-category').show(); $('#categories').focus(); return true;}
+		 if($('#input-location').val()=='') { $('#div-location').show(); $('#input-location').focus(); return true;}
+		 if($('#input-price').val()=='') { $('#div-price').show(); $('#input-price').focus(); return true;}
+	 }
+	 
+	 // 동적 파일 업로드를 위한 ajaxForm 
+	 function enrollAction() {
+		$('#enrollForm').ajaxForm({
+			type: 'post',
+			enctype: 'multipart/form-data',
+			processData: false, // 데이터 컨텐트 타입에 맞게 변환 여부
+			contentType: false, // 요청 컨텐트 타입
+			url: "/campervalley/usedProduct/product/productEnroll",
+			dataType: 'json',
+			beforeSubmit: function(data, form, option) { // submit 전 실행
+				// 이미지 정보 동적 할당
+				fileBuffer.forEach(function(e, i) {
+					const imgObj = {
+							name : 'img',
+							id : 'product_img'+i,
+							type : 'file',
+							value : e
+					}
+					data.push(imgObj);
+				});
+			
+				// 카테고리 
+				const cateObj = {
+					name : 'cate_no',
+					value : cate_no
+				}
+				data.push(cateObj);
+				
+				// 배송비 
+				const deliveryFeeObj = {
+					name : 'product_delivery_fee',
+					value : $('#freeDelivery').prop('checked') ? 1 : 0
+				} 
+				data.push(deliveryFeeObj);
+			},
+			success: function(data) {
+				alert('상품이 등록되었습니다.');
+				location.href="/campervalley/usedProduct/product/productDetail?no"+data.no;
+			},
+			error: function(error) {
+				console.log('error : ', error);
+			}
+	 
+		});
+	 }
 		 
  });
+ 
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

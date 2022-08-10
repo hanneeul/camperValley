@@ -45,7 +45,7 @@
 		</tr>
 	</table>
 	<div class="d-flex justify-content-center">
-	<button class="btn btn-dark btn-sm" type="submit" style="margin-right:10px;">취소</button>
+	<button class="btn btn-secondary btn-sm" type="submit" style="margin-right:10px;" onclick="location.href='${pageContext.request.contextPath}/cs/noticeList';">취소</button>
 	<button class="btn btn-primary btn-sm" type="submit">수정하기</button>
 	</div>
 </form>

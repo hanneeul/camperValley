@@ -1,6 +1,10 @@
 package com.kh.campervalley.cs.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.cs.model.dto.Notice;
 import com.kh.campervalley.cs.model.service.CsService;
 
@@ -38,15 +43,37 @@ public class CsController {
 	public void noticeDetail() {}
 
 	@GetMapping("/faq")
-	public String faq(Model model) {
+	public ModelAndView faq(ModelAndView mav,
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "1") int cPage,
+			HttpServletRequest request) {
 		try {
-			List<Notice> list = csService.selectFaqList();
+			int numPerPage = 7;
+			int offset = (cPage - 1) * numPerPage;
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("searchType", searchType);
+			map.put("searchKeyword", searchKeyword);
+			map.put("numPerPage", numPerPage);
+			map.put("offset", offset);
+			
+			List<Notice> list = csService.selectFaqList(map);
+			int totalContent = csService.selectTotalFaqList(map);
 			log.debug("list = {}", list);
-			model.addAttribute("list", list);
+			
+			String url = request.getRequestURI();
+			String pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalContent, url);
+			log.debug("map = {}" + map);
+			
+			mav.addObject("list", list);
+			mav.addObject("map", map);
+			mav.addObject("pagebar", pagebar);
+			
 		} catch (Exception e) {
 			log.error("faq 조회 오류", e);
 		}
-		return "cs/faq";
+		return mav;
 	}
 	
 	@PostMapping("/faqDelete")

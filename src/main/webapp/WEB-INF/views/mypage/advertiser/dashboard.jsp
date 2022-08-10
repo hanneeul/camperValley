@@ -44,10 +44,11 @@
 				</div>
 				<div class="divAdMoney align-self-center">
 					<h5 class="d-inline">
-						<a id="adMoneyCharge" href="${pageContext.request.contextPath}/mypage/advertiser/admoney">애드머니</a>
+						<span>${advertiser.bizName}</span>의
+						<a id="adMoneyCharge" href="${pageContext.request.contextPath}/mypage/advertiser/admoney?no=${advertiser.advertiserNo}">애드머니</a>
 					</h5>
 					<h5 class="d-inline">
-						4,200,000<small class="ml-1">원</small>
+						${advertiser.admoney.balance}<small class="ml-1">원</small>
 					</h5>
 				</div>
 			</div>
