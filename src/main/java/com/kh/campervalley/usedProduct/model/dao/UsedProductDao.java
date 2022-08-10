@@ -1,5 +1,6 @@
 package com.kh.campervalley.usedProduct.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -11,5 +12,7 @@ public interface UsedProductDao {
 
 	int productInsert(UsedProduct usedProduct);
 
-	int getProductNo();;
+	int getProductNo();
+
+	List<UsedProduct> getProductList(Map<String, Object> map);
 }

@@ -326,11 +326,6 @@ $('.input-price').on('keyup', function(e) {
 
 /* 등록하기 */
 $('#enrollBtn').click(function() {
-	 $('#div-image').hide();
-	 $('#div-subject').hide();
-	 $('#div-category').hide();
-	 $('#div-price').hide();
-	 $('#div-location').hide();
 	 
 	 // 필수 입력값 입력하지 않았을 경우 
 	 // true면 제출X
@@ -353,7 +348,7 @@ $('#enrollBtn').click(function() {
 			enctype: 'multipart/form-data',
 			processData: false, // 데이터 컨텐트 타입에 맞게 변환 여부
 			contentType: false, // 요청 컨텐트 타입
-			url: "${pageContext.request.contextPath}/usedProduct/product/productEnroll",
+			url: "/campervalley/usedProduct/product/productEnroll",
 			dataType: 'json',
 			beforeSubmit: function(data, form, option) { // submit 전 실행
 				// 이미지 정보 동적 할당
@@ -383,12 +378,11 @@ $('#enrollBtn').click(function() {
 			},
 			success: function(data) {
 				alert('상품이 등록되었습니다.');
-				location.href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no"+data.no;
+				location.href="/campervalley/usedProduct/product/productDetail?no"+data.no;
 			},
 			error: function(error) {
 				console.log('error : ', error);
 			}
-		
 	 
 		});
 	 }

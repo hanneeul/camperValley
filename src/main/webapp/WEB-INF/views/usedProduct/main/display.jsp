@@ -49,24 +49,26 @@
 </div>
 
 <div id="display-list" class="row">
-	<!-- for 구문 -->
+	<c:forEach items="${list}" var="list">
 		<div class="item col-3"
 			onclick="location.href='/campervalley/usedProduct/product/productDetail'">
 			<div class="item">
 				<div id="itemSolid">
-					<img src="${pageContext.request.contextPath}/resources/images/usedProduct/travlerPouch.jpg" class="rounded float-start" alt="상품이미지">
-					<h5 id="displayTitle">&nbsp&nbsp상품 이름</h5>
+					<img src="${list.img1}" class="rounded float-start" alt="상품이미지">
+					<h5 id="displayTitle">&nbsp&nbsp${list.title}</h5>
 					<div class="price-time">
-						<p class="displayPrice">&nbsp&nbsp000000원</p>
-						<h5 class="displayTime">몇일 전&nbsp&nbsp</h5>
+						<p class="displayPrice">${list.price}</p>
+						<h5 class="displayTime">&nbsp&nbsp${list.enrolltime}</h5>
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>	
+	</c:forEach>	
 </div>
 
 <div id="moreShow">
-	<a id="pe-auto" class="pe-auto" onclick="viewMore()">더 보기<br>▼
+	<a id="more" class="more" onclick="viewMore()">더 보기<br><i class="fa-solid fa-caret-down"></i>
+
 	</a>
 </div>
 <script>
@@ -88,9 +90,59 @@ function getProductList(page) {
 	
 	$.ajax({
 		type : 'post',
-		url : 
+		url : '/campervalley/usedProduct/main/getProductList',
+		dataType : 'json',
+		data : {
+			page : page
+		},
+		success : function(data) {
+			alert(JSON.stringify(data.list)); // json -> spring
+			console.log('success page = ' + data); 
+			
+			if(data.list.length == 0) {
+				$('#more').hide();
+			} else {
+				$.each(data.list, function() {
+					var html = "";
+					var time = Number(this.product_enroll_time);
+					var time_before = "분 전";
+					
+					if(time > (60 * 24)) {
+						time = Math.round(time / (60 * 24));
+						time_before = '일 전';
+					} else if (time > 60) {
+						time = Math.round(time / 60);
+						time_before = "시간 전";
+					} 
+				
+					html = '<div class="item col=3"' + 'onclick="productDetailNo('
+						+ this.product_no + ');"'
+						   + 'style="cursor: pointer;">'
+						   + '<div class ="item">' + '<div id="itemSolid">'
+						   + '<div class="img-box">'
+						   + '<img src="${pageContext.request.contextPath}/resources/images/usedProduct/' + this.product_img1
+						   + '" class="rounded float-start" alt="'
+						   + this.product_title + '">' + '</div>'
+						   + '<div class="text-box">'
+						   + '<div class="displayName">'
+						   + this.product_title + '</div>'
+						   + '<div class="price-time">'
+						   + '<div class="displayPrice">' + this.product_price
+						   + '</div>' + '<div class="displayTime"><span>'
+						   + time + time_before + '<span></div>' + '</div>'
+						   + '</div>' + '</div>' + '</div>' + '</div>'
+					$('#display-list').append(html)
+				})
+			}
+		},
+		error : function(err) {
+			console.log(err);
+		}
 	});
 }
 
+function productDetailNo(no) {
+	location.href = '/campervalley/usedProduct/product/productDetail?no=' + no;
+}
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

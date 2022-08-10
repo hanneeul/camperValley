@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,8 +84,23 @@ public class UsedProductController  {
 		return mav;
 	};
 	
+	/* 메인페이지 */
 	@GetMapping("/main/mainPage")
-	public void index() {};
+	public String mainPage() {
+		return "/usedProduct/main/mainPage";
+		
+	};
+	
+	@PostMapping("/main/getProductList") 
+	@ResponseBody
+	public ModelAndView getProductList(@RequestParam(name = "page") int page) {
+		List<UsedProduct> list = usedProductService.getProductList(page);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		return mav;
+	}
 	
 	@GetMapping("/main/searchDisplay")
 	public void searchDisplay() {};

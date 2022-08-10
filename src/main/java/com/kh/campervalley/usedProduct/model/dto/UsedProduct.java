@@ -22,7 +22,7 @@ public class UsedProduct {
 	private String product_price;
 	private String product_location;
 	private int product_delivery_fee;
-	private String product_enroll_date;
+	private String product_enroll_time;
 	private int product_views;
 	private Date transaction_date;
 	private String buyer_id;
