@@ -58,9 +58,16 @@ input.input-daterange {
 form[name="chartPeriodFrm"] .form-row > *, .divAdMoney > * {
 	margin: 0 0.2rem;
 }
+.divAdMoney > h5 > span {
+	color: #D9BF77;
+}
 #adMoneyCharge {
 	color: #000;
 	text-decoration: none;
+	transition-duration: .2s;
+}
+#adMoneyCharge:hover {
+	color: #639A67;
 }
 #chartSection {
 	height: 12rem;
@@ -111,14 +118,17 @@ input.custom-control-input:checked~.custom-control-label::before {
 .divNowAdMoney small {
 	color: #000;
 }
-form[name="chargeAdmoneyFrm"] {
+.selectBtnWrapper {
 	margin: 0.8rem 0;
 	border-top: 1px solid #888;
 	border-bottom: 1px solid #888;
 }
-form[name="chargeAdmoneyFrm"] > * {
+.selectBtnWrapper > * {
 	width: 30rem;
 	margin: 2rem auto;
+}
+.selectBtnWrapper > button {
+	width: 30rem;	
 }
 #chargeCustom {
 	width: 20rem;

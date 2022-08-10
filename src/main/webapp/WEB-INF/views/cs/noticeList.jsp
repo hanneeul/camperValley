@@ -23,7 +23,7 @@
 
 	
 		<div class="search-group float-right">
-			<input class="input-search" type="text" placeholder="search">
+			<input class="input-search" type="text" placeholder="검색어를 입력하세요.">
 			<button class="btn-search" type="button">
 				<i class="fa fa-search"></i>
 			</button>

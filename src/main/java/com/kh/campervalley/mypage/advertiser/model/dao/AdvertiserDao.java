@@ -10,22 +10,29 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
+import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 
 @Mapper
 public interface AdvertiserDao {
 
 	int insertAdvertiser(AdvertiserExt advertiser);
+	
+	@Insert("insert into admoney values (seq_admoney_no.nextval, #{advertiserNo}, default)")
+	int insertAdmoney(int advertiserNo);
 
 	@Insert("insert into license_file values (seq_license_file_no.nextval, #{advertiserNo}, #{originalFilename}, #{renamedFilename}, default)")
 	int insertLicenseFile(LicenseFile licenseFile);
 
-	
 	List<AdvertiserExt> selectAdvertiserList(RowBounds rowBounds);
+	
+	List<AdvertiserExt> selectAdvertiserFilteredList(Map<String, Object> param, RowBounds rowBounds);
 
-	@Select("select count(*) from advertiser")
 	int selectTotalAdvertiser();
+	
+	int selectFilteredTotalAdvertiser(Map<String, Object> param);
 
 	@Select("select * from license_file where license_file_no = #{no}")
 	LicenseFile selectOneLicenseFile(int no);
@@ -38,5 +45,10 @@ public interface AdvertiserDao {
 
 	@Delete("delete from authority where member_id = #{memberId} and auth = #{auth}")
 	int deleteAuthority(Map<String, Object> map);
-	
+
+	AdvertiserMoneyExt selectOneAdvertiserMoney(String memberId);
+
+	@Select("select * from admoney where advertiser_no = #{advertiserNo}")
+	Admoney selectOneAdmoney(int advertiserNo);
+
 }
