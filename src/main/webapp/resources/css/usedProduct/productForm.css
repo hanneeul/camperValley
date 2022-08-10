@@ -27,6 +27,7 @@
 }
 .list div {
 	font-weight: 600;
+	
 }
 .enrollBody section h2 span {
     color: #EB0000;
@@ -108,7 +109,6 @@ image_sub > .small {
 	border-color: rgb(230, 229, 239);
 	border-image: initial;
 	background: rgb(250, 250, 253);
-	margin-left: 36px;
 }
 .image-li input {
 	width: 100%;
@@ -139,7 +139,6 @@ image_sub > .small {
 	width: 1.5rem;
 	height: 1.5rem;
 	background-size: 12px 12px;
-	background-image: url("/market/image/product/cancleBtn.svg");
 	background-color: rgba(30, 29, 41, 0.32);
 	position: absolute;
 	top: 0.5rem;
@@ -183,6 +182,7 @@ image_sub > .small {
 	height: 50px;
 	border: 1px solid rgb(195, 194, 204);
 	padding: 0px 1rem;
+	margin-left: -40px;
 }
 .subjectBox {
 	flex: 1 1 0%;
@@ -200,8 +200,8 @@ image_sub > .small {
 }
 .subjectSize > span {
 	position: absolute;
-    left: 915px;
-    top: 608px;
+    left: 878px;
+    top: 586px;
 }
 .subjectCancle {
 	position: absolute;
@@ -295,6 +295,7 @@ image_sub > .small {
 }
 .location_con {
     flex: 1 1 0%;
+    margin-left: -40px;
 }
 .location_con > .contentDiv > button {
     height: 2.2rem;
@@ -334,6 +335,7 @@ image_sub > .small {
 }
 .price_con {
     flex: 1 1 0%;
+    margin-left: -40px;
 }
 .priceBox > input {
 	height: 3rem;
@@ -356,6 +358,7 @@ image_sub > .small {
 }
 .instruction_con {
     flex: 1 1 0%;
+    margin-left: -40px;
 }
 .instruction_con > .instruction {
     width: 100%;
@@ -411,7 +414,11 @@ image_sub > .small {
 .registBtn:hover {
     background: #0d47a1;
 }
-/* DIV */
+
+#div-image, #div-subject, #div-category, 
+#div-price, #div-location {
+	display: none;
+}
 .div-image {
     color: #E6B36D;
     font-size: 14px;
@@ -426,7 +433,7 @@ image_sub > .small {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    margin-left: 0.55rem;
+    margin-left: -2.45rem;
 }
 .div-category {
 	color: #E6B36D;
@@ -468,7 +475,6 @@ image_sub > .small {
     color: #bebebe;
     line-height: 1.6;
     font-size: 0.9rem;
-    margin-left: 2.2rem;
 }
 .instruction_con textarea {
 	margin-top: 6px;

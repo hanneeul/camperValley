@@ -245,6 +245,9 @@
     top: -5.1rem;
     right: 1.6rem;
 }
+.input-group:active {
+	border: none;
+}
 /* 광고 */
 .adPlace {
 	margin-top: -83px;
@@ -253,4 +256,16 @@
     height: 270px;
     background-color: lightgray;
     margin-left: 7px;
+}
+
+/* 더보기 */
+#moreShow {
+	text-align: center;
+}
+#more {
+	cursor: pointer; 
+	text-decoration: none; 
+	color: #61615b; 
+	font-size: 20px; 
+	line-height: 0.01em;
 }

@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
-public class CampsiteFacility extends Campsite {
+public class CampsiteFacility {
+	@NonNull
+	private long contentId;			// 콘텐츠ID
 	private int gnrlSsiteCo;		// 주요시설 일반야영장
 	private int autoSiteCo;			// 주요시설 자동차야영장
 	private int glampSiteCo;		// 주요시설 글램핑
