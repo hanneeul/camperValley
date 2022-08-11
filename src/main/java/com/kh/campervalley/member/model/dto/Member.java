@@ -35,7 +35,7 @@ public class Member implements UserDetails{
 	private String profilImg;
 	private LocalDateTime enrollDate;
 	private LocalDateTime updatedAt;
-	private boolean withdrawal;
+	private Withdrawal withdrawal;
 	private boolean enabled;
 	
 	List<SimpleGrantedAuthority> authorities;

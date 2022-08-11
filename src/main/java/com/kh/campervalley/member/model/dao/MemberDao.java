@@ -17,6 +17,8 @@ public interface MemberDao {
 
 	String selectIDByNameAndEmail(Map<String, Object> map);
 
+	int updateMember(Member member);
+
 
 
 }

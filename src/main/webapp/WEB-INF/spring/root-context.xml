@@ -49,4 +49,26 @@
 	
 	<util:properties id="customProperties" location="classpath:datasource.properties" />
 
+<!-- 	<bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
+        <property name="host" value="pop.naver.com" />
+        <property name="port" value="465" />
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="username" value="${bs-info.naverId}" />
+        <property name="password" value="${bs-info.naverPassword}" />
+       
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtps.checkserveridentity">true</prop>
+				<prop key="mail.smtps.ssl.trust">*</prop>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+            </props>
+        </property>
+       
+    </bean> -->
+    
+<!--     <bean id="email" class="com.mycom.test.vo.Email"></bean>
+    <bean id="emailSender" class="com.mycom.test.service.EmailSender"></bean> -->
 </beans>

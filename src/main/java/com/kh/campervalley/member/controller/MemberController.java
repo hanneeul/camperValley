@@ -83,7 +83,7 @@ public class MemberController {
 			Member member = memberService.selectOneMember(attribute, value);
 			boolean available = member == null;// 사용가능 true 1 사용불가능 false 0
 			
-			map.put("value", value);
+			map.put("value", value);//필요없나?
 			map.put("available", available);
 			log.debug("컨트롤러 중복검사");
 		} catch (Exception e) {
@@ -125,5 +125,39 @@ public class MemberController {
 				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.body(map);
 	}
+	
+	@PostMapping("/searchPassword")
+	public ResponseEntity<?> ssearchPassword(@RequestParam String memberId,
+						@RequestParam String email
+			) {
+		Map<String, Object> map = new HashMap<>();
+		log.debug(memberId);
+		log.debug(email);
+		int match = 0;
+		try {
+			Member member = memberService.selectOneMember("member_Id", memberId);
+			//이메일 일치
+			if(email.equals(member.getEmail())) {
+				// 이메일 보내고, 화면 바뀔 수 있도록 설정
+				match = 1;
+				//아이디정보 등록(재설정페이지로 이동할 수 있도록)
+				
+			}
+			map.put("match", match);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+					.body(map);
+		}
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.body(map);
+	}
+	
+	
 }
 

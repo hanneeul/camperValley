@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/info/edit.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
-
+<sec:authentication property="principal" var="loginMember" scope="page"/>
 <div class="container">	
 	<div class="row d-flex justify-content-between">
 		<div class="col-lg-2">
@@ -21,33 +21,22 @@
 			회원정보관리
 		</h4>
 		<!-- <hr> -->
-		<form action="" class="shadow-sm">
+		<form:form id="memberUpdateFrm" class="shadow-sm" method="post">
             <table  style="width: 40rem;">
 			<tbody>
 				<tr>
 					<td rowspan="2" style="width:9.5rem;">
 						<input type="file" accept="image/*" name="" id="file" />
 						<div class="rounded-circle" id="profileImg-wrp">
-							<img id="profileImg" alt="누구님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/kj.png"/>
+							<img id="profileImg" alt="<sec:authentication property="principal.nickname"/>님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/kj.png"/>
 						</div>
 					</td>
 					<td style="width:6.4rem;"class="font-weight-bold">
 						아이디
 					</td>
 					<td colspan="2" style="width:14rem;">
-                            honggd
-					</td>
-				</tr>
-				<tr>
-					<td class="font-weight-bold">
-						닉네임
-					</td>
-					<td>
-						<input type="text" class="form-control" name="name" id="name" placeholder="닉네임" autocomplete="off" required>
-						<input type="hidden" id="idValid" value="0" /> <!-- 0-사용불가 1-사용가능 -->
-					</td>
-					<td style="width:6.6rem; text-align: right;">
-						<button class="btn btn-outline-secondary">중복확인</button>
+                            <sec:authentication property="principal.username"/>
+                            <input type="hidden" name="memberId" value="<sec:authentication property="principal.username"/>" />
 					</td>
 				</tr>
 				<tr>
@@ -55,15 +44,28 @@
 						이름
 					</td>
 					<td colspan="3">
-						<input type="text" class="form-control" name="name" id="name" placeholder="이름" autocomplete="off" required>
+						<sec:authentication property="principal.name"/>
+                            <input type="hidden" name="name" value="<sec:authentication property="principal.name"/>" />
 					</td>
-                    </tr>
-                    <tr >
+				</tr>
+				<tr>
+					<td class="font-weight-bold">
+						닉네임
+					</td>
+					<td  colspan="2">
+						<input type="text" class="form-control" name="nickname" id="nickname" value="<sec:authentication property="principal.nickname"/>" autocomplete="off" required>
+						<input type="hidden" id="nicknameValid" value="0" /> <!-- 0-사용불가 1-사용가능 -->
+					</td>
+					<td style="width:6.6rem; text-align: right;">
+						<button type="button" class="btn btn-outline-secondary" id="duplicateNicknameChk">중복확인</button>
+					</td>
+                </tr>
+                <tr>
 					<td class="font-weight-bold">
 						새 비밀번호
 					</td>
 					<td colspan="3">
-						<input type="password" class="form-control" name="password" id="password" placeholder="새 비밀번호" autocomplete="off" required>
+						<input type="password" class="form-control" name="password" id="password" placeholder="새 비밀번호" autocomplete="off" value="">
 					</td>								
 				</tr>
                     <tr>
@@ -71,7 +73,7 @@
 						새 비밀번호 확인
 					</td>
 					<td colspan="3">
-						<input type="password" class="form-control" id="passwordCheck" placeholder="새 비밀번호확인" autocomplete="off" required>
+						<input type="password" class="form-control" id="passwordCheck" placeholder="새 비밀번호확인" autocomplete="off" value="">
 					</td>								
 					</tr>
                     <tr>
@@ -79,10 +81,11 @@
 							이메일
 						</td>
 						<td colspan="2">
-							<input type="email" class="form-control" placeholder="이메일" name="email" id="email" autocomplete="off" required>
+							<input type="email" class="form-control" value="<sec:authentication property="principal.email"/>" name="email" id="email" autocomplete="off" required>
+							<input type="hidden" id="nickValid" value="0" /> <!-- 0-사용불가 1-사용가능 -->
 						</td>
 						<td style="width:6.6rem; text-align: right;">
-							<button class="btn btn-outline-secondary">중복확인</button>
+							<button class="btn btn-outline-secondary" type="button" id="duplicateEmailChk">중복확인</button>
 						</td>							
 					</tr>
                     <tr>
@@ -90,37 +93,137 @@
 							전화번호
 						</td>
 						<td colspan="3">
-							<input type="tel" class="form-control" placeholder="-없이 입력하세요" name="phone" id="phone" maxlength="11" autocomplete="off" required>
+							<input type="tel" class="form-control" value="<sec:authentication property="principal.tel"/>" name="tel" id="tel" maxlength="11" autocomplete="off" required>
 						</td>								
 					</tr>
 				</tbody>
 			</table>
-		</form>
+			<button id="submitFrmBtn" class="d-none"></button>
+		</form:form>
 		<!-- <hr> -->
 			<div style="text-align: right; ">
 				<a href="${pageContext.request.contextPath}/mypage/info/withdrawal" class="btn btn-outline-secondary" type="button">회원탈퇴</a> 
 			</div>
 			<div style="text-align: center;">
-				<button type="button" class="btn btn-success shadow-sm">
+				<button type="button" class="btn btn-success shadow-sm" id="submitBtnClickBtn">
 					회원정보 수정하기
 				</button>
 			</div>
 			<script>
-				$("#profileImg").click(()=>{
-					$("#file").click();
+			
+			//프로필 이미지
+			
+			$("#profileImg").click(()=>{
+				$("#file").click();
+			});
+			$("input[type=file]").on("change", function (e) {
+				        if (e.target.files && e.target.files[0]) {
+				            var reader = new FileReader();
+				            reader.onload = function (e) {
+				                $('#profileImg').attr('src', e.target.result);
+				            };
+				            reader.readAsDataURL(e.target.files[0]);
+				        } else {
+				            document.getElementById('profileImg').src = "";
+				        }
+				    });
+			//닉네임 중복확인 버튼 클릭시
+			$("#duplicateNicknameChk").click((e) => {
+				const nicknameValid = $("#nicknameValid");
+				nicknameValid.val(0);
+				let nicknameVal = $("#nickname").val(); 
+				if(nicknameVal === "${loginMember.nickname}"){
+					alert("현재 닉네임과 동일합니다.");
+					return;
+				} else if(/^[a-z0-9가-힣]{11,}$/.test(nicknameVal)){
+					alert("글자 수가 너무 깁니다.");
+					return;
+				} else if(!/^[a-z0-9가-힣]{2,}$/.test(nicknameVal)){
+					alert("2자 이상의 영문/숫자/한글로 입력해주세요.");
+					return;
+				}
+					//중복검사
+				$.ajax({
+					url:'${pageContext.request.contextPath}/member/checkDuplicate',
+					data : {
+						value : nicknameVal,
+						attribute : "nickname"
+					},
+					async:false,
+					success(response){
+						const{value, available} = response;
+						if(available){
+							alert("사용할 수 있는 닉네임입니다.");
+							nicknameValid.val(1);
+						} else{
+							alert("이미 사용중인 닉네임입니다.")
+						}
+					},
+					error: console.log
 				});
-				$("input[type=file]").on("change", function (e) {
-					        if (e.target.files && e.target.files[0]) {
-					            var reader = new FileReader();
-					            reader.onload = function (e) {
-					                $('#profileImg').attr('src', e.target.result);
-					            };
-					            reader.readAsDataURL(e.target.files[0]);
-					        } else {
-					            document.getElementById('profileImg').src = "";
-					        }
-					    });
+
+			});	
+			// 이름
+			
+			// 비밀번호 변경 - alert 창
+			
+			// 이메일
+				$("#duplicateEmailChk").click((e) => {
+				const emailValid= $("#emailValid");
+				emailValid.val(0);
+				let emailVal = $("#email").val(); 
+				if(emailVal === "${loginMember.email}"){
+					alert("현재 이메일과 동일합니다.");
+					return;
+				} else if(!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/i.test(emailVal)){
+					alert("이메일 주소를 다시 확인해주세요.");
+					return;
+				}
+					//중복검사
+				$.ajax({
+					url:'${pageContext.request.contextPath}/member/checkDuplicate',
+					data : {
+						value : emailVal,
+						attribute : "email"
+					},
+					async:false,
+					success(response){
+						const{value, available} = response;
+						if(available){
+							alert("사용할 수 있는 이메일입니다.");
+							emailValid.val(1);
+						} else{
+							alert("이미 사용중인 이메일입니다.")
+						}
+					},
+					error: console.log
+				});
+
+			});	
+			
+			$("#submitBtnClickBtn").click((e)=>{
+				const nicknameValid = $("#nicknameValid");
+				const emailValid= $("#emailValid");
 				
+				if(nicknameVal !== "${loginMember.nickname}"){
+				//동일하지 않으면 nicknameValid 확인
+					if(nicknameValid) return;
+				} else if(emailVal !== "${loginMember.email}"){
+					//동일하지 않으면 emailValid 확인
+					if(emailValid) return;
+				} else if(!password) 
+				//비밀번호 값 없는지
+					//있으면 유효성검사, 비밀번호 확인 검사
+					if(){
+						
+					}	
+				//전화번호 유효성 검사
+				//alert("숫자만 입력하세요")
+				
+				$("#submitFrmBtn").click();
+			})
+			
+			
 			</script>
 		<%-- 본문끝 --%>
 		</div>
