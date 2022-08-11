@@ -6,6 +6,9 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/cs/cs.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
@@ -39,6 +42,7 @@
 	</table>
 	<div class="d-flex justify-content-center">
 	<button class="btn btn-secondary btn-sm" type="button" style="margin-right:10px;" onclick="location.href='${pageContext.request.contextPath}/cs/faq';">취소</button>
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<button class="btn btn-primary btn-sm" type="submit">등록하기</button>
 	</div>
 </form>

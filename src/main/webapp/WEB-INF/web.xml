@@ -58,7 +58,6 @@
     </filter-mapping>
     
     <!-- #9.3. Security Filter 등록 -->
-
 	<filter>
 		<display-name>springMultipartFilter</display-name>
 		<filter-name>springMultipartFilter</filter-name>
