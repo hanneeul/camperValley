@@ -14,6 +14,18 @@
 	<!-- static자원은 security filter처리하지 않음 -->
 	<http security="none" pattern="/resources/**" />
 	<http auto-config="true">
+	<!-- EJ Strat -->
+	<!-- EJ End -->
+	<!-- HN Strat -->
+	<!-- HN End -->
+	<!-- HR Strat -->
+	<!-- HR End -->
+	<!-- JE Strat -->
+	<!-- JE End -->
+	<!-- JH Strat -->
+	<!-- JH End -->
+	<!-- SJ Strat -->
+	<!-- SJ End -->
 	
 	<!-- 권한
 		<intercept-url pattern="/" access="permitAll"/>
