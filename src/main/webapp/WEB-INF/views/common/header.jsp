@@ -54,16 +54,21 @@
 					<li class="nav-item"><a class="mainMenu nav-link text-dark pl-3" href="${pageContext.request.contextPath}/admin/dashboard">관리자페이지</a></li>
 
 				</ul>
-				<ul class="navbar-nav col-md-3 mt-4 ml-5">
-					<c:if test="${empty loginMember}">
-						<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/login"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
-						<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/enroll"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
-					</c:if>
-					<c:if test="${not empty loginMember}">
-						<li class="nav-item pt-2"><span class="camper-color"><i class="fa-solid fa-user fa-1x"></i>&nbsp;[홍길동홍길...]</span>님</li>
-						<li class="nav-item ml-4"><a class="nav-link small" href="${pageContext.request.contextPath}/member/logout"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:11px;"></i>&nbsp;<span id="logout" >로그아웃</span></a></li>
-					</c:if>
-				</ul>
+				    <sec:authorize access="isAnonymous()">
+						<ul class="navbar-nav col-md-3 mt-4 ml-5">
+							<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/login"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
+							<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/enroll"><i clahss="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
+						</ul>
+			    	</sec:authorize>
+					<sec:authorize access="isAuthenticated()">
+					<form action="${pageContext.request.contextPath}/member/logout" method="post" style="display:contents;">
+						<ul class="navbar-nav col-md-3 mt-4 ml-5">
+							<li class="nav-item pt-2"><span class="camper-color"><i class="fa-solid fa-user fa-1x"></i>&nbsp;[<sec:authentication property="principal.nickname"/>]</span>님</li>
+							<li class="nav-item ml-4"><button class="nav-link small btn btn-link" href="${pageContext.request.contextPath}/member/logout"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:11px;"></i>&nbsp;<span id="logout" >로그아웃</span></button></li>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />			    	
+						</ul>
+					</form>
+			   		</sec:authorize>
 			</div>
 		</nav>
 		<nav class="navbar navbar-light p-2 justify-content-center bg-camper-color" id="navbarSub"></nav>
