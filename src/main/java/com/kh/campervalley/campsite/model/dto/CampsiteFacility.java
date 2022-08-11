@@ -11,7 +11,7 @@ import lombok.NonNull;
 public class CampsiteFacility {
 	@NonNull
 	private long contentId;			// 콘텐츠ID
-	private int gnrlSiteCo;			// 주요시설 일반야영장
+	private int gnrlSsiteCo;		// 주요시설 일반야영장
 	private int autoSiteCo;			// 주요시설 자동차야영장
 	private int glampSiteCo;		// 주요시설 글램핑
 	private int caravSiteCo;		// 주요시설 카라반

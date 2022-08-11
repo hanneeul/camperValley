@@ -9,7 +9,7 @@
     margin-right: 0;
     width: 40rem;
     padding-top: 44%;
-    background-image: url('${pageContext.request.contextPath}/resources/images/logo_high_definition.png');
+    background-image: url('${pageContext.request.contextPath}/resources/images/logo.png');
     background-repeat: no-repeat;
     background-attachment: local;
     background-size: contain;

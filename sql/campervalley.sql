@@ -97,14 +97,14 @@ create table admoney (
 );
 create sequence seq_admoney_no;
 
--- pk, imp_uid 자료형 수정함(8/9), pay_statement 컬럼명 수정
+-- pk, imp_uid 자료형 수정함(8/9)
 create table pay (
 	merchant_uid varchar2(16) not null,
 	advertiser_no number not null,
 	imp_uid varchar2(16) not null,
 	pay_method varchar2(50) not null,
 	paid_amount number not null,
-	status varchar2(15) not null,
+	pay_statement varchar2(15) not null,
 	buyer_email varchar2(255),
 	buyer_name varchar2(50),
 	buyer_tel varchar2(11),
@@ -163,10 +163,9 @@ create table camper (
 	read_count number default 0,
 	created_at date default sysdate,
 	updated_at date,
-	status varchar2(20) default 'I',
+	status varchar2(20) not null,
   constraint pk_camper_no primary key(camper_no),
-  constraint fk_camper_member_id foreign key(member_id) references member(member_id) on delete cascade,
-  constraint ck_camper_status check(state in ('C', 'I'))
+  constraint fk_camper_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 create sequence seq_camper_join_no;
 
@@ -341,7 +340,7 @@ create table campsite_facility (
 	animal_cmg_cl varchar2(100),
     
   constraint pk_campsite_facility primary key(content_id),
-  constraint fk_campsite_facility_content_id foreign key(content_id) references campsite(content_id) on delete cascade,
+  constraint fk_campsite_facility_content_id foreign key(content_id) references campsite(content_id),
   constraint ck_campsite_facility_trler_acmpny_at check(trler_acmpny_at in ('Y', 'N')),
   constraint ck_campsite_facility_carav_acmpny_at check(carav_acmpny_at in ('Y', 'N'))
 );
@@ -440,3 +439,6 @@ create table campsite_bookmark (
     constraint fk_campsite_bookmark_content_id foreign key(content_id) references campsite(content_id) on delete cascade
 );
 create sequence seq_campsite_bookmark_no;
+
+
+

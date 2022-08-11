@@ -15,7 +15,6 @@ import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.BizStatus;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
-import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -101,19 +100,6 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	@Override
 	public Admoney selectOneAdmoney(int advertiserNo) {
 		return advertiserDao.selectOneAdmoney(advertiserNo);
-	}
-	
-	@Override
-	public List<Pay> selectNotCancelPayByAdvertiserNo(int advertiserNo) {
-		return advertiserDao.selectNotCancelPayByAdvertiserNo(advertiserNo);
-	}
-
-	@Transactional(rollbackFor = Exception.class)
-	@Override
-	public int chargeAdmoney(Pay pay) {
-		int result = advertiserDao.insertPay(pay);
-		result = advertiserDao.updateAdmoneyCharge(pay);
-		return result;
 	}
 
 }

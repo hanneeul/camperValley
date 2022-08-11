@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
@@ -21,7 +20,7 @@
 				method="POST"
 				enctype="multipart/form-data"
 				style="width:800px;">
-				<input type="hidden" name="memberId" value=<sec:authentication property="principal.username"/> required>
+				<input type="hidden" name="memberId" value="honggd" required> <!-- ${loginMember.memberId}로 변경하기 -->
 				<div class="divInputWrapper">
 					<label for="bizName">광고계정 이름</label>
 					<input type="text" name="bizName" id="bizName" class="form-control form-control-sm" placeholder="광고계정명을 입력해주세요.">
@@ -79,16 +78,11 @@ const checkBizNo = () => {
 	var data = {
 		"b_no" : [ inputData ]
 	};
-
-	const headers = {
-		"${_csrf.headerName}" : "${_csrf.token}"
-	};
-
+	
 	$.ajax({
 		url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${ckBusinessNo}",
 		type: "POST",
 		data: JSON.stringify(data),
-		headers,
 		dataType: "JSON",
 		contentType: "application/json",
 		accept: "application/json",

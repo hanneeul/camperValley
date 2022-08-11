@@ -71,140 +71,9 @@
 		notice_no = #{noticeNo}
 </update>
 
-<select id="selectNoticeList" resultMap="noticeMap">
-	select 
-	    n.*,
-	    (select count(*) from notice_attach where notice_no = n.notice_no) attach_count 
-	from 
-	    notice n
-	<where>
-		<if test="searchType == 'title'">
-			${searchType} like '%' || #{searchKeyword} || '%'
-		</if>
-		<if test="searchType == 'content'">
-			${searchType} like '%' || #{searchKeyword} || '%'
-		</if>
-			and category = 'NOTICE'
-	</where>
-	order by notice_no desc
-</select>
-
-<insert id="noticeInsert">
-	insert into
-		notice
-	values(
-		seq_notice_no.nextval, 'honggd', 'NOTICE', #{title}, #{content}, default, default
-	)
-	<selectKey keyProperty="noticeNo" resultType="_int" order="AFTER"> 
-		select
-			seq_notice_no.currval
-		from
-			dual
-	</selectKey>
-</insert>
-
-<insert id="insertAttachment">
-	insert into 
-		notice_attach 
-	(notice_attach_no, notice_no, original_filename, renamed_filename)
-	values (
-	seq_notice_attach_no.nextval, #{noticeNo}, #{originalFilename}, #{renamedFilename}
-	)
-</insert>
-
-<select id="selectOneNoticeCollection" resultMap="noticeMap">
-	select
-	    n.*,
-	    m.*,
-	    a.notice_attach_no,
-	    a.*
-	from
-	    notice n
-	        left join member m on n.member_id = m.member_id
-	        left join notice_attach a on n.notice_no = a.notice_no
-	where
-	    n.notice_no = #{noticeNo}
-	order by
-	    n.notice_no desc
-</select>
-
-<select id="selectOneNotice" resultType="noticeExt">
-	select
-		*
-	from
-		notice
-	where
-		notice_no = #{noticeNo}
-</select>
-
-<select id="selectAttchmentListByNoticeNo" resultType="noticeAttach">
-	select
-		*
-	from
-		notice_attach
-	where
-		notice_no = #{noticeNo}
-</select>
-
-<select id="selectOneAttachment" resultType="noticeAttach">
-	select
-		* 
-	from 
-		notice_attach 
-	where 
-		notice_attach_no = #{noticeAttachNo}
-</select>
-
-<delete id="deleteAttachment">
-	delete 
-		from 
-	notice_attach 
-	where 
-		notice_attach_no = #{noticeAttachNo}
-</delete>
-
-<update id="noticeUpdate">
-	update 
-		notice set 
-	title = #{title}, content = #{content} where notice_no = #{noticeNo}
-</update>
-
-<delete id="noticeDelete">
-	delete 
-		from 
-	notice 
-	where 
-		notice_no = #{noticeNo}
-</delete>
-
-<select id="selectTotalNoticeList" resultType="_int">
-		select
-			count(*)
-		from
-			notice
-		<where>
-		<if test="searchType == 'title'">
-			${searchType} like '%' || #{searchKeyword} || '%'
-		</if>
-		<if test="searchType == 'content'">
-			${searchType} like '%' || #{searchKeyword} || '%'
-		</if>
-			and category = 'NOTICE'
-		</where>
-</select>
-
-<update id="readCntUpdate" parameterType="int">
-	update 
-		notice set 
-	read_count = read_count +1
-	where
-		notice_no = #{noticeNo}
-</update>
-
-<resultMap type="noticeExt" id="noticeMap">
+<resultMap type="notice" id="noticeMap">
 		<id column="notice_no" property="noticeNo"/>
 			<result column="member_id" property="memberId"/>
-			<result column="category" property="category"/>
 			<result column="title" property="title"/>
 			<result column="content" property="content"/>
 			<result column="created_at" property="createdAt"/>
@@ -216,10 +85,11 @@
 				<result column="email" property="email"/>
 			</association>  -->
 			
-			<collection property="attachments" javaType="arraylist" ofType="noticeAttach">
-				<id column="notice_attach_no" property="noticeAttachNo"/>
+			<!-- <collection property="attachments" javaType="arraylist" ofType="attachment">
+				<id column="attach_no" property="no"/>
 				<result column="original_filename" property="originalFilename"/>
 				<result column="renamed_filename" property="renamedFilename"/>
-			</collection> 
+				<result column="download_count" property="downloadCount"/>
+			</collection> -->
 	</resultMap>
 </mapper>

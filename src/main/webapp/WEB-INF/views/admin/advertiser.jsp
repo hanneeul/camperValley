@@ -144,14 +144,9 @@ document.querySelectorAll(".updateBtn").forEach((btn) => {
 		const tr = document.querySelector(`[data-advertiser-no="\${advertiserNo}"]`);
 		const memberId = tr.dataset.memberId;
 		
-		const headers = {
-			"${_csrf.headerName}" : "${_csrf.token}"
-		};
-		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/admin/advertiser/updateRole",
 			method : "POST",
-			headers,
 			data : {
 				advertiserNo,
 				memberId,

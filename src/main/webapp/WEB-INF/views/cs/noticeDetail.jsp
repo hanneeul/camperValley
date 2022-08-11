@@ -6,8 +6,6 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<meta name="_csrf" content="${_csrf.token}" />
-<meta name="_csrf_header" content="${_csrf.headerName}" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/cs/cs.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
@@ -30,34 +28,47 @@
 	</div>
 
 		<div class="float-right">
-			<button class="btn btn-outline-primary btn-update btn-sm" onclick="location.href='${pageContext.request.contextPath}/cs/noticeUpdate?noticeNo=${notice.noticeNo}';">수정</button>
-			<button class="btn btn-outline-danger btn-delete btn-sm" data-notice-no="${notice.noticeNo}">삭제</button>
+			<button class="btn btn-outline-primary btn-update btn-sm" onclick="location.href='${pageContext.request.contextPath}/cs/noticeUpdate';">수정</button>
+			<button class="btn btn-outline-danger btn-delete btn-sm">삭제</button>
 		</div>
 
 		<div class="container" style="display: inline">
 
 
 			<div class="noticeDetail_head">
-				<h4 class="notice__head ml-1">${notice.title}</h4>
+				<h4 class="notice__head">올해 야영장 사업자 안전교육 매뉴얼 배포</h4>
 			</div>
 
 			<div class="noticeSecond_head">
-				<span class="noticeDetail_date">
-				<fmt:parseDate value="${notice.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
-					<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
-			</span> <span
-					class="noticeDetail_read"><i class="fa-solid fa-eye"></i> ${notice.readCount}</span>
+				<span class="noticeDetail_date">2022-06-08</span> <span
+					class="noticeDetail_read">조회수 10</span>
 			</div>
 
-			<div class="noticeDetail_view">
-<c:if test="${not empty notice.attachments}">
-		<c:forEach items="${notice.attachments}" var="attach" varStatus="vs">
-			<img src="${pageContext.request.contextPath}/resources/upload/cs/${attach.renamedFilename}" alt="" class="mt-3"/>
-			</c:forEach>
-	</c:if>
-			<p class="mt-3">${notice.content}</p>
-			
-			</div>
+			<div class="noticeDetail_view">Lorem ipsum dolor sit, amet
+				consectetur adipisicing elit. Excepturi sapiente necessitatibus
+				quisquam, laboriosam quae voluptatem cumque et modi corrupti
+				doloribus impedit officia voluptatibus, corporis est magnam quis
+				incidunt amet. Placeat. Lorem ipsum dolor sit amet consectetur
+				adipisicing elit. Facilis quis sunt libero, labore ullam placeat
+				maxime officia ea vitae. Esse exercitationem obcaecati minima fugit
+				magni facere vitae aut ipsa repellat! Placeat cumque commodi ipsum
+				eligendi. Adipisci alias magnam excepturi corrupti mollitia nostrum,
+				cupiditate libero molestiae quia quod quidem? Quaerat excepturi quia
+				obcaecati, iure sequi dolores non provident corporis reiciendis
+				recusandae. Provident deleniti esse cupiditate accusantium nam hic
+				pariatur enim vero. Nulla minus in soluta! Dolorem veniam odit error
+				ea quia natus ducimus amet earum labore non, enim hic ab! Sit.
+				 officia voluptatibus, corporis est magnam quis
+				incidunt amet. Placeat. Lorem ipsum dolor sit amet consectetur
+				adipisicing elit. Facilis quis sunt libero, labore ullam placeat
+				maxime officia ea vitae. Esse exercitationem obcaecati minima fugit
+				magni facere vitae aut ipsa repellat! Placeat cumque commodi ipsum
+				eligendi. Adipisci alias magnam excepturi corrupti mollitia nostrum,
+				cupiditate libero molestiae quia quod quidem? Quaerat excepturi quia
+				obcaecati, iure sequi dolores non provident corporis reiciendis
+				recusandae. Provident deleniti esse cupiditate accusantium nam hic
+				pariatur enim vero. Nulla minus in soluta! Dolorem veniam odit error
+				ea quia natus ducimus amet earum labore non, enim hic ab! Sit.</div>
 
 			<div class="notice-box">
 				<span class="prev">이전글</span> <a href="#">Lorem, ipsum dolor sit
@@ -69,16 +80,5 @@
 			</div>
 		</div>
 	</div>
-<form action="${pageContext.request.contextPath}/cs/noticeDelete" method="POST" name="deleteNoticeFrm" enctype="multipart/form-data">
-<input type="hidden" name="noticeNo" id="deleteNo" />
-<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-</form>
-<script>
-document.querySelectorAll('.btn-delete').forEach((btn) => {
-	btn.addEventListener('click', (e) => {
-		document.deleteNoticeFrm.noticeNo.value = e.target.dataset.noticeNo;
-		document.deleteNoticeFrm.submit();
-	})
-});
-</script>
+	
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

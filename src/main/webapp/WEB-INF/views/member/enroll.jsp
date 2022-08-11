@@ -11,37 +11,36 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
 <div class="container">	
-	<%-- 본문시작 --%>
 	<div id="enroll-container" class="mx-auto text-center" style="width: 33rem;">
 		<div class="row">
 			<div class="col-md-12" >
 				<div class="header">
-					<!-- <div class="line"></div> -->
 					<h4>
 						회원가입
 					</h4>
 					<div class="line"></div>
 				</div>
 				
-				<form name="memberEnrollFrm" action="" method="POST" >
+				<form:form name="enrollMemberFrm" method="POST" >
 					<table class="mx-auto">
 						<tr>
 							<th><span class="text-danger">* </span>아이디</th>
 						</tr>
 						<tr>
 							<td>
-								<div id="memberId-container">
+								<div id="memberIdContainer">
 									<input type="text" 
 										   class="form-control" 
 										   placeholder="아이디"
 										   name="memberId" 
 										   id="memberId"
 										   autocomplete="off"
+										   value="chacha"
 										   required>
-			 						<span class="text-danger guide my-2 pl-1 d-none">필수입력항목입니다.</span>
-									<span class="text-danger guide my-2 pl-1 d-none">이미 사용중이거나탈퇴한 아이디입니다.</span>
-									<span class="text-danger guide my-2 pl-1 d-block">아이디는 최소 5글자 이상의 영문/숫자만 가능합니다.</span>
-									<span class="camper-color guide my-2 pl-1 d-none">사용할 수 있는 아이디입니다.</span>
+			 						<span class="text-danger guide-id-empty my-2 pl-1 d-none">필수 입력항목입니다.</span>
+									<span class="text-danger guide-id-duplicate my-2 pl-1 d-none">이미 사용 중이거나 탈퇴한 아이디입니다.</span>
+									<span class="text-danger guide-id-invalidation my-2 pl-1 d-none">아이디는 5-15자의 영문/숫자만 가능합니다.</span>
+									<span class="camper-color guide-id-ok my-2 pl-1 d-none">사용할 수 있는 아이디입니다.</span>
 									<input type="hidden" id="idValid" value="0" /> <!-- 0-사용불가 1-사용가능 -->
 								</div>
 							</td>
@@ -51,10 +50,10 @@
 						</tr>
 						<tr>
 							<td>	
-								<div id="name-container">
+								<div id="nameContainer">
 									<input type="text" class="form-control" name="name" id="name" placeholder="이름" autocomplete="off" required>
-									<input type="hidden" id="nameValid" value="0" /> <!-- 0-사용불가 1-사용가능 -->
-									<span class="text-danger guide my-2 pl-1 d-block">필수입력항목입니다.</span>
+									<span class="text-danger guide-name-empty my-2 pl-1 d-none">필수 입력항목입니다.</span>
+									<span class="text-danger guide-name-invalidation my-2 pl-1 d-none">2-10자의 한글만 가능합니다.</span>
 								</div>
 							</td>
 						</tr>
@@ -63,10 +62,14 @@
 						</tr>
 						<tr>
 							<td>	
-								<div id="nickname-container">
-									<input type="text" class="form-control" name="name" id="name" placeholder="닉네임" autocomplete="off" required>
+								<div id="nicknameContainer">
+									<input type="text" class="form-control" name="nickname" id="nickname" placeholder="닉네임" autocomplete="off" required>
 									<input type="hidden" id="nicknameValid" value="0" /> <!-- 0-사용불가 1-사용가능 -->
-									<span class="text-danger guide my-2 pl-1 d-block">필수입력항목입니다.</span>
+									<span class="text-danger guide-nickname-empty my-2 pl-1 d-none">필수 입력항목입니다.</span>
+									<span class="text-danger guide-nickname-duplicate my-2 pl-1 d-none">이미 사용 중인 닉네임입니다.</span>
+									<span class="text-danger guide-nickname-invalidation1 my-2 pl-1 d-none">2자 이상의 영문/숫자/한글로 입력해주세요.</span>
+									<span class="text-danger guide-nickname-invalidation2 my-2 pl-1 d-none">글자 수가 너무 깁니다.</span>
+									<span class="camper-color guide-nickname-ok my-2 pl-1 d-none">사용할 수 있는 닉네임입니다.</span>
 								</div>
 							</td>
 						</tr>
@@ -75,18 +78,21 @@
 						</tr>
 						<tr>
 							<td>
-								<div id="password-container">
+								<div id="passwordContainer">
 									<input type="password" class="form-control" name="password" id="password" placeholder="비밀번호" autocomplete="off" required>
 									<input type="hidden" id="passwordValid" value="0" /> <!-- 0-사용불가 1-사용가능 -->
-									<span class="text-danger guide my-2 pl-1 d-block">필수입력항목입니다.</span>
+									<span class="text-danger guide-pw-empty my-2 pl-1 d-none">필수 입력항목입니다.</span>
+									<span class="text-danger guide-pw-invalidation my-2 pl-1 d-none">영문자+숫자+특수문자 조합으로 8자리 이상 입력해주세요.</span>
+									<span class="camper-color guide-pw-ok my-2 pl-1 d-none">사용할 수 있는 비밀번호 입니다.</span>
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td>	
-								<div id="password-confirm-container">
+								<div id="passwordConfirmContainer">
 									<input type="password" class="form-control" id="passwordCheck" placeholder="비밀번호확인" autocomplete="off" required>
-									<span class="text-danger guide my-2 pl-1 d-block">필수입력항목입니다.</span>
+									<span class="text-danger guide-pw-ck-empty my-2 pl-1 d-none">필수입력항목입니다.</span>
+									<span class="text-danger guide-pw-ck-invalidation my-2 pl-1 d-none">비밀번호와 일치하지 않습니다.</span>
 								</div>
 							</td>
 						</tr>  
@@ -95,20 +101,25 @@
 						</tr>
 						<tr>
 							<td>	
-								<div id="password-confirm-container">
-									<input type="email" class="form-control" placeholder="이메일" name="email" id="email" autocomplete="off" required>
-									<span class="text-danger guide my-2 pl-1 d-block">필수입력항목입니다.</span>
+								<div id="emailContainer">
+									<input type="email" class="form-control " placeholder="이메일" name="email" id="email" autocomplete="off" required>
+									<input type="hidden" id="emailValid" value="0" />
+									<span class="text-danger guide-email-empty my-2 pl-1 d-none">필수입력항목입니다.</span>
+									<span class="text-danger guide-email-Invalidation my-2 pl-1 d-none">이메일 주소를 다시 확인해주세요.</span>
+									<span class="text-danger guide-email-duplicate my-2 pl-1 d-none">이미 사용 중인 이메일입니다.</span>
+									<span class="camper-color guide-email-ok my-2 pl-1 d-none">사용할 수 있는 이메일 입니다.</span>
 								</div>
 							</td>
 						</tr>
 						<tr>
-							<th><span class="text-danger">* </span>휴대폰</th>
+							<th><span class="text-danger">* </span>전화번호</th>
 						</tr>
 						<tr>
 							<td>	
-								<div id="tel-container">
-									<input type="tel" class="form-control" placeholder="-없이 입력하세요" name="phone" id="phone" maxlength="11" autocomplete="off" required>
-									<span class="text-danger guide my-2 pl-1 d-block">필수입력항목입니다.</span>
+								<div id="telContainer">
+									<input type="tel" class="form-control" placeholder="-없이 입력하세요" name="tel" id="tel" maxlength="11" autocomplete="off" required>
+									<span class="text-danger guide-tel-empty my-2 pl-1 d-none">필수입력항목입니다.</span>
+									<span class="text-danger guide-tel-invalidation my-2 pl-1 d-none">전화번호를 다시 확인해주세요.</span>
 								</div>
 							</td>
 						</tr>
@@ -117,23 +128,22 @@
 					<div class="checkbox">	 
 						<div class="line"></div>
 						<label>
-							<input type="checkbox" id="checkAll" />&nbsp;전체동의
+							<input type="checkbox" name="agreeAll" />&nbsp;전체 동의
 						</label>
 						<hr class="m-0 mb-3">
-							<input type="checkbox" id="checkAge"/> <label class="pointer">&nbsp;만 14세 이상입니다.(필수)</label>
+							<input type="checkbox" id="checkAge" name="agree"/> <label class="pointer">&nbsp;만 14세 이상입니다.(필수)</label>
 						<br>
-							<input type="checkbox" id="checkAge"/> <label class="pointer" data-toggle="modal" data-target="#terms-use-modal">&nbsp;이용약관(필수)</label> 
+							<input type="checkbox" name="agree"/> <label class="pointer" data-toggle="modal" data-target="#terms-use-modal">&nbsp;이용약관(필수)</label>  
 						<br>
-							<input type="checkbox" id="checkAge"/> <label class="pointer" data-toggle="modal" data-target="#termsPrivacyModal">&nbsp;개인정보수집 및 이용동의(필수)</label> 
+							<input type="checkbox" name="agree"/> <label class="pointer" data-toggle="modal" data-target="#terms-privacy-modal">&nbsp;개인정보수집 및 이용동의(필수)</label> 
 						<div class="line"></div>
 					</div> 
 						<button type="submit" class="btn btn-camper-color w-100 mt-3"> 가입 </button>
-						<button type="reset" class="btn btn-outline-camper-color w-100 my-2"> 취소 </button>
-				</form>
+						<a href="javascript:window.history.back();" type="reset" class="btn btn-outline-camper-color w-100 my-2"> 취소 </a>
+				</form:form>
 			</div>
 		</div>
 	</div>	
-	<%-- 본문끝 --%>
 </div>
 
 <!-- Modal1 -->
@@ -521,11 +531,11 @@
   </div>
 </div>
 
-<div class="modal fade" id="termsPrivacyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg"">
+<div class="modal fade" id="terms-privacy-modal" tabindex="-1" aria-labelledby="terms-privacy-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">개인정보 수집 및 이용 동의</h5>
+        <h5 class="modal-title" id="terms-privacy-modal-label">개인정보 수집 및 이용 동의</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -734,7 +744,286 @@
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 
+<script>
+// 제출이벤트
+$('form[name=enrollMemberFrm]').submit((e) =>{
 
-<script type="text/javascript">
+	if(!validateId($("input[name=memberId]").val()) || $("#idValid").val() === '0'){ 
+		$("input[name=memberId]").focus();
+		return false;
+	} else if(!validateName($("input[name=name]").val())){ 
+		$("input[name=name]").focus();
+		return false;
+	} else if(!validateNickname($("input[name=nickname]").val()) || $("#nicknameValid").val() === '0'){
+		$("input[name=nickname]").focus();
+		return false;
+	} else if(!validatePw($("input[name=password]").val())){
+		$("input[name=password]").focus();
+		return false;
+	} else if(!validatePwCheck($("input[name=password]").val(),$("#passwordCheck").val())){
+		$("#passwordCheck").focus();
+		return false;	
+	} else if(!validateEmail($("input[name=email]").val()) || $("#emailValid").val() === '0'){
+		$("input[name=email]").focus();
+		return false;
+	} else if(!validateTel($("input[name=tel]").val())){
+		$("input[name=tel]").focus();
+		return false;
+	} else if($("#checkAge").prop("checked") === false){
+		alert("14세 미만은 서비스 이용이 불가능합니다.")
+		return false;			
+	} else if($("input[name=agreeAll]").prop("checked") === false){
+		alert("이용약관과 개인정보 수집 및 이용 동의는 필수 입니다.")
+		return false;
+	}	
+});
+
+/*focusout 이벤트*/
+
+$("input[name=memberId]").focusout((e)=>{
+	validateId($("input[name=memberId]").val());
+})
+$("input[name=name]").focusout((e)=>{
+	validateName($("input[name=name]").val());
+})
+$("input[name=nickname]").focusout((e)=>{
+	validateNickname($("input[name=nickname]").val());
+})
+$("input[name=password]").focusout((e)=>{
+	validatePw($("input[name=password]").val());
+})
+$("#passwordCheck").focusout((e)=>{
+	validatePwCheck($("input[name=password]").val(),$("#passwordCheck").val());
+})
+$("input[name=email").focusout((e)=>{
+	validateEmail($("input[name=email]").val());
+})
+$("input[name=tel").focusout((e)=>{
+	validateTel($("input[name=tel]").val());
+})
+
+/*	유효성검사		*/
+
+//id
+function validateId(memberId){
+	const idValid = $("#idValid"); //id라 지워도 될듯?
+	const guideIdEmpty = $('.guide-id-empty');
+	const guideIdDuplicate = $('.guide-id-duplicate');
+	const guideIdInvalidation = $('.guide-id-invalidation');
+	const guideIdOk = $('.guide-id-ok');
+	const guides = $('#memberIdContainer span');
+	
+	idValid.val(0);
+
+	
+	let result = "";
+	
+	guides.removeClass('d-block'); 
+	if(memberId == ""){
+		addClassDBlock(guideIdEmpty);
+		return false;
+	} else if(!/^\w{5,15}$/.test(memberId)){
+		addClassDBlock(guideIdInvalidation);
+		return false;
+	} 
+	$.ajax({
+		url:'${pageContext.request.contextPath}/member/checkDuplicate',
+		async:false,
+		data : {
+			value : memberId,
+			attribute : "member_id"
+		},
+		success(response){
+			const{value, available} = response;
+			if(available){
+				addClassDBlock(guideIdOk);
+				idValid.val(1);
+			} else{
+				addClassDBlock(guideIdDuplicate);
+			}
+		},
+		error: console.log
+	});
+	return true;
+}
+//name
+function validateName(name){
+	const guideNameEmpty= $(".guide-name-empty");
+	const guideNameInvalidation = $(".guide-name-invalidation");
+	const guides = $('#nameContainer span');
+	
+	guides.removeClass('d-block'); 
+	if(name == ""){
+		addClassDBlock(guideNameEmpty);
+		return false;
+	} else if(!/^[가-힣]{2,10}$/.test(name)){
+		addClassDBlock(guideNameInvalidation);
+		return false;
+	}
+	return true;
+}
+
+//nickname
+function validateNickname(nickname){
+	const nicknameValid = $("#nicknameValid");
+	const guideNicknameEmpty= $(".guide-nickname-empty");
+	const guideNicknameInvalidation1 = $(".guide-nickname-invalidation1");
+	const guideNicknameInvalidation2 = $(".guide-nickname-invalidation2");
+	const guideNicknameDuplicate = $(".guide-nickname-duplicate");
+	const guideNicknameOk = $(".guide-nickname-ok");
+	const guides = $('#nicknameContainer span');
+	
+	nicknameValid.val(0);
+	guides.removeClass('d-block'); 
+	if(nickname == ""){
+		addClassDBlock(guideNicknameEmpty);
+		return false;
+	}  else if(/^[a-z0-9가-힣]{11,}$/.test(nickname)){
+		addClassDBlock(guideNicknameInvalidation2);
+		return false;
+	} else if(!/^[a-z0-9가-힣]{2,}$/.test(nickname)){
+		addClassDBlock(guideNicknameInvalidation1);
+		return false;
+	}
+	$.ajax({
+		url:'${pageContext.request.contextPath}/member/checkDuplicate',
+		data : {
+			value : nickname,
+			attribute : "nickname"
+		},
+		async:false,
+		success(response){
+			const{value, available} = response;
+			if(available){
+				addClassDBlock(guideNicknameOk);
+				nicknameValid.val(1);
+			} else{
+				addClassDBlock(guideNicknameDuplicate);
+			}
+		},
+		error: console.log
+	});
+	return true;
+}
+
+//pw
+function validatePw(password){
+	const guidePwEmpty= $(".guide-pw-empty");
+	const guidePwInvalidation = $(".guide-pw-invalidation");
+	const guidePwOk = $(".guide-pw-ok");
+	const guides = $('#PasswordContainer span');
+	
+	guides.removeClass('d-block'); 
+	if(password == ""){
+		addClassDBlock(guidePwEmpty);
+		return false;
+	} else if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/.test(password)){
+		addClassDBlock(guidePwInvalidation);
+		return false;
+	} else{
+		addClassDBlock(guidePwOk);
+	}
+	return true;
+}
+
+//pw확인
+function validatePwCheck(password, passwordCheck){
+	const guidePwCkEmpty= $(".guide-pw-ck-empty");
+	const guidePwCkInvalidation = $(".guide-pw-ck-invalidation");
+	const guides = $('#passwordConfirmContainer span');
+	
+	guides.removeClass('d-block'); 
+	if(passwordCheck == ""){
+		addClassBlock(guidePwCkEmpty);
+		return;
+	} else if(password !== passwordCheck){
+		addClassDBlock(guidePwCkInvalidation);
+		return false;
+	}
+	return true;
+}	
+
+//email
+function validateEmail(email){
+	const emailValid = $("#emailValid")
+	const guideEmailEmpty= $(".guide-email-empty");
+	const guideEmailInvalidation = $(".guide-email-invalidation");
+	const guideEmailOk = $(".guide-email-ok");
+	const guideEmailDuplicate = $(".guide-email-duplicate");
+	const guides = $('#emailContainer span');
+	emailValid.val(0);
+	
+	guides.removeClass('d-block'); 
+	if(email == ""){
+		addClassDBlock(guideEmailEmpty);
+		return false;
+	} else if(!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/i.test(email)){
+		addClassDBlock(guideEmailInvalidation);
+		return false;
+	}
+	$.ajax({
+		url:'${pageContext.request.contextPath}/member/checkDuplicate',
+		data : {
+			value : email,
+			attribute : "email"
+		},
+		async:false,
+		success(response){
+			const{value, available} = response;
+			if(available){
+				addClassDBlock(guideEmailOk);
+				emailValid.val(1);
+			} else{
+				addClassDBlock(guideEmailDuplicate);
+			}
+		},
+		error: console.log
+	});
+	return true;
+}
+//tel
+
+function validateTel(tel){
+	const guideTelEmpty = $(".guide-tel-empty");
+	const guideTelInvalidation = $(".guide-tel-invalidation");
+	const guides = $('#telContainer span');
+	
+	guides.removeClass('d-block'); 
+	if(tel == ""){
+		addClassDBlock(guideTelEmpty);
+		return false;
+	} else if(!/^\d{9,11}$/.test(tel)){
+		addClassDBlock(guideTelInvalidation);
+		return false;
+	}
+	return true;
+}
+
+//체크박스 전체선택
+$("input[name=agreeAll]").click((e)=>{
+	const agrees = $("input[name=agree]")
+	if($(e.target).prop("checked")){
+		agrees.prop("checked", true);
+	} else {
+		agrees.prop("checked", false)
+	}
+});
+$("input[name=agree]").click((e)=>{
+	const agreeAll = $("input[name=agreeAll]");
+	const agrees = $("input[name=agree]");
+	if(agreeAll.prop("checked") === true){
+		agreeAll.prop("checked", false);
+	} else{
+		if(agrees.length == $("input[name=agree]:checked").length){
+			agreeAll.prop("checked", true);
+		}
+	}
+
+});
+
+
+function addClassDBlock(elem){
+	elem.addClass('d-block');
+}
 
 </script>

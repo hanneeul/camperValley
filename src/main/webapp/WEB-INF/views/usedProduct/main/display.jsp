@@ -5,7 +5,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/main.css"/>
 
 <hr />
@@ -46,20 +45,20 @@
 </div>
 
 <div id="displayHeader">
-	<p class="displayName" style="margin-left: 7px;">전체 상품 목록</p>
+	<p class="displayName">전체 상품 목록</p>
 </div>
 
-<div id="display-list" class="row" style="width: 1200px;">
+<div id="display-list" class="row">
 	<c:forEach items="${list}" var="list">
 		<div class="item col-3"
 			onclick="location.href='/campervalley/usedProduct/product/productDetail'">
 			<div class="item">
 				<div id="itemSolid">
-					<img src="${list.productImg1} class="rounded float-start" alt="상품이미지">
-					<h5 id="displayTitle">${list.productTitle}</h5>
+					<img src="${list.img1}" class="rounded float-start" alt="상품이미지">
+					<h5 id="displayTitle">&nbsp&nbsp${list.title}</h5>
 					<div class="price-time">
-						<p class="displayPrice">${list.productPrice}</p>
-						<h5 class="displayTime">${list.productEnrollTime}</h5>
+						<p class="displayPrice">${list.price}</p>
+						<h5 class="displayTime">&nbsp&nbsp${list.enrolltime}</h5>
 					</div>
 				</div>
 			</div>
@@ -76,8 +75,6 @@
 // 광고
 
 // 전체 상품 목록 출력 및 페이징
-var page = 0;
-
 $(document).ready(function() {
 	getProductList(page);
 });
@@ -87,34 +84,27 @@ function viewMore() {
 	getProductList(page);
 }
 
-//ajax 통신을 위한 csrf 설정
-var token = $("meta[name='_csrf']").attr("content");
-var header = $("meta[name='_csrf_header']").attr("content");
-$(document).ajaxSend(function(e, xhr, options) {
-    xhr.setRequestHeader(header, token);
-});
-
-
 function getProductList(page) {
 	
 	console.log('page = ' + page);
 	
 	$.ajax({
 		type : 'post',
-		url : '${pageContext.request.contextPath}/usedProduct/main/getProductList',
+		url : '/campervalley/usedProduct/main/getProductList',
 		dataType : 'json',
 		data : {
 			page : page
 		},
 		success : function(data) {
-	//		alert(JSON.stringify(data.list)); // json -> spring
+			alert(JSON.stringify(data.list)); // json -> spring
+			console.log('success page = ' + data); 
 			
 			if(data.list.length == 0) {
 				$('#more').hide();
 			} else {
 				$.each(data.list, function() {
 					var html = "";
-					var time = Number(this.productEnrollTime);
+					var time = Number(this.product_enroll_time);
 					var time_before = "분 전";
 					
 					if(time > (60 * 24)) {
@@ -125,19 +115,19 @@ function getProductList(page) {
 						time_before = "시간 전";
 					} 
 				
-					html = '<div class="item col-3"' + 'onclick="productDetailNo('
-						+ this.productNo + ');"'
+					html = '<div class="item col=3"' + 'onclick="productDetailNo('
+						+ this.product_no + ');"'
 						   + 'style="cursor: pointer;">'
 						   + '<div class ="item">' + '<div id="itemSolid">'
 						   + '<div class="img-box">'
-						   + '<img src="${pageContext.request.contextPath}/resources/images/usedProduct/' + this.productImg1
+						   + '<img src="${pageContext.request.contextPath}/resources/images/usedProduct/' + this.product_img1
 						   + '" class="rounded float-start" alt="'
-						   + this.productTitle + '">' + '</div>'
+						   + this.product_title + '">' + '</div>'
 						   + '<div class="text-box">'
 						   + '<div class="displayName">'
-						   + this.productTitle + '</div>'
+						   + this.product_title + '</div>'
 						   + '<div class="price-time">'
-						   + '<div class="displayPrice">' + this.productPrice
+						   + '<div class="displayPrice">' + this.product_price
 						   + '</div>' + '<div class="displayTime"><span>'
 						   + time + time_before + '<span></div>' + '</div>'
 						   + '</div>' + '</div>' + '</div>' + '</div>'
@@ -152,7 +142,7 @@ function getProductList(page) {
 }
 
 function productDetailNo(no) {
-	location.href = '${pageContext.request.contextPath}/usedProduct/product/productDetail?no=' + no;
+	location.href = '/campervalley/usedProduct/product/productDetail?no=' + no;
 }
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

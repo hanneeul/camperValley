@@ -6,8 +6,6 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<meta name="_csrf" content="${_csrf.token}" />
-<meta name="_csrf_header" content="${_csrf.headerName}" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/cs/cs.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
@@ -22,7 +20,7 @@
 <div class="container" style="width: 870px;">            
 	<h5 class="cs-header text-center">FAQ 수정</h5>                          
 <form action="${pageContext.request.contextPath}/cs/faqUpdate" id="faqUpdateFrm" method="post" class="form-horizontal">
-	
+
 	<div class="notice-wrap" style="width: 50%; float:none; margin:0 auto"></div>
 	<table class="table" id="tb-notice-enroll" style="margin-top: 47px;">
 
@@ -42,7 +40,6 @@
 	<div class="d-flex justify-content-center">
 	<button class="btn btn-secondary btn-sm" type="button" style="margin-right:10px;" onclick="location.href='${pageContext.request.contextPath}/cs/faq';">취소</button>
 	<input type="hidden" name="noticeNo" value="${notice.noticeNo}"/>
-	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<button class="btn btn-primary btn-sm" type="submit">수정하기</button>
 	</div>
 </form>
