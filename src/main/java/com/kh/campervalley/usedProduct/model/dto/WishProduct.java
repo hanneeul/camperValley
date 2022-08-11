@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class WishProduct {
 	
-	private int wish_no;
-	private String member_id;
-	private int product_no;
+	private int wishNo;
+	private String memberId;
+	private int productNo;
 }

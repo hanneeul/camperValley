@@ -1,4 +1,8 @@
 @charset "UTF-8";
+body {
+	padding: 0;
+	height: 100%;
+}
 
 .row {
 	margin-right: 0 !important;
@@ -15,19 +19,19 @@
 	align-items: center;
 }
 .usedProduct-title {
-    font-size: 1.6rem;
+	font-size: 1.7rem;
     font-weight: 700;
     letter-spacing: 10px;
     position: relative;
     top: 73px;
     width: 499px;
-    left: 376px;
+    left: 448px;
 }
 .line {
-	width: 1005px;
+	width: 1196px;
     position: relative;
     top: -8px;
-    left: -1px;
+    left: -13px;
 }
 
 /* 상세검색 */
@@ -44,9 +48,9 @@
     font-size: 1.5rem;
     font-weight: 900;
     position: relative;
-    top: -2.5rem;
-    left: 1.5rem;
+    top: -3.15rem;
     cursor: pointer;
+    margin-left: -5px;
 }
 .dropmenu {          
     height: 100%;
@@ -68,7 +72,8 @@
 
 .dropmenu li {
 	float: left;
-	padding: 0px;
+    padding: 0px;
+    margin-left: -35px;
 }
 .dropmenu li a {
 	font-size: 20px;
@@ -161,51 +166,41 @@
 	color: blue;
 	font-weight: bold;
 }
+
 .item {
-    cursor: pointer;
     margin-bottom: 10px;
-    margin-right: -53px;
+    margin-right: -60px;
 }
-#itemSolid {    
-    border: 1.5px solid #e4e8f0;
-    width: 198.3px;
+#itemSolid {
+	border: 1px solid #e4e8f0;
+    width: 230px;
+    height: 300px;
 }
 #itemSolid img {
 	width: 100%;
-	height: 185px; 
-	object-fit: cover;
+    height: 100%;
 }
 .img-box {
 	position: relative;
 	width: 100%;
-	height: 220px;
+	height: 215px;
 }
+
 .text-box {
 	padding: 15px 20px;
 	height: 95px;
 }
-#display-list {
-	width: 100%
-}
-#displayTitle {
-	margin-top: 13px;
-    font-size: 14px;
-    font-weight: 600;
-}
-#displayName {
-	position: relative;
-	font-size: 14px;
-	font-weight: bold;
-	padding-bottom: 15ps;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
-}
+
 .displayName {
-	margin-left: 11px; 
-	font-weight: bold; 
-	font-size: 18px;
+    position: relative;
+    font-size: 1rem;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-bottom: 9px;
 }
+
 .price-time {
 	display: flex;
 	-webkit-box-pack: justify;
@@ -214,12 +209,18 @@
 	align-items: center;
 	height: 20px;
 }
-.price-time, .displayTime {    
+
+.price-time .displayPrice {
+	font-size: 16px;
+	font-weight: 600;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.price-time .displayTime {
 	font-size: 12px;
-    color: rgb(136, 136, 136);
-    margin-top: 3px;
-    height: 35px;
-    margin-bottom: -1px;
+	color: rgb(136, 136, 136);
 }
 
 /* searchDisplay  */
@@ -242,25 +243,23 @@
     align-content: space-around;
     justify-content: flex-end;
     position: relative;
-    top: -5.1rem;
-    right: 1.6rem;
+    top: -4.75rem;
 }
 .input-group:active {
 	border: none;
 }
 /* 광고 */
-.adPlace {
-	margin-top: -83px;
+.adPlace {    
+    margin-top: -83px;
     margin-bottom: 21px;
-    width: 1006px;
-    height: 270px;
+    height: 290px;
     background-color: lightgray;
-    margin-left: 7px;
 }
 
 /* 더보기 */
 #moreShow {
 	text-align: center;
+	margin-bottom: 15px;
 }
 #more {
 	cursor: pointer; 
