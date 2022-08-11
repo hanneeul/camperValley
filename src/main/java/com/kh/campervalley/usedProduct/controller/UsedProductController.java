@@ -3,9 +3,7 @@ package com.kh.campervalley.usedProduct.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.service.UsedProductService;
 
@@ -67,7 +66,7 @@ public class UsedProductController  {
 		}
 		
 		// 로그인한 회원의 아이디
-//		usedProduct.setSellerId(principal.getName()); 
+		usedProduct.setSellerId(principal.getName()); 
 		
 		// DB 
 		usedProductService.productInsert(usedProduct);
@@ -106,11 +105,19 @@ public class UsedProductController  {
 		return mav;
 	}
 	
+	@GetMapping("/main/cateDisplay")
+	public String cateDisplay(Model model,
+					@RequestParam(value = "page", required=false, defaultValue = "0") String page,
+					@RequestParam(value = "cateNo") String cateNo,
+					@RequestParam(value = "order", required=false) String order) {
+		
+		usedProductService.cateProductList(cateNo, Integer.parseInt(page), order, model);
+		return "";
+	}
+	
 	@GetMapping("/main/searchDisplay")
 	public void searchDisplay() {};
-	
-	@GetMapping("/main/cateDisplay")
-	public void cateDisplay() {};
+
 	
 	@GetMapping("/product/productDetail")
 	public void productDetail() {};

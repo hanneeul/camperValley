@@ -73,4 +73,7 @@ select *
 	)
 	where rnum between nvl(#{start}, 0) and nvl(#{end}, 10) order by product_enroll_time asc
 </select>
+
+<!-- 카테고리 -->
+
 </mapper>

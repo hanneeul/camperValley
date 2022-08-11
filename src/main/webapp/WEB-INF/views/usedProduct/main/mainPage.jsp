@@ -42,21 +42,21 @@
 						<li id="category">
 							<p>카테고리 선택</p>
 							<ul>
-								<a href="">텐트/타프</a>
-								<a href="">침낭/매트</a>
-								<a href="">테이블/의자</a>
-								<a href="">조명기구</a>
-								<a href="">주방용품</a>
-								<a href="">화로/버너/BBQ</a>
-								<a href="">안전/위생용품</a>
-								<a href="">전기/전자제품</a>
-								<a href="">캠핑카/카라반/용품</a>
-								<a href="">루프탑/트레일러</a>
-								<a href="">차박용품</a>
-								<a href="">의류/수납용품</a>
-								<a href="">겨울용품</a>
-								<a href="">기타캠핑용품</a>
-								<a href="">기타생활용품</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=100">텐트/타프</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=200">침낭/매트</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=300">테이블/의자</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=400">조명기구</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=500">주방용품</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=600">화로/버너/BBQ</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=700">안전/위생용품</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=800">전기/전자제품</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=900">캠핑카/카라반/용품</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=1000">루프탑/트레일러</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=1100">차박용품</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=1200">의류/수납용품</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=1300">겨울용품</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=1400">기타캠핑용품</a>
+								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=1500">기타생활용품</a>
 							</ul>
 						</li>
 					</ul>
@@ -86,12 +86,16 @@
 			<jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 		</div>
 <script>
+
+/* 검색 */ 
+
+/* 카테고리 */
 // 카테고리 마우스 오버 이벤트
 $("#btn_menu").hover(function(){
 	// 카테고리 보이기
 	$(".dropmenu").show();
 })
-
+		
 // 카테고리 마우스 벗어나면 숨김
 $(".dropmenu").mouseleave(function() {
 	$(".dropmenu").hide();

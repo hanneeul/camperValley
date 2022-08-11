@@ -3,14 +3,19 @@ package com.kh.campervalley.usedProduct.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.ui.Model;
+
+import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 
 public interface UsedProductService {
 
-	public void productInsert(UsedProduct usedProduct);
+	public void productInsert(UsedProduct usedProduct); // 상품 등록
 
-	public int getProductNo();
+	public int getProductNo(); // 상품 번호
 
-	public List<UsedProduct> getProductList(int page);
+	public List<UsedProduct> getProductList(int page); // 전체 상품 목록
+
+	public void cateProductList(String cateNo, int page, String order, Model model); // 카테고리
 
 }
