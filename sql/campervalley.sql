@@ -340,7 +340,7 @@ create table campsite_facility (
 	animal_cmg_cl varchar2(100),
     
   constraint pk_campsite_facility primary key(content_id),
-  constraint fk_campsite_facility_content_id foreign key(content_id) references campsite(content_id),
+  constraint fk_campsite_facility_content_id foreign key(content_id) references campsite(content_id) on delete cascade,
   constraint ck_campsite_facility_trler_acmpny_at check(trler_acmpny_at in ('Y', 'N')),
   constraint ck_campsite_facility_carav_acmpny_at check(carav_acmpny_at in ('Y', 'N'))
 );
@@ -439,6 +439,3 @@ create table campsite_bookmark (
     constraint fk_campsite_bookmark_content_id foreign key(content_id) references campsite(content_id) on delete cascade
 );
 create sequence seq_campsite_bookmark_no;
-
-
-
