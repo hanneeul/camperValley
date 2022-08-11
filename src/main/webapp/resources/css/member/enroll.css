@@ -25,10 +25,10 @@
   background-color: #2B380C;
   margin-bottom: 10px;
 }
-#enroll-container input.form-control{
+#enroll-container .form-control{
 	margin-bottom:5px;
 }
-#enroll-container input.form-control:focus, #enroll-container input.form-control:hover {
+#enroll-container .form-control:focus, #enroll-container .form-control:hover {
   box-shadow: none;
   border: #639A67 2px solid;
 }

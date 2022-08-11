@@ -35,73 +35,42 @@
 		</div>
 		<div class="pl-3 d-flex justify-content-between mt-4">
 			<div id="listSection">
-				<label for="toggle" class="chk_box">
-					<input type="checkbox" id="toggle" checked="checked" />
-					<span class="on"></span>
-					모집중 게시글만 조회
-				</label>
-				<div class="boardBoxSelect my-4 p-4">
-					<div class="drop-down drop-down-1">
-						<div class="selected text-right">
-							<i class="fa-solid fa-ellipsis-vertical d-block"></i>
+				<div id="scroll">
+					<label for="toggle" class="chk_box">
+						<input type="checkbox" id="toggle" checked="checked" />
+						<span class="on"></span>
+						모집중 게시글만 조회
+					</label>
+					<%-- <c:set var="loginMember" value="<sec:authentication property ="principal.username"/>"/> --%>
+					<c:forEach var="camper" items="${camperList}" varStatus="vs">
+						<div class="boardBox boardBoxSelect my-4 p-4">
+							<c:if test="${camper.getMemberId()} === ${loginMember}">
+								<div class="drop-down drop-down-1">
+									<div class="selected text-right">
+										<i class="fa-solid fa-ellipsis-vertical d-block"></i>
+									</div>
+									<div class="options text-right">
+										<ul class="border-top border-dark">
+											<li onclick="location.href='${pageContext.request.contextPath}/community/camper/camperUpdate'">수정</li>
+											<li>삭제</li>
+										</ul>
+									</div>
+								</div>
+							</c:if>
+							<div class="boardBoxSelectInfo">
+								<div class="font-weight-bold text-20 pb-4">${camper.getTitle()}</div>
+								<div class="font-weight-bold text-13">${camper.getArea()}</div>
+								<fmt:parseDate value="${camper.getDepartureDate()}" pattern="yyyy-MM-dd" var="departureDate"/>
+								<fmt:parseDate value="${camper.getArrivalDate()}" pattern="yyyy-MM-dd" var="arrivalDate"/>
+								
+								<div class="font-weight-bold text-13"><fmt:formatDate value="${departureDate}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${arrivalDate}" pattern="yyyy.MM.dd"/></div>
+								<div class="py-4">
+									${fn:substring(camper.getContent(), 0, 110)}...
+								</div>
+								<div id="status" class="font-weight-bold text-13">${camper.getStatus() eq "I" ? "모집중" : "모집완료"}</div>
+							</div>
 						</div>
-						<div class="options text-right">
-							<ul class="border-top border-dark">
-								<li onclick="location.href='${pageContext.request.contextPath}/community/camper/camperUpdate'">수정</li>
-								<li>삭제</li>
-							</ul>
-						</div>
-					</div>
-					<div class="boardBoxSelectInfo">
-						<div class="font-weight-bold text-20 pb-4">제천 캠핑장 놀러가실분들 모집합니다!</div>
-						<div class="font-weight-bold text-13">충청북도 제천시</div>
-						<div class="font-weight-bold text-13">2022.07.19 ~ 2022.07.20</div>
-						<div class="py-4">
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한...
-						</div>
-						<div id="status" class="font-weight-bold text-13">모집중</div>
-					</div>
-				</div>
-				<div class="boardBox my-4 p-4">
-					<div class="boardBoxSelectInfo">
-						<div class="font-weight-bold text-20 py-4">제천 캠핑장 놀러가실분들 모집합니다!</div>
-						<div class="font-weight-bold text-13">충청북도 제천시</div>
-						<div class="font-weight-bold text-13">2022.07.19 ~ 2022.07.20</div>
-						<div class="py-4">
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한...
-						</div>
-						<div id="status" class="font-weight-bold text-13">모집중</div>
-					</div>
-				</div>
-				<div class="boardBox my-4 p-4">
-					<div class="boardBoxSelectInfo">
-						<div class="font-weight-bold text-20 py-4">제천 캠핑장 놀러가실분들 모집합니다!</div>
-						<div class="font-weight-bold text-13">충청북도 제천시</div>
-						<div class="font-weight-bold text-13">2022.07.19 ~ 2022.07.20</div>
-						<div class="py-4">
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한...
-						</div>
-						<div id="status" class="font-weight-bold text-13">모집중</div>
-					</div>
-				</div>
-				<div class="boardBox my-4 p-4">
-					<div class="boardBoxSelectInfo">
-						<div class="font-weight-bold text-20 py-4">제천 캠핑장 놀러가실분들 모집합니다!</div>
-						<div class="font-weight-bold text-13">충청북도 제천시</div>
-						<div class="font-weight-bold text-13">2022.07.19 ~ 2022.07.20</div>
-						<div class="py-4">
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한...
-						</div>
-						<div id="status" class="font-weight-bold text-13">모집중</div>
-					</div>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="pl-5">
@@ -161,6 +130,26 @@ $(document).ready(() => {
 	$(review).removeClass("active");
 	$(camper).addClass("active");
 });
+
+const docHeight = $(document).height();
+const winHeight = $(window).height();
+$(document).scroll(function () {
+	if($(window).scrollTop() + winHeight >= docHeight) {
+		console.log("here is bottom");
+	}
+	
+	
+	/* const listSec = document.querySelector("#listSection");
+	const listSecAbsolute = window.pageYOffset + listSec.getBoundingClientRect().bottom;
+	
+	console.log(listSec.getBoundingClientRect().bottom);
+	console.log("list 위치 = ", listSecAbsolute);
+	console.log("scorll 위치1 = ", window.pageYOffset);
+	console.log("scorll 위치2 = ", $(document).scrollTop()); */
+	
+	
+	
+});
 document.querySelector(".chk_box").addEventListener('change', ()=> {
 	const isChecked = document.querySelector("#toggle").checked;
 	if(isChecked) {
@@ -190,5 +179,7 @@ $(document).bind('click', function(e) {
             $(".drop-down .options ul").hide();
         }
 });
+
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
