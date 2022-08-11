@@ -1,44 +1,41 @@
 package com.kh.campervalley.campsite.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.campervalley.campsite.model.common.CampsiteApiData;
+import com.kh.campervalley.campsite.model.dto.CampsiteExt;
 import com.kh.campervalley.campsite.model.service.CampsiteService;
-import com.kh.campervalley.common.CampsiteApiData;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
 @RequestMapping("/campsite")
-@PropertySource("classpath:datasource.properties")
+
 public class CampsiteController {
 	
 	@Autowired
 	private CampsiteService campsiteService;
 	
+	@Autowired
+	CampsiteApiData campsiteApiData;
 	
 	@GetMapping("/searchDetail")
-	public void searchDetail(Model model, @Value("${api.goCamping}") String SERVICE_KEY) throws IOException, ParseException {
-		ArrayList<HashMap<String, Object>> list = CampsiteApiData.getApiData(SERVICE_KEY);
-		
-		
+	public void searchDetail(Model model) {
+		List<CampsiteExt> list = campsiteService.recentCampsiteList();
         model.addAttribute("list", list);
 	}
 	
 	@GetMapping("/searchTheme")
-	public void searchTheme(Model model, @Value("${api.goCamping}") String SERVICE_KEY) throws IOException, ParseException {
-		ArrayList<HashMap<String, Object>> list = CampsiteApiData.getApiData(SERVICE_KEY);
+	public void searchTheme(Model model) {
+		List<CampsiteExt> list = campsiteService.recentCampsiteList();
         model.addAttribute("list", list);
 	}
 	

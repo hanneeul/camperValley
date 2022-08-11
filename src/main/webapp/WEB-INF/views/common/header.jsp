@@ -11,6 +11,9 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<!-- ajax 통신을 위한 meta tag -->
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 	<title>campervalley</title>
 	<!-- favicon_io -->
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/favicon/favicon.ico">
@@ -54,21 +57,21 @@
 					<li class="nav-item"><a class="mainMenu nav-link text-dark pl-3" href="${pageContext.request.contextPath}/admin/dashboard">관리자페이지</a></li>
 
 				</ul>
-				<ul class="navbar-nav col-md-3 mt-4 ml-5">
-					<sec:authorize access="isAnonymous()">
-						<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/login"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
-						<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/enroll"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
-					</sec:authorize>
+				    <sec:authorize access="isAnonymous()">
+						<ul class="navbar-nav col-md-3 mt-4 ml-5">
+							<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/login"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
+							<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/enroll"><i clahss="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
+						</ul>
+			    	</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
-						<li class="nav-item pt-2"><span class="camper-color"><i class="fa-solid fa-user fa-1x"></i>&nbsp;[<%-- <sec:authentication property="principal.username"/> --%>]</span>님</li>
-						<li class="nav-item ml-4">
-							<form name="logoutFrm" action="${pageContext.request.contextPath}/member/logout" method="post">
-								<a class="nav-link small" onclick="document.logoutFrm.submit();" style="cursor:pointer;"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:11px;"></i>&nbsp;<span id="logout">로그아웃</span></a>
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-							</form>
-						</li>
-					</sec:authorize>
-				</ul>
+					<form action="${pageContext.request.contextPath}/member/logout" method="post" style="display:contents;">
+						<ul class="navbar-nav col-md-3 mt-4 ml-5">
+							<li class="nav-item pt-2"><span class="camper-color"><i class="fa-solid fa-user fa-1x"></i>&nbsp;[<sec:authentication property="principal.nickname"/>]</span>님</li>
+							<li class="nav-item ml-4"><button class="nav-link small btn btn-link" href="${pageContext.request.contextPath}/member/logout"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:11px;"></i>&nbsp;<span id="logout" >로그아웃</span></button></li>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />			    	
+						</ul>
+					</form>
+			   		</sec:authorize>
 			</div>
 		</nav>
 		<nav class="navbar navbar-light p-2 justify-content-center bg-camper-color" id="navbarSub"></nav>
