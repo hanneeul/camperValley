@@ -36,10 +36,11 @@
 					password-parameter="password"
 		/>
 		
-<!-- 		<logout logout-url="/member/logout"
+		<logout logout-url="/member/logout"
 				invalidate-session="true"
 				delete-cookies="JSESSIONID"
-				logout-success-url="/"/>	 -->
+				logout-success-url="/"
+		/>	 
 		
 		<remember-me 
 			data-source-ref="dataSource"
