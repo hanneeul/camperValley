@@ -139,7 +139,7 @@ tr:last-child {
 	font-size: 16px;
 	margin-top: 3px;
 	margin-bottom: 3px;
-	padding: 12px;
+	padding: 7px;
 	padding-left: 4px;
 	font-weight: bold;
 }
@@ -233,6 +233,10 @@ tr:last-child {
 }
 
 .article a, .article a:hover {
+	text-decoration: none;
+	color: #000;
+}
+.notice-box a, .notice-box a:hover {
 	text-decoration: none;
 	color: #000;
 }
