@@ -6,8 +6,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.kh.campervalley.usedProduct.model.dao.UsedProductDao;
+import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 
 @Service
@@ -45,6 +47,44 @@ public class UsedProductServiceImpl implements UsedProductService {
 			System.out.println("end = " + end);
 		}
 		return usedProductDao.getProductList(param);
+	}
+
+	@Override
+	public void cateProductList(String cateNo, int page, String order, Model model) {
+		Map<String, Object> map = new HashMap<>();
+		
+		int pageSize = 20;
+		if(page == 0) {
+			page = 1;
+		}
+		
+		int start = (page - 1) * pageSize;
+		int end = (page) * pageSize;
+		
+		String cateName = usedProductDao.cateName(cateNo);
+		
+		map.put("start", start);
+		map.put("end", end);
+		map.put("order", order);
+		map.put("cateNo", Integer.parseInt(cateNo));
+		
+		// 목록 조회
+		List<UsedProduct> list = usedProductDao.cateProductList(map);
+		// 개수 조회
+		int cnt = usedProductDao.cateProductCount(map);
+		
+		System.out.println("cateName = " + cateName);
+		System.out.println("cateNo = " + cnt);
+		
+		
+		model.addAttribute("cateName", cateName);
+		model.addAttribute("cateNo", cateNo);
+		model.addAttribute("list", list);
+		model.addAttribute("start", start);
+		model.addAttribute("end", end);
+		model.addAttribute("cnt", cnt);
+		model.addAttribute("page", page);
+		model.addAttribute("order", order);
 	}
 
 }

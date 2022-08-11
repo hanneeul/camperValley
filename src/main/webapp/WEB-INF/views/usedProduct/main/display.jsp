@@ -68,10 +68,9 @@
 </div>
 
 <div id="moreShow">
-	<a id="more" class="more" onclick="viewMore()">더 보기<br><i class="fa-solid fa-caret-down"></i>
-
-	</a>
+	<a id="more" class="more" onclick="viewMore()">더 보기<br><i class="fa-solid fa-caret-down"></i></a>
 </div>
+
 <script>
 // 광고
 

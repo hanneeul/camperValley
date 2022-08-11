@@ -9,7 +9,13 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/main.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
 
-<div id="section" style="width: 90%; margin:50px auto"> auto">
+<input type="hidden" id="cateNo" name="cateNo" value="${ca teNo}"/>
+<input type="hidden" id="cateName" name="cateName" value="${cateName}"/>
+<input type="hidden" id="order" name="order" value="${order}"/>
+<input type="hidden" id="page" name="page" value="${page}"/>
+
+<div id="section" style="margin-top: 180px; margin-bottom: 100px;}">
+	<!-- page -->
 	<div id="productTop">
 		<!-- 상품+개수 -->
 		<div>
@@ -21,12 +27,12 @@
 	
 	<div class="productListTop" style="height: 30px;">
 		<div class="listTopInner">
-			<div class="group" style="float: right; margin-right: 50px;">
+			<div class="group" style="float: right; margin-right: 10px;">
 				<!-- DB-카테고리 정렬 -->
-				<a class="groupChecked">최신순</a> <a
-					class="groupOther">인기순</a> <a
-					class="groupOther">저가순</a> <a
-					class="groupOther">고가순</a>
+				<a class="groupChecked">최신순</a> 
+				<a class="groupOther">인기순</a> 
+				<a class="groupOther">저가순</a> 
+				<a class="groupOther">고가순</a>
 			</div>
 		</div>
 	</div>
