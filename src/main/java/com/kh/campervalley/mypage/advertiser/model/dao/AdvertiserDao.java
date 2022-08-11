@@ -58,6 +58,14 @@ public interface AdvertiserDao {
 	@Update("update admoney set balance = balance + #{paidAmount} where advertiser_no = #{advertiserNo}")
 	int updateAdmoneyCharge(Pay pay);
 
-	List<Pay> selectNotCancelPayByAdvertiserNo(int advertiserNo);
+	List<Pay> selectNotCanceledPay(Map<String, Object> param);
+
+	List<Pay> selectPayByMerchantUidList(List<String> merchantUidList);
+
+	@Update("update pay set status = 'cancel' where merchant_uid = #{merchantUid}")
+	int updatePayRefund(String merchantUid);
+
+	@Update("update admoney set balance = balance - #{paidAmount} where advertiser_no = #{advertiserNo}")
+	int updateAdmoneyRefund(Pay pay);
 
 }

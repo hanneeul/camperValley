@@ -68,7 +68,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="" name="refundAdmoneyFrm">
+			<form action="" onsubmit="return false;" name="refundAdmoneyFrm">
 				<div class="modal-body px-4">
 					<p>환불가능금액 : <span class="camper-color mx-1">${admoney.balance}</span><small>원</small></p>
 					<div class="d-flex justify-content-center" id="payListWrapper">
@@ -81,7 +81,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${payList}" var="pay">
+								<c:forEach items="${canRefundList}" var="pay">
 									<tr>
 										<td class="text-center">
 											<input type="checkbox" class="" name="cancelTarget" value="${pay.merchantUid}">
@@ -105,8 +105,8 @@
 
 <spring:eval var="impStoreCode" expression="@customProperties['api.impStoreCode']" />
 <script>
+// 결제기능
 IMP.init('${impStoreCode}');
-
 const clickChargeBtn = (amount) => {
 	const merchantUid = '${admoney.advertiserNo}_' + new Date().getTime()
 
@@ -150,33 +150,37 @@ const clickChargeBtn = (amount) => {
 			}).done(function(data) {
 				console.log(data);
 				const {balance : afterBalace} = data;
-				$.alert({
+				$.confirm({
 					title: '결제완료',
 					content: '애드머니가 정상적으로 충전되었습니다.',
+					buttons: {
+						OK: function () {
+							location.reload();
+						}
+					}
 				});
-				location.reload();
 			});
 		} else {
 			console.log(rsp.error_msg);
 		}
 	});
 }
-</script>
-<script>
+
+// 환불기능
 const cancelPay = () => {
-	
+
 	const headers = {
 		"${_csrf.headerName}" : "${_csrf.token}"
 	};
-	
+
 	const merchantUidList = [];
 	document.querySelectorAll("input[name=cancelTarget]:checked").forEach((checked, index) => {
 		merchantUidList[index] = checked.value;
 	});
-	console.log(merchantUidList);
+	// 환불대상이 지정되지 않은 경우 조기리턴
+	if(merchantUidList.length == 0)
+		return;
 
-	/*
-	*/
 	$.ajax({
 		url : '${pageContext.request.contextPath}/mypage/advertiser/refund',
 		method : 'post',
@@ -186,14 +190,30 @@ const cancelPay = () => {
 			advertiserNo : '${admoney.advertiserNo}',
 			reason : '테스트 결제 환불'
 		}
+	}).done(function(result) { // 환불 성공시 로직 
+		console.log(result);
+		$.confirm({
+			title: '환불완료',
+			content: '정상적으로 환불처리되었습니다.',
+			buttons: {
+				OK: function () {
+					location.reload();
+				}
+			}
+		});
+	}).fail(function(error) { // 환불 실패시 로직
+		console.log(error);
+		const {responseText : errorMID} = error;
+		$.confirm({
+			title: '환불실패',
+			content: `결제번호 [\${errorMID}]의 환불이 실패하였습니다.`,
+			buttons: {
+				OK: function () {
+					location.reload();
+				}
+			}
+		});
 	});
-
 };
-
-
-document.refundAdmoneyFrm.onsubmit = (e) => {
-	e.preventDefault();
-	cancelPay();
-}
 
 </script>

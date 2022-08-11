@@ -104,8 +104,8 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	}
 	
 	@Override
-	public List<Pay> selectNotCancelPayByAdvertiserNo(int advertiserNo) {
-		return advertiserDao.selectNotCancelPayByAdvertiserNo(advertiserNo);
+	public List<Pay> selectNotCanceledPay(Map<String, Object> param) {
+		return advertiserDao.selectNotCanceledPay(param);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -116,4 +116,16 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		return result;
 	}
 
+	@Override
+	public List<Pay> selectPayByMerchantUidList(List<String> merchantUidList) {
+		return advertiserDao.selectPayByMerchantUidList(merchantUidList);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int refundAdmoney(Pay pay) {
+		int result = advertiserDao.updatePayRefund(pay.getMerchantUid());
+		result = advertiserDao.updateAdmoneyRefund(pay);
+		return result;
+	}
 }
