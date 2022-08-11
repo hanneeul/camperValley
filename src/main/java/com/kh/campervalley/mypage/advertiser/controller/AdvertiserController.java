@@ -136,7 +136,8 @@ public class AdvertiserController {
 	
 	@ResponseBody
 	@PostMapping("/refund")
-	public ResponseEntity<?> refundAdmoney(@RequestParam(value="merchantUidList[]") List<String> merchantUidList, int advertiserNo, String reason) {
+	public ResponseEntity<?> refundAdmoney(@RequestParam(value="merchantUidList[]") List<String> merchantUidList, 
+			int advertiserNo, String reason) {
 		log.debug("merchantUidList = {}", merchantUidList);
 		log.debug("advertiserNo = {}", advertiserNo);
 		log.debug("reason = {}", reason);

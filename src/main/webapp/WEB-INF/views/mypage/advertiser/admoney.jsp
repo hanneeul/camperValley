@@ -171,7 +171,7 @@ const cancelPay = () => {
 	
 	const merchantUidList = [];
 	document.querySelectorAll("input[name=cancelTarget]:checked").forEach((checked, index) => {
-		merchantUidAll[index] = checked.value;
+		merchantUidList[index] = checked.value;
 	});
 	console.log(merchantUidList);
 

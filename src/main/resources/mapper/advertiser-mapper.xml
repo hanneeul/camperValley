@@ -192,4 +192,19 @@
 	</association>
 </resultMap>
 
+<select id="selectNotCancelPayByAdvertiserNo" resultType="payExt">
+	<!--
+	-->
+	select *
+	from (
+		select p.*, sum(paid_amount) over(order by paid_at desc) paid_sum
+		from pay p
+		where status != 'cancel' and advertiser_no = #{advertiserNo}
+		order by paid_at desc
+	)
+	<![CDATA[
+	where paid_sum <= #{sum}
+	]]>
+</select>
+
 </mapper>
