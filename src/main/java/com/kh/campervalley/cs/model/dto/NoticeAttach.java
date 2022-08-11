@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class NoticeAttach {
 	private int noticeAttachNo;
 	private int noticeNo;
-	private String originalFilename;
+	private String originalFilename; 
 	private String renamedFilename;
 	private LocalDateTime createdAt;
 	

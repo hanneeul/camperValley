@@ -6,6 +6,8 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/cs/cs.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
@@ -28,15 +30,15 @@
 	</div>
 
 		<div class="float-right">
-			<button class="btn btn-outline-primary btn-update btn-sm" onclick="location.href='${pageContext.request.contextPath}/cs/noticeUpdate';">수정</button>
-			<button class="btn btn-outline-danger btn-delete btn-sm">삭제</button>
+			<button class="btn btn-outline-primary btn-update btn-sm" onclick="location.href='${pageContext.request.contextPath}/cs/noticeUpdate?noticeNo=${notice.noticeNo}';">수정</button>
+			<button class="btn btn-outline-danger btn-delete btn-sm" data-notice-no="${notice.noticeNo}">삭제</button>
 		</div>
 
 		<div class="container" style="display: inline">
 
 
 			<div class="noticeDetail_head">
-				<h4 class="notice__head">${notice.title}</h4>
+				<h4 class="notice__head ml-1">${notice.title}</h4>
 			</div>
 
 			<div class="noticeSecond_head">
@@ -44,7 +46,7 @@
 				<fmt:parseDate value="${notice.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
 					<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
 			</span> <span
-					class="noticeDetail_read">${notice.readCount}</span>
+					class="noticeDetail_read"><i class="fa-solid fa-eye"></i> ${notice.readCount}</span>
 			</div>
 
 			<div class="noticeDetail_view">
@@ -53,7 +55,7 @@
 			<img src="${pageContext.request.contextPath}/resources/upload/cs/${attach.renamedFilename}" alt="" class="mt-3"/>
 			</c:forEach>
 	</c:if>
-			<p>${notice.content}</p>
+			<p class="mt-3">${notice.content}</p>
 			
 			</div>
 
@@ -67,5 +69,16 @@
 			</div>
 		</div>
 	</div>
-	
+<form action="${pageContext.request.contextPath}/cs/noticeDelete" method="POST" name="deleteNoticeFrm" enctype="multipart/form-data">
+<input type="hidden" name="noticeNo" id="deleteNo" />
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form>
+<script>
+document.querySelectorAll('.btn-delete').forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		document.deleteNoticeFrm.noticeNo.value = e.target.dataset.noticeNo;
+		document.deleteNoticeFrm.submit();
+	})
+});
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

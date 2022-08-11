@@ -11,20 +11,7 @@
 <style>
 .bar-notice {color: black !important;}
 </style>
-<script>
-window.addEventListener('load', (e) => {
-	document.querySelectorAll("tr[data-notice-no]").forEach((tr) => { 
-		tr.addEventListener('click', (e) => {
-			const tr = e.target.parentElement;
-			if(tr.matches('tr[data-notice-no]')){
-				const noticeNo = tr.dataset.noticeNo;
-				location.href = '${pageContext.request.contextPath}/cs/noticeDetail?noticeNo=' + noticeNo;
-			}
-		});
-	});
-	
-});
-</script>
+
 <h5 class="cs-header text-center">공지사항</h5>
 
 <div class="notice-wrap" style="width: 85%; float:none; margin:0 auto">
@@ -35,8 +22,14 @@ window.addEventListener('load', (e) => {
 	</div>
 	
 		<div class="search-group float-right">
-			<input class="input-search" type="text" placeholder="검색어를 입력하세요.">
-			<button class="btn-search" type="button">
+		<select id="search-type">
+            <option value="title" ${map.searchType eq 'title' ? 'selected' : ''}>제목</option>
+            <option value="content" ${map.searchType eq 'content' ? 'selected' : ''}>내용</option>
+        </select>
+        	<input type="hidden" name="searchType" value="title">
+			<input type="hidden" name="searchType" value="content">
+			<input class="input-search" type="text" placeholder="검색어를 입력하세요." name="searchKeyword" id="searchKeyword">
+			<button class="btn-search" type="button" id="searchButton">
 				<i class="fa fa-search"></i>
 			</button>
 		</div>
@@ -51,11 +44,10 @@ window.addEventListener('load', (e) => {
 				<th class="col-md-1">조회수</th>
 			</tr>
 		</thead>
-		<tbody>
 		<c:forEach items="${list}" var="list" varStatus="vs">
-			<tr data-notice-no="${list.noticeNo}">
+			<tr>
 				<td>${list.noticeNo}</td>
-				<td><a href="${pageContext.request.contextPath}/cs/noticeDetail">${list.title}</a></td>
+				<td><a href="${pageContext.request.contextPath}/cs/noticeDetail?noticeNo=${list.noticeNo}">${list.title}</a></td>
 				<td>
 					<fmt:parseDate value="${list.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
 					<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
@@ -68,6 +60,21 @@ window.addEventListener('load', (e) => {
 	<button type="button" class="btn btn-primary btn-sm float-right" id="btn-nt-enroll" onclick="location.href='${pageContext.request.contextPath}/cs/noticeEnroll';">글등록</button>
 </div>
 </div>
-<%-- <div class="mt-5" id="pageBar">${pagebar}</div> --%>
+<div class="mt-5" id="pageBar">${pagebar}</div>
+<script>
+document.querySelectorAll('.btn-search').forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		let keyword = document.getElementById('searchKeyword').value;
+		let searchType = document.getElementById('search-type').value;
+
+		let url = "${pageContext.request.contextPath}/cs/noticeList";
+		url = url + "?searchType=" + searchType;
+		url = url + "&searchKeyword=" + keyword;
+		location.href = url;
+		console.log(url);
+		
+	})
+})
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

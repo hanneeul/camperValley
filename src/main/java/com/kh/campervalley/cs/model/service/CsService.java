@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.campervalley.cs.model.dto.Notice;
+import com.kh.campervalley.cs.model.dto.NoticeAttach;
 import com.kh.campervalley.cs.model.dto.NoticeExt;
 
 public interface CsService {
@@ -20,10 +21,24 @@ public interface CsService {
 
 	int selectTotalFaqList(Map<String, Object> map);
 
-	List<NoticeExt> selectNoticeList();
+	List<NoticeExt> selectNoticeList(Map<String, Object> map);
 
 	int noticeInsert(NoticeExt notice);
 
+	NoticeExt selectOneNoticeCollection(int noticeNo);
+
 	NoticeExt selectOneNotice(int noticeNo);
+
+	NoticeAttach selectOneAttachment(int noticeAttachNo);
+
+	int deleteAttachment(int noticeAttachNo);
+
+	int noticeUpdate(NoticeExt notice);
+
+	int noticeDelete(int noticeNo);
+
+	int selectTotalNoticeList(Map<String, Object> map);
+
+	int readCntUpdate(int noticeNo);
 
 }

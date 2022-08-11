@@ -57,8 +57,11 @@ public class CsServiceImpl implements CsService {
 	}
 	
 	@Override
-	public List<NoticeExt> selectNoticeList() {
-		return csDao.selectNoticeList();
+	public List<NoticeExt> selectNoticeList(Map<String, Object> map) {
+		int offset = (int)map.get("offset");
+		int numPerPage = (int)map.get("numPerPage");
+		RowBounds rowBounds = new RowBounds(offset, numPerPage);
+		return csDao.selectNoticeList(map, rowBounds);
 	}
 	
 	@Override
@@ -77,8 +80,55 @@ public class CsServiceImpl implements CsService {
 	}
 	
 	@Override
-	public NoticeExt selectOneNotice(int noticeNo) {
-		return csDao.selectOneNotice(noticeNo);
+	public NoticeExt selectOneNoticeCollection(int noticeNo) {
+		return csDao.selectOneNoticeCollection(noticeNo);
 	}
+	
+	@Override
+	public NoticeExt selectOneNotice(int noticeNo) {
+		NoticeExt notice = csDao.selectOneNotice(noticeNo);
+		List<NoticeAttach> attachments = csDao.selectAttchmentListByNoticeNo(noticeNo);
+		notice.setAttachments(attachments);
+		return notice;
+	}
+	
+	@Override
+	public NoticeAttach selectOneAttachment(int noticeAttachNo) {
+		return csDao.selectOneAttachment(noticeAttachNo);
+	}
+	
+	@Override
+	public int deleteAttachment(int noticeAttachNo) {
+		return csDao.deleteAttachment(noticeAttachNo);
+	}
+	
+	@Override
+	public int noticeUpdate(NoticeExt notice) {
+		int result = csDao.noticeUpdate(notice);
+		
+		List<NoticeAttach> attachments = notice.getAttachments();
+		if(!attachments.isEmpty()) {
+			for(NoticeAttach attach : attachments)
+				result = csDao.insertAttachment(attach);
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public int noticeDelete(int noticeNo) {
+		return csDao.noticeDelete(noticeNo);
+	}
+	
+	@Override
+	public int selectTotalNoticeList(Map<String, Object> map) {
+		return csDao.selectTotalNoticeList(map);
+	}
+	
+	@Override
+	public int readCntUpdate(int noticeNo) {
+		return csDao.readCntUpdate(noticeNo);
+	}
+	
 
 }

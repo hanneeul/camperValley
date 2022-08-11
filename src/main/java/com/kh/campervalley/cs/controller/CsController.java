@@ -44,11 +44,32 @@ public class CsController {
 	ResourceLoader resourceLoader;
 	
 	@GetMapping("/noticeList")
-	public ModelAndView noticeList(ModelAndView mav, HttpServletRequest request) {
+	public ModelAndView noticeList(ModelAndView mav, 
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "1") int cPage,
+			HttpServletRequest request) {
 		try {
-			List<NoticeExt> list = csService.selectNoticeList();
+			int numPerPage = 7;
+			int offset = (cPage - 1) * numPerPage;
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("searchType", searchType);
+			map.put("searchKeyword", searchKeyword);
+			map.put("numPerPage", numPerPage);
+			map.put("offset", offset);
+			
+			List<NoticeExt> list = csService.selectNoticeList(map);
+			int totalContent = csService.selectTotalNoticeList(map);
 			log.debug("list = {}", list);
+			
+			String url = request.getRequestURI();
+			String pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalContent, url);
+			log.debug("map = {}" + map);
+			
 			mav.addObject("list", list);
+			mav.addObject("map", map);
+			mav.addObject("pagebar", pagebar);
 			
 			mav.setViewName("cs/noticeList");
 		} catch (Exception e) {
@@ -97,14 +118,91 @@ public class CsController {
 		
 		return "redirect:/cs/noticeList";
 	}
+	
 
 	@GetMapping("/noticeUpdate")
-	public void noticeUpdate() {}
+	public void noticeUpdate(@RequestParam(required=false) int noticeNo, Model model) {
+		try {
+			NoticeExt notice = csService.selectOneNotice(noticeNo);
+			log.debug("notice = {}", notice);
+			model.addAttribute("notice", notice);
+		} catch (Exception e) {
+			log.error("공지사항 수정 오류", e);
+			throw e;
+		}
+	}
+
+	@PostMapping("/noticeUpdate")
+	public String noticeUpdate(NoticeExt notice, RedirectAttributes redirectAttr,
+			@RequestParam("upFile") MultipartFile[] upFiles,
+			@RequestParam(value="delFile", required=false) int[] delFiles) throws Exception {
+		String saveDirectory = application.getRealPath("/resources/upload/cs");
+		try {
+			if(delFiles != null)
+				for(int noticeAttachNo : delFiles) {
+					NoticeAttach attach = csService.selectOneAttachment(noticeAttachNo);
+					log.debug("attch = {}", attach);
+
+					String renamedFilename = attach.getRenamedFilename();
+					File delFile = new File(saveDirectory, renamedFilename);
+					
+					if(delFile.exists()) { 
+						delFile.delete();
+						log.debug("{}번 {}파일 삭제", noticeAttachNo, renamedFilename);
+					}
+					int result = csService.deleteAttachment(noticeAttachNo);
+					log.debug("{}번 Attachment 레코드 삭제", noticeAttachNo);
+				}
+			
+			for(MultipartFile upFile : upFiles) {
+				if(upFile.getSize() > 0) {
+					NoticeAttach attach = new NoticeAttach();
+					attach.setOriginalFilename(upFile.getOriginalFilename());
+					attach.setRenamedFilename(CamperValleyUtils.getRenamedFilename(upFile.getOriginalFilename()));
+					attach.setNoticeNo(notice.getNoticeNo());
+					notice.addAttachment(attach);
+					
+					File destFile = new File(saveDirectory, attach.getRenamedFilename());
+					upFile.transferTo(destFile);
+				}
+			}
+			int result = csService.noticeUpdate(notice);
+			
+			redirectAttr.addFlashAttribute("msg", "게시글이 수정되었습니다.");
+		} catch (Exception e) {
+			log.error("게시글 수정 오류", e);
+			throw e; 
+		}
+		return "redirect:/cs/noticeDetail?noticeNo=" + notice.getNoticeNo();
+	}
+	
+	@PostMapping("/noticeDelete")
+	public String noticeDelete(@RequestParam int noticeNo, RedirectAttributes redirectAttr) throws Exception {
+				String saveDirectory = application.getRealPath("/resources/upload/cs");
+				try {
+					List<NoticeAttach> attachments = csService.selectOneNotice(noticeNo).getAttachments();
+					if(attachments != null && !attachments.isEmpty())
+						for(NoticeAttach attach : attachments) {
+					String renamedFilename = attach.getRenamedFilename();
+					File delFile = new File(saveDirectory, renamedFilename);
+					if(delFile.exists()) { 
+						delFile.delete();
+					}
+						}
+					int result = csService.noticeDelete(noticeNo);
+					redirectAttr.addFlashAttribute("msg", "게시글이 삭제되었습니다.");
+				} catch (Exception e) {
+					log.error("게시글 삭제 오류", e);
+					throw e; 
+				}
+		return "redirect:/cs/noticeList";
+	}
 
 	@GetMapping("/noticeDetail")
 	public ModelAndView noticeDetail(@RequestParam int noticeNo, ModelAndView mav) {
 		try {
-			NoticeExt notice = csService.selectOneNotice(noticeNo);
+			int readCnt = csService.readCntUpdate(noticeNo);
+			NoticeExt notice = csService.selectOneNoticeCollection(noticeNo);
 			log.debug("notice = {}", notice);
 			mav.addObject("notice", notice);
 			
