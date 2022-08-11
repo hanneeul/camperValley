@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
@@ -104,11 +108,12 @@
 </div>
 
 <spring:eval var="impStoreCode" expression="@customProperties['api.impStoreCode']" />
+<sec:authentication property="principal" var="loginMember" scope="page"/>
 <script>
 // 결제기능
 IMP.init('${impStoreCode}');
 const clickChargeBtn = (amount) => {
-	const merchantUid = '${admoney.advertiserNo}_' + new Date().getTime()
+	const merchantUid = '${admoney.advertiserNo}_' + new Date().getTime();
 
 	IMP.request_pay({
 		pg : 'html5_inicis.INIpayTest', // 일반결제 테스트 상점아이디 : INIpayTest
@@ -116,10 +121,10 @@ const clickChargeBtn = (amount) => {
 		merchant_uid : merchantUid,
 		name : '애드머니충전',
 		digital: true,
-		amount : 10, // 임의결제금액
-		buyer_name : '홍길동', // loginMember.name
-		buyer_tel : '01011111111', // loginMember.tel
-		buyer_email : 'honggd@gmail.com' // loginMember.email
+		amount : amount, // 임의결제금액
+		buyer_name : '${loginMember.name}',
+		buyer_tel : '${loginMember.tel}',
+		buyer_email : '${loginMember.email}'
 	}, function (rsp) {
 		if(rsp.success) {
 			console.log(rsp);
