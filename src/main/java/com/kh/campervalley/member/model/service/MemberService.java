@@ -9,4 +9,5 @@ public interface MemberService{
 	int insertMember(Member member);
 	Member selectOneMember(String attribute, String memberId);
 	String selectIDByNameAndEmail(String name, String email);
+	int updateMember(Member member);
 }

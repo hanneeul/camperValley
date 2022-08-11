@@ -49,4 +49,18 @@
 	 	and
 	 	email = #{email}
 	</select>
+	
+	<update id="updateMember">
+		update
+			member
+		set
+			nickname = #{nickname},
+			password = #{passsword},
+			email = #{email},
+			tel= #{tel},
+			profile_img= #{profilImg},
+			updated_at = sysdate
+		where
+			member_id = #{memberId}
+	</update>
 </mapper>
