@@ -55,14 +55,19 @@
 
 				</ul>
 				<ul class="navbar-nav col-md-3 mt-4 ml-5">
-					<c:if test="${empty loginMember}">
+					<sec:authorize access="isAnonymous()">
 						<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/login"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
 						<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/enroll"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
-					</c:if>
-					<c:if test="${not empty loginMember}">
-						<li class="nav-item pt-2"><span class="camper-color"><i class="fa-solid fa-user fa-1x"></i>&nbsp;[홍길동홍길...]</span>님</li>
-						<li class="nav-item ml-4"><a class="nav-link small" href="${pageContext.request.contextPath}/member/logout"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:11px;"></i>&nbsp;<span id="logout" >로그아웃</span></a></li>
-					</c:if>
+					</sec:authorize>
+					<sec:authorize access="isAuthenticated()">
+						<li class="nav-item pt-2"><span class="camper-color"><i class="fa-solid fa-user fa-1x"></i>&nbsp;[<%-- <sec:authentication property="principal.username"/> --%>]</span>님</li>
+						<li class="nav-item ml-4">
+							<form name="logoutFrm" action="${pageContext.request.contextPath}/member/logout" method="post">
+								<a class="nav-link small" onclick="document.logoutFrm.submit();" style="cursor:pointer;"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:11px;"></i>&nbsp;<span id="logout">로그아웃</span></a>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							</form>
+						</li>
+					</sec:authorize>
 				</ul>
 			</div>
 		</nav>

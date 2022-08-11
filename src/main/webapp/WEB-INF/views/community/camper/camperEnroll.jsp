@@ -27,7 +27,7 @@
 				<div class="text-danger text-13 pl-4 pt-1">*표시는 필수 입력사항입니다.</div>
 			</div>
 			<hr />
-			<form action="${pageContext.request.contextPath}/community/camper/camperEnroll" name="camperEnrollFrm" method="POST">
+			<form:form action="${pageContext.request.contextPath}/community/camper/camperEnroll" name="camperEnrollFrm" method="POST">
 				<table>
 					<tbody>
 						<tr>
@@ -106,7 +106,7 @@
 								<label for="chatUrl">오픈채팅 URL<span class="text-danger">*</span></label>
 							</td>
 							<td class="col-md-10 px-0">
-								<input type="text" name="chatUrl" class="input" style="width:98%" placeholder="오픈채팅방 URL을 입력해주세요."/>
+								<input type="text" name="chatUrl" class="input" style="width:98%" placeholder="https://open.kakao.com/"/>
 							</td>
 						</tr>
 					</tbody>
@@ -116,7 +116,7 @@
 					<button type="submit" class="btn btn-outline-camper-color px-5 m-4">등록</button>
 					<button type="button" class="btn btn-outline-danger px-5 my-4" onclick="location.href='${pageContext.request.contextPath}/community/camper/camperList'">취소</button>
 				</div>
-			</form>
+			</form:form>
 		</div>
 	</div>
 	
