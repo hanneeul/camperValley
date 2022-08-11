@@ -36,11 +36,13 @@
 					password-parameter="password"
 		/>
 		
-<!-- 		<logout logout-url="/member/logout"
+		<logout logout-url="/member/logout"
 				invalidate-session="true"
 				delete-cookies="JSESSIONID"
-				logout-success-url="/"/>	 -->
-		
+				logout-success-url="/"/>
+
+		<csrf disabled="false"/>
+
 		<remember-me 
 			data-source-ref="dataSource"
 			token-validity-seconds="1209600"/>	
