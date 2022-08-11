@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,8 +35,11 @@ public class UsedProductController  {
 	private UsedProductService usedProductService;
 
 	/* 상품 등록 */
-	@GetMapping("/product/productEnroll")
-	public void productEnrollPage() {};
+	@GetMapping("/product/getProductEnroll")
+	public String getProductEnroll(Model model) {
+		model.addAttribute("display", "/usedProduct/product/productEnroll.jsp");
+		return "/usedProduct/product/productEnroll";
+	};
 	
 	@PostMapping("/product/productEnroll")
 	@ResponseBody // json
@@ -55,25 +59,25 @@ public class UsedProductController  {
 				e.printStackTrace();
 			}
 			
-			if(i == 0) usedProduct.setProduct_img1(fileName);
-			if(i == 1) usedProduct.setProduct_img2(fileName);
-			if(i == 2) usedProduct.setProduct_img3(fileName);
-			if(i == 3) usedProduct.setProduct_img4(fileName);
-			if(i == 4) usedProduct.setProduct_img5(fileName);
+			if(i == 0) usedProduct.setProductImg1(fileName);
+			if(i == 1) usedProduct.setProductImg2(fileName);
+			if(i == 2) usedProduct.setProductImg3(fileName);
+			if(i == 3) usedProduct.setProductImg4(fileName);
+			if(i == 4) usedProduct.setProductImg5(fileName);
 		}
 		
 		// 로그인한 회원의 아이디
-		usedProduct.setSeller_id(principal.getName()); 
+//		usedProduct.setSellerId(principal.getName()); 
 		
 		// DB 
 		usedProductService.productInsert(usedProduct);
 		
 		// 최근 거래지역
-		String seller_id = principal.getName();
-		String recentLocation = usedProduct.getProduct_location();
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("seller_id", seller_id);
-		map.put("recentLocation", recentLocation);
+//		String sellerId = principal.getName();
+//		String recentLocation = usedProduct.getProductLocation();
+//		Map<String, String> map = new HashMap<String, String>();
+//		map.put("sellerId", sellerId);
+//		map.put("recentLocation", recentLocation);
 		
 		// 등록한 상품 no 가져오기
 		int no = usedProductService.getProductNo();

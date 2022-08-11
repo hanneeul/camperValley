@@ -1,4 +1,4 @@
-package com.kh.campervalley.common;
+package com.kh.campervalley.campsite.model.common;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,46 +22,32 @@ public class CampsiteUtils {
 	public static String sendSeverMsg (
 			ArrayList<String> urls, 
 			HashMap<String, String> header, 
-			String params,
 			String method) {
 		
 		String result = "";
 		StringBuffer sb = new StringBuffer();
 		HttpURLConnection conn = null;
 		BufferedReader br = null;
-
-		if (method.toUpperCase().equals("GET") && params != null) {
-			urls.add("?" + params);
-		}
 		
-		for (String url : urls) {
+		for (String url : urls)
 			sb.append(url);
-		}
-
+		
 		try {
 			URL url = new URL(sb.toString());
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod(method.toUpperCase());
 			conn.setDoOutput(true);
-
-			if (header != null && header.size() > 0) {
-				for (String key : header.keySet()) {
+			
+			if(header != null && header.size() > 0) {
+				for(String key : header.keySet())
 					conn.setRequestProperty(key, header.get(key));
-				}
 			}
-
-			if (method.toUpperCase().equals("POST") && params != null) {
-				conn.getOutputStream().write(params.getBytes("UTF-8"));
-				conn.getOutputStream().flush();
-			}
-
+			
 			int responseCode = conn.getResponseCode();
-			log.debug("responseCode = {}", responseCode);
-
-			if (responseCode == 200) {
-				br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+			if(responseCode >= 200 && responseCode <= 300) {
+			    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			} else {
-				br = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+			    br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
 			}
 			
 			String readLine = "";
@@ -71,23 +57,16 @@ public class CampsiteUtils {
 			}
 			
 			result = sb.toString();
-
-			if (responseCode != 200) {
-				log.debug("result = {}", result);
+			
+			if(responseCode != 200)
 				result = "Fail Message : " + result;
-			}
-
+			
 		} catch (Exception e) {
-			e.printStackTrace();
 			result = "Fail Message : " + e.toString();
 		} finally {
 			try {
-				if (conn != null) {
-					conn.disconnect();
-				}
-				if (br != null) {
-					br.close();
-				}
+				if(br != null) br.close();
+				if(conn != null) conn.disconnect();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -96,7 +75,6 @@ public class CampsiteUtils {
 	}
 	
 	public static JSONObject jsonStringToJson(Object result) {
-		System.out.println(result.toString());
 		JSONObject jsonObject = null;
 		try {
 			jsonObject = new JSONObject(result.toString());

@@ -6,6 +6,8 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/cs/cs.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
@@ -73,6 +75,7 @@
     	<div class="mt-5" id="pageBar">${pagebar}</div>
 <form action="${pageContext.request.contextPath}/cs/faqDelete" method="POST" name="deleteFaqFrm">
 <input type="hidden" name="noticeNo" id="deleteNo" />
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 <script>
 document.querySelectorAll('.btn-delete').forEach((btn) => {

@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ProductCategory {
 
-	private int cate_no;
-	private String cate_name;
+	private int cateNo;
+	private String cateName;
 }
