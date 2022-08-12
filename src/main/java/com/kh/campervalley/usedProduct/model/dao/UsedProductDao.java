@@ -19,9 +19,10 @@ public interface UsedProductDao {
 
 	List<ProductCategory> cateList();
 
-	String cateName(String cateNo);
-
 	List<UsedProduct> cateProductList(Map<String, Object> map);
 
 	int cateProductCount(Map<String, Object> map);
+
+	String cateName(String cateNo);
+
 }

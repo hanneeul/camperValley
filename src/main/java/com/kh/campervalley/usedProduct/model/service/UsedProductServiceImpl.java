@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.campervalley.usedProduct.model.dao.UsedProductDao;
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
@@ -50,7 +50,8 @@ public class UsedProductServiceImpl implements UsedProductService {
 	}
 
 	@Override
-	public void cateProductList(String cateNo, int page, String order, Model model) {
+	public void cateProductList(String cateNo, int page, String order, ModelAndView mav) {
+		
 		Map<String, Object> map = new HashMap<>();
 		
 		int pageSize = 20;
@@ -62,6 +63,8 @@ public class UsedProductServiceImpl implements UsedProductService {
 		int end = (page) * pageSize;
 		
 		String cateName = usedProductDao.cateName(cateNo);
+	
+		
 		
 		map.put("start", start);
 		map.put("end", end);
@@ -72,19 +75,20 @@ public class UsedProductServiceImpl implements UsedProductService {
 		List<UsedProduct> list = usedProductDao.cateProductList(map);
 		// 개수 조회
 		int cnt = usedProductDao.cateProductCount(map);
-		
-		System.out.println("cateName = " + cateName);
-		System.out.println("cateNo = " + cnt);
-		
-		
-		model.addAttribute("cateName", cateName);
-		model.addAttribute("cateNo", cateNo);
-		model.addAttribute("list", list);
-		model.addAttribute("start", start);
-		model.addAttribute("end", end);
-		model.addAttribute("cnt", cnt);
-		model.addAttribute("page", page);
-		model.addAttribute("order", order);
+
+		mav.addObject("cateName", cateName);
+		mav.addObject("cateNo", cateNo);
+		mav.addObject("list", list);
+		mav.addObject("start", start);
+		mav.addObject("end", end);
+		mav.addObject("cnt", cnt);
+		mav.addObject("page", page);
+		mav.addObject("order", order);
+	}
+
+	@Override
+	public List<ProductCategory> cateList() {
+		return usedProductDao.cateList();
 	}
 
 }

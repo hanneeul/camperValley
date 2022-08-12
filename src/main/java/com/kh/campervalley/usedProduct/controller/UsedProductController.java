@@ -12,6 +12,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -106,13 +107,28 @@ public class UsedProductController  {
 	}
 	
 	@GetMapping("/main/cateDisplay")
-	public String cateDisplay(Model model,
+	public ModelAndView cateDisplay(ModelAndView mav,
 					@RequestParam(value = "page", required=false, defaultValue = "0") String page,
 					@RequestParam(value = "cateNo") String cateNo,
 					@RequestParam(value = "order", required=false) String order) {
+		usedProductService.cateProductList(cateNo, Integer.parseInt(page), order, mav);
 		
-		usedProductService.cateProductList(cateNo, Integer.parseInt(page), order, model);
-		return "";
+		mav.addObject("display", "/usedProduct/main/cateDisplay.jsp");
+		mav.setViewName("usedProduct/main/mainPage");
+		
+		return mav;
+	}
+	
+	//카테고리 세부 값 가져오기
+	@PostMapping("/main/cateList")
+	@ResponseBody
+	public ModelAndView cateList() {
+		List<ProductCategory> list = usedProductService.cateList();
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		return mav;
 	}
 	
 	@GetMapping("/main/searchDisplay")

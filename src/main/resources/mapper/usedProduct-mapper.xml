@@ -7,26 +7,26 @@
 <!-- 상품 등록 -->
 <insert id="productInsert" parameterType="com.kh.campervalley.usedProduct.model.dto.UsedProduct">
 	insert into 
-		used_product 
+		used_product(product_no, seller_id, cate_no, product_title, product_content, product_img1, product_img2, product_img3, product_img4, product_img5, product_price, product_location, product_delivery_fee, product_enroll_date, product_views, transaction_date, buyer_id, is_delete)
 	values(
 		seq_used_product_no.nextval,
-		#{seller_id},
-		#{cate_no},
-		#{product_title},
-		#{product_content},
-		#{product_img1},
-		#{product_img2},
-		#{product_img3},
-		#{product_img4},
-		#{product_img5},
-		#{product_price},
-		#{product_location},
-		#{product_delivery_fee},
-		SYSDATE,
+		#{sellerId},
+		#{cateNo},
+		#{productTitle},
+		#{productContent},
+		#{productImg1},
+		#{productImg2},
+		#{productImg3},
+		#{productImg4},
+		#{productImg5},
+		#{productPrice},
+		#{productLocation},
+		#{productDeliveryFee},
+		default,
 		0,
-		#{transaction_date},
-		#{buyer_id},
-		'N'
+		default,
+		null,
+		default
 	)
 </insert>
 
@@ -75,5 +75,69 @@ select *
 </select>
 
 <!-- 카테고리 -->
+<select id="cateName" resultType="String">
+	select cate_name from category where cate_no=#{cate_no}
+</select>
 
+<select id="cateProductList" parameterType="java.util.HashMap" resultType="UsedProduct">
+
+	select *
+	from (
+		select 
+			rownum rnum,
+			a.*
+		from (
+			select
+				p.product_no,
+				p.seller_id,
+				p.cate_no,
+				p.product_title,
+				p.product_content,
+				p.product_img1,
+				p.product_img2,
+				p.product_img3,
+				p.product_img4,
+				p.product_img5,
+				to_char(product_price, 'FM99,999,999') ||'원' as product_price,
+				p.product_location,
+				p.product_delivery_fee,
+				round((sysdate-product_enroll_time)*24*60) as product_enroll_time,
+				p.product_views,
+				p.transaction_date,
+				p.buyer_id,
+				p.is_delete,
+				m.member_id
+			from
+				used_product p, member m
+			where p.seller_id = m.member_id and cate_no=#{cateNo}
+			order by
+								<choose>
+				<when test=' order =="A"'>p.product_enroll_time desc</when>
+				<when test=' order =="B"'>p.product_views asc</when>
+				<when test=' order =="C"'>p.product_price asc</when>
+				<when test=' order =="D"'>p.product_price desc</when>
+				<otherwise>
+					p.product_enroll_time desc
+				</otherwise>
+				
+			</choose>
+			
+		) a		
+	)
+	where rnum between nvl(#{start},1) and nvl(#{end},20)
+
+</select>
+
+<select id="cateProductCount" parameterType="java.util.HashMap" resultType="int">
+	select count(0)
+	from used_product p, member m
+	where p.seller_id = m.member_id and p.cate_no=#{cateNo}
+</select>
+
+<select id="cateList" resultType="ProductCategory">
+	select 
+		cate_no,
+		cate_name
+	from category 
+</select>
 </mapper>
