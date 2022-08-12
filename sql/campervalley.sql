@@ -128,6 +128,7 @@ create table advertisement (
 	ad_status number default 1,
 	created_at date default sysdate,
 	updated_at date,
+	deleted_at date,
     
 	constraint pk_advertisement primary key(advertisement_no),
 	constraint fk_advertisement_advertiser_no foreign key(advertiser_no) references advertiser(advertiser_no) on delete cascade,

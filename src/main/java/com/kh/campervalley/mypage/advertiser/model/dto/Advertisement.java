@@ -23,5 +23,6 @@ public class Advertisement {
 	private boolean adStatus;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	private LocalDateTime deletedAt;
 
 }

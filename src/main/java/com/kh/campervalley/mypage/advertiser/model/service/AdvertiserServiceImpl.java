@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.campervalley.mypage.advertiser.model.dao.AdvertiserDao;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
+import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
@@ -155,5 +156,18 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		}
 
 		return result;
+	}
+	
+	@Override
+	public List<Advertisement> selectAdListByAdvertiserNo(int advertiserNo, int cPage, int numPerPage) {
+		int offset = (cPage - 1) * numPerPage;
+		int limit = numPerPage;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return advertiserDao.selectAdListByAdvertiserNo(advertiserNo, rowBounds);
+	}
+	
+	@Override
+	public int selectTotalAdvertisement(int advertiserNo) {
+		return advertiserDao.selectTotalAdvertisement(advertiserNo);
 	}
 }

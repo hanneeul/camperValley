@@ -19,9 +19,9 @@ public class AdvertisementExt extends Advertisement {
 
 	public AdvertisementExt(int advertisementNo, int advertiserNo, String adName, AdZone adZone, String adLink,
 			int adCpc, int adDailyBudget, int adViewCnt, int adClickCnt, boolean adStatus, LocalDateTime createdAt,
-			LocalDateTime updatedAt, List<AdPerformance> performanceList) {
+			LocalDateTime updatedAt, LocalDateTime deletedAt, List<AdPerformance> performanceList) {
 		super(advertisementNo, advertiserNo, adName, adZone, adLink, adCpc, adDailyBudget, adViewCnt, adClickCnt,
-				adStatus, createdAt, updatedAt);
+				adStatus, createdAt, updatedAt, deletedAt);
 		this.performanceList = performanceList;
 	}
 

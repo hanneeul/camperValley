@@ -231,6 +231,7 @@
 		default,
 		#{adStatus},
 		default,
+		null,
 		null
 	)
 	<selectKey keyProperty="advertisementNo" resultType="_int" order="AFTER">
