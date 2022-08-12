@@ -32,7 +32,7 @@ public class Member implements UserDetails{
 	private String email;
 	@NonNull
 	private String tel;
-	private String profilImg;
+	private String profileImg;
 	private LocalDateTime enrollDate;
 	private LocalDateTime updatedAt;
 	private Withdrawal withdrawal;

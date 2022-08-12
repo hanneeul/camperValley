@@ -55,10 +55,10 @@
 			member
 		set
 			nickname = #{nickname},
-			password = #{passsword},
+			password = #{password},
 			email = #{email},
 			tel= #{tel},
-			profile_img= #{profilImg},
+			profile_img= #{profileImg},
 			updated_at = sysdate
 		where
 			member_id = #{memberId}
