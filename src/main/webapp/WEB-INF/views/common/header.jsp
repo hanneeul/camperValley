@@ -60,7 +60,7 @@
 				    <sec:authorize access="isAnonymous()">
 						<ul class="navbar-nav col-md-3 mt-4 ml-5">
 							<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/login"><i class="fa-regular fa-user"></i>&nbsp;로그인</a></li>
-							<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/enroll"><i clahss="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
+							<li class="nav-item"><a class="nav-link small text-dark" href="${pageContext.request.contextPath}/member/enroll"><i class="fa-solid fa-user-plus"></i>&nbsp;회원가입</a></li>
 						</ul>
 			    	</sec:authorize>
 					<sec:authorize access="isAuthenticated()">

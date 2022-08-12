@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+
 	<div class="container-md campsite-review-list-wrap pt-2">
 		<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
 			<div class="col-md float-right">
@@ -35,43 +36,41 @@
 		</div>
 		<div class="pl-3 d-flex justify-content-between mt-4">
 			<div id="listSection">
-				<div id="scroll">
-					<label for="toggle" class="chk_box">
-						<input type="checkbox" id="toggle" checked="checked" />
-						<span class="on"></span>
-						모집중 게시글만 조회
-					</label>
-					<%-- <c:set var="loginMember" value="<sec:authentication property ="principal.username"/>"/> --%>
-					<c:forEach var="camper" items="${camperList}" varStatus="vs">
-						<div class="boardBox boardBoxSelect my-4 p-4">
-							<c:if test="${camper.getMemberId()} === ${loginMember}">
-								<div class="drop-down drop-down-1">
-									<div class="selected text-right">
-										<i class="fa-solid fa-ellipsis-vertical d-block"></i>
-									</div>
-									<div class="options text-right">
-										<ul class="border-top border-dark">
-											<li onclick="location.href='${pageContext.request.contextPath}/community/camper/camperUpdate'">수정</li>
-											<li>삭제</li>
-										</ul>
-									</div>
+				<label for="toggle" class="chk_box">
+					<input type="checkbox" id="toggle" checked="checked" />
+					<span class="on"></span>
+					모집중 게시글만 조회
+				</label>
+				<%-- <c:set var="loginMember" value="<sec:authentication property ="principal.username"/>"/> --%>
+				<c:forEach var="camper" items="${camperList}" varStatus="vs">
+					<div class="${vs.first ? "boardBoxSelect" : "boardBox"} my-4 p-4">
+						<c:if test="${camper.getMemberId()} === ${loginMember}">
+							<div class="drop-down drop-down-1">
+								<div class="selected text-right">
+									<i class="fa-solid fa-ellipsis-vertical d-block" onclick="dropdown(this);"></i>
 								</div>
-							</c:if>
-							<div class="boardBoxSelectInfo">
-								<div class="font-weight-bold text-20 pb-4">${camper.getTitle()}</div>
-								<div class="font-weight-bold text-13">${camper.getArea()}</div>
-								<fmt:parseDate value="${camper.getDepartureDate()}" pattern="yyyy-MM-dd" var="departureDate"/>
-								<fmt:parseDate value="${camper.getArrivalDate()}" pattern="yyyy-MM-dd" var="arrivalDate"/>
-								
-								<div class="font-weight-bold text-13"><fmt:formatDate value="${departureDate}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${arrivalDate}" pattern="yyyy.MM.dd"/></div>
-								<div class="py-4">
-									${fn:substring(camper.getContent(), 0, 110)}...
+								<div class="options text-right">
+									<ul class="border-top border-dark">
+										<li onclick="location.href='${pageContext.request.contextPath}/community/camper/camperUpdate'">수정</li>
+										<li>삭제</li>
+									</ul>
 								</div>
-								<div id="status" class="font-weight-bold text-13">${camper.getStatus() eq "I" ? "모집중" : "모집완료"}</div>
 							</div>
+						</c:if>
+						<div class="boardBoxSelectInfo">
+							<div class="font-weight-bold text-20 pb-4">${camper.getTitle()}</div>
+							<div class="font-weight-bold text-13">${camper.getArea()}</div>
+							<fmt:parseDate value="${camper.getDepartureDate()}" pattern="yyyy-MM-dd" var="departureDate"/>
+							<fmt:parseDate value="${camper.getArrivalDate()}" pattern="yyyy-MM-dd" var="arrivalDate"/>
+							
+							<div class="font-weight-bold text-13"><fmt:formatDate value="${departureDate}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${arrivalDate}" pattern="yyyy.MM.dd"/></div>
+							<div class="py-4">
+								${fn:substring(camper.getContent(), 0, 110)}...
+							</div>
+							<div id="status" class="font-weight-bold text-13">${camper.getStatus() eq "I" ? "모집중" : "모집완료"}</div>
 						</div>
-					</c:forEach>
-				</div>
+					</div>
+				</c:forEach>
 			</div>
 			<div class="pl-5">
 				<div id="detailSection" class="boardBoxSelect p-5 mb-4 d-flex flex-column justify-content-between">
@@ -129,14 +128,88 @@
 $(document).ready(() => {
 	$(review).removeClass("active");
 	$(camper).addClass("active");
+	
 });
 
 const docHeight = $(document).height();
 const winHeight = $(window).height();
+let timer;
+let cPage = 1;
 $(document).scroll(function () {
-	if($(window).scrollTop() + winHeight >= docHeight) {
-		console.log("here is bottom");
+	if(timer) {
+		clearTimeout(timer);
 	}
+	timer = setTimeout(() => {
+		if(document.querySelector("#listSection").getBoundingClientRect().bottom < $(window).height()) {
+			$.ajax({
+				url: "${pageContext.request.contextPath}/community/camper/moreCamperList",
+				data: {cPage},
+				success(response) {
+					const {camperList} = response;
+					console.log(camperList);
+					
+					for(let i = 0; i < camperList.length; i++) {
+						const $boardBox = $('<div class="boardBox my-4 p-4">');
+						console.log(camperList[i].memberId);
+						if(${not empty loginMember}) {
+							const $dropdown = $('<div class="drop-down drop-down-1"></div>');
+							const $selected = $('<div class="selected text-right"></div>');
+							const $icon = $('<i class="fa-solid fa-ellipsis-vertical d-block"></i>');
+						} else {
+							// 로그인 아이디와 동일할 시 dropdown
+							const $drop = $('<div class="drop-down drop-down-1"></div>');
+							const $dropDiv1 = $('<div class="selected text-right"></div>');
+							const $dropI = $('<i class="fa-solid fa-ellipsis-vertical d-block" onclick="dropdown(this);"></i>');
+							const $dropDiv2 = $('<div class="options text-right"></div>');
+							const $dropUl = $('<ul class="border-top border-dark"></ul>');
+							const $dropLi1 = $('<li onclick="location.href="${pageContext.request.contextPath}/community/camper/camperUpdate">수정</li>');
+							const $dropLi2 = $('<li>삭제</li>');
+							
+							$dropUl.append($dropLi1, $dropLi2);
+							$dropDiv2.append($dropUl);
+							$dropDiv1.append($dropI);
+							$drop.append($dropDiv1, $dropDiv2);
+							$boardBox.append($drop);
+							$("#listSection").append($boardBox);
+						}
+					}
+					/* 
+					<div class="boardBox boardBoxSelect my-4 p-4">
+						<c:if test="${camper.getMemberId()} === ${loginMember}">
+							<div class="drop-down drop-down-1">
+								<div class="selected text-right">
+									<i class="fa-solid fa-ellipsis-vertical d-block"></i>
+								</div>
+								<div class="options text-right">
+									<ul class="border-top border-dark">
+										<li onclick="location.href='${pageContext.request.contextPath}/community/camper/camperUpdate'">수정</li>
+										<li>삭제</li>
+									</ul>
+								</div>
+							</div>
+						</c:if>
+						<div class="boardBoxSelectInfo">
+							<div class="font-weight-bold text-20 pb-4">${camper.getTitle()}</div>
+							<div class="font-weight-bold text-13">${camper.getArea()}</div>
+							<fmt:parseDate value="${camper.getDepartureDate()}" pattern="yyyy-MM-dd" var="departureDate"/>
+							<fmt:parseDate value="${camper.getArrivalDate()}" pattern="yyyy-MM-dd" var="arrivalDate"/>
+							
+							<div class="font-weight-bold text-13"><fmt:formatDate value="${departureDate}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${arrivalDate}" pattern="yyyy.MM.dd"/></div>
+							<div class="py-4">
+								${fn:substring(camper.getContent(), 0, 110)}...
+							</div>
+							<div id="status" class="font-weight-bold text-13">${camper.getStatus() eq "I" ? "모집중" : "모집완료"}</div>
+						</div>
+					</div>
+					*/
+					
+					
+				},
+				error: console.log
+			});
+			cPage++;
+		}
+	}, 500);
 	
 	
 	/* const listSec = document.querySelector("#listSection");
@@ -160,16 +233,20 @@ document.querySelector(".chk_box").addEventListener('change', ()=> {
 });
 
 //토글 ul
-$(".drop-down .selected i").click(function() {
+const dropdown = (iTag) => {
+	const $options = $(iTag).parent().siblings('.options');
+    $options.find('> ul').toggle();
+}
+/* $(".drop-down .selected i").click(function() {
     //$(".drop-down .options ul").toggle();
     const $options = $(this).parent().siblings('.options');
     $options.find('> ul').toggle();
-});
+}); */
 
 //옵션 선택 및 선택 후 옵션 숨기기
-$(".drop-down .options ul li").click(function() {
-    $(this).closest('ul').hide();
-}); 
+const close = (liTag) => {
+    $(liTag).closest('ul').hide();
+}
 
 
 //페이지의 다른 위치를 클릭하면 옵션 숨기기
