@@ -21,8 +21,8 @@
     align-items: center;
     border-bottom: 2px solid rgb(30, 29, 41);
     position: relative;
-    left: 38px;
-    width: 935px;
+    left: 10px;
+    width: 1150px;
     font-weight: 600;
 }
 .list div {
@@ -178,11 +178,11 @@ image_sub > .small {
 	flex-flow: row wrap;
 }
 .subject_con > .contentDiv input {
-	width: 700px;
-	height: 50px;
-	border: 1px solid rgb(195, 194, 204);
-	padding: 0px 1rem;
-	margin-left: -40px;
+	width: 535%;
+    height: 50px;
+    border: 1px solid rgb(195, 194, 204);
+    padding: 0px 1rem;
+    margin-left: -40px;
 }
 .subjectBox {
 	flex: 1 1 0%;
@@ -199,8 +199,8 @@ image_sub > .small {
 	color: gray;
 }
 .subjectSize > span {
-	position: absolute;
-    left: 878px;
+    position: absolute;
+    left: 1074px;
     top: 586px;
 }
 .subjectCancle {
@@ -309,7 +309,7 @@ image_sub > .small {
     width: 100%;
     margin-top: 1rem;
 }
-.input-location {
+.productLocation {
 	width: 100%;
 	margin-top: 1rem;
 	border: 1px solid rgb(195, 194, 204);
@@ -361,7 +361,7 @@ image_sub > .small {
     margin-left: -40px;
 }
 .instruction_con > .instruction {
-    width: 100%;
+    width: 99%;
 }
 .instruction_con > .text {
     display: flex;
@@ -391,12 +391,9 @@ image_sub > .small {
 
 /************ 등록하기 ************/
 .btmArea {
-	display: flex;
-	height: 100%;
-	justify-content: flex-end;
-	align-items: center;
-	width: 1024px;
-	margin: auto;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: -43px;
 }
 .enrollBtn {
     height: 3rem;
@@ -482,7 +479,9 @@ image_sub > .small {
     border: 1px solid rgb(195, 194, 204);
 }
 .limit {
-	text-align: right;
+    text-align: right;
     font-size: 0.8rem;
     color: gray;
+    margin-top: 10px;
+    margin-right: 9px;
 }

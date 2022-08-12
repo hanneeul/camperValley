@@ -9,7 +9,7 @@ import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 
 public interface UsedProductService {
 
-	public void productInsert(UsedProduct usedProduct); // 상품 등록
+	public int productInsert(UsedProduct usedProduct); // 상품 등록
 
 	public int getProductNo(); // 상품 번호
 
