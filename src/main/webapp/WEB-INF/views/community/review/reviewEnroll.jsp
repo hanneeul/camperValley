@@ -8,12 +8,26 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/review/review.css" />
+<style>
+body {overflow-y: auto!important;}
+</style>
 
 <!-- Date Range Picker -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<!-- jQuery UI -->
+<script
+	src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"
+	integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c="
+	crossorigin="anonymous"></script>
+<script
+	src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+	integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+	crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
 <!-- 캠핑장후기등록 페이지 (작성자:SJ) -->
 <div class="container-md campsite-review-enroll-wrap pt-2">
@@ -26,16 +40,17 @@
 	</div>
 	<hr />
 	<div class="review-enroll-form-wrap mb-4 pb-4">
-		<form 
+		<form:form 
 			name="reviewEnrollFrm" 
 			method="POST" 
-			action=""
+			action="${pageContext.request.contextPath}/community/review/reviewEnroll" 
 			enctype="multipart/form-data">
 			<div class="form-group row">
 				<div class="form-group col display-contents">
 				  	<label for="name" class="col-md-1 col-form-label font-weight-bold">작성자</label>
 				  	<div class="col-md-5">
-				    	<input type="text" class="form-control" id="nickname" name="nickname" value="캠퍼길동" readonly>
+						<sec:authentication property="principal" var="loginMember" scope="page"/>
+				    	<input type="text" class="form-control" id="nickname" name="nickname" value="${loginMember.nickname}" readonly>
 				  	</div>
 				</div>
 				<div class="form-group col display-contents">
@@ -48,7 +63,7 @@
 		        		<span class="fa fa-star-o" data-rating="3"></span>
 		        		<span class="fa fa-star-o" data-rating="4"></span>
 		        		<span class="fa fa-star-o" data-rating="5"></span>
-		        		<input type="hidden" class="review-grade" id="reviewGrade" name="reviewGrade" value="3">
+		        		<input type="hidden" class="review-grade" id="reviewGrade" name="reviewGrade" value="">
 		      		</div>
 				</div>
 			</div>
@@ -59,14 +74,16 @@
 				  	</label>
 				  	<div class="col-md-5">
 				  		<input 
-				  			type="button" 
+				  			type="text" 
 				  			class="form-control text-left" 
 				  			id="facltNm" 
 				  			name="facltNm" 
-				  			value="이용하신 캠핑장을 선택해주세요."
+				  			value=""
+				  			placeholder="이용하신 캠핑장을 선택해주세요."
 				  			data-toggle="modal" 
 				  			data-target="#facltNmModal"
 				  			required/>
+				  		<input type="hidden" class="content-id" id="contentId" name="contentId">
 				  	</div>
 				</div>
 				<!-- facltNmModal start -->
@@ -80,11 +97,14 @@
 				        		</button>
 				      		</div>
 					      	<div class="modal-body">
-					        	검색창 들어갈 예정
+					        	<div>
+								    <label for="autoComplete">캠핑장명</label>
+								    <input type="text" class="form-control" id="autoComplete" aria-describedby="autoComplete" placeholder="이용하신 캠핑장명을 입력하세요.">
+								</div>
 					      	</div>
 					      	<div class="modal-footer">
 					        	<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-					        	<button type="button" class="btn btn-success btn-camper-color">선택</button>
+					        	<button type="button" class="btn btn-success btn-camper-color" id="facltNmSelect">선택</button>
 					      	</div>
 				    	</div>
 				  	</div>
@@ -160,24 +180,104 @@
 			  	<label for="reviewPhoto" class="col-md-1 col-form-label font-weight-bold">첨부파일</label>
 				<div class="input-group col-md-5">
 				  	<div class="custom-file">
-				    	<input type="file" class="custom-file-input" name="upFile" id="upFile" multiple>
+				    	<input type="file" class="custom-file-input" name="upFile" id="upFile" accept="image/*" multiple>
 				    	<label class="custom-file-label" for="upFile">첨부파일을 선택해주세요.</label>
 				  	</div>
 				</div>
 			</div>
 			<hr />
 			<div class="text-center m-3 p-3">
-				<input type="reset" class="btn btn-outline-secondary px-4" value="작성취소">
+				<input type="submit" class="btn btn-outline-secondary px-4" onclick="location.href='${pageContext.request.contextPath}/community/review/reviewList';" value="작성취소">
 				<input type="submit" class="btn btn-outline-success btn-outline-camper-color ml-1 px-4" value="후기등록" >
 			</div>
-		</form>
+		</form:form>
 	</div>
 </div>
 <script>
 /**
+ * 파일명 가져오기
+ */
+window.onload = function() {
+	const target = document.getElementById('upFile');
+	const label = target.nextElementSibling;
+	target.addEventListener('change', () => {
+		let upFileList = '';
+		if(upFileList != null) {
+	        for(i = 0; i < target.files.length; i++) {
+	        	upFileList += target.files[i].name + ' ';
+	        }
+	        label.innerText = upFileList;
+		}
+		else {
+			label.innerText = '첨부파일을 선택해주세요.';
+		}
+    });
+}
+
+/**
+ * 캠핑장 조회 자동완성
+ */
+$('#autoComplete').autocomplete({
+	source : function(request, response) {
+		const headers = {
+			"${_csrf.headerName}" : "${_csrf.token}"
+		};
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/community/review/autoComplete",
+	        type : "POST",
+	        dataType : "JSON",
+	        headers,
+	        data : {value : request.term},
+	        success : function(data) {
+				response(
+					$.map(data.resultList, function(item) {
+						return {
+							label : item.FACLT_NM,
+	                        value : item.FACLT_NM,
+							idx : item.CONTENT_ID
+						};
+					})
+				);
+			},
+			error : console.log
+		});
+	},
+	focus : function(event, ui) {	
+		return false;
+	},
+	minLength: 2,
+	delay: 100,
+	select : function(evt, ui) {
+		$('#facltNmSelect').on('click', function() {
+			$('#facltNm').val(ui.item.label);
+			$("#facltNmModal").removeClass("in");
+			$(".modal-backdrop").remove();
+			$("#facltNmModal").hide();
+		});
+	}
+});
+
+/**
  * 이용기간 선택
  */
-$("#stay").daterangepicker();
+$("#stay").daterangepicker({
+	autoUpdateInput: false,
+	locale: {
+		applyLabel: "선택",
+        cancelLabel: "취소",
+		format: "YYYY-MM-DD (ddd)",
+		daysOfWeek: ["일", "월", "화", "수", "목", "금", "토"],
+		monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+	}
+}, 
+function(start, end) {
+	$("#stay").val(start.format("YYYY-MM-DD (ddd)") + " - " + end.format("YYYY-MM-DD (ddd)"));
+});
+
+$('#stay').on('cancel.daterangepicker', function() {
+    return $(this).val('');
+});
 
 /**
  * 리뷰평점 개수 제어
@@ -200,6 +300,12 @@ $reviewGradeList.on('click', function() {
 });
 
 setReviewGrade();
+
+/**
+ * 캠핑장후기 등록폼 제출
+ */
+ reviewEnrollBtn
 </script>
+<script src="${pageContext.request.contextPath}/resources/js/community/review/validation.js"></script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.campervalley.community.review.model.dao.ReviewDao">
+
+<select id="autoComplete" parameterType="map" resultType="map">
+	select
+		content_id, faclt_nm
+	from
+		campsite
+	where
+		faclt_nm like '%'|| #{value} || '%'
+</select>
+
+<insert id="insertReview">
+  	insert into
+  		campsite_review
+  	values (
+  		seq_campsite_review_no.nextval, 
+  		#{memberId}, 
+  		#{contentId}, 
+  		#{facltNm}, 
+  		#{reviewGrade}, 
+  		#{stay}, 
+  		#{merit}, 
+  		#{title}, 
+  		#{content}, 
+  		default, default, default)
+  	<selectKey keyProperty="reviewNo" resultType="_int" order="AFTER">
+  		select
+  			seq_campsite_review_no.currval
+  		from
+  			dual
+  	</selectKey>
+</insert>
+
+<insert id="insertReviewPhoto">
+	insert into
+		review_photo
+	values (
+		seq_review_photo_no, 
+		#{reviewNo}, 
+		#{originalFilename}, 
+		#{renamedFilename}, 
+		default)
+</insert>
+
+</mapper>
