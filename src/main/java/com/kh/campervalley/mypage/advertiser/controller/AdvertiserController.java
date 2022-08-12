@@ -160,15 +160,12 @@ public class AdvertiserController {
 	@PostMapping("/refund")
 	public ResponseEntity<?> refundAdmoney(@RequestParam(value="merchantUidList[]") List<String> merchantUidList, 
 			@RequestParam(name="advertiserNo") int advertiserNo, String reason) throws Exception {
-		log.debug("merchantUidList = {}", merchantUidList);
-		log.debug("advertiserNo = {}", advertiserNo);
-		log.debug("reason = {}", reason);
 		Admoney admoney = null;
 		int result = 0;
 		try {
 			List<Pay> payList = advertiserService.selectPayByMerchantUidList(merchantUidList);
 			log.debug("payList = {}", payList);
-			
+
 			// 인증토큰발급
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Content-type", "application/json");
@@ -182,7 +179,7 @@ public class AdvertiserController {
 			HttpEntity<Map<String, String>> tokenRequest = new HttpEntity(jsonTokenParams, headers);
 			Map<String, Object> responseToken = (Map<String, Object>) restTemplate
 					.postForObject(IMP_TOKEN_URL, tokenRequest, Map.class).get("response");
-			
+
 			String ACCESS_TOKEN = (String) responseToken.get("access_token");
 
 			// API서버 환불요청 및 DB업데이트
@@ -191,16 +188,15 @@ public class AdvertiserController {
 				Map<String, Object> params = new HashMap<>();
 				params.put("reason", reason);
 				params.put("imp_uid", payList.get(i).getImpUid());
-				params.put("amount", payList.get(i).getPaidAmount());			
+				params.put("amount", payList.get(i).getPaidAmount());
 				String jsonParams = new ObjectMapper().writeValueAsString(params);
-				
+
 				HttpEntity<Map<String, String>> request = new HttpEntity(jsonParams, headers);
 				Map<String, Object> response = restTemplate.postForObject(IMP_CANCEL_URL, request, Map.class);
 				log.debug("Refund API response = {}", response);
-				log.debug("Refund API response.code = {}", String.valueOf(response.get("code")).getClass().getName());
-				
+
 				// 정상환불 code = 0
-				if(String.valueOf(response.get("code")).equals("0")) {
+				if (String.valueOf(response.get("code")).equals("0")) {
 					result = advertiserService.refundAdmoney(payList.get(i));
 				} else {
 					String errorMID = payList.get(i).getMerchantUid();
@@ -209,12 +205,12 @@ public class AdvertiserController {
 				}
 			}
 			admoney = advertiserService.selectOneAdmoney(advertiserNo);
-			
-		} catch(RestClientException e) {
+
+		} catch (RestClientException e) {
 			log.error("REST API 호출오류", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
 					.body(admoney);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error("애드머니 환불처리 오류", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
 					.body(admoney);
@@ -223,7 +219,7 @@ public class AdvertiserController {
 	}
 	
 	@GetMapping("/enrollAd")
-	public void enrollAd() { }
+	public void enrollAd() {}
 	
 	@GetMapping("/sample")
 	public void sample() { }
