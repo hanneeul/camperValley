@@ -2,6 +2,9 @@ package com.kh.campervalley.community.review.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -52,7 +56,6 @@ public class ReviewController {
 				if(upFile.getSize() > 0) {
 					String originalFilename = upFile.getOriginalFilename();
 					String renamedFilename = CamperValleyUtils.getRenamedFilename(originalFilename);
-					log.debug("renamedFilename = {}", renamedFilename);
 					
 					File destFile = new File(saveDirectory, renamedFilename);
 					upFile.transferTo(destFile);
@@ -75,6 +78,15 @@ public class ReviewController {
 			throw e;
 		}
 		return "redirect:/community/review/reviewDetail.do?reviewNo=" + review.getReviewNo();
+	}
+		
+	@PostMapping("/autoComplete")
+	public @ResponseBody Map<String, Object> autoComplete(
+			@RequestParam Map<String, Object> paramMap) throws Exception {
+		List<Map<String, Object>> resultList = reviewService.autoComplete(paramMap);
+		log.debug("resultList = {}", resultList);
+		paramMap.put("resultList", resultList);
+		return paramMap;
 	}
 	
 	@GetMapping("/reviewUpdate")
