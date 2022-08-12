@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,8 +28,8 @@ public class CamperController {
 	@GetMapping("/camperList")
 	public ModelAndView camperList(ModelAndView mav) {
 		try {
-			List<Camper> camperList = camperService.selectCamperList();
-			log.debug("list = {}", camperList);
+			int numPerPage = CamperService.CAMPER_NUM_PER_PAGE;
+			List<Camper> camperList = camperService.selectCamperList(numPerPage);
 			mav.addObject("camperList", camperList);
 			mav.setViewName("/community/camper/camperList");
 		} catch(Exception e) {
@@ -35,6 +37,20 @@ public class CamperController {
 			throw e;
 		}
 		return mav;
+	}
+	
+	// 비동기 요청처리
+	@GetMapping("/moreCamperList")
+	public String moreCamperList(@RequestParam int cPage, Model model) {
+		try {
+			int numPerPage = CamperService.CAMPER_NUM_PER_PAGE;
+			List<Camper> camperList = camperService.selectMoreCamperList(cPage, numPerPage);
+			model.addAttribute("camperList", camperList);
+		} catch(Exception e) {
+			log.error("캠퍼모집 목록 추가 조회 오류", e);
+			throw e;
+		}
+		return "jsonView";
 	}
 	
 	@GetMapping("/camperEnroll")
