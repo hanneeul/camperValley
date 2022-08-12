@@ -51,6 +51,8 @@ public interface CsDao {
 	int selectTotalNoticeList(Map<String, Object> map);
 
 	int readCntUpdate(int noticeNo);
+
+	NoticeExt movePage(int noticeNo);
 	
 	
 	

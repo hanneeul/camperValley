@@ -41,4 +41,6 @@ public interface CsService {
 
 	int readCntUpdate(int noticeNo);
 
+	NoticeExt movePage(int noticeNo);
+
 }

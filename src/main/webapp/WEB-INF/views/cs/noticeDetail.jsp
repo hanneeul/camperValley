@@ -50,23 +50,40 @@
 			</div>
 
 			<div class="noticeDetail_view">
-<c:if test="${not empty notice.attachments}">
-		<c:forEach items="${notice.attachments}" var="attach" varStatus="vs">
+			<c:if test="${not empty notice.attachments}">
+				<c:forEach items="${notice.attachments}" var="attach" varStatus="vs">
 			<img src="${pageContext.request.contextPath}/resources/upload/cs/${attach.renamedFilename}" alt="" class="mt-3"/>
 			</c:forEach>
-	</c:if>
+		</c:if>
 			<p class="mt-3">${notice.content}</p>
 			
 			</div>
-
+	<c:choose>	
+		<c:when test="${move.prev ne 9999}">
 			<div class="notice-box">
-				<span class="prev">이전글</span> <a href="#">Lorem, ipsum dolor sit
-					amet consectetur adtetur adipisiciipisicing elit.</a>
+				<span class="prev">이전글</span><a href="${pageContext.request.contextPath}/cs/noticeDetail?noticeNo=${move.prev}">${move.prevtitle}</a>
 			</div>
+		</c:when>
+		<c:otherwise>
 			<div class="notice-box">
-				<span class="next">다음글</span> <a href="#">Lorem, ipsum dolor sit
-					amet consectetur adipisicing elit.</a>
+				<span class="prev">이전글</span><a href="#">${move.prevtitle}</a>
 			</div>
+		</c:otherwise>
+	</c:choose>	
+	
+	<c:choose>	
+		<c:when test="${move.next ne 9999}">	
+			<div class="notice-box">
+				<span class="next">다음글</span><a href="${pageContext.request.contextPath}/cs/noticeDetail?noticeNo=${move.next}">${move.nexttitle}</a>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="notice-box">
+				<span class="next">다음글</span><a href="#">${move.nexttitle}</a>
+			</div>
+			</c:otherwise>
+	</c:choose>	
+	
 		</div>
 	</div>
 <form action="${pageContext.request.contextPath}/cs/noticeDelete" method="POST" name="deleteNoticeFrm" enctype="multipart/form-data">

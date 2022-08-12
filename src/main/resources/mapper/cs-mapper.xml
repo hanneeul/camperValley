@@ -7,7 +7,7 @@
 <select id="selectFaqList" resultMap="noticeMap">
 	select 
 		* 
-	from 
+	from
 		notice 
 	<where>
 		<if test="searchType == 'title'">
@@ -41,7 +41,7 @@
 	insert into
 		notice
 	values (
-		seq_notice_no.nextval, 'honggd', 'FAQ', #{title}, #{content}, default, default
+		seq_notice_no.nextval, #{memberId}, 'FAQ', #{title}, #{content}, default, default
 	)
 </insert>
 
@@ -93,7 +93,7 @@
 	insert into
 		notice
 	values(
-		seq_notice_no.nextval, 'honggd', 'NOTICE', #{title}, #{content}, default, default
+		seq_notice_no.nextval, #{memberId}, 'NOTICE', #{title}, #{content}, default, default
 	)
 	<selectKey keyProperty="noticeNo" resultType="_int" order="AFTER"> 
 		select
@@ -200,6 +200,26 @@
 	where
 		notice_no = #{noticeNo}
 </update>
+
+<select id="movePage" resultType="noticeExt" parameterType="int">
+	select 
+		*
+	from 
+		(select 
+			notice_no, 
+			lead(notice_no, 1, 9999) over(order by notice_no) as prev,
+			lag(notice_no, 1, 9999) over(order by notice_no) as next, 
+			title,
+			lead(title, 1, '이전글이 없습니다.') over(order by notice_no) as prevtitle,
+			lag(title, 1, '다음글이 없습니다.') over(order by notice_no) as nexttitle
+		from 
+			notice 
+		where 
+			category = 'NOTICE' 
+			order by notice_no desc) 
+	where 
+		notice_no = #{noticeNo}
+</select>
 
 <resultMap type="noticeExt" id="noticeMap">
 		<id column="notice_no" property="noticeNo"/>

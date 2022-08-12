@@ -3,6 +3,10 @@ footer {
 	margin-top: 200px;
 }
 
+.notice-box a {
+	font-size: 14px;
+}
+
 /* 페이지바 */
 .page-item.active span.page-link {
 	background-color: #639A67;

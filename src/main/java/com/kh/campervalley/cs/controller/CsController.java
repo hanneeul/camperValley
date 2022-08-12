@@ -199,13 +199,14 @@ public class CsController {
 	}
 
 	@GetMapping("/noticeDetail")
-	public ModelAndView noticeDetail(@RequestParam int noticeNo, ModelAndView mav) {
+	public ModelAndView noticeDetail(@RequestParam int noticeNo, NoticeExt notice, ModelAndView mav) {
 		try {
 			int readCnt = csService.readCntUpdate(noticeNo);
-			NoticeExt notice = csService.selectOneNoticeCollection(noticeNo);
+			notice = csService.selectOneNoticeCollection(noticeNo);
 			log.debug("notice = {}", notice);
 			mav.addObject("notice", notice);
-			
+			mav.addObject("move", csService.movePage(notice.getNoticeNo()));
+
 			mav.setViewName("cs/noticeDetail");
 		} catch (Exception e) {
 			log.error("공지사항 조회 오류", e);
