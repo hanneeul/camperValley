@@ -27,16 +27,19 @@
 								<div class="imgWrapper" id="imgWrapper1">
 									<%-- <img src="${pageContext.request.contextPath}/resources/images/mypage/advertiser/file.png" alt="메인 홈 슬라이드 배너 영역" /> --%>
 								</div>
+								<input type="checkbox" name="adZone" id="adZone1" value="mainHome" class=""/>
 								<p class="my-1">메인 홈 슬라이드 배너</p>
-								<span>캠퍼밸리 메인 홈에 노출되는 슬라이드배너 영역광고입니다. 광고이미지 규격은 0000 0000 입니다.</span>
+								<span>캠퍼밸리 메인 홈에 노출되는 슬라이드배너 영역광고입니다. 광고이미지 규격은 1200px*300px 입니다.</span>
 							</div>
 							<div class="col optionWrapper">
 								<div class="imgWrapper" id="imgWrapper2"></div>								
+								<input type="checkbox" name="adZone" id="adZone2" value="usedProductHome" class=""/>
 								<p class="my-1">중고거래 홈</p>
 								<span>캠퍼밸리 캠핑용품거래 게시판의 슬라이드배너에 노출됩니다. 광고이미지 규격은 0000 0000 입니다.</span>
 							</div>
 							<div class="col optionWrapper">
 								<div class="imgWrapper" id="imgWrapper3"></div>								
+								<input type="checkbox" name="adZone" id="adZone3" value="usedProductFeed" class=""/>
 								<p class="my-1">중고거래 피드</p>
 								<span>캠퍼밸리 캠핑용품거래 게시판의 중고거래 게시글 사이에 노출됩니다. 광고이미지 규격은 0000 0000 입니다.</span>
 							</div>
@@ -142,6 +145,7 @@ document.querySelectorAll(".divAdZoneOptions > div").forEach((adZone) => {
 		
 		if(!imgDiv.classList.contains('selectedImgWapper')){
 			imgDiv.classList.add('selectedImgWapper');
+			console.log(imgDiv.nextElementSibling);
 		} else {
 			imgDiv.classList.remove('selectedImgWapper');
 		}

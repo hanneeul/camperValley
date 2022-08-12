@@ -192,9 +192,8 @@
 	</association>
 </resultMap>
 
-<select id="selectNotCancelPayByAdvertiserNo" resultType="payExt">
-	<!--
-	-->
+<select id="selectNotCanceledPay" resultType="payExt" parameterType="map">
+<![CDATA[
 	select *
 	from (
 		select p.*, sum(paid_amount) over(order by paid_at desc) paid_sum
@@ -202,9 +201,19 @@
 		where status != 'cancel' and advertiser_no = #{advertiserNo}
 		order by paid_at desc
 	)
-	<![CDATA[
-	where paid_sum <= #{sum}
-	]]>
+	where paid_sum <= #{maxCancelAmount}
+]]>
+</select>
+
+<select id="selectPayByMerchantUidList" parameterType="java.util.List" resultType="pay">
+	select *
+	from pay
+	<where>
+		merchant_uid in
+		<foreach collection="list" item="merchantUid" open="(" close=")" separator=",">
+		 #{merchantUid}
+		</foreach>
+	</where>
 </select>
 
 </mapper>
