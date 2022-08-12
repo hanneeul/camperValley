@@ -10,25 +10,29 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/info/edit.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <sec:authentication property="principal" var="loginMember" scope="page"/>
+<c:set var="profileFileName" value="${empty loginMember.profileImg ? 'default-profile.svg' : loginMember.profileImg}"/>
 <div class="container">	
 	<div class="row d-flex justify-content-between">
 		<div class="col-lg-2">
 			<jsp:include page="/WEB-INF/views/common/mypageSidebar.jsp" />
 		</div>
-		<div class="col-lg-10 px-5 mt-2" id="edit-container">
+		<div class="col-lg-10 px-5 mt-4" id="edit-container">
 		<%-- 본문시작 --%>
 		<h4>
 			회원정보관리
+
 		</h4>
 		<!-- <hr> -->
-		<form:form id="memberUpdateFrm" class="shadow-sm" method="post">
+		<form:form id="memberUpdateFrm" class="shadow-sm" enctype="multipart/form-data" method="post">
             <table  style="width: 40rem;">
 			<tbody>
 				<tr>
 					<td rowspan="2" style="width:9.5rem;">
-						<input type="file" accept="image/*" name="" id="file" />
+						<input type="file" accept="image/*" name="profileImgFile" id="file" />
 						<div class="rounded-circle" id="profileImg-wrp">
-							<img id="profileImg" alt="<sec:authentication property="principal.nickname"/>님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/kj.png"/>
+ 								<img id="profileImg" alt="<sec:authentication property="principal.nickname"/>님의 프로필사진" 
+										src="${pageContext.request.contextPath}/resources/upload/member/${profileFileName}"/>
+								<input type="hidden" name="changeImg" value="0" />
 						</div>
 					</td>
 					<td style="width:6.4rem;"class="font-weight-bold">
@@ -111,117 +115,148 @@
 			</div>
 			<script>
 			
-			//프로필 이미지
-			
-			$("#profileImg").click(()=>{
-				$("#file").click();
-			});
-			$("input[type=file]").on("change", function (e) {
-				        if (e.target.files && e.target.files[0]) {
-				            var reader = new FileReader();
-				            reader.onload = function (e) {
-				                $('#profileImg').attr('src', e.target.result);
-				            };
-				            reader.readAsDataURL(e.target.files[0]);
-				        } else {
-				            document.getElementById('profileImg').src = "";
-				        }
-				    });
-			//닉네임 중복확인 버튼 클릭시
-			$("#duplicateNicknameChk").click((e) => {
-				const nicknameValid = $("#nicknameValid");
-				nicknameValid.val(0);
-				let nicknameVal = $("#nickname").val(); 
-				if(nicknameVal === "${loginMember.nickname}"){
-					alert("현재 닉네임과 동일합니다.");
-					return;
-				} else if(/^[a-z0-9가-힣]{11,}$/.test(nicknameVal)){
-					alert("글자 수가 너무 깁니다.");
-					return;
-				} else if(!/^[a-z0-9가-힣]{2,}$/.test(nicknameVal)){
-					alert("2자 이상의 영문/숫자/한글로 입력해주세요.");
-					return;
-				}
-					//중복검사
-				$.ajax({
-					url:'${pageContext.request.contextPath}/member/checkDuplicate',
-					data : {
-						value : nicknameVal,
-						attribute : "nickname"
-					},
-					async:false,
-					success(response){
-						const{value, available} = response;
-						if(available){
-							alert("사용할 수 있는 닉네임입니다.");
-							nicknameValid.val(1);
-						} else{
-							alert("이미 사용중인 닉네임입니다.")
-						}
-					},
-					error: console.log
-				});
+			   $("#profileImg").click(()=>{
+			        $("#file").click();
+			    });
+			   
+			    $("input[type=file]").on("change", function (e) {
+			                if (e.target.files && e.target.files[0]) {
+			                    var reader = new FileReader();
+			                    reader.onload = function (e) {
+			                        $('#profileImg').attr('src', e.target.result);
+			                    };
+			                    reader.readAsDataURL(e.target.files[0]);
+			                } else {
+			                    $('#profileImg').attr('src', '${pageContext.request.contextPath}/resources/upload/member/default-profile.svg');
+			                }
+			                $("input[name=changeImg]").val(1);
+			            });
+			    //닉네임 input change 시
+			    $("input[name=nickname]").change((e) =>{
+			        const nicknameValid = $("#nicknameValid");
+			        nicknameValid.val(0);
+			    	
+			    });
+			    
+			    //닉네임 중복확인 버튼 클릭시
+			    $("#duplicateNicknameChk").click((e) => {
+			        const nicknameValid = $("#nicknameValid");
+			        let nicknameVal = $("#nickname").val(); 
+			        if(nicknameVal === "${loginMember.nickname}"){
+			            alert("현재 닉네임과 동일합니다.");
+			            return;
+			        } else if(/^[a-z0-9가-힣]{11,}$/.test(nicknameVal)){
+			            alert("글자 수가 너무 깁니다.");
+			            return;
+			        } else if(!/^[a-z0-9가-힣]{2,}$/.test(nicknameVal)){
+			            alert("2자 이상의 영문/숫자/한글로 입력해주세요.");
+			            return;
+			        }
+			            //중복검사
+			        $.ajax({
+			            url:'${pageContext.request.contextPath}/member/checkDuplicate',
+			            data : {
+			                value : nicknameVal,
+			                attribute : "nickname"
+			            },
+			            async:false,
+			            success(response){
+			                const{value, available} = response;
+			                if(available){
+			                    nicknameValid.val(1);
+			                    alert("사용할 수 있는 닉네임입니다.");
+			                } else{
+			                    alert("이미 사용중인 닉네임입니다.")
+			                }
+			            },
+			            error: console.log
+			        });
 
-			});	
-			// 이름
-			
-			// 비밀번호 변경 - alert 창
-			
-			// 이메일
-				$("#duplicateEmailChk").click((e) => {
-				const emailValid= $("#emailValid");
-				emailValid.val(0);
-				let emailVal = $("#email").val(); 
-				if(emailVal === "${loginMember.email}"){
-					alert("현재 이메일과 동일합니다.");
-					return;
-				} else if(!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/i.test(emailVal)){
-					alert("이메일 주소를 다시 확인해주세요.");
-					return;
-				}
-					//중복검사
-				$.ajax({
-					url:'${pageContext.request.contextPath}/member/checkDuplicate',
-					data : {
-						value : emailVal,
-						attribute : "email"
-					},
-					async:false,
-					success(response){
-						const{value, available} = response;
-						if(available){
-							alert("사용할 수 있는 이메일입니다.");
-							emailValid.val(1);
-						} else{
-							alert("이미 사용중인 이메일입니다.")
-						}
-					},
-					error: console.log
-				});
+			    });	
+			    // 이름
+			    
+			    // 비밀번호 변경 - alert 창
+			    
+			    // 이메일
+			        $("#duplicateEmailChk").click((e) => {
+			        const emailValid= $("#emailValid");
+			        let emailVal = $("#email").val(); 
+			        if(emailVal === "${loginMember.email}"){
+			            alert("현재 이메일과 동일합니다.");
+			            return;
+			        } else if(!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/i.test(emailVal)){
+			            alert("이메일 주소를 다시 확인해주세요.");
+			            return;
+			        }
+			            //중복검사
+			        $.ajax({
+			            url:'${pageContext.request.contextPath}/member/checkDuplicate',
+			            data : {
+			                value : emailVal,
+			                attribute : "email"
+			            },
+			            async:false,
+			            success(response){
+			                const{value, available} = response;
+			                if(available){
+			                    alert("사용할 수 있는 이메일입니다.");
+			                    emailValid.val(1);
+			                } else{
+			                    alert("이미 사용중인 이메일입니다.")
+			                }
+			            },
+			            error: console.log
+			        });
 
-			});	
+			    });	
+			    $("input[name=email]").change((e) =>{
+			    	const emailValid= $("#emailValid");
+			        emailValid.val(0);
+			    });
+			     
+			    $("#submitBtnClickBtn").click((e)=>{
+			        const nicknameValid = $("#nicknameValid");
+			        const emailValid= $("#emailValid");
+			        
+			        
+			        //파일처리
+			        if($("input[name=nickname]").val() !== "${loginMember.nickname}"){
+			        console.log(typeof(nicknameValid));
+			        //동일하지 않으면 nicknameValid 확인
+			            if(nicknameValid.val() === '0') {
+			        console.log(1);
+			                alert("닉네임의 '중복확인'버튼을 눌러 사용 가능 여부를 확인해 주세요.");
+			                return;
+			            }
+			        } else if(!password) {
+			        //비밀번호 값 없는지
+			            //있으면 유효성검사, 비밀번호 확인 검사
+			            if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/.test($("input[name=password]").val())){
+			                alert("비밀번호는 영문자+숫자+특수문자 조합으로 8자리 이상 입력해주세요.");
+			                return;
+			            } else if($("input[name=password]").val() !== $("#passwordCheck").val()){
+			                alert("새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.");
+			                return;
+			            }	
+			        
+			        } else if($("input[name=email]").val() !== "${loginMember.email}"){
+			            //동일하지 않으면 emailValid 확인
+			            if(emailValid) {
+			                alert("이메일의 '중복확인'버튼을 눌러 사용 가능 여부를 확인해 주세요.")
+			                return;
+			            }
+			        } else if(!$("input[name=tel]").val()){
+			                alert("전화번호를 입력해주세요.");
+			            return false;
+			        } else if(!/^\d{9,11}$/.test($("input[name=tel]").val())){
+			                alert("전화번호를 다시 확인해주세요.\n전화번호는 숫자만 입력 가능합니다.");
+			            return false;
+			        }
+			        
+			        
+			        $("#submitFrmBtn").click();
+			    }); 
 			
-			$("#submitBtnClickBtn").click((e)=>{
-				const nicknameValid = $("#nicknameValid");
-				const emailValid= $("#emailValid");
-				
-				if(nicknameVal !== "${loginMember.nickname}"){
-				//동일하지 않으면 nicknameValid 확인
-					if(nicknameValid) return;
-				} else if(emailVal !== "${loginMember.email}"){
-					//동일하지 않으면 emailValid 확인
-					if(emailValid) return;
-				} else if(!password) 
-				//비밀번호 값 없는지
-					//있으면 유효성검사, 비밀번호 확인 검사
-					if(){
-						
-					}	
-				//전화번호 유효성 검사
-				//alert("숫자만 입력하세요")
-				
-				$("#submitFrmBtn").click();
-			})
 			
 			
 			</script>

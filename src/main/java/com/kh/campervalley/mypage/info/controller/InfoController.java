@@ -1,17 +1,26 @@
 package com.kh.campervalley.mypage.info.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.member.model.service.MemberService;
 
@@ -27,7 +36,11 @@ public class InfoController {
 	@Autowired
 	BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	@Autowired
+	ServletContext application;
 	
+	@Autowired
+	ResourceLoader resourceLoader;
 	
 	@GetMapping("/edit")
 	public void mypageUpdate(@AuthenticationPrincipal Member member) {
@@ -36,15 +49,39 @@ public class InfoController {
 	@PostMapping("/edit")
 	public String mypageUpdate(Member updateMember,
 								@AuthenticationPrincipal Member loginMember,
+								@RequestParam("profileImgFile") MultipartFile upFile,
+								@RequestParam("changeImg") String changeImg,
 								RedirectAttributes redirectAttr) {
 		
-		
+		log.debug("a");
 		Map<String, Object> map = new HashMap<>();
 		try {
+			log.debug("b");
 			System.out.println(updateMember.getPassword()==null + "");
 			System.out.println(updateMember.getPassword().equals(""));
+			log.debug("c");
 			
 			//파일 처리
+			String saveDirectory = application.getRealPath("/resources/upload/member");
+			
+			//파일업로드
+			if (upFile.getSize() > 0) {
+				String originalFilename = upFile.getOriginalFilename();
+				String renamedFilename = CamperValleyUtils.getRenamedFilename(originalFilename);
+				File destFile = new File(saveDirectory, renamedFilename);
+				upFile.transferTo(destFile);
+
+				updateMember.setProfileImg(renamedFilename);
+				
+			}
+			//기존파일 삭제
+			if(loginMember.getProfileImg() != null && changeImg.equals("1")) {
+				File delFile = new File(saveDirectory, loginMember.getProfileImg());
+				if(delFile.exists()) {
+					delFile.delete();
+					log.debug("{}님 프로필 사진{} 삭제", loginMember.getMemberId(), loginMember.getProfileImg());		
+				}
+			}
 			
 			
 			//비밀번호 암호화
@@ -58,13 +95,17 @@ public class InfoController {
 			int result = memberService.updateMember(updateMember);
 			log.debug("121");
 			log.debug(result+"");
-			//Authentication 대체??
-//			loginMember.setNickname(updateMember.getNickname());
-//			loginMember.setEmail(updateMember.getEmail());
-//			loginMember.setName(updateMember.getTel());
-//			loginMember.setName(updateMember.getProfilImg());
+			loginMember.setNickname(updateMember.getNickname());
+			loginMember.setPassword(updateMember.getPassword());
+			loginMember.setEmail(updateMember.getEmail());
+			loginMember.setName(updateMember.getTel());
+			if(changeImg.equals("1"))
+				loginMember.setProfileImg(updateMember.getProfileImg());
 			
-			// 비밀번호 바뀌었을 
+			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
+					loginMember, loginMember.getPassword());
+					
+log.debug("success{}",loginMember.getProfileImg());
 			
 			//msg저장
 		} catch (Exception e) {
