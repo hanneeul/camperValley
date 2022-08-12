@@ -130,5 +130,9 @@ public class CsServiceImpl implements CsService {
 		return csDao.readCntUpdate(noticeNo);
 	}
 	
+	@Override
+	public NoticeExt movePage(int noticeNo) {
+		return csDao.movePage(noticeNo);
+	}
 
 }
