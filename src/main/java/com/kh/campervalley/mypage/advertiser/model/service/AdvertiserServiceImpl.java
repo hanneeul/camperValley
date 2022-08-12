@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.campervalley.mypage.advertiser.model.dao.AdvertiserDao;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.BizStatus;
@@ -126,6 +128,32 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	public int refundAdmoney(Pay pay) {
 		int result = advertiserDao.updatePayRefund(pay.getMerchantUid());
 		result = advertiserDao.updateAdmoneyRefund(pay);
+		return result;
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int insertAdvertisement(AdvertisementExt advertisement) {
+		int result = 0;
+		Admoney admoney = advertiserDao.selectOneAdmoney(advertisement.getAdvertiserNo());
+		if (admoney.getBalance() > advertisement.getAdCpc()) {
+			// 잔여 애드머니가 cpc보다 많은경우 : on
+			advertisement.setAdStatus(true);
+		} else {
+			// 잔여 애드머니가 cpc보다 적은경우 : off
+			advertisement.setAdStatus(false);
+		}
+		result = advertiserDao.insertAdvertisement(advertisement);
+
+		AdAttach adAttach = advertisement.getAdAttach();
+		adAttach.setAdvertisementNo(advertisement.getAdvertisementNo());
+		result = advertiserDao.insertAdAttach(adAttach);
+
+		// 광고상태 on인경우 현재날짜 광고성과레코드 insert
+		if (advertisement.isAdStatus()) {
+			result = advertiserDao.insertAdPerformance(advertisement.getAdvertisementNo());
+		}
+
 		return result;
 	}
 }

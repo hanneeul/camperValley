@@ -53,7 +53,7 @@
 				</div>
 			</div>
 			<div class="my-3" id="chartSection"></div>
-			<button type="button" class="btn btn-camper-color btn-sm" onclick="location.href='${pageContext.request.contextPath}/mypage/advertiser/enrollAd'">광고만들기</button>
+			<button type="button" class="btn btn-camper-color btn-sm" onclick="location.href='${pageContext.request.contextPath}/mypage/advertiser/enrollAd?no=${advertiser.advertiserNo}'">광고만들기</button>
 			<table id="tblAdList" class="table my-3">
 				<thead class="adListHead">
 					<tr class="text-center">

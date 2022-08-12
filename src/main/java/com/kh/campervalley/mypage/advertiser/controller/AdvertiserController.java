@@ -32,7 +32,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.member.model.dto.Member;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
@@ -219,7 +221,34 @@ public class AdvertiserController {
 	}
 	
 	@GetMapping("/enrollAd")
-	public void enrollAd() {}
+	public void loadEnrollAdPage() {}
+
+	@PostMapping("/enrollAd")
+	public String submitEnrollAdFrm(AdvertisementExt advertisement, @RequestParam("adImg") MultipartFile upFile) {
+		log.debug("advertisement = {}", advertisement);
+		log.debug("upFile = {}", upFile);
+		
+		try {
+			String saveDirectory = application.getRealPath("/resources/upload/mypage/advertiser/advertisement");
+
+			if (upFile.getSize() > 0) {
+				String originalFilename = upFile.getOriginalFilename();
+				String renamedFilename = CamperValleyUtils.getRenamedFilename(originalFilename);
+				File destFile = new File(saveDirectory, renamedFilename);
+				upFile.transferTo(destFile);
+
+				AdAttach attach = new AdAttach();
+				attach.setOriginalFilename(originalFilename);
+				attach.setRenamedFilename(renamedFilename);
+				advertisement.setAdAttach(attach);
+			}
+			int result = advertiserService.insertAdvertisement(advertisement);
+			
+		} catch(Exception e) {
+			log.error("광고소재 등록 오류", e);
+		}
+		return "redirect:/mypage/advertiser/dashboard";
+	}
 	
 	@GetMapping("/sample")
 	public void sample() { }

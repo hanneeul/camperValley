@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
@@ -40,5 +41,7 @@ public interface AdvertiserService {
 	List<Pay> selectPayByMerchantUidList(List<String> merchantUidList);
 
 	int refundAdmoney(Pay pay);
+
+	int insertAdvertisement(AdvertisementExt advertisement);
 
 }

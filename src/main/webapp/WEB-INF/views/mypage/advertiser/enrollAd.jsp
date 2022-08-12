@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/advertiser.css" />
@@ -13,33 +19,39 @@
 		<div class="col-lg-10 px-5">
 			<div class="adDetailWrapper mx-auto">
 				<h2>광고소재 등록하기</h2>
-				<form action="" name="enrollAdFrm">
+				<form:form 
+					name="enrollAdFrm"
+					action="${pageContext.request.contextPath}/mypage/advertiser/enrollAd" 
+					method="POST"
+					enctype="multipart/form-data">
+					<input type="hidden" name="advertiserNo" value="${param.no}"/>
 					<div class="divInputWrapper">
 						<label for="adName">광고소재명</label>
 						<input type="text" name="adName" id="adName" class="form-control form-control-sm"
 							placeholder="광고소재의 이름을 작성해주세요.">
-						<small class="form-text text-muted">광고소재명은~</small>
+						<small class="resultMsg hide" id="adNameMsg"></small>
 					</div>
 					<div class="divInputWrapper">
 						<label for="">노출위치 선택</label>
+						<small class="resultMsg hide" id="adZoneMsg"></small>
 						<div class="row divAdZoneOptions">
 							<div class="col optionWrapper">
 								<div class="imgWrapper" id="imgWrapper1">
 									<%-- <img src="${pageContext.request.contextPath}/resources/images/mypage/advertiser/file.png" alt="메인 홈 슬라이드 배너 영역" /> --%>
 								</div>
-								<input type="checkbox" name="adZone" id="adZone1" value="mainHome" class=""/>
+								<input type="checkbox" name="adZone" id="adZone1" value="mainHome" class="hide"/>
 								<p class="my-1">메인 홈 슬라이드 배너</p>
 								<span>캠퍼밸리 메인 홈에 노출되는 슬라이드배너 영역광고입니다. 광고이미지 규격은 1200px*300px 입니다.</span>
 							</div>
 							<div class="col optionWrapper">
 								<div class="imgWrapper" id="imgWrapper2"></div>								
-								<input type="checkbox" name="adZone" id="adZone2" value="usedProductHome" class=""/>
+								<input type="checkbox" name="adZone" id="adZone2" value="usedProductHome" class="hide"/>
 								<p class="my-1">중고거래 홈</p>
 								<span>캠퍼밸리 캠핑용품거래 게시판의 슬라이드배너에 노출됩니다. 광고이미지 규격은 0000 0000 입니다.</span>
 							</div>
 							<div class="col optionWrapper">
 								<div class="imgWrapper" id="imgWrapper3"></div>								
-								<input type="checkbox" name="adZone" id="adZone3" value="usedProductFeed" class=""/>
+								<input type="checkbox" name="adZone" id="adZone3" value="usedProductFeed" class="hide"/>
 								<p class="my-1">중고거래 피드</p>
 								<span>캠퍼밸리 캠핑용품거래 게시판의 중고거래 게시글 사이에 노출됩니다. 광고이미지 규격은 0000 0000 입니다.</span>
 							</div>
@@ -49,13 +61,15 @@
 						<label for="adLink">링크</label>
 						<input type="text" name="adLink" id="adLink" class="form-control form-control-sm"
 							placeholder="광고 클릭 시 이동할 주소를 입력해주세요.">
+						<small class="resultMsg hide" id="adLinkMsg"></small>
 					</div>
 					<div class="divInputWrapper">
 						<label for="adImg">이미지</label>
 						<div class="custom-file">
-							<input type="file" class="custom-file-input" name="adImg" id="validatedCustomFile" accept="image/*" required>
+							<input type="file" class="custom-file-input" name="adImg" id="validatedCustomFile" accept="image/*">
 							<label class="custom-file-label" id="upFileLabel" for="validatedCustomFile">이미지를 선택해주세요.</label>
 						</div>
+						<small class="resultMsg hide" id="adImgMsg"></small>
 					</div>
 					<div class="divInputWrapper">
 						<label for="adDailyBudget">일일예산 설정</label>
@@ -67,6 +81,7 @@
 								<span>원</span>
 							</div>
 						</div>
+						<small class="resultMsg hide" id="adDailyBudgetMsg"></small>
 					</div>
 					<div class="divInputWrapper">
 						<label for="adCpc">클릭당 단가(CPC) 설정</label>
@@ -78,6 +93,7 @@
 								<span>원</span>
 							</div>
 						</div>
+						<small class="resultMsg hide" id="adCpcMsg"></small>
 					</div>
 					<div class="divInputWrapper adPolicy">
 						<div class="d-flex justify-content-between align-items-center px-3" id="adPolicyHead">
@@ -85,7 +101,9 @@
 							<i class="fa-solid fa-angle-down" id="adPolicyLoad"></i>
 						</div>
 						<div class="p-3" id="adPolicyBody">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quisquam nesciunt obcaecati voluptatem illum alias deserunt ut corporis modi fuga deleniti officiis dolorum temporibus maiores vero saepe repellendus? Nulla porro.
+							광고소재 등록 후 광고소재 이미지와 노출 위치는 변경할 수 없습니다.
+							광고비는 충전한 애드머니에서 지정한 CPC(클릭당 비용)만큼 차감됩니다. 잔여 애드머니가 CPC보다 적은경우 해당 광고소재의 상태가 OFF로 변경됩니다.
+							또한 설정한 일일예산을 모두 소진한 경우에도 광고소재가 자동으로 OFF처리됩니다.
 						</div>
 					</div>
 					<div class="divInputWrapper row justify-content-md-center">
@@ -96,13 +114,13 @@
 							<button type="button" class="btn btn-secondary btn-block">뒤로</button>
 						</div>
 					</div>	
-				</form>
+				</form:form>
 			</div>
 		</div>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
-
+<script src="${pageContext.request.contextPath}/resources/js/mypage/advertiser/validation.js"></script>
 <script>
 window.addEventListener('load', () => {
 	upFile();
@@ -127,6 +145,14 @@ $("#adPolicyLoad").click((e) => {
 	}
 });
 
+// 노출위치에 맞는 input:ckeckbox 상태 지정
+const zoneCheck = (imgDiv) => {
+	document.querySelectorAll(".divAdZoneOptions input[type=checkbox]").forEach((checkbox) => {
+		checkbox.checked = false;
+	});
+	imgDiv.nextElementSibling.checked = true;
+};
+
 // 노출위치 선택 css 부여
 document.querySelectorAll(".divAdZoneOptions > div").forEach((adZone) => {
 	adZone.addEventListener('click', (e) => {
@@ -143,9 +169,9 @@ document.querySelectorAll(".divAdZoneOptions > div").forEach((adZone) => {
 			imgDiv = target.parentElement.firstElementChild;
 		}
 		
+		zoneCheck(imgDiv);
 		if(!imgDiv.classList.contains('selectedImgWapper')){
 			imgDiv.classList.add('selectedImgWapper');
-			console.log(imgDiv.nextElementSibling);
 		} else {
 			imgDiv.classList.remove('selectedImgWapper');
 		}

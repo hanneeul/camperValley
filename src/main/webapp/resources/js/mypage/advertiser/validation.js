@@ -52,5 +52,43 @@ if(document.searchAdvertiserFrm != null) {
 	};
 };
 
-if(document.refundAdmoneyFrm != null) {
-}
+// 광고등록 유효성검사
+if(document.enrollAdFrm != null) {
+	document.enrollAdFrm.onsubmit = (e) => {
+		let result = true;
+		
+		if(!/^[^\<\>\/]{5,100}$/.test(adName.value)) {
+			printErrSmall("#adNameMsg", "일부 특수문자(<,>,/)를 제외하여 5자 이상 100자 이내로 입력해주세요.");
+			result = false;
+		} else resetMsg("#adNameMsg");
+		
+		const checkedbox = document.querySelectorAll(".divAdZoneOptions input[type=checkbox]:checked");
+		if(checkedbox.length == 0) {
+			printErrSmall("#adZoneMsg", "광고노출 위치를 선택해주세요.");
+			document.querySelector("#adZoneMsg").style.marginLeft = 0;
+			result = false;
+		} else resetMsg("#adZoneMsg");
+		
+		if(!/^(https?):\/\/([a-z0-9-]+\.)+[a-z0-9]{2,4}.*$/.test(adLink.value)) {
+			printErrSmall("#adLinkMsg", "http:// 혹은 https://로 시작하는 적절한 이동링크를 입력해주세요.");
+			result = false;
+		} else resetMsg("#adLinkMsg");
+		
+		if(validatedCustomFile.files.length == 0) {
+			printErrSmall("#adImgMsg", "광고소재 이미지를 등록해주세요.");
+			result = false;
+		} else resetMsg("#adImgMsg");
+		
+		if(adDailyBudget.value == '') {
+			printErrSmall("#adDailyBudgetMsg", "일일예산을 설정해주세요.");
+			result = false;
+		} else resetMsg("#adDailyBudgetMsg");
+
+		if(adCpc.value == '') {
+			printErrSmall("#adCpcMsg", "클릭당 단가를 설정해주세요.");
+			result = false;
+		} else resetMsg("#adCpcMsg");
+		
+		return result;
+	};
+};
