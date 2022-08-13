@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +33,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.member.model.dto.Member;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
+import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
@@ -104,16 +108,26 @@ public class AdvertiserController {
 	public void exitAdvertiser() { }
 	
 	@GetMapping("/dashboard")
-	public ModelAndView advertiserDashBoard(ModelAndView mav, @AuthenticationPrincipal Member loginMember) {
+	public ModelAndView advertiserDashBoard(ModelAndView mav, @AuthenticationPrincipal Member loginMember, 
+			@RequestParam(defaultValue = "1") int cPage, HttpServletRequest request) {
 		String memberId = loginMember.getMemberId();
 		try {
+			int numPerPage = AdvertiserService.ADVERTISEMENT_NUM_PER_PAGE;
+			String url = request.getRequestURI();
+			
 			// 광고주 계정 상태
 			AdvertiserMoneyExt advertiser = advertiserService.selectOneAdvertiserMoney(memberId);
 			log.debug("advertiser = {}", advertiser);
 
 			// 운영광고목록
+			List<Advertisement> adList = advertiserService.selectAdListByAdvertiserNo(advertiser.getAdvertiserNo(), cPage, numPerPage);
+			int totalAdvertisement = advertiserService.selectTotalAdvertisement(advertiser.getAdvertiserNo());
+			String pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalAdvertisement, url);
+			log.debug("adList = {}", adList);
 
 			mav.addObject("advertiser", advertiser);
+			mav.addObject("adList", adList);
+			mav.addObject("pagebar", pagebar);
 		} catch (Exception e) {
 			log.error("광고주 대시보드 조회 오류", e);
 			throw e;
@@ -219,9 +233,39 @@ public class AdvertiserController {
 	}
 	
 	@GetMapping("/enrollAd")
-	public void enrollAd() {}
+	public void loadEnrollAdPage() {}
+
+	@PostMapping("/enrollAd")
+	public String submitEnrollAdFrm(AdvertisementExt advertisement, @RequestParam("adImg") MultipartFile upFile) {
+		log.debug("advertisement = {}", advertisement);
+		log.debug("upFile = {}", upFile);
+		
+		try {
+			String saveDirectory = application.getRealPath("/resources/upload/mypage/advertiser/advertisement");
+
+			if (upFile.getSize() > 0) {
+				String originalFilename = upFile.getOriginalFilename();
+				String renamedFilename = CamperValleyUtils.getRenamedFilename(originalFilename);
+				File destFile = new File(saveDirectory, renamedFilename);
+				upFile.transferTo(destFile);
+
+				AdAttach attach = new AdAttach();
+				attach.setOriginalFilename(originalFilename);
+				attach.setRenamedFilename(renamedFilename);
+				advertisement.setAdAttach(attach);
+			}
+			int result = advertiserService.insertAdvertisement(advertisement);
+			
+		} catch(Exception e) {
+			log.error("광고소재 등록 오류", e);
+		}
+		return "redirect:/mypage/advertiser/dashboard";
+	}
 	
-	@GetMapping("/sample")
-	public void sample() { }
+	@PostMapping("/deleteAd")
+	public ResponseEntity<?> deleteAdvertisement() {
+		Map<String, Object> map = new HashMap<>();
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	}
 
 }

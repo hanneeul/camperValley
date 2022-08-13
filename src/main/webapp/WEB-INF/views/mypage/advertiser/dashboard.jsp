@@ -53,7 +53,7 @@
 				</div>
 			</div>
 			<div class="my-3" id="chartSection"></div>
-			<button type="button" class="btn btn-camper-color btn-sm" onclick="location.href='${pageContext.request.contextPath}/mypage/advertiser/enrollAd'">광고만들기</button>
+			<button type="button" class="btn btn-camper-color btn-sm" onclick="location.href='${pageContext.request.contextPath}/mypage/advertiser/enrollAd?no=${advertiser.advertiserNo}'">광고만들기</button>
 			<table id="tblAdList" class="table my-3">
 				<thead class="adListHead">
 					<tr class="text-center">
@@ -70,42 +70,67 @@
 					</tr>
 				</thead>
 				<tbody class="adListBody">
-					<tr>
-						<td><button class="btn btn-camper-red btn-sm">삭제</button></td>
-						<td>
-							<div class="custom-control custom-switch text-center">
-								<input type="checkbox" class="custom-control-input" name="adStatus" id="customSwitch1">
-								<label class="custom-control-label" for="customSwitch1"></label>
-							</div>
-						</td>
-						<td>
-							<input type="text" class="form-control-plaintext"
-								name="adName" value="${ad ? ad.adName : '소재명'}" />
-						</td>
-						<td>
-							<input type="text" class="form-control-plaintext"
-								name="adZone" value="${ad ? ad.adName : '위치'}" />
-						</td>
-						<td class="text-center">10</td>
-						<td class="text-center">200</td>
-						<td class="text-center">5<small>%</small></td>
-						<td>
-							<input type="number" class="form-control form-control-sm"
-								name="adCpc" value="${ad ? ad.adName : '300'}" />
-						</td>
-						<td>
-							<input type="number" class="form-control form-control-sm"
-								name="adDailyBudget" value="${ad ? ad.adName : '100000'}" />
-						</td>
-						<td>
-							<button class="btn btn-camper-color btn-sm">변경</button>
-						</td>
-					</tr>
+					<c:if test="${empty adList}">
+						<tr><td colspan="10">등록된 광고소재가 없습니다.</td></tr>
+					</c:if>
+					<c:if test="${not empty adList}">
+						<c:forEach items="${adList}" var="advertisement" varStatus="vs">
+							<tr data-advertisement-no="${advertisement.advertisementNo}">
+								<td><button class="btn btn-camper-red btn-sm delAdBtn">삭제</button></td>
+								<td>
+									<div class="custom-control custom-switch text-center">
+										<input type="checkbox" class="custom-control-input" name="adStatus" id="customSwitch${vs.count}"
+											${advertisement.adStatus eq true ? 'checked' : ''}>
+										<label class="custom-control-label" for="customSwitch${vs.count}"></label>
+									</div>
+								</td>
+								<td>
+									<input type="text" class="form-control-plaintext"
+										name="adName" value="${advertisement.adName}" disabled/>
+								</td>
+								<td>
+									<c:if test="${advertisement.adZone eq 'mainHome'}">
+										<c:set var="adZone" value="메인 홈"/>
+									</c:if>
+									<c:if test="${advertisement.adZone eq 'usedProductHome'}">
+										<c:set var="adZone" value="중고거래 홈"/>
+									</c:if>
+									<c:if test="${advertisement.adZone eq 'usedProductFeed'}">
+										<c:set var="adZone" value="중고거래 피드"/>
+									</c:if>
+									<input type="text" class="form-control-plaintext" name="adZone"
+										value="${adZone}" disabled/>
+								</td>
+								<td class="text-center">${advertisement.adClickCnt}</td>
+								<td class="text-center">${advertisement.adViewCnt}</td>
+								<td class="text-center">
+									<c:set var="clickCnt" value="${advertisement.adClickCnt}"/>
+									<c:set var="viewCnt" value="${advertisement.adViewCnt}"/>
+									<c:if test="${viewCnt ne 0}">
+										<fmt:formatNumber value="${clickCnt / viewCnt * 100}" pattern="#.##"/><br>									
+									</c:if>
+									<c:if test="${viewCnt eq 0}">0</c:if>									
+									<small>%</small>
+								</td>
+								<td>
+									<input type="number" class="form-control form-control-sm"
+										name="adCpc" value="${advertisement.adCpc}" />
+								</td>
+								<td>
+									<input type="number" class="form-control form-control-sm"
+										name="adDailyBudget" value="${advertisement.adDailyBudget}" />
+								</td>
+								<td>
+									<button class="btn btn-camper-color btn-sm">변경</button>
+								</td>
+							</tr>
+						</c:forEach>
+					</c:if>
 				</tbody>
 			</table>
-			<div class="mt-5">
-				<jsp:include page="/WEB-INF/views/common/pagebar.jsp" />
-			</div>
+			<c:if test="${not empty adList}">
+				<div class="mt-5 pagebar">${pagebar}</div>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -125,4 +150,28 @@ window.addEventListener('load', (e) => {
 		startDate: '0d'
 	});	
 })
+
+document.querySelectorAll(".delAdBtn").forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		const advertisementNo = e.target.parentElement.parentElement.dataset.advertisementNo;
+		console.log(advertisementNo);
+		
+		const headers = {
+			"${_csrf.headerName}" : "${_csrf.token}"
+		};
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/mypage/advertiser/deleteAd",
+			type: "POST",
+			headers,
+			data: {
+				advertisementNo
+			},
+			success(response) {
+				console.log(response);
+			},
+			error: console.log
+		});
+	})
+});
 </script>

@@ -216,4 +216,30 @@
 	</where>
 </select>
 
+<insert id="insertAdvertisement">
+	insert into
+		advertisement
+	values(
+		seq_advertisement_no.nextval,
+		#{advertiserNo},
+		#{adName},
+		#{adZone},
+		#{adLink},
+		#{adCpc},
+		#{adDailyBudget},
+		default,
+		default,
+		#{adStatus},
+		default,
+		null,
+		null
+	)
+	<selectKey keyProperty="advertisementNo" resultType="_int" order="AFTER">
+		select
+			seq_advertisement_no.currval
+		from
+			dual
+	</selectKey>
+</insert>
+
 </mapper>

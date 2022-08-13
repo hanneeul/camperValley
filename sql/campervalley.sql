@@ -128,6 +128,7 @@ create table advertisement (
 	ad_status number default 1,
 	created_at date default sysdate,
 	updated_at date,
+	deleted_at date,
     
 	constraint pk_advertisement primary key(advertisement_no),
 	constraint fk_advertisement_advertiser_no foreign key(advertiser_no) references advertiser(advertiser_no) on delete cascade,
@@ -141,12 +142,22 @@ create table ad_attach (
 	original_filename varchar2(255),
 	renamed_filename varchar2(255),
 	created_at date default sysdate not null,
-	updated_at date,
     
 	constraint pk_ad_attach primary key(ad_attach_no),
 	constraint fk_ad_attach_advertisement_no foreign key(advertisement_no) references advertisement(advertisement_no) on delete cascade
 );
 create sequence seq_ad_attach_no;
+
+create table ad_performance (
+    ad_performance_no number not null,
+    advertisement_no number not null,
+    display_at date default sysdate,
+    daily_click_cnt number default 0,
+    
+    constraint pk_ad_performance primary key(ad_performance_no),
+    constraint fk_ad_performance_advertisement_no foreign key(advertisement_no) references advertisement(advertisement_no) on delete cascade
+);
+create sequence seq_ad_performance_no;
 
 create table camper (
 	camper_no number,

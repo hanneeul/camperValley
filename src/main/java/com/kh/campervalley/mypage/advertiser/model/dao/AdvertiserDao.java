@@ -10,7 +10,10 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
+import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
+import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
@@ -67,5 +70,19 @@ public interface AdvertiserDao {
 
 	@Update("update admoney set balance = balance - #{paidAmount} where advertiser_no = #{advertiserNo}")
 	int updateAdmoneyRefund(Pay pay);
+
+	int insertAdvertisement(AdvertisementExt advertisement);
+
+	@Insert("insert into ad_attach values (seq_ad_attach_no.nextval, #{advertisementNo}, #{originalFilename}, #{renamedFilename}, default)")
+	int insertAdAttach(AdAttach adAttach);
+
+	@Insert("insert into ad_performance values (seq_ad_performance_no.nextval, #{advertisementNo}, default, default)")
+	int insertAdPerformance(int advertisementNo);
+
+	@Select("select * from advertisement where advertiser_no = #{advertiserNo} and deleted_at is null order by created_at desc")
+	List<Advertisement> selectAdListByAdvertiserNo(int advertiserNo, RowBounds rowBounds);
+
+	@Select("select count(*) from advertisement where advertiser_no = #{advertiserNo} and deleted_at is null")
+	int selectTotalAdvertisement(int advertiserNo);
 
 }
