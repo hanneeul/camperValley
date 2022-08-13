@@ -9,31 +9,10 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/review/review.css" />
 
+<!-- Swiper -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
-<style>
-.swiper-container {
-	height: 300px;
-}
-.swiper-slide {
-	text-align: center;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-.swiper-slide img {
-	width: 250px;
-	height: 150px;
-}
-.swiper-button-prev {
-	background-image: url("../../resources/images/community/review/caret-left-solid.svg");
-	background-size: 13px;
-}
-.swiper-button-next {
-	background-image: url("../../resources/images/community/review/caret-right-solid.svg");
-	background-size: 13px;
-}
-</style>
+
 <!-- 캠핑장후기상세 페이지 (작성자:SJ) -->
 <div class="container-md campsite-review-detail-wrap pt-2">
 	<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
