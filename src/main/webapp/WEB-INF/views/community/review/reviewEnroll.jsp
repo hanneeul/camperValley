@@ -51,6 +51,7 @@ body {overflow-y: auto!important;}
 				  	<div class="col-md-5">
 						<sec:authentication property="principal" var="loginMember" scope="page"/>
 				    	<input type="text" class="form-control" id="nickname" name="nickname" value="${loginMember.nickname}" readonly>
+				  		<input type="hidden" name="memberId" id="memberId" value="${loginMember.memberId}"/>
 				  	</div>
 				</div>
 				<div class="form-group col display-contents">
@@ -83,7 +84,7 @@ body {overflow-y: auto!important;}
 				  			data-toggle="modal" 
 				  			data-target="#facltNmModal"
 				  			required/>
-				  		<input type="hidden" class="content-id" id="contentId" name="contentId">
+				  		<input type="hidden" class="content-id" id="contentId" name="contentId" value="">
 				  	</div>
 				</div>
 				<!-- facltNmModal start -->
@@ -131,23 +132,23 @@ body {overflow-y: auto!important;}
 				<label class="col col-form-label font-weight-bold">이런 점이 좋았어요.</label>
 				<div class="col py-3">
 					<div class="form-check form-check-inline">
-				  		<input class="form-check-input" type="checkbox" name="merit" id="merit0" value="merit0">
+				  		<input class="form-check-input" type="checkbox" name="merit" id="merit0" value="시설물이 깨끗해요.">
 				  		<label class="form-check-label" for="merit0">시설물이 깨끗해요.</label>
 					</div>
 					<div class="form-check form-check-inline">
-				  		<input class="form-check-input" type="checkbox" name="merit" id="merit1" value="merit1">
+				  		<input class="form-check-input" type="checkbox" name="merit" id="merit1" value="사장님이 친절해요.">
 				  		<label class="form-check-label" for="merit1">사장님이 친절해요.</label>
 					</div>
 					<div class="form-check form-check-inline">
-				  		<input class="form-check-input" type="checkbox" name="merit" id="merit2" value="merit2">
+				  		<input class="form-check-input" type="checkbox" name="merit" id="merit2" value="매너타임이 잘 준수되고 있어요.">
 				  		<label class="form-check-label" for="merit2">매너타임이 잘 준수되고 있어요.</label>
 					</div>
 					<div class="form-check form-check-inline">
-				  		<input class="form-check-input" type="checkbox" name="merit" id="merit3" value="merit3">
+				  		<input class="form-check-input" type="checkbox" name="merit" id="merit3" value="가족/아이들과 함께 이용하기 좋아요.">
 				  		<label class="form-check-label" for="merit3">가족/아이들과 함께 이용하기 좋아요.</label>
 					</div>
 					<div class="form-check form-check-inline">
-				  		<input class="form-check-input" type="checkbox" name="merit" id="merit4" value="merit4">
+				  		<input class="form-check-input" type="checkbox" name="merit" id="merit4" value="놀이시설이 많아요.">
 				  		<label class="form-check-label" for="merit4">놀이시설이 많아요.</label>
 					</div>
 				</div>
@@ -248,9 +249,10 @@ $('#autoComplete').autocomplete({
 	},
 	minLength: 2,
 	delay: 100,
-	select : function(evt, ui) {
+	select : function(evt, ui, idx) {
 		$('#facltNmSelect').on('click', function() {
 			$('#facltNm').val(ui.item.label);
+			$('#contentId').val(ui.item.idx);
 			$("#facltNmModal").removeClass("in");
 			$(".modal-backdrop").remove();
 			$("#facltNmModal").hide();
@@ -300,12 +302,7 @@ $reviewGradeList.on('click', function() {
 });
 
 setReviewGrade();
-
-/**
- * 캠핑장후기 등록폼 제출
- */
- reviewEnrollBtn
 </script>
-<script src="${pageContext.request.contextPath}/resources/js/community/review/validation.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/community/review/reviewValidation.js"></script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

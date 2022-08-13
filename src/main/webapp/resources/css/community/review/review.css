@@ -20,6 +20,15 @@
 .review-title:hover {
 	color: #639A67;
 }
+
+.page-item .page-link {
+	color: #2B380C;
+}
+
+.page-item.active span.page-link {
+	background-color: #639A67;
+    border-color: #639A67;
+}
 /* reviewList.jsp end */
 
 /* reviewErnoll.jsp start */
@@ -169,5 +178,31 @@ textarea[name=commentContent] {
 
 .review-detail-comment-wrap .card-text i {
 	color: #D9BF77;
+}
+
+.swiper-container {
+	height: 300px;
+}
+
+.swiper-slide {
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.swiper-slide img {
+	width: 250px;
+	height: 150px;
+}
+
+.swiper-button-prev {
+	background-image: url("../../resources/images/community/review/caret-left-solid.svg");
+	background-size: 13px;
+}
+
+.swiper-button-next {
+	background-image: url("../../resources/images/community/review/caret-right-solid.svg");
+	background-size: 13px;
 }
 /* reviewDetail.jsp end */
