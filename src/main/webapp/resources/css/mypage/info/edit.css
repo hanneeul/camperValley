@@ -24,11 +24,15 @@
 #edit-container td {
     height: 3.6rem;
 }
-
+#edit-container .btn-outline-secondary:hover{
+	background-color: inherit;
+	border-color: #639A67;
+	transition-duaration: 600ms;
+}
 #edit-container form{
 	margin:1.5rem 0 1rem 0;
 	background-color: #fafbfa;
-	padding: 2rem;
+	padding: 2rem 3rem;
 }
 #edit-container button.btn-success {
     background-color: #639A67;
@@ -66,11 +70,12 @@
 }
 #profileImg-wrp{
 	position: absolute;
-	width: 105px;
-	height: 105px;
+	width: 96px;
+	height: 96px;
 	overflow: hidden;
 	transform:translate(-50%,-50%);
-	left: 13.1%;
+	left: 14.7%;
+
 }
 #profileImg{
       cursor:pointer;

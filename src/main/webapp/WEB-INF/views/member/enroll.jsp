@@ -35,7 +35,6 @@
 										   name="memberId" 
 										   id="memberId"
 										   autocomplete="off"
-										   value="chacha"
 										   required>
 			 						<span class="text-danger guide-id-empty my-2 pl-1 d-none">필수 입력항목입니다.</span>
 									<span class="text-danger guide-id-duplicate my-2 pl-1 d-none">이미 사용 중이거나 탈퇴한 아이디입니다.</span>
@@ -911,7 +910,7 @@ function validatePw(password){
 	const guidePwEmpty= $(".guide-pw-empty");
 	const guidePwInvalidation = $(".guide-pw-invalidation");
 	const guidePwOk = $(".guide-pw-ok");
-	const guides = $('#PasswordContainer span');
+	const guides = $('#passwordContainer span');
 	
 	guides.removeClass('d-block'); 
 	if(password == ""){
