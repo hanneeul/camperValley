@@ -76,12 +76,12 @@
 					<c:if test="${not empty adList}">
 						<c:forEach items="${adList}" var="advertisement" varStatus="vs">
 							<tr data-advertisement-no="${advertisement.advertisementNo}">
-								<td><button class="btn btn-camper-red btn-sm">삭제</button></td>
+								<td><button class="btn btn-camper-red btn-sm delAdBtn">삭제</button></td>
 								<td>
 									<div class="custom-control custom-switch text-center">
-										<input type="checkbox" class="custom-control-input" name="adStatus" id="customSwitch${vs}"
+										<input type="checkbox" class="custom-control-input" name="adStatus" id="customSwitch${vs.count}"
 											${advertisement.adStatus eq true ? 'checked' : ''}>
-										<label class="custom-control-label" for="customSwitch${vs}"></label>
+										<label class="custom-control-label" for="customSwitch${vs.count}"></label>
 									</div>
 								</td>
 								<td>
@@ -150,4 +150,28 @@ window.addEventListener('load', (e) => {
 		startDate: '0d'
 	});	
 })
+
+document.querySelectorAll(".delAdBtn").forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		const advertisementNo = e.target.parentElement.parentElement.dataset.advertisementNo;
+		console.log(advertisementNo);
+		
+		const headers = {
+			"${_csrf.headerName}" : "${_csrf.token}"
+		};
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/mypage/advertiser/deleteAd",
+			type: "POST",
+			headers,
+			data: {
+				advertisementNo
+			},
+			success(response) {
+				console.log(response);
+			},
+			error: console.log
+		});
+	})
+});
 </script>

@@ -262,7 +262,10 @@ public class AdvertiserController {
 		return "redirect:/mypage/advertiser/dashboard";
 	}
 	
-	@GetMapping("/sample")
-	public void sample() { }
+	@PostMapping("/deleteAd")
+	public ResponseEntity<?> deleteAdvertisement() {
+		Map<String, Object> map = new HashMap<>();
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	}
 
 }
