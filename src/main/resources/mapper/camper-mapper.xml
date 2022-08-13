@@ -25,4 +25,13 @@
 		default)
 </insert>
 
+<select id="selectCamperOne" resultType="CamperExt">
+	select 
+		c.*,
+		(select nickname from member where member_id = c.member_id) nickname
+	from
+		camper c
+	where
+		camper_no = #{camperNo}
+</select>
 </mapper>

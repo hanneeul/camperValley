@@ -43,7 +43,7 @@
 				</label>
 				<%-- <c:set var="loginMember" value="<sec:authentication property ="principal.username"/>"/> --%>
 				<c:forEach var="camper" items="${camperList}" varStatus="vs">
-					<div class="${vs.first ? "boardBoxSelect" : "boardBox"} my-4 p-4">
+					<div class="${vs.first ? "boardBoxSelect" : "boardBox"} my-4 p-4" onclick="selectBoardBox(this);">
 						<c:if test="${camper.getMemberId()} === ${loginMember}">
 							<div class="drop-down drop-down-1">
 								<div class="selected text-right">
@@ -65,9 +65,15 @@
 							
 							<div class="font-weight-bold text-13"><fmt:formatDate value="${departureDate}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${arrivalDate}" pattern="yyyy.MM.dd"/></div>
 							<div class="py-4">
-								${fn:substring(camper.getContent(), 0, 110)}...
+								<c:if test="${camper.getContent().length() > 110}">
+									${fn:substring(camper.getContent(), 0, 110)}...
+								</c:if>
+								<c:if test="${camper.getContent().length() <= 110}">
+									${camper.getContent()}
+								</c:if>
 							</div>
-							<div id="status" class="font-weight-bold text-13">${camper.getStatus() eq "I" ? "모집중" : "모집완료"}</div>
+							<div class="font-weight-bold text-13">${camper.getStatus() eq "I" ? "모집중" : "모집완료"}</div>
+							<input type="hidden" data-no="${camper.getCamperNo()}" />
 						</div>
 					</div>
 				</c:forEach>
@@ -75,41 +81,28 @@
 			<div class="pl-5">
 				<div id="detailSection" class="boardBoxSelect p-5 mb-4 d-flex flex-column justify-content-between">
 					<div id="detailHeader" class="pb-3">
-						<div id="title" class="font-weight-bold text-25">제천 캠핑장 놀러가실분들 모집합니다!</div>
-						<div id="name" class="font-weight-bold text-15 text-right py-3">최강길동님</div>
+						<div id="title" class="font-weight-bold text-25">${camperList[0].getTitle()}</div>
+						<div id="nickname" class="font-weight-bold text-15 text-right py-3">${camperList[0].getNickname()}님</div>
 						<div class="d-flex justify-content-between">
 							<div>
-								<div id="area" class="font-weight-bold text-13">충청북도 제천시</div>
-								<div id="dates" class="font-weight-bold text-13">2022.07.19 ~ 2022.07.20</div>
+								<div id="area" class="font-weight-bold text-13">${camperList[0].getArea()}</div>
+								<fmt:parseDate value="${camperList[0].getDepartureDate()}" pattern="yyyy-MM-dd" var="departureDateDetail"/>
+								<fmt:parseDate value="${camperList[0].getArrivalDate()}" pattern="yyyy-MM-dd" var="arrivalDateDetail"/>
+								<div id="dates" class="font-weight-bold text-13"><fmt:formatDate value="${departureDateDetail}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${arrivalDateDetail}" pattern="yyyy.MM.dd"/></div>
 							</div>
 							<div>
-								<div id="memberCount" class="font-weight-bold text-15 text-right text-danger">4명</div>
-								<div id="status" class="font-weight-bold text-13 text-right">모집중</div>
+								<div id="memberCount" class="font-weight-bold text-15 text-right text-danger">${camperList[0].getMemberCount()}명</div>
+								<div id="status" class="font-weight-bold text-13 text-right">${camperList[0].getStatus() eq "I" ? "모집중" : "모집완료"}</div>
 							</div>
 						</div>
 					</div>
 					<div id="detailBody">
 						<div class="font-weight-bold py-2">상세내용</div>
-						<div>
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-						</div>
-						<div class="font-weight-bold py-2">이용수칙</div>
-						<div>
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-						</div>
+						<div id="ctent" >${camperList[0].getContent()}</div>
+						<div class="font-weight-bold py-2">모임취지</div>
+						<div id="purpose" >${camperList[0].getPurpose()}</div>
 						<div class="font-weight-bold py-2">예상비용</div>
-						<div>
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-							캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.
-						</div>
+						<div id="expectedCost">${camperList[0].getExpectedCost()}</div>
 					</div>
 					<div id="detailFooter" class="mt-4">
 						<label for="basic-url" class="text-15">오픈채팅방에서 자유롭게 소통해요!</label>
@@ -117,7 +110,7 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="basic-addon3">URL</span>
 							</div>
-						<input id="openURL" type="text" class="form-control bg-light" id="basic-url" aria-describedby="basic-addon3" value="https://kakaotalk.openchat/asdlqwoas/qwer" readonly>
+						<input id="chatUrl" type="text" class="form-control bg-light" aria-describedby="basic-addon3" value="${camperList[0].getChatUrl()}" onclick="window.open('${camperList[0].getChatUrl()}')" readonly>
 						</div>
 					</div>
 				</div>
@@ -146,11 +139,8 @@ $(document).scroll(function () {
 				data: {cPage},
 				success(response) {
 					const {camperList} = response;
-					console.log(camperList);
-					
 					for(let i = 0; i < camperList.length; i++) {
-						const $boardBox = $('<div class="boardBox my-4 p-4">');
-						console.log(camperList[i].memberId);
+						const $boardBox = $('<div class="boardBox my-4 p-4" onclick="selectBoardBox(this);"></div>');
 						if(${not empty loginMember}) {
 							const $dropdown = $('<div class="drop-down drop-down-1"></div>');
 							const $selected = $('<div class="selected text-right"></div>');
@@ -162,48 +152,40 @@ $(document).scroll(function () {
 							const $dropI = $('<i class="fa-solid fa-ellipsis-vertical d-block" onclick="dropdown(this);"></i>');
 							const $dropDiv2 = $('<div class="options text-right"></div>');
 							const $dropUl = $('<ul class="border-top border-dark"></ul>');
-							const $dropLi1 = $('<li onclick="location.href="${pageContext.request.contextPath}/community/camper/camperUpdate">수정</li>');
+							const $dropLi1 = $('<li>수정</li>');
 							const $dropLi2 = $('<li>삭제</li>');
-							
+							$dropLi1.on("click", (li) => {
+								$(li).closest('ul').hide();
+								location.href = "${pageContext.request.contextPath}/community/camper/camperUpdate";
+							});
+							$dropLi2.on("click", (li) => $(li).closest('ul').hide());
 							$dropUl.append($dropLi1, $dropLi2);
 							$dropDiv2.append($dropUl);
 							$dropDiv1.append($dropI);
 							$drop.append($dropDiv1, $dropDiv2);
 							$boardBox.append($drop);
-							$("#listSection").append($boardBox);
 						}
+						
+						const $info = $('<div class="boardBoxSelectInfo"></div>');
+						const $title = $('<div class="font-weight-bold text-20 pb-4"></div>');
+						$title.html(camperList[i].title);
+						const $area = $('<div class="font-weight-bold text-13"></div>');
+						$area.html(camperList[i].area);
+						const $dates = $('<div class="font-weight-bold text-13"></div>');
+						const departureDate = camperList[i].departureDate;
+						const arrivalDate = camperList[i].arrivalDate;
+						$dates.html(departureDate.year + "." + f(departureDate.monthValue) + "." + f(departureDate.dayOfMonth) + " ~ " + arrivalDate.year + "." + f(arrivalDate.monthValue) + "." + f(arrivalDate.dayOfMonth)); 
+						const $content = $('<div class="py-4"></div>');
+						camperList[i].content.length > 110 ? $content.html(camperList[i].content.substring(0, 110) + "...") : $content.html(camperList[i].content); 
+						const $status = $('<div class="font-weight-bold text-13">');
+						camperList[i].status === "I" ? $status.html("모집중") : $status.html("모집완료");
+						const $camperNo = $('<input type="hidden"/>');
+						$camperNo.data("no", camperList[i].camperNo);
+						$info.append($title, $area, $dates, $content, $status, $camperNo);
+						$boardBox.append($info);
+						
+						$("#listSection").append($boardBox);
 					}
-					/* 
-					<div class="boardBox boardBoxSelect my-4 p-4">
-						<c:if test="${camper.getMemberId()} === ${loginMember}">
-							<div class="drop-down drop-down-1">
-								<div class="selected text-right">
-									<i class="fa-solid fa-ellipsis-vertical d-block"></i>
-								</div>
-								<div class="options text-right">
-									<ul class="border-top border-dark">
-										<li onclick="location.href='${pageContext.request.contextPath}/community/camper/camperUpdate'">수정</li>
-										<li>삭제</li>
-									</ul>
-								</div>
-							</div>
-						</c:if>
-						<div class="boardBoxSelectInfo">
-							<div class="font-weight-bold text-20 pb-4">${camper.getTitle()}</div>
-							<div class="font-weight-bold text-13">${camper.getArea()}</div>
-							<fmt:parseDate value="${camper.getDepartureDate()}" pattern="yyyy-MM-dd" var="departureDate"/>
-							<fmt:parseDate value="${camper.getArrivalDate()}" pattern="yyyy-MM-dd" var="arrivalDate"/>
-							
-							<div class="font-weight-bold text-13"><fmt:formatDate value="${departureDate}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${arrivalDate}" pattern="yyyy.MM.dd"/></div>
-							<div class="py-4">
-								${fn:substring(camper.getContent(), 0, 110)}...
-							</div>
-							<div id="status" class="font-weight-bold text-13">${camper.getStatus() eq "I" ? "모집중" : "모집완료"}</div>
-						</div>
-					</div>
-					*/
-					
-					
 				},
 				error: console.log
 			});
@@ -212,17 +194,41 @@ $(document).scroll(function () {
 	}, 500);
 	
 	
-	/* const listSec = document.querySelector("#listSection");
-	const listSecAbsolute = window.pageYOffset + listSec.getBoundingClientRect().bottom;
-	
-	console.log(listSec.getBoundingClientRect().bottom);
-	console.log("list 위치 = ", listSecAbsolute);
-	console.log("scorll 위치1 = ", window.pageYOffset);
-	console.log("scorll 위치2 = ", $(document).scrollTop()); */
-	
-	
-	
 });
+
+const selectBoardBox = (boardBox) => {
+	$("#listSection .boardBoxSelect").removeClass("boardBoxSelect").addClass("boardBox");
+	$(boardBox).removeClass("boardBox").addClass("boardBoxSelect");
+	
+	const $hidden = $(boardBox).find("input[type=hidden]");
+	const camperNo = $hidden.data("no");
+	// detailBox 비동기 요청
+	$.ajax({
+		url: "${pageContext.request.contextPath}/community/camper/camperDetail",
+		data: {camperNo},
+		success(response) {
+			const {camper} = response;
+			$("#title").html(camper.title);
+			$("#nickname").html(camper.nickname + "님");
+			$("#area").html(camper.area);
+			const departureDate = camper.departureDate;
+			const arrivalDate = camper.arrivalDate;
+			$("#dates").html(departureDate.year + "." + f(departureDate.monthValue) + "." + f(departureDate.dayOfMonth) + " ~ " + arrivalDate.year + "." + f(arrivalDate.monthValue) + "." + f(arrivalDate.dayOfMonth));
+			$("#memberCount").html(camper.memberCount + "명");
+			camper.status === "I" ? $("#status").html("모집중") : $("#status").html("모집완료");
+			$("#ctent").html(camper.content);
+			$("#purpose").html(camper.purpose);
+			$("#expectedCost").html(camper.expectedCost);
+			$("#chatUrl").val(camper.chatUrl);
+			$("#chatUrl").on("click", () => window.open(camper.chatUrl));
+		},
+		error: console.log
+	});
+	
+}
+
+const f = (n) => n < 10 ? "0" + n : n;
+
 document.querySelector(".chk_box").addEventListener('change', ()=> {
 	const isChecked = document.querySelector("#toggle").checked;
 	if(isChecked) {
@@ -237,26 +243,14 @@ const dropdown = (iTag) => {
 	const $options = $(iTag).parent().siblings('.options');
     $options.find('> ul').toggle();
 }
-/* $(".drop-down .selected i").click(function() {
-    //$(".drop-down .options ul").toggle();
-    const $options = $(this).parent().siblings('.options');
-    $options.find('> ul').toggle();
-}); */
-
-//옵션 선택 및 선택 후 옵션 숨기기
-const close = (liTag) => {
-    $(liTag).closest('ul').hide();
-}
-
 
 //페이지의 다른 위치를 클릭하면 옵션 숨기기
 $(document).bind('click', function(e) {
     const $clicked = $(e.target);
     if (!$clicked.parents().hasClass("drop-down")){
-            $(".drop-down .options ul").hide();
-        }
+        $(".drop-down .options ul").hide();
+    }
 });
-
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
