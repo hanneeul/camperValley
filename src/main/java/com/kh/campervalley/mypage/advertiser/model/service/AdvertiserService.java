@@ -6,10 +6,13 @@ import java.util.Map;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.Advertiser;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
+
+import lombok.NonNull;
 
 public interface AdvertiserService {
 
@@ -52,5 +55,9 @@ public interface AdvertiserService {
 	int selectTotalAdvertisement(int advertiserNo);
 
 	int deleteAdvertisement(int advertisementNo);
+
+	Advertiser selectAdvertiserByMemberId(@NonNull String memberId);
+
+	boolean checkBalanceAndCpc(Advertisement advertisement, String memberId);
 
 }

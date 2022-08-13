@@ -14,12 +14,14 @@ import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.Advertiser;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.BizStatus;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -174,5 +176,25 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	@Override
 	public int deleteAdvertisement(int advertisementNo) {
 		return advertiserDao.updateDelAtAdvertisement(advertisementNo);
+	}
+	
+	@Override
+	public Advertiser selectAdvertiserByMemberId(@NonNull String memberId) {
+		return advertiserDao.selectAdvertiserByMemberId(memberId);
+	}
+
+	@Override
+	public boolean checkBalanceAndCpc(Advertisement advertisement, String memberId) {
+		Advertiser advertiser = advertiserDao.selectAdvertiserByMemberId(memberId);
+		advertisement.setAdvertiserNo(advertiser.getAdvertiserNo());
+
+		int diff = advertiserDao.checkBalanceAndCpc(advertisement);
+		log.debug("diff = {}", diff);
+		boolean result;
+		if (diff >= 0)
+			result = true;
+		else
+			result = false;
+		return result;
 	}
 }

@@ -14,10 +14,13 @@ import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.Advertiser;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
+
+import lombok.NonNull;
 
 @Mapper
 public interface AdvertiserDao {
@@ -87,5 +90,9 @@ public interface AdvertiserDao {
 
 	@Update("update advertisement set deleted_at = sysdate where advertisement_no = #{advertisementNo}")
 	int updateDelAtAdvertisement(int advertisementNo);
+
+	Advertiser selectAdvertiserByMemberId(@NonNull String memberId);
+
+	int checkBalanceAndCpc(Advertisement advertisement);
 
 }
