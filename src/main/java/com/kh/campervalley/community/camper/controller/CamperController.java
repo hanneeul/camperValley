@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.community.camper.model.dto.Camper;
+import com.kh.campervalley.community.camper.model.dto.CamperExt;
 import com.kh.campervalley.community.camper.model.service.CamperService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class CamperController {
 	public ModelAndView camperList(ModelAndView mav) {
 		try {
 			int numPerPage = CamperService.CAMPER_NUM_PER_PAGE;
-			List<Camper> camperList = camperService.selectCamperList(numPerPage);
+			List<CamperExt> camperList = camperService.selectCamperList(numPerPage);
 			mav.addObject("camperList", camperList);
 			mav.setViewName("/community/camper/camperList");
 		} catch(Exception e) {
@@ -59,7 +60,7 @@ public class CamperController {
 	@GetMapping("/camperUpdate")
 	public void camperUpdate() {}
 	
-	@PostMapping("camperEnroll")
+	@PostMapping("/camperEnroll")
 	public String camperEnroll(Camper camper, RedirectAttributes redirectAttr) {
 		try {
 			camper.setMemberId("honggd");
@@ -71,5 +72,18 @@ public class CamperController {
 			throw e;
 		}
 		return "redirect:/community/camper/camperList";
+	}
+	
+	// 비동기 요청처리
+	@GetMapping("/camperDetail")
+	public String camperDetail(@RequestParam int camperNo, Model model) {
+		try {
+			CamperExt camper = camperService.selectCamperOne(camperNo);
+			model.addAttribute("camper", camper);
+		} catch(Exception e) {
+			log.error("캠퍼모집 상세 조회 오류", e);
+			throw e;
+		}
+		return "jsonView";
 	}
 }

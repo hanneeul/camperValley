@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.campervalley.community.camper.model.dao.CamperDao;
 import com.kh.campervalley.community.camper.model.dto.Camper;
+import com.kh.campervalley.community.camper.model.dto.CamperExt;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +25,7 @@ public class CamperServiceImpl implements CamperService {
 	}
 
 	@Override
-	public List<Camper> selectCamperList(int numPerPage) {
+	public List<CamperExt> selectCamperList(int numPerPage) {
 		int limit = numPerPage;
 		RowBounds rowBounds = new RowBounds(0, limit);
 		return camperDao.selectCamperList(rowBounds);
@@ -36,6 +37,11 @@ public class CamperServiceImpl implements CamperService {
 		int limit = numPerPage;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return camperDao.selectMoreCamperList(rowBounds);
+	}
+
+	@Override
+	public CamperExt selectCamperOne(int camperNo) {
+		return camperDao.selectCamperOne(camperNo);
 	}
 	
 }
