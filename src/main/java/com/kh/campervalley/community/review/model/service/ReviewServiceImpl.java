@@ -65,4 +65,42 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.searchTotalReview(searchParam);
 	}
 	
+	@Override
+	public int updateReadCount(int reviewNo) {
+		// TODO Auto-generated method stub
+		return reviewDao.updateReadCount(reviewNo);
+	}
+	
+	@Override
+	public CampsiteReviewExt selectOneReview(int reviewNo) {
+		return reviewDao.selectOneReview(reviewNo);
+	}
+	
+	@Override
+	public ReviewPhoto selectOneReviewPhoto(int reviewPhotoNo) {
+		return reviewDao.selectOneReviewPhoto(reviewPhotoNo);
+	}
+	
+	@Override
+	public int deleteReviewPhoto(int reviewPhotoNo) {
+		return reviewDao.deleteReviewPhoto(reviewPhotoNo);
+	}
+	
+	@Override
+	public int updateReview(CampsiteReviewExt review) {
+		int result = reviewDao.updateReview(review);
+		List<ReviewPhoto> photos = review.getPhotos();
+		if(!photos.isEmpty()) {
+			for(ReviewPhoto photo : photos) {
+				result = reviewDao.insertReviewPhoto(photo);
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	public int deleteReview(int reviewNo) {
+		return reviewDao.deleteReview(reviewNo);
+	}
+	
 }

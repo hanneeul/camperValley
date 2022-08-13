@@ -84,7 +84,7 @@ body {overflow-y: auto!important;}
 				  			data-toggle="modal" 
 				  			data-target="#facltNmModal"
 				  			required/>
-				  		<input type="hidden" class="content-id" id="contentId" name="contentId" value="">
+				  		<input type="hidden" class="contentId" id="contentId" name="contentId" value="">
 				  	</div>
 				</div>
 				<!-- facltNmModal start -->
@@ -188,7 +188,7 @@ body {overflow-y: auto!important;}
 			</div>
 			<hr />
 			<div class="text-center m-3 p-3">
-				<input type="submit" class="btn btn-outline-secondary px-4" onclick="location.href='${pageContext.request.contextPath}/community/review/reviewList';" value="작성취소">
+				<input type="button" class="btn btn-outline-secondary px-4" onclick="location.href='${pageContext.request.contextPath}/community/review/reviewList';" value="작성취소">
 				<input type="submit" class="btn btn-outline-success btn-outline-camper-color ml-1 px-4" value="후기등록" >
 			</div>
 		</form:form>

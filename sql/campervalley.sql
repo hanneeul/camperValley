@@ -451,3 +451,6 @@ create table campsite_bookmark (
     constraint fk_campsite_bookmark_content_id foreign key(content_id) references campsite(content_id) on delete cascade
 );
 create sequence seq_campsite_bookmark_no;
+
+select * from campsite_review;
+select * from review_photo;
