@@ -5,19 +5,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <!-- 로그인 정보 가져오기 -->
 <sec:authentication property="principal" var="member" />
 <!-- 회원/비회원 -->
 <sec:authorize access="isAnonymous()">
-	<input type="hidden" class="loginId" value="비회원"/>
 </sec:authorize>
 <sec:authorize access="hasRole('ROLE_USER')">
+	<input type="hidden" class="loginId" value="비회원"/>
 	<input type="hidden" class="loginId" value="${member.username}"/>
 </sec:authorize>
-
-<input type="hidden" class="hiddenNo" value="${no}"/>
-<input type="hidden" class="owner" value=""/>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/productDetail.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
@@ -25,6 +21,8 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
+<input type="hidden" class="hiddenNo" value="${no}"/>
+<input type="hidden" class="owner" value=""/>
 <div id="section" style="width: 98%; margin:50px auto">
 	<div class="detail_area">
 	<div class="detail_div">
@@ -42,20 +40,24 @@
 					<div class="slideshow-container">
 						<div class="swiper-container detail-info__image__list">
 							<div class="swiper-wrapper">
-								<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/travlerPouch.jpg" class="rounded float-start" alt="상품이미지">
+									<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${usedProduct.productImg1}" id="product_img1" alt="상품이미지">
+									<img src="${usedProduct.productImg2}" id="product_img2" alt="상품이미지">
+									<img src="${usedProduct.productImg3}" id="product_img3" alt="상품이미지">
+									<img src="${usedProduct.productImg4}" id="product_img4" alt="상품이미지">
+									<img src="${usedProduct.productImg5}" id="product_img5" alt="상품이미지">
 							</div>
 							<!-- 확대 버튼-->
 							<button class="detail-info__image--enlg">
 								<i class="fas fa-search"></i> 확대
 							</button>
 							<div class="detail-info__image--prev swiper-button-next swiper-button-white" 
-											style="top: -206px;" onclick="">&#10094;</div>
+											style="top: -206px;" onclick="moveSlides(-1)">&#10094;</div>
 							<div class="detail-info__image--next swiper-button-prev swiper-button-white" 
-											style="top: -227px; float: right;" onclick="">&#10095;</div>
+											style="top: -227px; float: right;" onclick="moveSlides(1)">&#10095;</div>
 							<!-- 슬라이더 버튼 수 -->
 							<div class="swiper-pagination">
 								<div class="paginationBtn" style="">
-									<!-- productDetail.js -->
+									<!-- js -->
 								</div>
 							</div>
 							
@@ -69,10 +71,10 @@
 										<div class="dtailImg_prodName"></div>
 										<!-- 이미지 리스트 -->
 										<div class="detailImgList" > 
-											<!-- productDetail.js -->
+											<!--js -->
 										</div>
 										<div class="detailImg_buttonWrap">
-											<!-- productDetail.js -->
+											<!-- js -->
 										</div>
 									</div>
 								</div>
@@ -84,11 +86,15 @@
 					<div class="detail-info__text__div2">
 						<div class="detail-info__text__div3">
 							<div class="detail-info__text-header">
-								<!-- 상품명 -->
-								<div class="detail-info__text-title">실리만 캠핑 트래블러 파우치 세트</div>
+								<div class="detail-info__text-title">
+									<!-- 상품제목 -->
+									${usedProduct.productTitle}
+								</div>
 								<div class="detail-info__text-price__div">
 									<!-- 상품가격 -->
-									<div class="detail-info__price" id="product_price">59,000원</div>
+									<div class="detail-info__price" id="product_price">
+										${usedProduct.productPrice}
+									</div>
 								</div>
 							</div>
 							<div class="detail-info__text-body">
@@ -103,12 +109,28 @@
 										<div class="detail-info--topL-item">
 											<i class="fa-regular fa-eye"></i>
 											<!-- 상품 조회수 -->
-											<div id="view"></div>
+											<div id="view">
+												${usedProduct.productViews}
+											</div>
 										</div>
 										<div class="detail-info--topL-item">
 											<i class="fa-regular fa-clock"></i>
 											<!-- 시간 -->
-											<div id="product_logtime"></div> 
+											<c:set var="b_time" value="${usedProduct.productEnrollTime}" />
+											<c:set var="time"
+												value="${b_time > (60 * 24) ? Math.round( b_time / (60 * 24) ) : ( b_time > 60 ? Math.round( b_time / 60 ) : b_time ) }" />
+								
+											<c:if test="${60 > b_time}">
+												<c:set var="unit" value="분 전" />
+											</c:if>
+											<c:if test="${b_time > 60}">
+												<c:set var="unit" value="시간 전" />
+											</c:if>
+											<c:if test="${b_time > (60 * 24)}">
+												<c:set var="unit" value="일 전" />
+											</c:if>
+											<div id="productLogtime">${time}${unit}</div> 
+										</div>
 										</div>
 									</div>
 								</div>
@@ -116,7 +138,16 @@
 									<div class="detail-info__text-body-bItem">
 										<div class="detail-info__text-body-bItem-title">▪배송비</div>
 										<!-- 배송비 -->
-										<div class="detail-info__delivery" id="productDeliveryFee"></div>
+										<div class="detail-info__delivery" id="productDeliveryFee">
+											<c:set var="delivery" target="${usedproduct.productDeliveryFee}"/>
+												<c:if test="${delivery == 1}">
+													<p>배송비 별도</p>
+												</c:if>
+												<c:if test="${delivery == 0}">
+													<p>배송비 별도</p>
+												</c:if>
+										</div>
+				
 									</div>
 									<div class="detail-info__text-body-bItem">
 										<div class="detail-info__text-body-bItem-title">▪거래지역</div>
@@ -187,7 +218,6 @@
 						<div class="store">
 							<a class="storeProfileImg_Link" href="#">
 								<!-- productDetail.js -->
-								<img src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="float-start" alt="상품이미지">
 							</a>
 							<div class="storeInfoWrap">
 								<a class="storeInfo_name" href="#" 
@@ -231,33 +261,10 @@
 		 </div>
 	 </div>
 </div>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 
 
 <script>
 $(document).ready(function() {
-	$.ajax({
-		type : 'GET',
-		url :  '${pageContext.request.contextPath}/usedProduct/product/getProductDetail',
-		data : {'no': $('.hiddenNo').val()},
-		dataType : 'json',
-		success : function(data) {
-			console.log("로그인 아이디 확인 = " + $('.loginId').val()); 
-			
-			var usedProduct = data.usedProduct;
-			
-			$('.detail-info__text-title').text(usedProduct.productTitle);
-			$('.detail-info__price').text(usedProduct.productPrice+'원');
-			$('#view').text(usedProduct.productViews);
-			$('#productLocation').text(usedProduct.productLocation); // (상단 거래 지역)
-			$('.prodInfo_contentText').text(usedProduct.productContent); // 상품 내용 =
-			
-			// 배송비 (1:포함 0:미포함)
-			if(usedProduct.productDeliveryFee == 0) {
-				$('#pageDeliveryFee').text('배송비 별도');
-			} else if(usedProduct.productDeliveryFee == 1) {
-				$('#productDeliveryFee').text('배송비 포함')';	
-			}
 			
 			// 상품 이미지 - 스와이퍼 
 			var product_img = [{product_img : usedProduct.productImg1},
@@ -268,6 +275,96 @@ $(document).ready(function() {
 			
 			// 확대
 			$('.detailImg_prodName').text(usedProduct.productTitle);
+			
+	 
+			$.each(product_img, function(index, items) {
+				if(itemms.product_img, != '') {
+					if(items.product_img == null) {
+						return false;
+					} else {
+						// ======================== 스와이퍼 ===========================
+							$('.swiper-wrapper').append($('<div>', {
+								class : 'swiper-slide' 
+							}).append($('<img/>', {
+								src : '${pageContext.request.contextPath}/resources/upload/usedProduct/' + items.product_img,
+								alt : '상세 상품 이미지',
+								id : 'product_img' + index
+							})))
+							
+							// 첫 장 빼고 display: none
+							if(index != 0) {
+								$('#product_img'+index).parent().css('display', 'none');
+								$('#product_img0').parent().css('display', 'block');
+							}
+							
+							// 슬라이더 버튼
+							$('.paginationBtn').append($('<span/>', {
+								class : 'dot',
+								onclick : 'currentSlide('+(index)+')'
+							}))
+							
+							// 첫장만 도트 검정
+							if(index == 0) {
+								$('.dot').attr('class', 'dot active');
+							}
+							
+							// 확대버튼
+							$('.detailImgList').append($('<div>', {
+								class : 'detailImg_wrap',
+							}).append($('<img/>', {
+								src : '${pageContext.request.contextPath}/resources/upload/usedProduct/' + items.product_img,
+								alt : '리뷰 이미지'
+							})))
+							
+							// 버튼
+							$('.detailImg_buttonWrap').append($('<button/>', {
+								class : 'detailImg_button'+index
+							}));
+							
+							// 첫번째 버튼 흰색
+							if(index==0) {
+								$('.detailImg_button'+index).css('opacity', '0.6');
+							}
+							
+							$('.detailImg_button'+index).click(function() {
+								$(this).css('opacity', '0.6');	
+							
+								$('.detailImgList').attr('class', 'detailImgList_' + index);
+								
+								var i;
+								if(index == 0) {
+									for(i=1; i<=4; i++) 
+										$('.deatilImgList_' + i).attr('class', 'detailImgList_0');	
+								} else if(index==1) {
+									$('.detailImgList_0, .detailImgList_2, .detailImgList_3, .detailImgList_4').attr('class', 'detailImgList_1');
+								} else if(index==2) {
+									$('.detailImgList_0, .detailImgList_1, .detailImgList_3, .detailImgList_4').attr('class', 'detailImgList_2');
+								} else if(index==3) {
+									$('.detailImgList_0, .detailImgList_1, .detailImgList_2, .detailImgList_4').attr('class', 'detailImgList_3');
+								} else if(index==4) {
+									for(var i=0; i<=3; i++) {
+										$('.detailImgList_'+i).attr('class', 'detailImgList_4');
+									}
+						}
+				}
+				
+				// 판매완료
+				if(usedProduct.buyerId != null) {
+					$('#product_img' + index).after($('<div/>', {
+						class : 'soldOut',
+					}).append($('<div/>', {
+						
+					}).append($('<span/>', {
+						id : 'soldOutText1',
+						text: '판매'
+					})).append($('<span/>', {
+						id : 'soldOutText2',
+						text : '완료'
+					})))
+				}
+			}); // each 끝
+			
+			// 판매자 정보
 		}
 
 	})

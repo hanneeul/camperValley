@@ -442,4 +442,7 @@ div {
     top: -47px;
     left: -60px;
 }
+
+#soldOutText1, #soldOutText2 {
+	font-size: 1.5rem;
 }

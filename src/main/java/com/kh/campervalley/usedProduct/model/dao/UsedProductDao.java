@@ -25,4 +25,8 @@ public interface UsedProductDao {
 
 	String cateName(String cateNo);
 
+	void viewUpdate(String no);
+
+	UsedProduct productDetail(String no);
+
 }

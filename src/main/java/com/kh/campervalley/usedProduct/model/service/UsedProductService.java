@@ -19,5 +19,9 @@ public interface UsedProductService {
 
 	public List<ProductCategory> cateList();
 
+	public void viewUpdate(String no);
+
+	public UsedProduct productDetail(String no);
+
 
 }

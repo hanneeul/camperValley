@@ -1,14 +1,19 @@
 package com.kh.campervalley.usedProduct.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.member.model.dto.Member;
@@ -37,41 +43,39 @@ public class UsedProductController  {
 	@Autowired
 	private UsedProductService usedProductService;
 
+	/* 메인페이지 */
+	@GetMapping("/main/mainPage")
+	public void mainPage() {};
+	
 	/* 상품 등록 */
 	@GetMapping("/product/registForm")
-	public void registForm() {;
-	};
+	public void registForm() {};
 	
 	@PostMapping("/product/productEnroll")
-	@ResponseBody // json
-	public String productEnroll(@ModelAttribute UsedProduct usedProduct, 
-										@RequestParam("productImg") MultipartFile[] upFiles, @AuthenticationPrincipal Member loginMember) {
+	public String productEnroll(@ModelAttribute UsedProduct usedProduct, RedirectAttributes redirectAttr,
+										@RequestParam MultipartFile[] upFiles, @AuthenticationPrincipal Member loginMember) {
 		// 이미지 파일 복사
 		String saveDirectory = application.getRealPath("/resources/upload/usedProduct");
 
 		File file;
 		
-        ModelAndView mav;
-		try {
-			for(int i = 0; i < upFiles.length; i++) {
-			    if(upFiles[i].getSize() > 0) {
-			        String originalFilename = upFiles[i].getOriginalFilename();
-			        String renamedFilename = CamperValleyUtils.getRenamedFilename(originalFilename);
-			        log.debug("renamedFilename = {}", renamedFilename);
+			for(int i = 0; i <= upFiles.length - 1; i++) {
+				String fileName = upFiles[i].getOriginalFilename();
+				file = new File(saveDirectory, fileName);
+				
+				try {
+					FileCopyUtils.copy( upFiles[i].getInputStream(), new FileOutputStream(file));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			       
+			        if(i == 0) usedProduct.setProductImg1(fileName);
+			        if(i == 1) usedProduct.setProductImg2(fileName);
+			        if(i == 2)  usedProduct.setProductImg3(fileName);
+			        if(i == 3)  usedProduct.setProductImg4(fileName);
+			        if(i == 4)  usedProduct.setProductImg5(fileName);
 			        
-			        File destFile = new File(saveDirectory, renamedFilename);
-			        upFiles[i].transferTo(destFile);
-			        
-			        switch(i) {
-			        case 0 : usedProduct.setProductImg1(renamedFilename); break;
-			        case 1 : usedProduct.setProductImg2(renamedFilename); break;
-			        case 2 : usedProduct.setProductImg3(renamedFilename); break;
-			        case 3 : usedProduct.setProductImg4(renamedFilename); break;
-			        case 4 : usedProduct.setProductImg5(renamedFilename); break;
-			        }   
-			    }
 			}
-			
 			// 로그인한 회원의 아이디
 			usedProduct.setSellerId(loginMember.getMemberId()); 
 			
@@ -79,26 +83,11 @@ public class UsedProductController  {
 			
 			// DB 
 			int result = usedProductService.productInsert(usedProduct);
-			log.debug("after usedProduct = {}", usedProduct);
 			
-			// 최근 거래지역
-//		String sellerId = principal.getName();
-//		String recentLocation = usedProduct.getProductLocation();
-//		Map<String, String> map = new HashMap<String, String>();
-//		map.put("sellerId", sellerId);
-//		map.put("recentLocation", recentLocation);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "redirect:/WEB-INF/views/usedProduct/product/productDetail?no=" + usedProduct.getProductNo();
+			return "redirect:/usedProduct/product/productDetail?no=" + usedProduct.getProductNo();
 	};
 	
-	/* 메인페이지 */
-	@GetMapping("/main/mainPage")
-	public String mainPage() {
-		return "/usedProduct/main/mainPage";
-		
-	};
+	
 	
 	@PostMapping("/main/getProductList") 
 	@ResponseBody
@@ -140,8 +129,21 @@ public class UsedProductController  {
 	public void searchDisplay() {};
 
 	
-	@GetMapping("/product/getProductDetail")
-	public void productDetail() {};
+	/* 상품 상세보기 - 상품 정보 */
+	// 상품 리스트 - > 상세페이지
+	@GetMapping("/product/productDetail")
+	public String productDetail(@RequestParam String no, Model model, @AuthenticationPrincipal Member member) {
+
+		usedProductService.viewUpdate(no); //조회수 증가
+		
+		// 상품 정보 받아옴
+		UsedProduct usedProduct = usedProductService.productDetail(no);
+		
+		model.addAttribute("no", no);
+		model.addAttribute("usedProduct", usedProduct);
+		model.addAttribute("display", "/usedProduct/product/productDetail.jsp");
+		return "/usedProduct/main/mainPage";
+	}
 	
 	@GetMapping("/product/productUpdate")
 	public void productUpdate() {};

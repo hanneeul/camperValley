@@ -91,4 +91,14 @@ public class UsedProductServiceImpl implements UsedProductService {
 		return usedProductDao.cateList();
 	}
 
+	@Override
+	public void viewUpdate(String no) {
+		usedProductDao.viewUpdate(no);
+	}
+
+	@Override
+	public UsedProduct productDetail(String no) {
+		return usedProductDao.productDetail(no);
+	}
+
 }

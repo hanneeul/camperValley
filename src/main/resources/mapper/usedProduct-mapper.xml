@@ -117,15 +117,14 @@ select *
 				used_product p, member m
 			where p.seller_id = m.member_id and cate_no=#{cateNo}
 			order by
-								<choose>
-				<when test=' order =="A"'>p.product_enroll_time desc</when>
-				<when test=' order =="B"'>p.product_views asc</when>
-				<when test=' order =="C"'>p.product_price desc</when>
-				<when test=' order =="D"'>p.product_price asc</when>
+			<choose>
+				<when test='order =="A"'>p.product_enroll_time desc</when>
+				<when test='order =="B"'>p.product_views asc</when>
+				<when test='order =="C"'>to_number(p.product_price) asc</when>
+				<when test='order =="D"'>to_number(p.product_price) desc</when>
 				<otherwise>
 					p.product_enroll_time desc
 				</otherwise>
-				
 			</choose>
 			
 		) a		
@@ -146,4 +145,35 @@ select *
 		cate_name
 	from category 
 </select>
+
+<!-- 조회수 증가 -->
+<update id="viewUpdate" parameterType="String">
+	update used_product
+	set product_views = product_views + 1
+	where product_no=#{no}
+</update>
+
+<select id="productDetail" parameterType="String" resultType="UsedProduct">
+	select
+		product_no,
+		seller_id,
+		cate_no,
+		product_title,
+		product_content,
+		product_img1,
+		product_img2,
+		product_img3,
+		product_img4,
+		product_img5,
+		to_char(product_price, 'FM99,999,999') ||'원' as product_price,
+		product_location,
+		product_delivery_fee,
+		round((sysdate-product_enroll_time)*24*60) as product_enroll_time,
+		product_views,
+		transaction_date,
+		buyer_id,
+		is_delete
+	from used_product where product_no=#{no}	
+</select>
+
 </mapper>
