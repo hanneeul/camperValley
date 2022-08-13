@@ -14,6 +14,9 @@
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/datepicker.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/jquery-ui.css" />
+<!-- jquery-confirm -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
 <div class="container">
 	<div class="row d-flex justify-content-between">
@@ -168,7 +171,16 @@ document.querySelectorAll(".delAdBtn").forEach((btn) => {
 				advertisementNo
 			},
 			success(response) {
-				console.log(response);
+				const {msg} = response;
+				$.confirm({
+					title: '삭제완료',
+					content: `\${msg}`,
+					buttons: {
+						OK: function () {
+							location.reload();
+						}
+					}
+				});
 			},
 			error: console.log
 		});

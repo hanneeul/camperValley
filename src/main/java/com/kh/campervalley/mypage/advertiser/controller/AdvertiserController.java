@@ -263,8 +263,15 @@ public class AdvertiserController {
 	}
 	
 	@PostMapping("/deleteAd")
-	public ResponseEntity<?> deleteAdvertisement() {
+	public ResponseEntity<?> deleteAdvertisement(@RequestParam int advertisementNo) {
+		log.debug("advertisementNo = {}", advertisementNo);
 		Map<String, Object> map = new HashMap<>();
+		try {
+			int result = advertiserService.deleteAdvertisement(advertisementNo);
+			map.put("msg", "광고소재가 정상적으로 삭제되었습니다.");
+		} catch(Exception e) {
+			log.error("광고소재 삭제처리 오류", e);
+		}
 		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
 	}
 

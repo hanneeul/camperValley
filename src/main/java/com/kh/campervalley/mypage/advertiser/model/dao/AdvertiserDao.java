@@ -23,7 +23,7 @@ import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
 public interface AdvertiserDao {
 
 	int insertAdvertiser(AdvertiserExt advertiser);
-	
+
 	@Insert("insert into admoney values (seq_admoney_no.nextval, #{advertiserNo}, default)")
 	int insertAdmoney(int advertiserNo);
 
@@ -31,11 +31,11 @@ public interface AdvertiserDao {
 	int insertLicenseFile(LicenseFile licenseFile);
 
 	List<AdvertiserExt> selectAdvertiserList(RowBounds rowBounds);
-	
+
 	List<AdvertiserExt> selectAdvertiserFilteredList(Map<String, Object> param, RowBounds rowBounds);
 
 	int selectTotalAdvertiser();
-	
+
 	int selectFilteredTotalAdvertiser(Map<String, Object> param);
 
 	@Select("select * from license_file where license_file_no = #{no}")
@@ -84,5 +84,8 @@ public interface AdvertiserDao {
 
 	@Select("select count(*) from advertisement where advertiser_no = #{advertiserNo} and deleted_at is null")
 	int selectTotalAdvertisement(int advertiserNo);
+
+	@Update("update advertisement set deleted_at = sysdate where advertisement_no = #{advertisementNo}")
+	int updateDelAtAdvertisement(int advertisementNo);
 
 }

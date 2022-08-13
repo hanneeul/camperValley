@@ -12,9 +12,9 @@ import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
 
 public interface AdvertiserService {
-	
+
 	public static final int ADVERTISER_NUM_PER_PAGE = 15;
-	
+
 	public static final int ADVERTISEMENT_NUM_PER_PAGE = 10;
 
 	int insertAdvertiser(AdvertiserExt advertiser);
@@ -50,5 +50,7 @@ public interface AdvertiserService {
 	List<Advertisement> selectAdListByAdvertiserNo(int advertiserNo, int cPage, int numPerPage);
 
 	int selectTotalAdvertisement(int advertiserNo);
+
+	int deleteAdvertisement(int advertisementNo);
 
 }
