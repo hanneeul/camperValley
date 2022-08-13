@@ -5,7 +5,7 @@
 <mapper namespace="com.kh.campervalley.usedProduct.model.dao.UsedProductDao">
 
 <!-- 상품 등록 -->
-<insert id="productInsert" parameterType="com.kh.campervalley.usedProduct.model.dto.UsedProduct">
+<insert id="productInsert" parameterType="usedProduct">
 	insert into 
 		used_product(product_no, seller_id, cate_no, product_title, product_content, product_img1, product_img2, product_img3, product_img4, product_img5, product_price, product_location, product_delivery_fee, product_enroll_date, product_views, transaction_date, buyer_id, is_delete)
 	values(
@@ -28,6 +28,12 @@
 		null,
 		default
 	)
+	<selectKey keyProperty="productNo" resultType="_int" order="AFTER">
+        select
+            seq_used_product_no.currval
+        from
+            dual
+    </selectKey>
 </insert>
 
 <!-- 상품 번호 가져오기 -->
@@ -114,8 +120,8 @@ select *
 								<choose>
 				<when test=' order =="A"'>p.product_enroll_time desc</when>
 				<when test=' order =="B"'>p.product_views asc</when>
-				<when test=' order =="C"'>p.product_price asc</when>
-				<when test=' order =="D"'>p.product_price desc</when>
+				<when test=' order =="C"'>p.product_price desc</when>
+				<when test=' order =="D"'>p.product_price asc</when>
 				<otherwise>
 					p.product_enroll_time desc
 				</otherwise>

@@ -3,14 +3,14 @@
 .navBanner {
     position: fixed;
     top: 220px;
-    right: calc(50% - 680px);
+    right: calc(50% - 686px);
     z-index: 9999;
 }
 /* 관심상품! */ 
 .favorites {             
-	padding: 7px 13px;
+    padding: 7px 17px;
     background: white;
-    width: 80px;
+    width: 90px;
     height: 60px;
     border: 1px solid gray;
     position: absolute;
@@ -47,7 +47,7 @@
 }
 .recently {        
     background-color: white;
-    width: 80px;
+    width: 90px;
     border: 1px solid gray;
     position: relative;
     top: 74px;

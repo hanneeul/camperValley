@@ -24,7 +24,7 @@
 		      <i class="fas fa-search" style="color: #639A67;"></i>
 		  </button>
 		  <div class="ml-1">
-			  <button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/usedProduct/product/getProductEnroll'">글쓰기</button>
+			  <button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/usedProduct/product/registForm'">글쓰기</button>
 		  </div>
 		</div>
 			
@@ -114,6 +114,10 @@
  		}
  	});
  })
+ 
+function productDetailSeq(no) {
+	location.href = "/campervalley/usedProduct/product/productDetail?no=" + no
+}
 // 카테고리 마우스 오버 이벤트
 $("#btn_menu").hover(function(){
 	// 카테고리 보이기
@@ -130,4 +134,7 @@ $(".dropmenu").mouseleave(function() {
 	console.log(this.className)
 	$(".dropmenu li:first a").removeClass("active");
 	$(".dropmenu").hide();
-})</script>
+})
+</script>
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

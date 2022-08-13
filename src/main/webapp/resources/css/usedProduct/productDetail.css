@@ -32,9 +32,6 @@ div {
     font-size: 14px;
     flex-direction: column;
 }
-.detail_div {
-	width: 64rem;
-}
 /**** 슬라이더 ****/
 .slideshow-container {
     width: 26rem;
@@ -62,10 +59,10 @@ div {
 	display: flex;
 }
 .detail-info__image__div {
-	margin-right: 40px;
-	flex-shrink: 0;
-	width: 26rem;
-	height: 28rem;
+	margin-right: 60px;
+    flex-shrink: 0;
+    width: 28rem;
+    height: 25rem;
 }
 .detail-info__image__list {
 	width: 100%;
@@ -408,10 +405,9 @@ div {
     font-size: 17px;
 }
 #zzim_btn, #chat_btn {    
-	margin-right: -8px;
     color: white;
     letter-spacing: 1.7px;
-    width: 282px;
+    width: 325px;
     height: 52px;
     border: none;
 }

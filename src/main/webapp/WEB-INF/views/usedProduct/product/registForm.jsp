@@ -6,7 +6,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <!-- ajaxForm -->
 <script defer src="${pageContext.request.contextPath}/resources/js/usedProduct/jquery.form.js"></script>
@@ -18,9 +17,13 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/productForm.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
+<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
-<div id="section" style="width: 81%; margin:50px auto">
-	<form id="enrollForm" >
+<div id="section" style="width: 98%; margin:50px auto">
+	<form:form id="enrollForm" name="enrollForm" 
+				action="${pageContext.request.contextPath}/usedProduct/product/productEnroll"
+				method="post"
+				enctype="multipart/form-data">
 		<div class="enrollWrap">
 			<!--------- enrollBody  --------->
 			<div class="enrollBody">
@@ -28,7 +31,7 @@
 				
 					<!-- section -->
 					<section class="section">
-						<h2>기본정보<span>*필수항목</span></h2>
+						<h2>&nbsp&nbsp&nbsp기본정보<span>*필수항목</span></h2>
 						
 						<ul class="listBody">
 							<li class="list">
@@ -36,7 +39,7 @@
 								<div class="image_con">
 									<ul class="image-ul" id="image-ul">
 										<li class="image-li">이미지 등록
-											<input type="file" id="input-image">
+											<input type="file" id="productImg" name="productImg">
 										</li>
 									</ul>
 									<div class="div-image" id="div-image">
@@ -57,7 +60,7 @@
 								<div class="subject_con">
 									<div class="contentDiv">
 										<div class="subjectBox">
-											<input type="text" placeholder="상품 제목을 입력해주세요." class="input-subject" id="input-subject" name="input-subject">
+											<input type="text" placeholder="상품 제목을 입력해주세요." class="producTitle" id="productTitle" name="productTitle">
 										</div>
 										<div class="subjectSize"><span>최대 30자</span></div>
 									</div>
@@ -91,7 +94,7 @@
 										</div>
 									</div>
 									<div class="div-category" id="div-category">카테고리를 선택해주세요.</div>
-									
+									<input type="hidden" name="cateNo" id="cateNoInput"/>
 									<h3 class="selectedCategory">선택한 카테고리 : <b id="selectedCategory" name="cateNo"></b></h3>
 								</div>
 							</li><!-- 카테고리 -->
@@ -102,7 +105,7 @@
 									<div class="contentDiv">
 										<button type="button" id="search_address">주소 검색</button>
 									</div>
-									<input placeholder="거래할 지역을 입력해주세요." class="input-location" id="input-location" name="productLocation">
+									<input placeholder="거래할 지역을 입력해주세요." class="productLocation" id="productLocation" name="productLocation">
 									<div class="div-location" id="div-location">거래지역을 선택해주세요.</div>
 									<div class="add_description" style="margin-left: 0px;">
 										<b>* 주소 검색 후 구매자에게 알려주고 싶은 주소 범위까지만 나타나도록 주소를 수정해주세요.</b><br>
@@ -116,15 +119,14 @@
 								<div class="price_sub">가격<span>*</span></div>
 								<div class="price_con">
 									<div class="priceBox">
-										<input type="text" placeholder="숫자만 입력해주세요." class="input-price" id="input-price" name="productPrice">원
+										<input type="text" placeholder="숫자만 입력해주세요." class="productPrice" id="productPrice" name="productPrice">원
 									</div>
 		
 									<!-- 배송비 포함 여부 -->
 									<div class="deliveryArea">
 										<div class="deliveryBox">
-											<label for="freeDelivery" class="freeDelivery">
-												<input id="freeDelivery" type="checkbox">배송비 포함
-											</label>
+												<input type="checkbox" id="freeDelivery" name="productDeliveryFee" value='1'/>배송비 포함
+												<input type="hidden" name="input_check" value='0' id="input_check_hidden"/>
 									</div>
 									</div>
 									<div class="div-price" id="div-price">0원 이상 입력해주세요. (무료 나눔 시 0원으로 설정해주세요)</div>
@@ -135,7 +137,7 @@
 							<li class="list">
 								<div class="instruction_sub">설명</div>
 								<div class="instruction_con">
-									<textarea placeholder="상품 설명을 입력해주세요." rows="6" class="instruction" id="product_content" name="productContent"></textarea>
+									<textarea placeholder="상품 설명을 입력해주세요." rows="6" class="instruction" id="productContent" name="productContent"></textarea>
 									<div class="limit">최대 1000자</div>
 								</div>
 							</li><!-- 설명 -->					
@@ -151,7 +153,7 @@
 				</div>
 			</footer>
 		</div>
-	</form>
+	</form:form>
 	<div id="nav">
 		<jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 	</div>
@@ -167,7 +169,7 @@ $('#enrollForm').ready(function() {
 });
 
 /* 이미지 등록 (미리보기) */
-$('#input-image').on('change', readImage); // 파일 올릴떄마다 readImage함수 호출
+$('#productImg').on('change', readImage); // 파일 올릴떄마다 readImage함수 호출
 const fileBuffer = []; // 파일 저장 변수
 
 function readImage() {
@@ -247,7 +249,10 @@ function deleteImage() {
 }
 
 
-/* 제목 */
+/* 배송비 */
+if(document.getElementById("freeDelivery").checked) {
+	    document.getElementById("input_check_hidden").disabled = true;
+}
  
  
 /* 카테고리 */
@@ -264,8 +269,9 @@ $('.category >.cate_btn').on("click", function(){
 	$('#'+cateNo).addClass('selectedList');
 	
 	// 카테고리 이름 넣기
-	$('#selectedCategory').text(cate_name);
-
+	$('#selectedCategory').text(cateName);
+	
+	$('#cateNoInput').val(cateNo);
 });
 
 
@@ -293,7 +299,7 @@ $('#search_address').click(function() {
                 var addr = data.address; // 최종 주소 변수
 
                 // 주소 정보를 해당 필드에 넣는다.
-                document.getElementById("input-location").value = addr;
+                document.getElementById("productLocation").value = addr;
                 // 주소로 상세 정보를 검색
                 geocoder.addressSearch(data.address, function(results, status) {
                     // 정상적으로 검색이 완료됐으면
@@ -317,84 +323,24 @@ $('#search_address').click(function() {
 });
 
 /* 가격 */
-$('.input-price').on('keyup', function(e) {
+$('.productPrice').on('keyup', function(e) {
    const val = $(this).val();
    if(!(/^[0-9]$/g.test(val))) { // 숫자만 입력되지 않았다면
       $(this).val(val.replace(/[^0-9]/g, '')); // 숫자 제외한 문자 공백으로 대체
    }
 });
 
-/* 등록하기 */
-$('#enrollBtn').click(function() {
-	 
-	 // 필수 입력값 입력하지 않았을 경우 
-	 // true면 제출X
-	 if(confirm()) return false;
-	 
-	 enrollAction.call(this);
-	
-	 function confirm() {
-		 if(!fileBuffer.length) { $('#div-image').show(); $('#input-image').focus(); return true;}
-		 else if($('#input-subject').val()=='') {$('#div-subject').show(); $('#input-subject').focus(); return true;}
-		 else if(cate_no == null) { $('#div-category').show(); $('#categories').focus(); return true;}
-		 if($('#input-location').val()=='') { $('#div-location').show(); $('#input-location').focus(); return true;}
-		 if($('#input-price').val()=='') { $('#div-price').show(); $('#input-price').focus(); return true;}
-	 }
-	 
-	 var token = $("meta[name='_csrf']").attr("content");
-	 var header = $("meta[name='_csrf_header']").attr("content");
-	 $(document).ajaxSend(function(e, xhr, options) {
-	     xhr.setRequestHeader(header, token);
-	 });
+function confirm() {
+	 if(!fileBuffer.length) { $('#div-image').show(); $('#productImg').focus(); return true;}
+	 else if($('#productTitle').val()=='') {$('#div-subject').show(); $('#productTitle').focus(); return true;}
+	 else if(cate_no == null) { $('#div-category').show(); $('#categories').focus(); return true;}
+	 if($('#productLocation').val()=='') { $('#div-location').show(); $('#productLocation').focus(); return true;}
+	 if($('#productPrice').val()=='') { $('#productPrice').show(); $('#productPrice').focus(); return true;}
+ }
 
-	 // 동적 파일 업로드를 위한 ajaxForm 
-	 function enrollAction() {
-		$('#enrollForm').ajaxForm({
-			type: 'post',
-			enctype: 'multipart/form-data',
-			processData: false, // 데이터 컨텐트 타입에 맞게 변환 여부
-			contentType: false, // 요청 컨텐트 타입
-			url: "${pageContext.request.contextPath}/usedProduct/product/productEnroll",
-			dataType: 'json',
-			beforeSubmit: function(data, form, option) { // submit 전 실행
-				// 이미지 정보 동적 할당
-				fileBuffer.forEach(function(e, i) {
-					const imgObj = {
-							name : 'img',
-							id : 'productImg'+i,
-							type : 'file',
-							value : e
-					}
-					data.push(imgObj);
-				});
-			
-				// 카테고리 
-				const cateObj = {
-					name : 'cateNo',
-					value : cateNo
-				}
-				data.push(cateObj);
-				
-				// 배송비 
-				const deliveryFeeObj = {
-					name : 'productDeliveryFee',
-					value : $('#freeDelivery').prop('checked') ? 1 : 0
-				} 
-				data.push(deliveryFeeObj);
-			},
-			success: function(data) {
-				alert('상품이 등록되었습니다.');
-				location.href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no"+data.no;
-			},
-			error: function(error) {
-				console.log('error : ', error);
-			}
-	 
-		});
-	 }
-		 
- });
- 
+document.enrollForm.onsubmit = () => {
+	 if(confirm()) return false;
+};
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

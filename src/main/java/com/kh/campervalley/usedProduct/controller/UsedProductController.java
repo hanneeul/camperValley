@@ -1,24 +1,25 @@
 package com.kh.campervalley.usedProduct.controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.campervalley.common.CamperValleyUtils;
+import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.service.UsedProductService;
@@ -30,62 +31,66 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping(value = "/usedProduct")
 public class UsedProductController  {
+	@Autowired
+    ServletContext application;
 	
 	@Autowired
 	private UsedProductService usedProductService;
 
 	/* 상품 등록 */
-	@GetMapping("/product/getProductEnroll")
-	public String getProductEnroll(Model model) {
-		model.addAttribute("display", "/usedProduct/product/productEnroll.jsp");
-		return "/usedProduct/product/productEnroll";
+	@GetMapping("/product/registForm")
+	public void registForm() {;
 	};
 	
 	@PostMapping("/product/productEnroll")
 	@ResponseBody // json
-	public ModelAndView productEnroll(@ModelAttribute UsedProduct usedProduct, 
-											@RequestParam MultipartFile[] img, Principal principal) {
+	public String productEnroll(@ModelAttribute UsedProduct usedProduct, 
+										@RequestParam("productImg") MultipartFile[] upFiles, @AuthenticationPrincipal Member loginMember) {
 		// 이미지 파일 복사
-		String filePath = "C:/Users/haneu/git/camperValley/src/main/webapp/resources/images/usedProduct";
+		String saveDirectory = application.getRealPath("/resources/upload/usedProduct");
+
 		File file;
 		
-		for(int i = 0; i <= img.length - 1; i++) {
-			String fileName = img[i].getOriginalFilename();
-			file = new File(filePath, fileName);
-			
-			try {
-				FileCopyUtils.copy(img[i].getInputStream(), new FileOutputStream(file));
-			} catch(Exception e) {
-				e.printStackTrace();
+        ModelAndView mav;
+		try {
+			for(int i = 0; i < upFiles.length; i++) {
+			    if(upFiles[i].getSize() > 0) {
+			        String originalFilename = upFiles[i].getOriginalFilename();
+			        String renamedFilename = CamperValleyUtils.getRenamedFilename(originalFilename);
+			        log.debug("renamedFilename = {}", renamedFilename);
+			        
+			        File destFile = new File(saveDirectory, renamedFilename);
+			        upFiles[i].transferTo(destFile);
+			        
+			        switch(i) {
+			        case 0 : usedProduct.setProductImg1(renamedFilename); break;
+			        case 1 : usedProduct.setProductImg2(renamedFilename); break;
+			        case 2 : usedProduct.setProductImg3(renamedFilename); break;
+			        case 3 : usedProduct.setProductImg4(renamedFilename); break;
+			        case 4 : usedProduct.setProductImg5(renamedFilename); break;
+			        }   
+			    }
 			}
 			
-			if(i == 0) usedProduct.setProductImg1(fileName);
-			if(i == 1) usedProduct.setProductImg2(fileName);
-			if(i == 2) usedProduct.setProductImg3(fileName);
-			if(i == 3) usedProduct.setProductImg4(fileName);
-			if(i == 4) usedProduct.setProductImg5(fileName);
-		}
-		
-		// 로그인한 회원의 아이디
-		usedProduct.setSellerId(principal.getName()); 
-		
-		// DB 
-		usedProductService.productInsert(usedProduct);
-		
-		// 최근 거래지역
+			// 로그인한 회원의 아이디
+			usedProduct.setSellerId(loginMember.getMemberId()); 
+			
+			log.debug("usedProduct = {}", usedProduct);
+			
+			// DB 
+			int result = usedProductService.productInsert(usedProduct);
+			log.debug("after usedProduct = {}", usedProduct);
+			
+			// 최근 거래지역
 //		String sellerId = principal.getName();
 //		String recentLocation = usedProduct.getProductLocation();
 //		Map<String, String> map = new HashMap<String, String>();
 //		map.put("sellerId", sellerId);
 //		map.put("recentLocation", recentLocation);
-		
-		// 등록한 상품 no 가져오기
-		int no = usedProductService.getProductNo();
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("no", no);
-		mav.setViewName("jsonView");
-		return mav;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/WEB-INF/views/usedProduct/product/productDetail?no=" + usedProduct.getProductNo();
 	};
 	
 	/* 메인페이지 */
@@ -135,7 +140,7 @@ public class UsedProductController  {
 	public void searchDisplay() {};
 
 	
-	@GetMapping("/product/productDetail")
+	@GetMapping("/product/getProductDetail")
 	public void productDetail() {};
 	
 	@GetMapping("/product/productUpdate")

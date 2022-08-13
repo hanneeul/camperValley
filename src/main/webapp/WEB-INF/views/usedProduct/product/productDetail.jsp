@@ -6,13 +6,26 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<!-- 로그인 정보 가져오기 -->
+<sec:authentication property="principal" var="member" />
+<!-- 회원/비회원 -->
+<sec:authorize access="isAnonymous()">
+	<input type="hidden" class="loginId" value="비회원"/>
+</sec:authorize>
+<sec:authorize access="hasRole('ROLE_USER')">
+	<input type="hidden" class="loginId" value="${member.username}"/>
+</sec:authorize>
+
+<input type="hidden" class="hiddenNo" value="${no}"/>
+<input type="hidden" class="owner" value=""/>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/productDetail.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
 
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-<div id="section" style="width: 90%; margin:50px auto">
+<div id="section" style="width: 98%; margin:50px auto">
 	<div class="detail_area">
 	<div class="detail_div">
         <div class="delete_update">
@@ -29,7 +42,7 @@
 					<div class="slideshow-container">
 						<div class="swiper-container detail-info__image__list">
 							<div class="swiper-wrapper">
-								<img src="${pageContext.request.contextPath}/resources/images/usedProduct/travlerPouch.jpg" class="rounded float-start" alt="상품이미지">
+								<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/travlerPouch.jpg" class="rounded float-start" alt="상품이미지">
 							</div>
 							<!-- 확대 버튼-->
 							<button class="detail-info__image--enlg">
@@ -46,7 +59,7 @@
 								</div>
 							</div>
 							
-							<!-- 확대버튼 하는 중 -->
+							<!-- 확대  -->
 							<div class="prodDetailImgWrap1">
 								<div class="prodDetailImgWrap2"> 
 									<button type="button" class="detailImg_closeBtn">
@@ -101,20 +114,14 @@
 								</div>
 								<div class="detail-info__text-body-bottom">
 									<div class="detail-info__text-body-bItem">
-										<div class="detail-info__text-body-bItem-title">▪카테고리</div>
-											<!-- 카테고리 -->
-											<div class="detail-info__category" id="product_category"></div>
-										</div>
-									</div>
-									<div class="detail-info__text-body-bItem">
 										<div class="detail-info__text-body-bItem-title">▪배송비</div>
 										<!-- 배송비 -->
-										<div class="detail-info__delivery" id="product_delivery_fee"></div>
+										<div class="detail-info__delivery" id="productDeliveryFee"></div>
 									</div>
 									<div class="detail-info__text-body-bItem">
 										<div class="detail-info__text-body-bItem-title">▪거래지역</div>
 										<!-- 거래지역 -->
-										<div class="detail-info__location" id="product_location"></div>
+										<div class="detail-info__location" id="productLocation"></div>
 									</div>
 									<div class="detail-info__text-body-bottom">
 										<div class="detail-info__zzim-chat" style="display: flex;">
@@ -163,60 +170,7 @@
 						<div class="prodInfo_contentWrap">
 							<div class="content_marginTop"></div>
 							<!-- 상품내용 -->
-							<div class="prodInfo_contentText">
-								▶️ 야외용 캠핑용 선풍기 무선선풍기 써큘레이터
-								모델명: 스위스밀리터리 코브라이트
-							
-								▶️  판매상품은 미개봉 새상품입니다.
-								번개페이로 구매하시면 11시이전 거래 다음날 수령가능!!
-								
-								❤필독❤  제품 궁굼사항 번개톡 메세지주세요
-								
-								😁누적 판매건수  4000건  / 거래후기 800건
-								번장 최다판매 샵입니다
-								
-								미개봉새상품입니다
-						 </div>
-						 <!-- 지역, 카테고리, 상품태그 -->
-						 <div class="prodInfo_detailWrap1">
-							<!-- 지역 -->
-							<div class="prodInfo_detailWrap2">
-								<div class="detailTitleWrap">
-									<i class="fa-solid fa-location-dot"></i>
-									거래지역
-								</div>
-								<div class="detailContentWrap">
-									<div class="detailContent_location">
-										<!-- productDetail.js -->
-										<p>서울시 강남구 학동로 지하 102</p>
-									</div>
-								</div>
-							</div>
-							<!-- 카테고리 -->
-							<div class="prodInfo_detailWrap2">
-								<div class="detailTitleWrap">
-									<i class="fa-solid fa-align-justify"></i>
-									카테고리
-								</div>
-								<div class="detailContentWrap">
-									<div class="detailContent_cate">
-										<!-- productDetail.js -->
-										<p>주방용품</p>
-									</div>
-								</div>
-							</div>
-							<!-- 상품태그 -->
-							<div class="prodInfo_detailWrap2">
-								<div class="detailTitleWrap">
-									<i class="fa-solid fa-tag"></i>
-									상품태그
-								</div>
-								<div class="detailContentWrap_hash">
-									<!-- productDetail.js -->
-									<p>#주방용품 #파우치 #수저 #세트</p>
-								</div>
-							</div>
-						</div>
+							<div class="prodInfo_contentText"></div>
 					</div>
 				</div>
 				</div>
@@ -278,19 +232,52 @@
 	 </div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+
+
 <script>
+$(document).ready(function() {
+	$.ajax({
+		type : 'GET',
+		url :  '${pageContext.request.contextPath}/usedProduct/product/getProductDetail',
+		data : {'no': $('.hiddenNo').val()},
+		dataType : 'json',
+		success : function(data) {
+			console.log("로그인 아이디 확인 = " + $('.loginId').val()); 
+			
+			var usedProduct = data.usedProduct;
+			
+			$('.detail-info__text-title').text(usedProduct.productTitle);
+			$('.detail-info__price').text(usedProduct.productPrice+'원');
+			$('#view').text(usedProduct.productViews);
+			$('#productLocation').text(usedProduct.productLocation); // (상단 거래 지역)
+			$('.prodInfo_contentText').text(usedProduct.productContent); // 상품 내용 =
+			
+			// 배송비 (1:포함 0:미포함)
+			if(usedProduct.productDeliveryFee == 0) {
+				$('#pageDeliveryFee').text('배송비 별도');
+			} else if(usedProduct.productDeliveryFee == 1) {
+				$('#productDeliveryFee').text('배송비 포함')';	
+			}
+			
+			// 상품 이미지 - 스와이퍼 
+			var product_img = [{product_img : usedProduct.productImg1},
+							  {product_img : usedProduct.productImg2}
+							  {product_img : usedProduct.productImg3}
+							  {product_img : usedProduct.productImg4}
+							  {product_img : usedProduct.productImg5}];
+			
+			// 확대
+			$('.detailImg_prodName').text(usedProduct.productTitle);
+		}
+
+	})
+});
+
 // 채팅하기 관련
 document.querySelector("#update_btn").addEventListener('click', (e) => {
 	location.href = '${pageContext.request.contextPath}/usedProduct/product/productUpdate';
 });
 $('#chat_btn').click(function() {
-	// var popupWidth = 850;
-	// var popupHeight = 500;
-
-	// var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
-	// var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
-
-	// window.open('', 'chat', 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY, resizable=no);	
 	window.open('', 'chat', resizable=no);	
 });
 
@@ -325,4 +312,6 @@ function showSlides(n) {
     slides[n].style.display = "block";
     dots[n].className += " active";
   }
+  
+  
 </script>

@@ -19,8 +19,8 @@ public class UsedProductServiceImpl implements UsedProductService {
 	private UsedProductDao usedProductDao;
 	
 	@Override
-	public void productInsert(UsedProduct usedProduct) {
-		usedProductDao.productInsert(usedProduct);
+	public int productInsert(UsedProduct usedProduct) {
+		return usedProductDao.productInsert(usedProduct);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class UsedProductServiceImpl implements UsedProductService {
 		Map<String, Object> param = new HashMap<>();
 		int start;
 		int end;
-		int default_count = 20;
+		int default_count = 10;
 		int pageSize = 10;
 		
 		if(page > 0) {

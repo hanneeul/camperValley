@@ -66,25 +66,12 @@
 		</div>	
 	</c:forEach>	
 </div>
-
 <div id="moreShow">
 	<a id="more" class="more" onclick="viewMore()">더 보기<br><i class="fa-solid fa-caret-down"></i></a>
 </div>
-
 <script>
 // 광고
-
 // 전체 상품 목록 출력 및 페이징
-var page = 0;
-
-$(document).ready(function() {
-	getProductList(page);
-});
-
-function viewMore() {
-	page = page + 1;
-	getProductList(page);
-}
 
 //ajax 통신을 위한 csrf 설정
 var token = $("meta[name='_csrf']").attr("content");
@@ -93,11 +80,17 @@ $(document).ajaxSend(function(e, xhr, options) {
     xhr.setRequestHeader(header, token);
 });
 
+var page = 0;
 
+$(document).ready(function() {
+	getProductList(page);
+});
+function viewMore() {
+	page = page + 1;
+	getProductList(page);
+}
 function getProductList(page) {
-	
-	console.log('page = ' + page);
-	
+
 	$.ajax({
 		type : 'post',
 		url : '${pageContext.request.contextPath}/usedProduct/main/getProductList',
@@ -106,7 +99,6 @@ function getProductList(page) {
 			page : page
 		},
 		success : function(data) {
-	//		alert(JSON.stringify(data.list)); // json -> spring
 			
 			if(data.list.length == 0) {
 				$('#more').hide();
@@ -129,7 +121,7 @@ function getProductList(page) {
 						   + 'style="cursor: pointer;">'
 						   + '<div class ="item">' + '<div id="itemSolid">'
 						   + '<div class="img-box">'
-						   + '<img src="${pageContext.request.contextPath}/resources/images/usedProduct/' + this.productImg1
+						   + '<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/' + this.productImg1
 						   + '" class="rounded float-start" alt="'
 						   + this.productTitle + '">' + '</div>'
 						   + '<div class="text-box">'
@@ -149,7 +141,6 @@ function getProductList(page) {
 		}
 	});
 }
-
 function productDetailNo(no) {
 	location.href = '${pageContext.request.contextPath}/usedProduct/product/productDetail?no=' + no;
 }
