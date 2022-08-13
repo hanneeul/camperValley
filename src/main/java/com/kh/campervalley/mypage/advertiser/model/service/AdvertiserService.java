@@ -60,4 +60,6 @@ public interface AdvertiserService {
 
 	boolean checkBalanceAndCpc(Advertisement advertisement, String memberId);
 
+	int updateAdvertisement(Advertisement advertisement);
+
 }

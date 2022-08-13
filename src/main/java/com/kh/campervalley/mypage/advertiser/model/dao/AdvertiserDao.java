@@ -95,4 +95,10 @@ public interface AdvertiserDao {
 
 	int checkBalanceAndCpc(Advertisement advertisement);
 
+	@Update("update advertisement set ad_cpc = #{adCpc}, ad_daily_budget = #{adDailyBudget}, ad_status = #{adStatus}, updated_at = sysdate where advertisement_no = #{advertisementNo}")
+	int updateAdvertisement(Advertisement advertisement);
+
+	@Select("select count(*) from ad_performance where advertisement_no = #{advertisementNo} and trunc(display_at) = trunc(sysdate)")
+	int checkTodayPerformanceCnt(int advertisementNo);
+
 }

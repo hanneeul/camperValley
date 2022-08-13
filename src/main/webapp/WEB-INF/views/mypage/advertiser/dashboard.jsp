@@ -308,11 +308,9 @@ document.querySelectorAll(".updateAdBtn").forEach((btn) => {
 				const {msg} = response;
 				$.confirm({
 					title: '변경완료',
-					content: `\${msg}`,
+					content: '광고소재 정보가 변경되었습니다.',
 					buttons: {
-						OK: function () {
-							location.reload();
-						}
+						OK: function () {}
 					}
 				});
 			},

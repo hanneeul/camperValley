@@ -280,7 +280,7 @@ public class AdvertiserController {
 		log.debug("advertisement = {}", advertisement);
 		Map<String, Object> map = new HashMap<>();
 		try {
-			// int result = advertiserService.updateAdvertisement(advertisement);
+			int result = advertiserService.updateAdvertisement(advertisement);
 		} catch(Exception e) {
 			log.error("광고소재 정보변경 오류", e);
 		}

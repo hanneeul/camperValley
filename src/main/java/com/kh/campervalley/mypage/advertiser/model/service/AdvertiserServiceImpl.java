@@ -177,7 +177,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	public int deleteAdvertisement(int advertisementNo) {
 		return advertiserDao.updateDelAtAdvertisement(advertisementNo);
 	}
-	
+
 	@Override
 	public Advertiser selectAdvertiserByMemberId(@NonNull String memberId) {
 		return advertiserDao.selectAdvertiserByMemberId(memberId);
@@ -195,6 +195,22 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 			result = true;
 		else
 			result = false;
+		return result;
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int updateAdvertisement(Advertisement advertisement) {
+		int result = 0;
+
+		if (advertisement.isAdStatus()) {
+			if (advertiserDao.checkTodayPerformanceCnt(advertisement.getAdvertisementNo()) == 0) {
+				result = advertiserDao.insertAdPerformance(advertisement.getAdvertisementNo());
+			}
+		}
+
+		result = advertiserDao.updateAdvertisement(advertisement);
+
 		return result;
 	}
 }
