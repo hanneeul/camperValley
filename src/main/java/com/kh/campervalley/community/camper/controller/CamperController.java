@@ -44,9 +44,11 @@ public class CamperController {
 	@GetMapping("/moreCamperList")
 	public String moreCamperList(@RequestParam int cPage, Model model) {
 		try {
+			log.debug("cPage = {}", cPage);
 			int numPerPage = CamperService.CAMPER_NUM_PER_PAGE;
 			List<Camper> camperList = camperService.selectMoreCamperList(cPage, numPerPage);
 			model.addAttribute("camperList", camperList);
+			log.debug("camperList = {}", camperList);
 		} catch(Exception e) {
 			log.error("캠퍼모집 목록 추가 조회 오류", e);
 			throw e;
