@@ -13,38 +13,27 @@
 <div class="container-md campsite-review-list-wrap pt-2">
 	<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
 		<div class="col-md float-right">
-			<div class="input-group align-items-center community-search-enroll">
-		    	<select id="searchType" class="custom-select btn-outline-success btn-outline-camper-color">
-					<option value="" disabled selected>선택</option>
-					<option value="memberId">작성자</option>
-				   	<option value="title">제목</option>
-				    <option value="content">내용</option>
-				</select>
-				<input type="text" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
-			  	<div class="input-group-append">
-			    	<button class="btn btn-outline-success btn-outline-camper-color" type="button" id="communitySearchBtn">
-			    		<i class="fa-solid fa-magnifying-glass camper-color"></i>
-			    	</button>
-			  	</div>
-				<div class="ml-1">
-					<button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color">글쓰기</button>
+			<form:form name="reviewSearchFrm" action="${pageContext.request.contextPath}/community/review/reviewList" method="GET">
+				<div class="input-group align-items-center community-search-enroll">
+			    	<select id="searchType" name="searchType" class="custom-select btn-outline-success btn-outline-camper-color">
+						<option value="" disabled selected>선택</option>
+						<option value="memberId" ${searchParam.searchType eq 'memberId' ? 'selected' : ''}>작성자</option>
+					   	<option value="title" ${searchParam.searchType eq 'title' ? 'selected' : ''}>제목</option>
+					    <option value="content" ${searchParam.searchType eq 'content' ? 'selected' : ''}>내용</option>
+					</select>
+					<input type="text" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
+				  	<div class="input-group-append">
+				    	<button class="btn btn-outline-success btn-outline-camper-color" type="submit" id="communitySearchBtn">
+				    		<i class="fa-solid fa-magnifying-glass camper-color"></i>
+				    	</button>
+				  	</div>
+					<div class="ml-1">
+						<button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color">글쓰기</button>
+					</div>
 				</div>
-			</div>
+			</form:form>
 		</div>
 	</div>
-	<script>
-	document.querySelector("#communityEnrollBtn").addEventListener('click', (e) => {
-		location.href = "${pageContext.request.contextPath}/community/review/reviewEnroll";
-	});
-	
-	/* communitySearchBtn 작동하는지 테스트. 삭제할 예정 */
-	const communitySearchBtn = document.querySelector('#communitySearchBtn');
-	const communitySearchInput = document.querySelector('.community-search-input');
-	communitySearchBtn.addEventListener('click', () => {
-		const communitySearchInputValue = communitySearchInput.value;
-		alert(communitySearchInputValue);
-	});
-	</script>
 	<hr />
 	<div class="review-list py-3">
 		<table class="table table-hover text-center review-list-table">
@@ -60,72 +49,47 @@
 		    	</tr>
 		  	</thead>
 		  	<tbody>
-		    	<tr>
-		      		<th scope="row">1</th>
-		      		<td>
-		      			<a 
-		      				class="font-weight-bold text-decoration-none review-title"
-		      				href="${pageContext.request.contextPath}/community/review/reviewDetail">○○야영장 후기 (1)
-		      			</a>
-		      		</td>
-		     		<td>캠퍼길동</td>
-		      		<td>4</td>
-		      		<td>2</td>
-		      		<td>3</td>
-		      		<td>2022-07-18</td>
-		    	</tr>
-		    	<tr>
-		      		<th scope="row">1</th>
-		      		<td>○○야영장 후기 (1)</td>
-		     		<td>캠퍼길동</td>
-		      		<td>4</td>
-		      		<td>2</td>
-		      		<td>3</td>
-		      		<td>2022-07-18</td>
-		    	</tr>
-		    	<tr>
-		      		<th scope="row">1</th>
-		      		<td>○○야영장 후기 (1)</td>
-		     		<td>캠퍼길동</td>
-		      		<td>4</td>
-		      		<td>2</td>
-		      		<td>3</td>
-		      		<td>2022-07-18</td>
-		    	</tr>
-		    	<tr>
-		      		<th scope="row">1</th>
-		      		<td>○○야영장 후기 (1)</td>
-		     		<td>캠퍼길동</td>
-		      		<td>4</td>
-		      		<td>2</td>
-		      		<td>3</td>
-		      		<td>2022-07-18</td>
-		    	</tr>
-		    	<tr>
-		      		<th scope="row">1</th>
-		      		<td>○○야영장 후기 (1)</td>
-		     		<td>캠퍼길동</td>
-		      		<td>4</td>
-		      		<td>2</td>
-		      		<td>3</td>
-		      		<td>2022-07-18</td>
-		    	</tr>
-		    	<tr>
-		      		<th scope="row">1</th>
-		      		<td>○○야영장 후기 (1)</td>
-		     		<td>캠퍼길동</td>
-		      		<td>4</td>
-		      		<td>2</td>
-		      		<td>3</td>
-		      		<td>2022-07-18</td>
-		    	</tr>
+		  		<c:if test="${empty list}">
+					<tr>
+						<td colspan="8">등록된 후기가 없습니다.</td>
+					</tr>
+				</c:if>
+				<c:if test="${not empty list}">
+					<c:forEach items="${list}" var="review" varStatus="vs">
+				    	<tr>
+				      		<th scope="row">${vs.count}</th>
+				      		<td>
+				      			<a 
+				      				class="font-weight-bold text-decoration-none review-title"
+				      				href="${pageContext.request.contextPath}/community/review/reviewDetail?reviewNo=${review.reviewNo}">${review.title} (${review.commentCount})
+				      			</a>
+				      		</td>
+				     		<td>${review.member.nickname}</td>
+				      		<td>${review.reviewGrade}</td>
+				      		<td>${review.recommendCount}</td>
+				      		<td>${review.readCount}</td>
+				      		<td>
+								<fmt:parseDate value="${review.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+								<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
+							</td>
+				    	</tr>
+					</c:forEach>
+				</c:if>
 		  	</tbody>
 		</table>
-		<%-- CamperValleyUtils에서 제어? --%>
 		<div class="my-5">
-			<jsp:include page="/WEB-INF/views/common/pagebar.jsp"></jsp:include>
+			<c:if test="${not empty list}">${pagebar}</c:if>
 		</div>
 	</div>
 </div>
+<script>
+/**
+ * 후기 등록 페이지 이동
+ */
+document.querySelector("#communityEnrollBtn").addEventListener('click', (e) => {
+	location.href = "${pageContext.request.contextPath}/community/review/reviewEnroll";
+});
+</script>
+<script src="${pageContext.request.contextPath}/resources/js/community/review/reviewValidation.js"></script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

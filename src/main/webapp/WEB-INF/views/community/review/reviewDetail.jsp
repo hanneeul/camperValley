@@ -178,5 +178,6 @@ new Swiper('.swiper-container', {
 	},
 });
 </script>
+<script src="${pageContext.request.contextPath}/resources/js/community/review/reviewValidation.js"></script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

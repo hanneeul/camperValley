@@ -20,6 +20,15 @@
 .review-title:hover {
 	color: #639A67;
 }
+
+.page-item .page-link {
+	color: #2B380C;
+}
+
+.page-item.active span.page-link {
+	background-color: #639A67;
+    border-color: #639A67;
+}
 /* reviewList.jsp end */
 
 /* reviewErnoll.jsp start */

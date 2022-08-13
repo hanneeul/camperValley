@@ -370,7 +370,7 @@ create table campsite_review (
 	title varchar2(1000) not null,
 	content varchar2(4000) not null,
 	created_at date default sysdate not null,
-	updated_at date default sysdate,
+	updated_at date,
 	read_count number default 0 not null,
     
 	constraint pk_campsite_review primary key(review_no),

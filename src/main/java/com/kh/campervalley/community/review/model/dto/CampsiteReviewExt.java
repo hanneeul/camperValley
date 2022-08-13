@@ -1,6 +1,9 @@
 package com.kh.campervalley.community.review.model.dto;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.kh.campervalley.member.model.dto.Member;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,13 +16,14 @@ import lombok.ToString;
 public class CampsiteReviewExt extends CampsiteReview {
 
 	private int commentCount;
-	private int likeCount;
-	private List<ReviewPhoto> photos;
-	private List<ReviewComment> comments;
+	private int recommendCount;
+	private List<ReviewPhoto> photos = new ArrayList<>();
 	private List<ReviewRecommend> recommends;
+	private List<ReviewComment> comments;
+	private Member member;
 	
 	public void addReviewPhoto(@NonNull ReviewPhoto photo) {
 		photos.add(photo);
 	}
-	
+
 }
