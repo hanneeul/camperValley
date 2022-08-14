@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.campervalley.community.review.model.dto.CampsiteReview;
@@ -22,11 +21,22 @@ public interface ReviewDao {
 
 	List<CampsiteReview> selectReviewList(RowBounds rowBounds);
 
-	@Select("select count(*) from campsite_review")
 	int selectTotalReview();
 
 	List<CampsiteReview> searchReviewList(Map<String, Object> searchParam, RowBounds rowBounds);
 
 	int searchTotalReview(Map<String, Object> searchParam);
+
+	int updateReadCount(int reviewNo);
+	
+	CampsiteReviewExt selectOneReview(int reviewNo);
+
+	ReviewPhoto selectOneReviewPhoto(int reviewPhotoNo);
+
+	int deleteReviewPhoto(int reviewPhotoNo);
+
+	int updateReview(CampsiteReviewExt review);
+
+	int deleteReview(int reviewNo);
 
 }

@@ -14,16 +14,19 @@ import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.Advertiser;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
 
+import lombok.NonNull;
+
 @Mapper
 public interface AdvertiserDao {
 
 	int insertAdvertiser(AdvertiserExt advertiser);
-	
+
 	@Insert("insert into admoney values (seq_admoney_no.nextval, #{advertiserNo}, default)")
 	int insertAdmoney(int advertiserNo);
 
@@ -31,11 +34,11 @@ public interface AdvertiserDao {
 	int insertLicenseFile(LicenseFile licenseFile);
 
 	List<AdvertiserExt> selectAdvertiserList(RowBounds rowBounds);
-	
+
 	List<AdvertiserExt> selectAdvertiserFilteredList(Map<String, Object> param, RowBounds rowBounds);
 
 	int selectTotalAdvertiser();
-	
+
 	int selectFilteredTotalAdvertiser(Map<String, Object> param);
 
 	@Select("select * from license_file where license_file_no = #{no}")
@@ -84,5 +87,18 @@ public interface AdvertiserDao {
 
 	@Select("select count(*) from advertisement where advertiser_no = #{advertiserNo} and deleted_at is null")
 	int selectTotalAdvertisement(int advertiserNo);
+
+	@Update("update advertisement set deleted_at = sysdate where advertisement_no = #{advertisementNo}")
+	int updateDelAtAdvertisement(int advertisementNo);
+
+	Advertiser selectAdvertiserByMemberId(@NonNull String memberId);
+
+	int checkBalanceAndCpc(Advertisement advertisement);
+
+	@Update("update advertisement set ad_cpc = #{adCpc}, ad_daily_budget = #{adDailyBudget}, ad_status = #{adStatus}, updated_at = sysdate where advertisement_no = #{advertisementNo}")
+	int updateAdvertisement(Advertisement advertisement);
+
+	@Select("select count(*) from ad_performance where advertisement_no = #{advertisementNo} and trunc(display_at) = trunc(sysdate)")
+	int checkTodayPerformanceCnt(int advertisementNo);
 
 }

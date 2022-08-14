@@ -37,6 +37,7 @@ import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.Advertiser;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
@@ -263,8 +264,42 @@ public class AdvertiserController {
 	}
 	
 	@PostMapping("/deleteAd")
-	public ResponseEntity<?> deleteAdvertisement() {
+	public ResponseEntity<?> deleteAdvertisement(@RequestParam int advertisementNo) {
 		Map<String, Object> map = new HashMap<>();
+		try {
+			int result = advertiserService.deleteAdvertisement(advertisementNo);
+			map.put("msg", "광고소재가 정상적으로 삭제되었습니다.");
+		} catch(Exception e) {
+			log.error("광고소재 삭제처리 오류", e);
+		}
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	}
+	
+	@PostMapping("/updateAd")
+	public ResponseEntity<?> updateAdvertisement(Advertisement advertisement) {
+		log.debug("advertisement = {}", advertisement);
+		Map<String, Object> map = new HashMap<>();
+		try {
+			int result = advertiserService.updateAdvertisement(advertisement);
+		} catch(Exception e) {
+			log.error("광고소재 정보변경 오류", e);
+		}
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	}
+	
+	@PostMapping("/checkBalance")
+	public ResponseEntity<?> checkBalanceAndCpc(Advertisement advertisement, @AuthenticationPrincipal Member loginMember) {
+		log.debug("advertisement = {}", advertisement);
+		Map<String, Object> map = new HashMap<>();
+		try {
+			boolean result = advertiserService.checkBalanceAndCpc(advertisement, loginMember.getMemberId());
+			map.put("result", result);
+			if(!result) {
+				map.put("msg", "입력한 CPC대비 잔여 애드머니가 부족하여 광고소재 상태를 변경 할 수 없습니다.");				
+			}
+		} catch(Exception e) {
+			log.error("CPC-잔여애드머니 비교 오류", e);
+		}
 		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
 	}
 

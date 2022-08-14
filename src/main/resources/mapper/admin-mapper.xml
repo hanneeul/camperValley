@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.campervalley.admin.model.dao.AdminDao">
+
+<select id="selectMemberList" resultMap="memberMap">
+	select
+	    *
+	from
+	    member m join authority a
+	        on m.member_id = a.member_id
+	order by
+	    enroll_date desc
+</select>
+
+<update id="memberUpdate">
+	update
+		member
+	set
+		nickname = #{nickname},
+		email = #{email},
+		tel= #{tel}
+	where
+		member_id = #{memberId}
+</update>
+
+<select id="selectOneMember" resultType="member">
+		select
+			*
+		from
+			member
+		where
+			member_id = #{memberId}
+</select>
+
+
+
+
+<resultMap type="member" id="memberMap">
+		<id column="member_id" property="memberId"/>
+		<result column="name" property="name"/>
+		<result column="nickname" property="nickname"/>
+		<result column="password" property="password"/>
+		<result column="email" property="email"/>
+		<result column="tel" property="tel"/>
+		<result column="profile_img" property="profileImg"/>
+		<result column="enroll_date" property="enrollDate"/>
+		<result column="created_at" property="updatedAt"/>
+		<result column="withdrawal" property="withdrawal"/>
+		<result column="enabled" property="enabled"/>
+		<collection property="authorities" ofType="simpleGrantedAuthority">
+			<constructor>
+				<arg column="auth" javaType="string"/>
+			</constructor>	
+		</collection>
+	</resultMap>
+</mapper>
