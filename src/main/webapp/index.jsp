@@ -110,6 +110,7 @@
 		</form>
 	</div>
 	<!-- 광고 -->
+	<%-- EJ start --%>
 	<div id="carouselExampleIndicators" class="carousel slide mx-auto" data-ride="carousel">
 		<ol class="carousel-indicators">
 			<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -133,6 +134,7 @@
 			<span class="sr-only">Next</span>
 		</a>
 	</div>
+	<%-- EJ end --%>
 	<div id="gubunBox" style="background-image:url('${pageContext.request.contextPath}/resources/images/index/bottom.jpg')">
 		<div id="campsiteGubun" class="width-1000 mx-auto">
 			<div class="font-weight-bold text-22">Favorite Camping</div>
@@ -318,3 +320,6 @@
     });
 	</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+<%-- EJ start --%>
+<script></script>
+<%-- EJ end --%>

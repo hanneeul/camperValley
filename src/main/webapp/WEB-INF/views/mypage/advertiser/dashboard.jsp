@@ -14,6 +14,9 @@
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/datepicker.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/jquery-ui.css" />
+<!-- jquery-confirm -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
 <div class="container">
 	<div class="row d-flex justify-content-between">
@@ -47,7 +50,7 @@
 						<span>${advertiser.bizName}</span>의
 						<a id="adMoneyCharge" href="${pageContext.request.contextPath}/mypage/advertiser/admoney?no=${advertiser.advertiserNo}">애드머니</a>
 					</h5>
-					<h5 class="d-inline">
+					<h5 class="d-inline" id="admoneyAmount" data-balance="${advertiser.admoney.balance}">
 						${advertiser.admoney.balance}<small class="ml-1">원</small>
 					</h5>
 				</div>
@@ -75,8 +78,9 @@
 					</c:if>
 					<c:if test="${not empty adList}">
 						<c:forEach items="${adList}" var="advertisement" varStatus="vs">
-							<tr data-advertisement-no="${advertisement.advertisementNo}">
-								<td><button class="btn btn-camper-red btn-sm delAdBtn">삭제</button></td>
+							<tr data-advertisement-no="${advertisement.advertisementNo}" data-cpc="${advertisement.adCpc}"
+								data-daily-budget="${advertisement.adDailyBudget}" id="tr${vs.count}">
+								<td class="text-center"><button class="btn btn-camper-red btn-sm delAdBtn">삭제</button></td>
 								<td>
 									<div class="custom-control custom-switch text-center">
 										<input type="checkbox" class="custom-control-input" name="adStatus" id="customSwitch${vs.count}"
@@ -112,16 +116,16 @@
 									<c:if test="${viewCnt eq 0}">0</c:if>									
 									<small>%</small>
 								</td>
-								<td>
+								<td class="text-center">
 									<input type="number" class="form-control form-control-sm"
 										name="adCpc" value="${advertisement.adCpc}" />
 								</td>
-								<td>
+								<td class="text-center">
 									<input type="number" class="form-control form-control-sm"
 										name="adDailyBudget" value="${advertisement.adDailyBudget}" />
 								</td>
-								<td>
-									<button class="btn btn-camper-color btn-sm">변경</button>
+								<td class="text-center">
+									<button class="btn btn-camper-color btn-sm updateAdBtn">적용</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -148,17 +152,17 @@ window.addEventListener('load', (e) => {
 		todayHighlight: true,
 		showMonthAfterYear: true,
 		startDate: '0d'
-	});	
-})
+	});
+});
+
+const headers = {
+	"${_csrf.headerName}" : "${_csrf.token}"
+};
 
 document.querySelectorAll(".delAdBtn").forEach((btn) => {
 	btn.addEventListener('click', (e) => {
 		const advertisementNo = e.target.parentElement.parentElement.dataset.advertisementNo;
 		console.log(advertisementNo);
-		
-		const headers = {
-			"${_csrf.headerName}" : "${_csrf.token}"
-		};
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/mypage/advertiser/deleteAd",
@@ -168,10 +172,150 @@ document.querySelectorAll(".delAdBtn").forEach((btn) => {
 				advertisementNo
 			},
 			success(response) {
-				console.log(response);
+				const {msg} = response;
+				$.confirm({
+					title: '삭제완료',
+					content: `\${msg}`,
+					buttons: {
+						OK: function () {
+							location.reload();
+						}
+					}
+				});
 			},
 			error: console.log
 		});
-	})
+	});
+});
+
+document.querySelectorAll("input[name='adStatus']").forEach((input) => {
+	input.addEventListener('change', (e) => {
+		const newStatus = e.target.checked;
+		if(!newStatus) return;
+		
+		const tr = e.target.parentElement.parentElement.parentElement;
+		const advertisementNo = tr.dataset.advertisementNo;
+		const adCpc = document.querySelector(`#\${tr.id} input[name='adCpc']`).value;
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/mypage/advertiser/checkBalance",
+			type: "POST",
+			headers,
+			data: {
+				advertisementNo,
+				adCpc
+			},
+			success(response) {
+				const {result, msg} = response;
+				if(!result) {
+					$.confirm({
+						title: '변경불가',
+						content: `\${msg}`,
+						buttons: {
+							OK: function () {
+								e.target.checked = false;
+							}
+						}
+					});
+				}
+			},
+			error: console.log
+		});
+	});
+});
+
+document.querySelectorAll("input[name='adCpc']").forEach((input) => {
+	input.addEventListener('change', (e) => {
+		const tr = e.target.parentElement.parentElement;
+		const adDailyBudget = Number(document.querySelector(`#\${tr.id} input[name='adDailyBudget']`).value);
+		const adCpc = Number(e.target.value);
+		const advertisementNo = tr.dataset.advertisementNo;
+		const originalCpc = tr.dataset.cpc;
+		const adStatus = document.querySelector(`#\${tr.id} input[name='adStatus']`);
+		const admoneyAmount = Number(document.querySelector("#admoneyAmount").dataset.balance);
+
+		if(adCpc > admoneyAmount && adStatus.checked == true) {
+			$.confirm({
+				title: '변경불가',
+				content: 'ON 상태의 광고소재는 클릭당 단가가 보유애드머니를 초과 할 수 없습니다.',
+				buttons: {
+					OK: function () {
+						e.target.value = originalCpc;
+						if(adCpc > admoneyAmount)
+							adStatus.checked = false;
+					}
+				}
+			});
+		}
+			
+		if(adCpc > adDailyBudget) {
+			$.confirm({
+				title: '변경불가',
+				content: '클릭당 단가는 일예산보다 클 수 없습니다.',
+				buttons: {
+					OK: function () {
+						e.target.value = originalCpc;
+					}
+				}
+			});
+		}
+	});
+});
+
+document.querySelectorAll("input[name='adDailyBudget']").forEach((input) => {
+	input.addEventListener('change', (e) => {
+		const tr = e.target.parentElement.parentElement;
+		const adCpc = Number(document.querySelector(`#\${tr.id} input[name='adCpc']`).value);
+		const adDailyBudget = Number(e.target.value);
+		const originalBudget = tr.dataset.dailyBudget;
+		
+		if(adDailyBudget < adCpc) {
+			$.confirm({
+				title: '변경불가',
+				content: '일예산은 클릭당 단가보다 작을 수 없습니다.',
+				buttons: {
+					OK: function () {
+						e.target.value = originalBudget;
+					}
+				}
+			});
+		}
+	});
+});
+
+document.querySelectorAll(".updateAdBtn").forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		const tr = e.target.parentElement.parentElement;
+		const trId = tr.id;
+
+		const advertisementNo = tr.dataset.advertisementNo;
+		const adStatus = document.querySelector(`#\${trId} input[name='adStatus']`).checked;
+		const adCpc = document.querySelector(`#\${trId} input[name='adCpc']`).value;
+		const adDailyBudget = document.querySelector(`#\${trId} input[name='adDailyBudget']`).value;
+
+		$.ajax({
+			url: "${pageContext.request.contextPath}/mypage/advertiser/updateAd",
+			type: "POST",
+			headers,
+			data: {
+				advertisementNo,
+				adStatus,
+				adCpc,
+				adDailyBudget
+			},
+			success(response) {
+				console.log(response);
+				const {msg} = response;
+				$.confirm({
+					title: '변경완료',
+					content: '광고소재 정보가 변경되었습니다.',
+					buttons: {
+						OK: function () {}
+					}
+				});
+			},
+			error: console.log
+		});
+	});
 });
 </script>
