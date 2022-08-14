@@ -27,15 +27,20 @@
 
 <select id="selectMoreCamperList" resultType="Camper">
 	select 
-		* 
-	from 
-		camper
+		c.*,
+		(select nickname from member where member_id = c.member_id) nickname
+	from
+		camper c	
+	<where>
 	<if test="isChk == null or isChk == ''">
-	where
 		status = 'I'
 	</if>
+	<if test="searchType != null and searchType != '' and searchKeyword != null and searchKeyword != ''">
+		<!-- and ${searchType} like '%' + #{searchKeyword} + '%' -->
+	</if>
+	</where>
 	order by
-		camper_no desc
+		c.camper_no desc
 </select>
 
 <select id="selectCamperOne" resultType="CamperExt">

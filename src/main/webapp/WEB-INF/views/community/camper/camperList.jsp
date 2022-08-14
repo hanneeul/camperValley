@@ -18,13 +18,13 @@
 				<div class="input-group align-items-center community-search-enroll">
 			    	<select id="searchType" class="custom-select btn-outline-success btn-outline-camper-color">
 						<option value="" disabled selected>선택</option>
-						<option value="memberId">작성자</option>
+						<option value="nickname">작성자</option>
 					   	<option value="title">제목</option>
 					    <option value="content">내용</option>
 					</select>
-					<input type="text" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
+					<input type="text" id="searchKeyword" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
 				  	<div class="input-group-append">
-				    	<button class="btn btn-outline-success btn-outline-camper-color" type="button" id="communitySearchBtn">
+				    	<button id="searchBtn" class="btn btn-outline-success btn-outline-camper-color" type="button" id="communitySearchBtn">
 				    		<i class="fa-solid fa-magnifying-glass camper-color"></i>
 				    	</button>
 				  	</div>
@@ -42,41 +42,6 @@
 					모집중 게시글만 조회
 				</label>
 				<div id="boardBoxSection">
-					<%-- <c:forEach var="camper" items="${camperList}" varStatus="vs">
-						<div class="boardBox my-4 p-4" onclick="renderBoardBoxDetail(this);">
-							<c:if test="${camper.getMemberId()} === ${loginMember}">
-								<div class="drop-down drop-down-1">
-									<div class="selected text-right">
-										<i class="fa-solid fa-ellipsis-vertical d-block" onclick="dropdown(this);"></i>
-									</div>
-									<div class="options text-right">
-										<ul class="border-top border-dark">
-											<li onclick="location.href='${pageContext.request.contextPath}/community/camper/camperUpdate'">수정</li>
-											<li>삭제</li>
-										</ul>
-									</div>
-								</div>
-							</c:if>
-							<div class="boardBoxSelectInfo">
-								<div class="font-weight-bold text-20 pb-4">${camper.getTitle()}</div>
-								<div class="font-weight-bold text-13">${camper.getArea()}</div>
-								<fmt:parseDate value="${camper.getDepartureDate()}" pattern="yyyy-MM-dd" var="departureDate"/>
-								<fmt:parseDate value="${camper.getArrivalDate()}" pattern="yyyy-MM-dd" var="arrivalDate"/>
-								
-								<div class="font-weight-bold text-13"><fmt:formatDate value="${departureDate}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${arrivalDate}" pattern="yyyy.MM.dd"/></div>
-								<div class="py-4">
-									<c:if test="${camper.getContent().length() > 110}">
-										${fn:substring(camper.getContent(), 0, 110)}...
-									</c:if>
-									<c:if test="${camper.getContent().length() <= 110}">
-										${camper.getContent()}
-									</c:if>
-								</div>
-								<div class="font-weight-bold text-13">${camper.getStatus() eq "I" ? "모집중" : "모집완료"}</div>
-								<input type="hidden" data-no="${camper.getCamperNo()}" />
-							</div>
-						</div>
-					</c:forEach> --%>
 				</div>
 			</div>
 			<div class="pl-5">
@@ -125,6 +90,13 @@ $(document).ready(async () => {
 	renderBoardBoxDetail(renderBoardBoxMore());
 });
 
+// 검색
+document.querySelector("#searchBtn").addEventListener("click", (e) => {
+	const searchType = $("#searchType").val();
+	const searchKeyword = $("#searchKeyword").val();
+	if(!searchType || ! searchKeyword) return false;
+	location.href = `${pageContext.request.contextPath}/community/camper/camperList?searchType=\${searchType}&searchKeyword=\${searchKeyword}`;
+});
 
 // 모집중 게시글만 조회 toggle 클릭 시 더보기/상세보기 비동기 요청
 document.querySelector(".chk_box").addEventListener('change', ()=> {
@@ -188,7 +160,9 @@ const renderBoardBoxDetail = (boardBox) => {
 const renderBoardBoxMore = (isChk) => {
 	$.ajax({
 		url: "${pageContext.request.contextPath}/community/camper/moreCamperList",
-		data: {cPage, isChk},
+		data: {
+				cPage, isChk, 
+				searchType : "${searchType}", searchKeyword : "${searchKeyword}"},
 		async: false,
 		success(response) {
 			const {camperList} = response;

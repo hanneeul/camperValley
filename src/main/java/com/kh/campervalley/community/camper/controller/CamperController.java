@@ -29,16 +29,30 @@ public class CamperController {
 	private CamperService camperService;
 	
 	@GetMapping("/camperList")
-	public void camperList() {}
+	public ModelAndView camperList(
+			@RequestParam(required = false) String searchType,
+			@RequestParam(required = false) String searchKeyword,
+			ModelAndView mav) {
+		mav.addObject("searchType", searchType);
+		mav.addObject("searchKeyword", searchKeyword);
+		mav.setViewName("/community/camper/camperList");
+		return mav;
+	}
 	
 	// 비동기 요청처리
 	@GetMapping("/moreCamperList")
-	public String moreCamperList(@RequestParam int cPage, @RequestParam(required = false) String isChk, Model model) {
+	public String moreCamperList(
+			@RequestParam int cPage, 
+			@RequestParam(required = false) String isChk, 
+			@RequestParam(required = false) String searchType, 
+			@RequestParam(required = false) String searchKeyword, 
+			Model model) {
 		try {
 			Map<String, Object> param = new HashMap<>();
 			
 			param.put("isChk", isChk);
-			log.debug("isChk = {}", isChk);
+			param.put("searchType", searchType);
+			param.put("searchKeyword", searchKeyword);
 			int numPerPage = CamperService.CAMPER_NUM_PER_PAGE;
 			List<Camper> camperList = camperService.selectMoreCamperList(cPage, numPerPage, param);
 			model.addAttribute("camperList", camperList);
