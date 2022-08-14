@@ -14,12 +14,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString(callSuper = true)
 public class CampsiteReviewExt extends CampsiteReview {
-
 	private int commentCount;
 	private int recommendCount;
 	private List<ReviewPhoto> photos = new ArrayList<>();
-	private List<ReviewRecommend> recommends;
-	private List<ReviewComment> comments;
+	private List<ReviewRecommend> recommends = new ArrayList<>();
+	private List<ReviewComment> comments = new ArrayList<>();
 	private Member member;
 	
 	public void addReviewPhoto(@NonNull ReviewPhoto photo) {

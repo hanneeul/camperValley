@@ -21,7 +21,7 @@ public class CampsiteReview {
 	private int reviewGrade;
 	@NonNull
 	private String stay;
-	private String merit;
+	private String[] merit;
 	@NonNull
 	private String title;
 	@NonNull

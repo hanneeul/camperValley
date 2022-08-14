@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.campervalley.community.review.model.dto.CampsiteReview;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
+import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
 
 public interface ReviewService {
 	
@@ -21,5 +22,17 @@ public interface ReviewService {
 	List<CampsiteReview> searchReviewList(Map<String, Object> searchParam, int cPage, int numPerPage);
 
 	int searchTotalReview(Map<String, Object> searchParam);
+
+	int updateReadCount(int reviewNo);
+	
+	CampsiteReviewExt selectOneReview(int reviewNo);
+
+	ReviewPhoto selectOneReviewPhoto(int reviewPhotoNo);
+
+	int deleteReviewPhoto(int reviewPhotoNo);
+
+	int updateReview(CampsiteReviewExt review);
+
+	int deleteReview(int reviewNo);
 
 }

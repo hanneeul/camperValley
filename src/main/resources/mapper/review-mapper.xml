@@ -60,6 +60,13 @@
   		r.review_no desc
 </select>
 
+<select id="selectTotalReview" resultType="_int">
+	select
+ 		count(*)
+ 	from
+ 		campsite_review
+</select>
+
 <select id="searchReviewList" resultMap="reviewCollectionMap">
   	select
   		r.*, 
@@ -72,7 +79,7 @@
   				on r.member_id = m.member_id
   	<where>
   		<if test="searchType != null and searchType != '' and searchKeyword != null and searchKeyword != ''">
-			<if test="searchType == 'memberId'">
+			<if test="searchType == 'nickname'">
 				${searchType} like '%' || #{searchKeyword} || '%'
 			</if>
 			<if test="searchType == 'title'">
@@ -94,7 +101,7 @@
  		campsite_review
  	<where>
   		<if test="searchType != null and searchType != '' and searchKeyword != null and searchKeyword != ''">
-			<if test="searchType == 'memberId'">
+			<if test="searchType == 'nickname'">
 				${searchType} like '%' || #{searchKeyword} || '%'
 			</if>
 			<if test="searchType == 'title'">
@@ -106,6 +113,71 @@
 		</if>
  	</where>
 </select>
+
+<update id="updateReadCount">
+	update 
+		campsite_review 
+	set 
+		read_count = read_count + 1 
+	where 
+		review_no = #{reviewNo}
+</update>
+
+<select id="selectOneReview" resultMap="reviewCollectionMap">
+  	select
+        cr.*, 
+        m.*, 
+        rp.*, 
+        rr.*, 
+        rc.*
+	from
+        campsite_review cr
+                left join member m on cr.member_id = m.member_id
+                left join review_photo rp on cr.review_no = rp.review_no
+                left join review_recommend rr on cr.review_no = rr.review_no
+                left join review_comment rc on cr.review_no = rc.review_no
+	where
+        cr.review_no = #{reviewNo}
+</select>
+
+<select id="selectOneReviewPhoto" resultType="reviewPhoto">
+	select
+		*
+	from
+		review_photo
+	where
+		review_photo_no = #{reviewPhotoNo}
+</select>
+
+<delete id="deleteReviewPhoto">
+	delete from
+		review_photo
+	where
+		review_photo_no = #{reviewPhotoNo}
+</delete>
+
+<update id="updateReview">
+	update
+		campsite_review
+	set
+  		content_id = #{contentId}, 
+  		faclt_nm = #{facltNm}, 
+  		review_grade = #{reviewGrade}, 
+  		stay = #{stay}, 
+  		merit = #{merit}, 
+  		title = #{title}, 
+  		content = #{content}, 
+  		updated_at = sysdate
+  	where
+  		review_no = #{reviewNo}
+</update>
+
+<delete id="deleteReview">
+	delete from
+		campsite_review
+	where
+		review_no = #{reviewNo}
+</delete>
 
 <resultMap type="campsiteReviewExt" id="reviewCollectionMap">
 	<id column="review_no" property="reviewNo"/>
@@ -143,7 +215,6 @@
   	
 	<collection property="recommends" javaType="arrayList" ofType="reviewRecommend">
   		<id column="recommend_no" property="recommendNo"/>
-  		<result column="original_filename" property="originalFilename"/>
   		<result column="member_id" property="memberId"/>
   		<result column="status" property="status"/>
   	</collection>
