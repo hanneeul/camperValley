@@ -294,8 +294,11 @@ $('#autoComplete').autocomplete({
 /**
  * 이용기간 선택
  */
+let nowDate = new Date();
+let today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
 $("#stay").daterangepicker({
 	autoUpdateInput: false,
+	maxDate: today, // 오늘 이후 선택 금지 처리
 	locale: {
 		applyLabel: "선택",
         cancelLabel: "취소",

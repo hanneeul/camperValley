@@ -11,6 +11,32 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/review/review.css" />
+<style>
+.card-footer {
+    position: relative;
+    display: flex;
+    padding:20px;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+}
+
+.media img{
+    width: 50px;
+    height: 50px;
+}
+
+.reply a {
+	text-decoration: none;
+}
+
+.reply-wrap {
+	justify-content: right;
+}
+</style>
+
 
 <!-- Swiper -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
@@ -136,32 +162,224 @@
 		</div>
 	</c:if>
 	<div class="review-detail-comment-wrap m-auto py-5">
-		<form
-			name="commentEnrollFrm"
-			action="" 
-			method="POST">
-			<div class="card my-3">
-		  		<div class="card-header font-weight-bold m-0">
-		    		<i class="fa-solid fa-comments camper-color"></i>&nbsp;comments (${review.commentCount})
-		  		</div>
+		<div class="card my-3">
+	  		<div class="card-header font-weight-bold m-0">
+	    		<i class="fa-solid fa-comments camper-color"></i>&nbsp;comments (${review.commentCount})
+	  		</div>
+			<form:form name="commentEnrollFrm">
 		  		<div class="card-body">
 		  			<ul class="list-group list-group-flush">
 						<li class="list-group-item">
 							<div class="form-inline mb-2">
 					    		<p class="card-text">
-					    			<i class="fa-solid fa-compass"></i>&nbsp;${review.member.nickname}
+					    			<i class="fa-solid fa-compass"></i>&nbsp;${loginMember.getNickname()}
 					    		</p>
 							</div>
 							<textarea class="form-control" name="commentContent" cols="60" rows="3" placeholder="권리침해, 욕설 및 특정 대상을 비하하는 내용을 게시할 경우 이용약관 및 관련 법률에 의해 제재될 수 있습니다." required></textarea>
-							<button type="submit" class="btn btn-success btn-camper-color mt-3 float-right" id="commentEnrollBtn">등록</button>
+							<input type="hidden" name="reviewNo" value="${review.reviewNo}" />
+							<input type="hidden" name="memberId" value="${not empty loginMember ? loginMember.getMemberId() : ''}"/>
+							<input type="hidden" name="commentLevel" value="1" />
+                			<input type="hidden" name="commentRef" value="0" />
+							<button type="button" class="btn btn-success btn-camper-color mt-3 float-right" id="commentEnrollBtn">등록</button>
 					    </li>
 					</ul>
 		  		</div>
-			</div>
-		</form>
+			</form:form>
+			<c:if test="${not empty review.comments}">
+		  		<div class="card-footer">
+					<div class="row p-4">
+						<c:forEach items="${review.comments}" var="comment">
+							<div class="col-md-12">
+								<div class="media">
+									<c:if test="${not empty comment.member.profileImg}">
+										<img class="mr-3 rounded-circle" src="${pageContext.request.contextPath}/resources/upload/member/default-profile.svg"/>
+									</c:if>
+									<c:if test="${empty comment.member.profileImg}">
+										<img class="mr-3 rounded-circle" src="${pageContext.request.contextPath}/resources/upload/member/default-profile.svg"/>
+									</c:if>
+									<div class="media-body">
+										<div class="row">
+											<div class="col-md-8 d-flex my-2">
+										    	<span>${comment.member.nickname}</span>&nbsp;
+										    	<span>
+										    		<fmt:parseDate value="${comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+													<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
+										    	</span>
+										 	</div>
+										 	<div class="col-md-4 d-flex reply-wrap">
+										 		<div class="reply">
+										 			<button type="button" class="badge btn-outline-camper-color btn-reply" value="${comment.reviewCommentNo}"><i class="fa fa-reply"></i>&nbsp;답글</button>
+										 			<button type="button" class="badge btn-outline-camper-delete btn-delete" value="${comment.reviewCommentNo}"><i class="fa-solid fa-circle-minus"></i>&nbsp;삭제</button>
+											 	</div>
+											</div>
+											<div class="row mx-3">
+												${comment.commentContent}
+											</div>
+										</div>
+										<div class="media mt-4">
+											<a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/xELPaag.jpg" /></a>
+											<div class="media-body">
+												<div class="row">
+													<div class="col-md d-flex my-2">
+												    	<span>길동1</span>&nbsp;<span>22-08-14</span>
+												 	</div>
+												</div>
+												<div class="row mx-1">
+													Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat voluptatem consectetur quidem modi labore tempore nostrum possimus qui nihil amet dolorum doloribus tempora. Expedita in temporibus consequuntur hic optio eos.
+					                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod earum nam quia nemo placeat delectus vitae fugit sint dolores deleniti. Optio perspiciatis dolorum commodi debitis nam totam! Inventore perspiciatis earum?     
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+				</div>
+			</c:if>
+		</div>
 	</div>
 </div>
 <script>
+/**
+ * 답글 등록폼 동적 생성
+ */
+document.querySelectorAll('.btn-reply').forEach((btn) => {
+	btn.onclick = (e) => {
+		if(${empty loginMember}) {
+			alert('로그인 후 이용할 수 있습니다.');
+			return;
+		}
+		
+		const {value : commentRef} = e.target;
+		console.log(commentRef);
+		
+		const frm = document.createElement("form");
+        frm.name = "commentReplyFrm";
+        frm.action = "${pageContext.request.contextPath}/community/review/commentEnroll";
+        frm.method = "POST";
+		
+        const outerDiv = document.createElement("div");
+        outerDiv.className = "card-body";
+        
+        const ul = document.createElement("ul");
+        ul.className= "list-group list-group-flush";
+        
+        const li = document.createElement("li");
+        li.className = "list-group-item";
+        
+        const innerDiv = document.createElement("div");
+        innerDiv.className = "form-inline mb-2";
+        
+        const p = document.createElement("p");
+        p.className = "card-text";
+        p.innerHTML = `<i class="fa-solid fa-compass"></i>&nbsp;${loginMember.getNickname()}`;
+                
+        const textarea = document.createElement("textarea");
+        textarea.className = "form-control";
+        textarea.name = "commentContent";
+        textarea.cols = "60";
+        textarea.rows = "3";
+        textarea.placeholder = "권리침해, 욕설 및 특정 대상을 비하하는 내용을 게시할 경우 이용약관 및 관련 법률에 의해 제재될 수 있습니다.";
+        
+        const inputReviewNo = document.createElement("input");
+        inputReviewNo.type = "hidden";
+        inputReviewNo.name = "reviewNo";
+        inputReviewNo.value = "${review.reviewNo}";
+        
+        const inputMemberId = document.createElement("input");
+        inputMemberId.type = "hidden";
+        inputMemberId.name = "memberId";
+        inputMemberId.value = "${not empty loginMember ? loginMember.getMemberId() : ''}";
+        
+        const inputCommentLevel = document.createElement("input");
+        inputCommentLevel.type = "hidden";
+        inputCommentLevel.name = "commentLevel";
+        inputCommentLevel.value = "2";
+       	
+        const inputCommentRef = document.createElement("input");
+        inputCommentRef.type = "hidden";
+        inputCommentRef.name = "commentRef";
+        inputCommentRef.value = commentRef;
+        
+        const inputCsrf = document.createElement("input");
+        inputCsrf.type = "hidden";
+        inputCsrf.name = "${_csrf.parameterName}";
+        inputCsrf.value = "${_csrf.token}";
+        
+        const button = document.createElement("button");
+        button.className = "btn btn-success btn-camper-color mt-3 float-right";
+        button.id = "commentReplyBtn";
+        button.innerText = "등록";
+        
+        innerDiv.append(p);
+        li.append(innerDiv);
+        li.append(textarea);
+        li.append(inputReviewNo);
+        li.append(inputMemberId);
+        li.append(inputCommentLevel);
+        li.append(inputCommentRef);
+        li.append(inputCsrf);
+        li.append(button);
+        ul.append(li);
+        outerDiv.append(ul);
+        frm.append(outerDiv);
+        
+		const target = e.target.parentElement.parentElement.parentElement;        
+        target.insertAdjacentElement('afterend', frm);		
+		e.target.onclick = null;
+	};
+});
+
+const commentReplyHandler = (e) => {
+	if(${empty loginMember}) {
+		alert('로그인 후 이용할 수 있습니다.');
+		return;
+	}
+	
+	const commentContentVal = e.target.commentContent.value.trim();
+	if(!/^(.|\n)+$/.test(commentContentVal)) {
+		alert("댓글 내용을 작성해주세요.");
+		e.target.commentContent.focus();
+		return false;
+	}
+};
+
+/**
+ * 답글 등록
+ */
+$('#commentReplyBtn').click(function() {
+	const commentData = $('[name=commentReplyFrm]').serialize();
+	commentEnroll(commentData);
+});
+
+/**
+ * 댓글 등록
+ */
+$('#commentEnrollBtn').click(function() {
+	const commentData = $('[name=commentEnrollFrm]').serialize();
+	commentEnroll(commentData);
+});
+
+function commentEnroll(commentData) {
+	const headers = {
+		"${_csrf.headerName}" : "${_csrf.token}"
+	};
+	
+	$.ajax({
+		url : '${pageContext.request.contextPath}/community/review/commentEnroll',
+		method : "POST",
+		headers,
+		data : commentData,
+		success(response) {
+			alert('댓글 등록이 완료되었습니다.');
+			$('[name=commentContent]').val('');
+			location.reload();
+		},
+		error : console.log
+	});
+};
+
 /**
  * 캠핑장 후기 삭제
  */
@@ -176,9 +394,6 @@ document.querySelector('#reviewDeleteBtn').addEventListener('click', (e) => {
 		frm.submit();
 	}
 });
-document.reviewDeleteFrm.addEventListener('submit', (e) => {
-	
-})
 
 /**
  * 이미지 클릭시 모달창 실행

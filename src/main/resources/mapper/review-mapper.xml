@@ -129,7 +129,8 @@
         m.*, 
         rp.*, 
         rr.*, 
-        rc.*
+        rc.*,
+		(select count(*) from review_comment where review_no = cr.review_no) comment_count
 	from
         campsite_review cr
                 left join member m on cr.member_id = m.member_id
@@ -179,6 +180,19 @@
 		review_no = #{reviewNo}
 </delete>
 
+<insert id="insertReviewComment">
+insert into
+	review_comment
+values (
+	seq_review_comment_no.nextval, 
+	#{reviewNo}, 
+	#{memberId}, 
+	#{commentContent}, 
+	#{commentLevel}, 
+	#{commentRef}, 
+	sysdate, null)
+</insert>
+
 <resultMap type="campsiteReviewExt" id="reviewCollectionMap">
 	<id column="review_no" property="reviewNo"/>
 	<result column="member_id" property="memberId"/>
@@ -192,6 +206,8 @@
 	<result column="created_at" property="createdAt"/>
 	<result column="updated_at" property="updatedAt"/>
 	<result column="read_count" property="readCount"/>
+	<result column="comment_count" property="commentCount"/>
+	<result column="recommend_count" property="recommendCount"/>
 	
 	<association property="member" javaType="member">
 		<id column="member_id" property="memberId"/>
@@ -225,7 +241,6 @@
   		<result column="comment_content" property="commentContent"/>
   		<result column="comment_level" property="commentLevel"/>
   		<result column="comment_ref" property="commentRef"/>
-  		<result column="comment_level" property="commentLevel"/>
   		<result column="created_at" property="createdAt"/>
 		<result column="updated_at" property="updatedAt"/>
   	</collection>

@@ -282,4 +282,15 @@ textarea[name=commentContent] {
 		width: 100%;
 	}
 }
+
+.btn-outline-camper-delete {
+	color: #c7392b;
+	border-color: #c7392b;
+}
+
+.btn-outline-camper-delete:hover {
+	color: #fff;
+    background-color: #c7392b;
+    border-color: #c7392b;
+}
 /* reviewDetail.jsp end */

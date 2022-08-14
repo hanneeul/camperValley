@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.campervalley.community.review.model.dao.ReviewDao;
 import com.kh.campervalley.community.review.model.dto.CampsiteReview;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
+import com.kh.campervalley.community.review.model.dto.ReviewComment;
 import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
 
 @Service
@@ -101,6 +102,11 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int deleteReview(int reviewNo) {
 		return reviewDao.deleteReview(reviewNo);
+	}
+	
+	@Override
+	public int insertReviewComment(ReviewComment comment) {
+		return reviewDao.insertReviewComment(comment);
 	}
 	
 }
