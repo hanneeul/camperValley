@@ -29,10 +29,12 @@
 		<a href="${pageContext.request.contextPath}/cs/faq" class="bar-faq">자주 묻는 질문</a>
 	</div>
 
+ <sec:authorize access="hasRole('ADMIN')">
 		<div class="float-right">
 			<button class="btn btn-outline-primary btn-update btn-sm" onclick="location.href='${pageContext.request.contextPath}/cs/noticeUpdate?noticeNo=${notice.noticeNo}';">수정</button>
 			<button class="btn btn-outline-danger btn-delete btn-sm" data-notice-no="${notice.noticeNo}">삭제</button>
 		</div>
+</sec:authorize>
 
 		<div class="container" style="display: inline">
 

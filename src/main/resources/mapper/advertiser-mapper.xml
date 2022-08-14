@@ -242,4 +242,28 @@
 	</selectKey>
 </insert>
 
+<select id="selectAdvertiserByMemberId" resultType="advertiser">
+	select
+		ader.*
+	from
+		advertiser ader
+			left join (select * from authority where auth = 'ROLE_AD') a
+				on ader.member_id = a.member_id
+			join member m
+				on ader.member_id = m.member_id
+	where
+		withdrawal = 'N'
+		and ader.member_id = #{memberId}
+</select>
+
+<select id="checkBalanceAndCpc" resultType="_int">
+	select
+		(money.balance - #{adCpc}) diff
+	from
+		advertisement ad
+			join admoney money
+				using(advertiser_no)
+	where ad.advertisement_no = #{advertisementNo}
+</select>
+
 </mapper>

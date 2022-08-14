@@ -58,10 +58,12 @@
                         <div class="a">
                         <span class="icon_a ml-2" >A</span>
                         <div style="margin-left: 65px; margin-top: -28px;">${list.content}</div>
+                         <sec:authorize access="hasRole('ADMIN')">
                         <div class="faq-btn mt-3 mb-2" style="text-align: center;">
 								<button class="btn-update btn btn-outline-primary btn-sm" value="${list.noticeNo}">수정</button>
 								<button class="btn-delete btn-sm btn btn-outline-danger" data-notice-no="${list.noticeNo}">삭제</button>	
 							</div>
+						</sec:authorize>
                         </div>
                     </li>
                     </c:forEach>
@@ -69,7 +71,9 @@
 
 		
 </div>
+ <sec:authorize access="hasRole('ADMIN')">
 <button type="button" class="mr-2 btn btn-primary btn-sm float-right" onclick="location.href='${pageContext.request.contextPath}/cs/faqEnroll';">글등록</button>
+</sec:authorize>
 </div> 
 </div>
     	<div class="mt-5" id="pageBar">${pagebar}</div>

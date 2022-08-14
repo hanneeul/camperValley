@@ -14,12 +14,14 @@ import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
+import com.kh.campervalley.mypage.advertiser.model.dto.Advertiser;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.BizStatus;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -41,7 +43,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 
 		return result;
 	}
-	
+
 	@Override
 	public List<AdvertiserExt> selectAdvertiserList(int cPage, int numPerPage) {
 		int offset = (cPage - 1) * numPerPage;
@@ -49,7 +51,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return advertiserDao.selectAdvertiserList(rowBounds);
 	}
-	
+
 	@Override
 	public List<AdvertiserExt> selectAdvertiserFilteredList(Map<String, Object> param, int cPage, int numPerPage) {
 		int offset = (cPage - 1) * numPerPage;
@@ -57,17 +59,17 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return advertiserDao.selectAdvertiserFilteredList(param, rowBounds);
 	}
-	
+
 	@Override
 	public int selectTotalAdvertiser() {
 		return advertiserDao.selectTotalAdvertiser();
 	}
-	
+
 	@Override
 	public int selectFilteredTotalAdvertiser(Map<String, Object> param) {
 		return advertiserDao.selectFilteredTotalAdvertiser(param);
 	}
-	
+
 	@Override
 	public LicenseFile selectOneLicenseFile(int no) {
 		return advertiserDao.selectOneLicenseFile(no);
@@ -77,22 +79,22 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	@Override
 	public int updateAdvertiserPermission(int advertiserNo, String memberId) {
 		int result = advertiserDao.updateAdvertiserStatus(advertiserNo);
-		
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberId", memberId);
 		map.put("auth", "ROLE_AD");
 		result = advertiserDao.insertAuthority(map);
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public int updateAdvertiserPause(int advertiserNo, String memberId) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberId", memberId);
 		map.put("auth", "ROLE_AD");
 		int result = advertiserDao.deleteAuthority(map);
-		
+
 		return result;
 	}
 
@@ -100,12 +102,12 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	public AdvertiserMoneyExt selectOneAdvertiserMoney(String memberId) {
 		return advertiserDao.selectOneAdvertiserMoney(memberId);
 	}
-	
+
 	@Override
 	public Admoney selectOneAdmoney(int advertiserNo) {
 		return advertiserDao.selectOneAdmoney(advertiserNo);
 	}
-	
+
 	@Override
 	public List<Pay> selectNotCanceledPay(Map<String, Object> param) {
 		return advertiserDao.selectNotCanceledPay(param);
@@ -123,7 +125,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	public List<Pay> selectPayByMerchantUidList(List<String> merchantUidList) {
 		return advertiserDao.selectPayByMerchantUidList(merchantUidList);
 	}
-	
+
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int refundAdmoney(Pay pay) {
@@ -131,7 +133,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		result = advertiserDao.updateAdmoneyRefund(pay);
 		return result;
 	}
-	
+
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int insertAdvertisement(AdvertisementExt advertisement) {
@@ -157,7 +159,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 
 		return result;
 	}
-	
+
 	@Override
 	public List<Advertisement> selectAdListByAdvertiserNo(int advertiserNo, int cPage, int numPerPage) {
 		int offset = (cPage - 1) * numPerPage;
@@ -165,9 +167,50 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return advertiserDao.selectAdListByAdvertiserNo(advertiserNo, rowBounds);
 	}
-	
+
 	@Override
 	public int selectTotalAdvertisement(int advertiserNo) {
 		return advertiserDao.selectTotalAdvertisement(advertiserNo);
+	}
+
+	@Override
+	public int deleteAdvertisement(int advertisementNo) {
+		return advertiserDao.updateDelAtAdvertisement(advertisementNo);
+	}
+
+	@Override
+	public Advertiser selectAdvertiserByMemberId(@NonNull String memberId) {
+		return advertiserDao.selectAdvertiserByMemberId(memberId);
+	}
+
+	@Override
+	public boolean checkBalanceAndCpc(Advertisement advertisement, String memberId) {
+		Advertiser advertiser = advertiserDao.selectAdvertiserByMemberId(memberId);
+		advertisement.setAdvertiserNo(advertiser.getAdvertiserNo());
+
+		int diff = advertiserDao.checkBalanceAndCpc(advertisement);
+		log.debug("diff = {}", diff);
+		boolean result;
+		if (diff >= 0)
+			result = true;
+		else
+			result = false;
+		return result;
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int updateAdvertisement(Advertisement advertisement) {
+		int result = 0;
+
+		if (advertisement.isAdStatus()) {
+			if (advertiserDao.checkTodayPerformanceCnt(advertisement.getAdvertisementNo()) == 0) {
+				result = advertiserDao.insertAdPerformance(advertisement.getAdvertisementNo());
+			}
+		}
+
+		result = advertiserDao.updateAdvertisement(advertisement);
+
+		return result;
 	}
 }

@@ -1,3 +1,6 @@
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.kh.campervalley.community.review.model.dto.CampsiteReviewExt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -18,25 +21,49 @@
 	<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
 	</div>
 	<hr />
+	<sec:authentication property="principal" var="loginMember"/>
 	<div class="d-flex px-2 review-detail-heading font-weight-bold row">
-		<span class="col-md text-left ml-3"><i class="fa-solid fa-compass"></i>&nbsp;캠퍼길동</span>
-		<span class="col-md text-right mr-3">2022-07-18</span>
+		<span class="col-md text-left ml-3">
+			<i class="fa-solid fa-compass"></i>&nbsp;
+			<c:if test="${not empty loginMember && loginMember.memberId eq review.memberId}">
+				<a 
+					class="text-decoration-none" 
+					onMouseOver="this.innerHTML='마이페이지 바로가기'" 
+					onMouseOut="this.innerHTML='${review.member.nickname}'" 
+					href="${pageContext.request.contextPath}/mypage/info/main">
+					${review.member.nickname} 
+				</a>
+			</c:if>
+			<c:if test="${not empty loginMember && loginMember.memberId ne review.memberId}">
+				<a 
+					class="text-decoration-none" 
+					onMouseOver="this.innerHTML='${review.member.nickname}님의 게시글 보러가기'" 
+					onMouseOut="this.innerHTML='${review.member.nickname}'" 
+					href="${pageContext.request.contextPath}/community/review/reviewList?searchType=memberId&searchKeyword=${review.member.nickname}">
+					${review.member.nickname}
+				</a>
+			</c:if>
+		</span>
+		<span class="col-md text-right mr-3">
+			<fmt:parseDate value="${review.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+			<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>&nbsp;(조회수:${review.readCount})
+		</span>
 	</div>
 	<hr />
 	<div class="review-detail-content-wrap m-auto mb-4 pb-3">
 		<div class="detail-title py-3 my-2">
-			<h5 class="font-weight-bold m-0">○○야영장 후기</h5>
+			<h5 class="font-weight-bold m-0">${review.title}</h5>
 		</div>
 		<div class="detail-content-wrap shadow p-4 bg-light rounded font-weight-bold row">
-			<div class="detail-content-table col">
-				<table class="table table-borderless">
+			<div class="detail-content-table col m-auto">
+				<table class="table table-borderless m-0">
 					<tr>
 						<th>캠핑장명</th>
-						<td>○○야영장</td>
+						<td>${review.facltNm}</td>
 					</tr>
 					<tr>
 						<th>이용기간</th>
-						<td>08/04/2022 - 08/04/2022</td>
+						<td>${review.stay}</td>
 					</tr>
 					<tr>
 						<th>평점</th>
@@ -47,52 +74,67 @@
 				        		<span class="fa fa-star-o" data-rating="3"></span>
 				        		<span class="fa fa-star-o" data-rating="4"></span>
 				        		<span class="fa fa-star-o" data-rating="5"></span>
-				        		<input type="hidden" class="review-grade" id="reviewGrade" name="reviewGrade" value="4">
+				        		<input type="hidden" class="review-grade" id="reviewGrade" name="reviewGrade" value="${review.reviewGrade}">
 				      		</div>
 						</td>
 					</tr>
 				</table>
 			</div>
 			<div class="detail-tag-list col">
-				<ul class="text-center">
-					<li>#시설물이 깨끗해요.</li>
-					<li>#사장님이 친절해요.</li>
-					<li>#놀이시설이 많아요.</li>
+				<ul class="text-center p-0 m-0">
+					<c:forEach items="${review.merit}" var="merit">
+						<li class="badge badge-yellow my-2">#${merit}</li>
+						<br />
+					</c:forEach>
 				</ul>
 			</div>
 		</div>
-		<!-- images swiper -->
-		<div class="swiper-container detail-photo-list">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/images/campsite/campsiteSearchBanner.jpg"></div>
-				<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/images/campsite/campsiteSearchBanner.jpg"></div>
-				<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/images/campsite/campsiteSearchBanner.jpg"></div>
-				<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/images/campsite/campsiteSearchBanner.jpg"></div>
-				<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/images/campsite/campsiteSearchBanner.jpg"></div>
-				<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/images/campsite/campsiteSearchBanner.jpg"></div>
-				<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/images/campsite/campsiteSearchBanner.jpg"></div>
+		<c:if test="${not empty review.photos}">
+			<c:forEach items="${review.photos}" var="photo">
+				<!-- Photo Swiper -->
+				<div class="swiper-container detail-photo-list">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide"><img id="photo" src="${pageContext.request.contextPath}/resources/upload/community/review/${photo.renamedFilename}" alt="${photo.originalFilename}"></div>
+					</div>
+					<div class="swiper-button-next"></div>
+					<div class="swiper-button-prev"></div>
+				</div>
+			</c:forEach>
+			<!-- Photo Modal -->
+			<div id="photoModal" class="modal photo-modal">
+			  	<span class="modal-close">&times;</span>
+			  	<img class="modal-content" id="photoModalContent">
 			</div>
-			<!-- swiper-button -->
-			<div class="swiper-button-next"></div>
-			<div class="swiper-button-prev"></div>
-			<!-- swiper-pagination -->
-			<!-- <div class="swiper-pagination"></div> -->
-		</div>
+		</c:if>
 		<div class="detail-content p-4 bg-light rounded">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis ad dolore porro asperiores mollitia nam assumenda alias id quos incidunt similique fugiat modi totam corrupti quia perspiciatis et qui aperiam.</textarea>
+			${review.content}
 		</div>
+		<form:form 
+			name="reviewDeleteFrm" 
+			method="POST" 
+			action="${pageContext.request.contextPath}/community/review/reviewDelete">
+			<input type="hidden" name="reviewNo" id="reviewNo" value="${review.reviewNo}" />
+		</form:form>
 		<!-- status가 'Y'일 경우 active 활성화 -->
-		<div class="text-center mt-3 pt-3">
-			<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue">
-				<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천하기
-			</button>
-		</div>
+		<c:if test="${not empty loginMember && loginMember.memberId ne review.memberId}">
+			<div class="text-center mt-3 pt-3">
+				<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue">
+					<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천하기
+				</button>
+			</div>
+		</c:if>
 	</div>
 	<hr />
-	<div class="text-center m-3 p-3">
-		<input type="submit" class="btn btn-outline-success btn-outline-camper-color px-4" value="후기수정" >
-		<input type="reset" class="btn btn-outline-danger btn-outline-camper-red ml-1 px-4" value="후기삭제">
-	</div>
+	<c:if test="${not empty loginMember && loginMember.memberId eq review.memberId}">
+		<div class="text-center m-3 p-3">
+			<input 
+				type="submit" 
+				class="btn btn-outline-success btn-outline-camper-color px-4" 
+				onclick="location.href='${pageContext.request.contextPath}/community/review/reviewUpdate?reviewNo=${review.reviewNo}';" 
+				value="후기수정">
+			<input type="button" class="btn btn-outline-danger btn-outline-camper-red ml-1 px-4" id="reviewDeleteBtn" value="후기삭제">
+		</div>
+	</c:if>
 	<div class="review-detail-comment-wrap m-auto py-5">
 		<form
 			name="commentEnrollFrm"
@@ -100,15 +142,17 @@
 			method="POST">
 			<div class="card my-3">
 		  		<div class="card-header font-weight-bold m-0">
-		    		<i class="fa-solid fa-comments camper-color"></i>&nbsp;comments (1)
+		    		<i class="fa-solid fa-comments camper-color"></i>&nbsp;comments (${review.commentCount})
 		  		</div>
 		  		<div class="card-body">
 		  			<ul class="list-group list-group-flush">
 						<li class="list-group-item">
 							<div class="form-inline mb-2">
-					    		<p class="card-text"><i class="fa-solid fa-compass"></i>&nbsp;캠핑족장</p>
+					    		<p class="card-text">
+					    			<i class="fa-solid fa-compass"></i>&nbsp;${review.member.nickname}
+					    		</p>
 							</div>
-							<textarea class="form-control" name="commentContent" cols="60" rows="3" placeholder="권리침해, 욕설 및 특정 대상을 비하하는 내용을 게시할 경우 이용약관 및 관련 법률에 의해 제재될 수 있습니다."></textarea>
+							<textarea class="form-control" name="commentContent" cols="60" rows="3" placeholder="권리침해, 욕설 및 특정 대상을 비하하는 내용을 게시할 경우 이용약관 및 관련 법률에 의해 제재될 수 있습니다." required></textarea>
 							<button type="submit" class="btn btn-success btn-camper-color mt-3 float-right" id="commentEnrollBtn">등록</button>
 					    </li>
 					</ul>
@@ -118,6 +162,40 @@
 	</div>
 </div>
 <script>
+/**
+ * 캠핑장 후기 삭제
+ */
+document.querySelector('#reviewDeleteBtn').addEventListener('click', (e) => {
+	const bool = confirm('정말 삭제하시겠습니까?');
+	
+	if(!bool) {
+		alert('삭제를 취소했습니다.');
+	}
+	else {
+		const frm = document.reviewDeleteFrm;
+		frm.submit();
+	}
+});
+document.reviewDeleteFrm.addEventListener('submit', (e) => {
+	
+})
+
+/**
+ * 이미지 클릭시 모달창 실행
+ */
+let photoModal = document.getElementById("photoModal");
+let photo = document.getElementById("photo");
+let photoModalContent = document.getElementById("photoModalContent");
+photo.onclick = function() {
+	photoModal.style.display = "block";
+	photoModalContent.src = this.src;
+};
+
+let modalClose = document.getElementsByClassName("modal-close")[0];
+modalClose.addEventListener('click', () => {
+	photoModal.style.display = "none";
+});
+
 /**
  * 리뷰평점 개수 제어
  */
