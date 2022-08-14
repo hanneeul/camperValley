@@ -1,3 +1,6 @@
+<%@page import="org.springframework.security.core.authority.SimpleGrantedAuthority"%>
+<%@page import="java.util.List"%>
+<%@page import="com.kh.campervalley.member.model.dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,11 +11,45 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/admin/admin.css" />
+<link href="/path/to/bootstrap.min.css" rel="stylesheet">
+<link href="dist/css/component-custom-switch.css" rel="stylesheet">
 <style>
 .col-form-label {
 	width: 80px;
 	margin-left: 100px;
+	}
+.toggle-btn {
+  width: 40px;
+  height: 21px;
+  background: grey;
+  border-radius: 50px;
+  padding: 3px;
+  cursor: pointer;
+  -webkit-transition: all 0.3s 0.1s ease-in-out;
+  -moz-transition: all 0.3s 0.1s ease-in-out;
+  -o-transition: all 0.3s 0.1s ease-in-out;
+  transition: all 0.3s 0.1s ease-in-out;
 }
+
+.toggle-btn > .inner-circle {
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  border-radius: 50%;
+  -webkit-transition: all 0.3s 0.1s ease-in-out;
+  -moz-transition: all 0.3s 0.1s ease-in-out;
+  -o-transition: all 0.3s 0.1s ease-in-out;
+  transition: all 0.3s 0.1s ease-in-out;
+}
+
+.toggle-btn.active {
+  background: #639A67 !important;
+}
+
+.toggle-btn.active > .inner-circle {
+  margin-left: 19px;
+}
+
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
@@ -29,68 +66,35 @@
 		<table class="table text-center" id="tb-member">
 			<thead>
 				<tr>
+					<th>권한</th>
+					<th>아이디</th>
 					<th>이름</th>
 					<th>닉네임</th>
-					<th>권한</th>
 					<th>이메일</th>
+					<th>회원가입일</th>
 					<th>상태</th>
-					<th>최근 접속일</th>
-					<th></th>
+					<th class="col-sm-1"></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>홍길동</td>
-					<td>동그랑땡</td>
-					<td>ROLE_USER</td>
-					<td>honggd@naver.com</td>
-					<td>블랙</td>
-					<td>2022.08.03</td>
+			<c:forEach items="${list}" var="list" varStatus="vs">
+				<tr data-member-id="${list.memberId}" data-name="${list.name}" data-nickname="${list.nickname}" data-email="${list.email}" data-tel="${list.tel}">
+					<td>${list.authorities}</td>
+					<td>${list.memberId}</td>
+					<td>${list.name}</td>
+					<td>${list.nickname}</td>
+					<td>${list.email}</td>
 					<td>
-						<button type="button" class="btn-update" data-toggle="modal" data-target="#adminMemberModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
+						<fmt:parseDate value="${list.enrollDate}" pattern="yyyy-MM-dd'T'HH:mm" var="enrollDate"/>
+						<fmt:formatDate value="${enrollDate}" pattern="yyyy-MM-dd"/>
+					</td>
+					<td>블랙</td>
+					<td style="padding: 6px;">
+						<button type="button" class="btn btn-outline-camper-color btn-sm btn-update" name="btn-update" data-toggle="modal" data-target="#adminMemberModal" value="">
+							수정</button>
 					</td>
 				</tr>
-				<tr>
-					<td>홍길동</td>
-					<td>동그랑땡</td>
-					<td>ROLE_USER</td>
-					<td>honggd@naver.com</td>
-					<td>블랙</td>
-					<td>2022.08.03</td>
-					<td>
-						<button type="button" class="btn-update" data-toggle="modal" data-target="#adminMemberModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-					</td>
-				</tr>
-				<tr>
-					<td>홍길동</td>
-					<td>동그랑땡</td>
-					<td>ROLE_USER</td>
-					<td>honggd@naver.com</td>
-					<td>블랙</td>
-					<td>2022.08.03</td>
-					<td>
-						<button type="button" class="btn-update" data-toggle="modal" data-target="#adminMemberModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-					</td>
-				</tr>
-				<tr>
-					<td>홍길동</td>
-					<td>동그랑땡</td>
-					<td>ROLE_USER</td>
-					<td>honggd@naver.com</td>
-					<td>블랙</td>
-					<td>2022.08.03</td>
-					<td>
-						<button type="button" class="btn-update" data-toggle="modal" data-target="#adminMemberModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-					</td>
-				</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>
@@ -106,53 +110,69 @@
 		  <span aria-hidden="true" style="color:#fff">&times;</span>
 		</button>
 	  </div>
+		<form:form name="adminMemberUpdateFrm" method="post">
 	  <div class="modal-body pb-1">
-		<form name="adminMemberUpdateFrm">
 			<div class="form-group mt-4">
 			  <label for="memberId" class="col-form-label">아이디</label>
-			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="memberId" value="honggd" readonly>
+			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="memberId" value="" readonly>
 			</div>
 			<div class="form-group">
 			  <label for="name" class="col-form-label">이름</label>
-			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="name" value="홍길동"></input>
+			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="name" value=""></input>
 			</div>
 			<div class="form-group">
 			  <label for="nickname" class="col-form-label">닉네임</label>
-			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="nickname" value="동그랑땡"></input>
+			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="nickname" value=""></input>
 			</div>
 			<div class="form-group">
 			  <label for="email" class="col-form-label">이메일</label>
-			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="email" value="honggd@google.com"></input>
+			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="email" value=""></input>
 			</div>
 			<div class="form-group">
 			  <label for="phone" class="col-form-label">전화번호</label>
-			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="phone" value="010-1234-1234"></input>
+			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="tel" value=""></input>
 			</div>
-			 <div class="form-group">
+			  <div class="form-group">
 					<label for="role" class="col-form-label">권한</label>
-					<select class="member-role">
-						<option value="">ROLE_USER</option>
-						<option value="">ROLE_ADMIN</option>
-					</select>
-				  </div>
+						<input type="checkbox" name="authority" id="" value="ROLE_USER"/>
+						<label for="role-user-">일반</label>
+						&nbsp;
+						<input type="checkbox" name="authority" id="" value="ROLE_ADMIN"/>
+						<label for="role-user-">관리자</label>
+		  </div>	
 			<div class="form-group">
 			  <p class="form-check form-check-inline mr-4 ml-6" style="margin-left: 100px;">블랙리스트</p>
-			  <div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-				  <label class="form-check-label" for="inlineRadio1">일반</label>
-				</div>
-				<div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-				  <label class="form-check-label" for="inlineRadio2">블랙</label>
-				</div>
+			  
+			  <div class="form-check form-check-inline" style="top: -15px;">
+					   <div class="custom-control custom-switch">
+					    <input type="checkbox" class="custom-control-input" id="switch1">
+					    <label class="custom-control-label" for="switch1"></label>
+					  </div>
+				</div> 
 			</div>
-		  </form>
+			
 		</div>
+		
+
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-		<button type="button" class="btn btn-primary" id="btn-member-update">수정</button>
+		<button type="button" class="btn btn-primary btn-member-update" id="modalSubmit">수정</button>
 	  </div>
 	</div>
+		  </form:form>
   </div>
 </div>
+<script>
+$(document).ready(function(){
+
+	$('.toggle-btn').click(function() {
+	$(this).toggleClass('active').siblings().removeClass('active');
+	});
+
+	});
+</script>
+
+<script>
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

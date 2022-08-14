@@ -17,16 +17,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.campervalley.admin.model.service.AdminService;
 import com.kh.campervalley.common.CamperValleyUtils;
+import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
-import com.kh.campervalley.mypage.advertiser.model.dto.BizStatus;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 import com.kh.campervalley.mypage.advertiser.model.service.AdvertiserService;
 
@@ -38,6 +41,9 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminController {
 	
 	@Autowired
+	AdminService adminService;
+	
+	@Autowired
 	ServletContext application;
 
 	@Autowired
@@ -47,7 +53,32 @@ public class AdminController {
 	public void dashboard() {}
 
 	@GetMapping("/memberList")
-	public void memberList() {}
+	public ModelAndView memberList(ModelAndView mav) {
+		try {
+			List<Member> list = adminService.selectMemberList();
+			log.debug("list = {}", list);
+		
+			mav.addObject("list", list);
+			mav.setViewName("admin/memberList");
+		} catch (Exception e) {
+			log.error("회원 관리 오류", e);
+			throw e;
+		}
+		return mav;
+	}
+	
+	@PostMapping("/memberUpdate")
+	public String memberUpdate(@RequestParam Member member, RedirectAttributes redirectAttr) {
+		try {
+			int result = adminService.memberUpdate(member.getMemberId());
+			redirectAttr.addFlashAttribute("msg", "회원 정보가 수정되었습니다.");
+		} catch (Exception e) {
+			log.error("회원 정보 수정 오류", e);
+		}
+		return "admin/memberList";
+	}
+	
+	
 	
 	// --------------------- EJ start
 	@Autowired

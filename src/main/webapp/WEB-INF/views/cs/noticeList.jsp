@@ -57,7 +57,9 @@
 		</c:forEach>
 		</tbody>
 	</table>
+	 <sec:authorize access="hasRole('ADMIN')">
 	<button type="button" class="btn btn-primary btn-sm float-right" id="btn-nt-enroll" onclick="location.href='${pageContext.request.contextPath}/cs/noticeEnroll';">글등록</button>
+	</sec:authorize>
 </div>
 </div>
 <div class="mt-5" id="pageBar">${pagebar}</div>

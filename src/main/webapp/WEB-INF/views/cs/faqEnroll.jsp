@@ -36,13 +36,15 @@
 			<td><textarea rows="10" class="form-control" name="content" style="resize: none;"></textarea></td>
 		</tr>
 		<tr>
-			<th>작성자</th>                                    
-			<td><input type="text" class="form-control" name="memberId" value="" readonly></td>
+			<th>작성자</th>
+			<sec:authentication property="principal" var="loginMember" scope="page"/>                                    
+			<td><input type="text" class="form-control" value="${loginMember.nickname}" readonly></td>
 		</tr>
 	</table>
 	<div class="d-flex justify-content-center">
 	<button class="btn btn-secondary btn-sm" type="button" style="margin-right:10px;" onclick="location.href='${pageContext.request.contextPath}/cs/faq';">취소</button>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	<input type="hidden" name="memberId" value="${loginMember.memberId}" /> 
 	<button class="btn btn-primary btn-sm" type="submit">등록하기</button>
 	</div>
 </form>
