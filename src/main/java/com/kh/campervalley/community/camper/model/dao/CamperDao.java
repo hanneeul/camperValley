@@ -1,6 +1,7 @@
 package com.kh.campervalley.community.camper.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -17,8 +18,7 @@ public interface CamperDao {
 	@Select("select c.*, (select nickname from member where member_id = c.member_id) nickname from camper c order by c.camper_no desc")
 	List<CamperExt> selectCamperList(RowBounds rowBounds);
 
-	@Select("select * from camper order by camper_no desc")
-	List<Camper> selectMoreCamperList(RowBounds rowBounds);
+	List<Camper> selectMoreCamperList(RowBounds rowBounds, Map<String, Object> param);
 
 	CamperExt selectCamperOne(int camperNo);
 

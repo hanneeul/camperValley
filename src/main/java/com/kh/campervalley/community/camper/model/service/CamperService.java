@@ -1,6 +1,7 @@
 package com.kh.campervalley.community.camper.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.campervalley.community.camper.model.dto.Camper;
 import com.kh.campervalley.community.camper.model.dto.CamperExt;
@@ -13,7 +14,7 @@ public interface CamperService {
 
 	List<CamperExt> selectCamperList(int numPerPage);
 
-	List<Camper> selectMoreCamperList(int cPage, int numPerPage);
+	List<Camper> selectMoreCamperList(int cPage, int numPerPage, Map<String, Object> param);
 
 	CamperExt selectCamperOne(int camperNo);
 	

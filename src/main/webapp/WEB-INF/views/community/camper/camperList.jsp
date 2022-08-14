@@ -42,7 +42,6 @@
 					모집중 게시글만 조회
 				</label>
 				<div id="boardBoxSection">
-					<%-- <c:set var="loginMember" value="<sec:authentication property ="principal.username"/>"/> --%>
 					<%-- <c:forEach var="camper" items="${camperList}" varStatus="vs">
 						<div class="boardBox my-4 p-4" onclick="renderBoardBoxDetail(this);">
 							<c:if test="${camper.getMemberId()} === ${loginMember}">
@@ -83,28 +82,26 @@
 			<div class="pl-5">
 				<div id="detailSection" class="boardBoxSelect p-5 mb-4 d-flex flex-column justify-content-between">
 					<div id="detailHeader" class="pb-3">
-						<div id="title" class="font-weight-bold text-25">${camperList[0].getTitle()}</div>
-						<div id="nickname" class="font-weight-bold text-15 text-right py-3">${camperList[0].getNickname()}님</div>
+						<div id="title" class="font-weight-bold text-25"></div>
+						<div id="nickname" class="font-weight-bold text-15 text-right py-3"></div>
 						<div class="d-flex justify-content-between">
 							<div>
-								<div id="area" class="font-weight-bold text-13">${camperList[0].getArea()}</div>
-								<fmt:parseDate value="${camperList[0].getDepartureDate()}" pattern="yyyy-MM-dd" var="departureDateDetail"/>
-								<fmt:parseDate value="${camperList[0].getArrivalDate()}" pattern="yyyy-MM-dd" var="arrivalDateDetail"/>
-								<div id="dates" class="font-weight-bold text-13"><fmt:formatDate value="${departureDateDetail}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${arrivalDateDetail}" pattern="yyyy.MM.dd"/></div>
+								<div id="area" class="font-weight-bold text-13"></div>
+								<div id="dates" class="font-weight-bold text-13"></div>
 							</div>
 							<div>
-								<div id="memberCount" class="font-weight-bold text-15 text-right text-danger">${camperList[0].getMemberCount()}명</div>
-								<div id="status" class="font-weight-bold text-13 text-right">${camperList[0].getStatus() eq "I" ? "모집중" : "모집완료"}</div>
+								<div id="memberCount" class="font-weight-bold text-15 text-right text-danger"></div>
+								<div id="status" class="font-weight-bold text-13 text-right"></div>
 							</div>
 						</div>
 					</div>
 					<div id="detailBody">
 						<div class="font-weight-bold py-2">상세내용</div>
-						<div id="ctent" >${camperList[0].getContent()}</div>
+						<div id="ctent" ></div>
 						<div class="font-weight-bold py-2">모임취지</div>
-						<div id="purpose" >${camperList[0].getPurpose()}</div>
+						<div id="purpose" ></div>
 						<div class="font-weight-bold py-2">예상비용</div>
-						<div id="expectedCost">${camperList[0].getExpectedCost()}</div>
+						<div id="expectedCost"></div>
 					</div>
 					<div id="detailFooter" class="mt-4">
 						<label for="basic-url" class="text-15">오픈채팅방에서 자유롭게 소통해요!</label>
@@ -112,7 +109,7 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="basic-addon3">URL</span>
 							</div>
-						<input id="chatUrl" type="text" class="form-control bg-light" aria-describedby="basic-addon3" value="${camperList[0].getChatUrl()}" readonly>
+						<input id="chatUrl" type="text" class="form-control bg-light" aria-describedby="basic-addon3" value="" readonly>
 						</div>
 					</div>
 				</div>
@@ -122,24 +119,25 @@
 <script>
 let cPage = 1;
 
-$(document).ready(() => {
+$(document).ready(async () => {
 	$(review).removeClass("active");
 	$(camper).addClass("active");
-	renderBoardBoxMore();
+	renderBoardBoxDetail(renderBoardBoxMore());
 });
 
 
 // 모집중 게시글만 조회 toggle 클릭 시 더보기/상세보기 비동기 요청
 document.querySelector(".chk_box").addEventListener('change', ()=> {
-	const isChk = document.querySelector("#isChk").checked;
-	if(isChk) {
-		$(".chk_box > span").removeClass("off").addClass("on");
-	} else {
-		$(".chk_box > span").removeClass("on").addClass("off");
-	}
 	$("#boardBoxSection").html("");
 	cPage = 1;
-	renderBoardBoxMore();
+	// 검색어 가져와서 renderBoardBoxMore에 넘겨줄 필요
+	if(document.querySelector("#isChk").checked) {
+		$(".chk_box > span").removeClass("off").addClass("on");
+		renderBoardBoxDetail(renderBoardBoxMore()); // 체크/체크해제 시 chk값 분기처리 필요
+	} else {
+		$(".chk_box > span").removeClass("on").addClass("off");
+		renderBoardBoxDetail(renderBoardBoxMore("selectAll")); // 체크/체크해제 시 chk값 분기처리 필요
+	}
 });
 
 // 스크롤 시 게시글 더보기 비동기요청
@@ -150,15 +148,12 @@ $(document).scroll(function () {
 	if(timer) clearTimeout(timer);
 	timer = setTimeout(() => {
 		if(document.querySelector("#listSection").getBoundingClientRect().bottom < $(window).height()) {
-			renderBoardBoxMore();
 			cPage++;
+			if(document.querySelector("#isChk").checked) renderBoardBoxMore();
+			else renderBoardBoxMore("selectAll");
 		}
 	}, 500);
 });
-
-
-// boardBoxSelect class 추가
-/* const renderBoardBox */
 
 // camperNo로 상세보기 비동기 요청처리
 const renderBoardBoxDetail = (boardBox) => {
@@ -188,24 +183,23 @@ const renderBoardBoxDetail = (boardBox) => {
 		},
 		error: console.log
 	});
-	
 }
 
-const renderBoardBoxMore = () => {
-	console.log(cPage);
+const renderBoardBoxMore = (isChk) => {
 	$.ajax({
 		url: "${pageContext.request.contextPath}/community/camper/moreCamperList",
-		data: {cPage},
+		data: {cPage, isChk},
+		async: false,
 		success(response) {
 			const {camperList} = response;
 			for(let i = 0; i < camperList.length; i++) {
 				const $boardBox = $('<div class="boardBox my-4 p-4" onclick="renderBoardBoxDetail(this);"></div>');
-				if(${not empty loginMember}) {
+				// 현재 로그인된 아이디로 분기처리 필요
+				if(${not empty loginMember}) { // 동일하지 않을 때
 					const $dropdown = $('<div class="drop-down drop-down-1"></div>');
 					const $selected = $('<div class="selected text-right"></div>');
 					const $icon = $('<i class="fa-solid fa-ellipsis-vertical d-block"></i>');
-				} else {
-					// 로그인 아이디와 동일할 시 dropdown
+				} else { // 동일할 때
 					const $drop = $('<div class="drop-down drop-down-1"></div>');
 					const $dropDiv1 = $('<div class="selected text-right"></div>');
 					const $dropI = $('<i class="fa-solid fa-ellipsis-vertical d-block" onclick="dropdown(this);"></i>');
@@ -248,6 +242,8 @@ const renderBoardBoxMore = () => {
 		},
 		error: console.log
 	});
+	// boardBoxSection의 첫번째 요소 리턴
+	return $("#boardBoxSection").find(":first");
 }
 
 const f = (n) => n < 10 ? "0" + n : n;

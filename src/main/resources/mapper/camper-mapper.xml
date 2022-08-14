@@ -25,6 +25,19 @@
 		default)
 </insert>
 
+<select id="selectMoreCamperList" resultType="Camper">
+	select 
+		* 
+	from 
+		camper
+	<if test="isChk == null or isChk == ''">
+	where
+		status = 'I'
+	</if>
+	order by
+		camper_no desc
+</select>
+
 <select id="selectCamperOne" resultType="CamperExt">
 	select 
 		c.*,

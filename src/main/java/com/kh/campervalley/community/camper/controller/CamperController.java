@@ -1,6 +1,8 @@
 package com.kh.campervalley.community.camper.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,26 +29,18 @@ public class CamperController {
 	private CamperService camperService;
 	
 	@GetMapping("/camperList")
-	public ModelAndView camperList(ModelAndView mav) {
-		try {
-			int numPerPage = CamperService.CAMPER_NUM_PER_PAGE;
-			List<CamperExt> camperList = camperService.selectCamperList(numPerPage);
-			mav.addObject("camperList", camperList);
-			mav.setViewName("/community/camper/camperList");
-		} catch(Exception e) {
-			log.error("캠퍼모집 목록 조회 오류", e);
-			throw e;
-		}
-		return mav;
-	}
+	public void camperList() {}
 	
 	// 비동기 요청처리
 	@GetMapping("/moreCamperList")
-	public String moreCamperList(@RequestParam int cPage, Model model) {
+	public String moreCamperList(@RequestParam int cPage, @RequestParam(required = false) String isChk, Model model) {
 		try {
-			log.debug("cPage = {}", cPage);
+			Map<String, Object> param = new HashMap<>();
+			
+			param.put("isChk", isChk);
+			log.debug("isChk = {}", isChk);
 			int numPerPage = CamperService.CAMPER_NUM_PER_PAGE;
-			List<Camper> camperList = camperService.selectMoreCamperList(cPage, numPerPage);
+			List<Camper> camperList = camperService.selectMoreCamperList(cPage, numPerPage, param);
 			model.addAttribute("camperList", camperList);
 			log.debug("camperList = {}", camperList);
 		} catch(Exception e) {
