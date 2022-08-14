@@ -8,7 +8,7 @@ button.btn-primary, button.btn-primary:hover {
 
 /* footer 임시 */
 footer {
-	margin-top: 70px;
+	margin-top: 200px;
 }
 
 #admin-container {
@@ -102,10 +102,10 @@ input:focus {
 	outline: none;
 }
 
-.btn-update {
+/* .btn-update {
 	border: none;
 	background-color: #fff;
-}
+} */
 
 .btn-update:hover {
 	background-color: #639A67;
@@ -113,7 +113,7 @@ input:focus {
 }
 
 #tb-member th, #tb-member td {
-	padding: 9px;
+	padding: 13px;
 	font-size: 0.870rem;
 }
 
