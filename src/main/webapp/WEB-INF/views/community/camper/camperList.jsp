@@ -11,20 +11,19 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
-
 	<div class="container-md campsite-review-list-wrap pt-2">
 		<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
 			<div class="col-md float-right">
 				<div class="input-group align-items-center community-search-enroll">
 			    	<select id="searchType" class="custom-select btn-outline-success btn-outline-camper-color">
 						<option value="" disabled selected>선택</option>
-						<option value="memberId">작성자</option>
+						<option value="member_id" ${param.searchType }>작성자</option>
 					   	<option value="title">제목</option>
 					    <option value="content">내용</option>
 					</select>
-					<input type="text" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
+					<input type="text" id="searchKeyword" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn" value="${param.searchKeyword}">
 				  	<div class="input-group-append">
-				    	<button class="btn btn-outline-success btn-outline-camper-color" type="button" id="communitySearchBtn">
+				    	<button id="searchBtn" class="btn btn-outline-success btn-outline-camper-color" type="button" id="communitySearchBtn">
 				    		<i class="fa-solid fa-magnifying-glass camper-color"></i>
 				    	</button>
 				  	</div>
@@ -36,73 +35,37 @@
 		</div>
 		<div class="pl-3 d-flex justify-content-between mt-4">
 			<div id="listSection">
-				<label for="toggle" class="chk_box">
-					<input type="checkbox" id="toggle" checked="checked" />
+				<label for="isChk" class="chk_box">
+					<input type="checkbox" id="isChk" checked="checked" />
 					<span class="on"></span>
 					모집중 게시글만 조회
 				</label>
-				<%-- <c:set var="loginMember" value="<sec:authentication property ="principal.username"/>"/> --%>
-				<c:forEach var="camper" items="${camperList}" varStatus="vs">
-					<div class="${vs.first ? "boardBoxSelect" : "boardBox"} my-4 p-4" onclick="selectBoardBox(this);">
-						<c:if test="${camper.getMemberId()} === ${loginMember}">
-							<div class="drop-down drop-down-1">
-								<div class="selected text-right">
-									<i class="fa-solid fa-ellipsis-vertical d-block" onclick="dropdown(this);"></i>
-								</div>
-								<div class="options text-right">
-									<ul class="border-top border-dark">
-										<li onclick="location.href='${pageContext.request.contextPath}/community/camper/camperUpdate'">수정</li>
-										<li>삭제</li>
-									</ul>
-								</div>
-							</div>
-						</c:if>
-						<div class="boardBoxSelectInfo">
-							<div class="font-weight-bold text-20 pb-4">${camper.getTitle()}</div>
-							<div class="font-weight-bold text-13">${camper.getArea()}</div>
-							<fmt:parseDate value="${camper.getDepartureDate()}" pattern="yyyy-MM-dd" var="departureDate"/>
-							<fmt:parseDate value="${camper.getArrivalDate()}" pattern="yyyy-MM-dd" var="arrivalDate"/>
-							
-							<div class="font-weight-bold text-13"><fmt:formatDate value="${departureDate}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${arrivalDate}" pattern="yyyy.MM.dd"/></div>
-							<div class="py-4">
-								<c:if test="${camper.getContent().length() > 110}">
-									${fn:substring(camper.getContent(), 0, 110)}...
-								</c:if>
-								<c:if test="${camper.getContent().length() <= 110}">
-									${camper.getContent()}
-								</c:if>
-							</div>
-							<div class="font-weight-bold text-13">${camper.getStatus() eq "I" ? "모집중" : "모집완료"}</div>
-							<input type="hidden" data-no="${camper.getCamperNo()}" />
-						</div>
-					</div>
-				</c:forEach>
+				<div id="boardBoxSection">
+				</div>
 			</div>
 			<div class="pl-5">
 				<div id="detailSection" class="boardBoxSelect p-5 mb-4 d-flex flex-column justify-content-between">
 					<div id="detailHeader" class="pb-3">
-						<div id="title" class="font-weight-bold text-25">${camperList[0].getTitle()}</div>
-						<div id="nickname" class="font-weight-bold text-15 text-right py-3">${camperList[0].getNickname()}님</div>
+						<div id="title" class="font-weight-bold text-25"></div>
+						<div id="nickname" class="font-weight-bold text-15 text-right py-3"></div>
 						<div class="d-flex justify-content-between">
 							<div>
-								<div id="area" class="font-weight-bold text-13">${camperList[0].getArea()}</div>
-								<fmt:parseDate value="${camperList[0].getDepartureDate()}" pattern="yyyy-MM-dd" var="departureDateDetail"/>
-								<fmt:parseDate value="${camperList[0].getArrivalDate()}" pattern="yyyy-MM-dd" var="arrivalDateDetail"/>
-								<div id="dates" class="font-weight-bold text-13"><fmt:formatDate value="${departureDateDetail}" pattern="yyyy.MM.dd"/> ~ <fmt:formatDate value="${arrivalDateDetail}" pattern="yyyy.MM.dd"/></div>
+								<div id="area" class="font-weight-bold text-13"></div>
+								<div id="dates" class="font-weight-bold text-13"></div>
 							</div>
 							<div>
-								<div id="memberCount" class="font-weight-bold text-15 text-right text-danger">${camperList[0].getMemberCount()}명</div>
-								<div id="status" class="font-weight-bold text-13 text-right">${camperList[0].getStatus() eq "I" ? "모집중" : "모집완료"}</div>
+								<div id="memberCount" class="font-weight-bold text-15 text-right text-danger"></div>
+								<div id="status" class="font-weight-bold text-13 text-right"></div>
 							</div>
 						</div>
 					</div>
 					<div id="detailBody">
 						<div class="font-weight-bold py-2">상세내용</div>
-						<div id="ctent" >${camperList[0].getContent()}</div>
+						<div id="ctent" ></div>
 						<div class="font-weight-bold py-2">모임취지</div>
-						<div id="purpose" >${camperList[0].getPurpose()}</div>
+						<div id="purpose" ></div>
 						<div class="font-weight-bold py-2">예상비용</div>
-						<div id="expectedCost">${camperList[0].getExpectedCost()}</div>
+						<div id="expectedCost"></div>
 					</div>
 					<div id="detailFooter" class="mt-4">
 						<label for="basic-url" class="text-15">오픈채팅방에서 자유롭게 소통해요!</label>
@@ -110,7 +73,7 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="basic-addon3">URL</span>
 							</div>
-						<input id="chatUrl" type="text" class="form-control bg-light" aria-describedby="basic-addon3" value="${camperList[0].getChatUrl()}" onclick="window.open('${camperList[0].getChatUrl()}')" readonly>
+						<input id="chatUrl" type="text" class="form-control bg-light" aria-describedby="basic-addon3" value="" readonly>
 						</div>
 					</div>
 				</div>
@@ -118,85 +81,69 @@
 		</div>
 	</div>
 <script>
-$(document).ready(() => {
+let cPage = 1;
+
+$(document).ready(async () => {
 	$(review).removeClass("active");
 	$(camper).addClass("active");
-	
+	const firstBoardBox = renderBoardBoxMore();
+	if(firstBoardBox.length == 0) {
+		// 조회된 검색결과 x
+		$("#boardBoxSection").html("");
+		$("#detailSection").html("").removeClass("boardBoxSelect");
+		const $result = $('<div class="my-5 py-4 text-20">에 대한 검색결과가 없습니다.</div>');
+		const $keyword = $('<span class="text-danger text-20">"${param.searchKeyword}"</span>');
+		const $info1 = $('<div class="pt-5 pb-2">&#183;&nbsp;단어의 철자가 정확한지 확인해 보세요.</div>');
+		const $info2 = $('<div class="py-2">&#183;&nbsp;한글을 영어로 혹은 영어를 한글로 입력했는지 확인해 보세요.</div>');
+		const $info3 = $('<div class="py-2">&#183;&nbsp;검색어의 단어 수를 줄이거나, 보다 일반적인 검색어로 다시 검색해 보세요.</div>');
+		$result.prepend($keyword);
+		$result.append($info1, $info2, $info3);
+		$("#listSection").append($result);
+	} else {
+		$("#detailSection").addClass("boardBoxSelect");
+		renderBoardBoxDetail(firstBoardBox);
+	}
 });
 
+// 검색
+document.querySelector("#searchBtn").addEventListener("click", (e) => {
+	const searchType = $("#searchType").val();
+	const searchKeyword = $("#searchKeyword").val();
+	if(!searchType || ! searchKeyword) return false;
+	location.href = `${pageContext.request.contextPath}/community/camper/camperList?searchType=\${searchType}&searchKeyword=\${searchKeyword}`;
+});
+
+// 모집중 게시글만 조회 toggle 클릭 시 더보기/상세보기 비동기 요청
+document.querySelector(".chk_box").addEventListener('change', ()=> {
+	$("#boardBoxSection").html("");
+	cPage = 1;
+	// 검색어 가져와서 renderBoardBoxMore에 넘겨줄 필요
+	if(document.querySelector("#isChk").checked) {
+		$(".chk_box > span").removeClass("off").addClass("on");
+		renderBoardBoxDetail(renderBoardBoxMore()); // 체크/체크해제 시 chk값 분기처리 필요
+	} else {
+		$(".chk_box > span").removeClass("on").addClass("off");
+		renderBoardBoxDetail(renderBoardBoxMore("selectAll")); // 체크/체크해제 시 chk값 분기처리 필요
+	}
+});
+
+// 스크롤 시 게시글 더보기 비동기요청
 const docHeight = $(document).height();
 const winHeight = $(window).height();
 let timer;
-let cPage = 1;
 $(document).scroll(function () {
-	if(timer) {
-		clearTimeout(timer);
-	}
+	if(timer) clearTimeout(timer);
 	timer = setTimeout(() => {
 		if(document.querySelector("#listSection").getBoundingClientRect().bottom < $(window).height()) {
-			$.ajax({
-				url: "${pageContext.request.contextPath}/community/camper/moreCamperList",
-				data: {cPage},
-				success(response) {
-					const {camperList} = response;
-					for(let i = 0; i < camperList.length; i++) {
-						const $boardBox = $('<div class="boardBox my-4 p-4" onclick="selectBoardBox(this);"></div>');
-						if(${not empty loginMember}) {
-							const $dropdown = $('<div class="drop-down drop-down-1"></div>');
-							const $selected = $('<div class="selected text-right"></div>');
-							const $icon = $('<i class="fa-solid fa-ellipsis-vertical d-block"></i>');
-						} else {
-							// 로그인 아이디와 동일할 시 dropdown
-							const $drop = $('<div class="drop-down drop-down-1"></div>');
-							const $dropDiv1 = $('<div class="selected text-right"></div>');
-							const $dropI = $('<i class="fa-solid fa-ellipsis-vertical d-block" onclick="dropdown(this);"></i>');
-							const $dropDiv2 = $('<div class="options text-right"></div>');
-							const $dropUl = $('<ul class="border-top border-dark"></ul>');
-							const $dropLi1 = $('<li>수정</li>');
-							const $dropLi2 = $('<li>삭제</li>');
-							$dropLi1.on("click", (li) => {
-								$(li).closest('ul').hide();
-								location.href = "${pageContext.request.contextPath}/community/camper/camperUpdate";
-							});
-							$dropLi2.on("click", (li) => $(li).closest('ul').hide());
-							$dropUl.append($dropLi1, $dropLi2);
-							$dropDiv2.append($dropUl);
-							$dropDiv1.append($dropI);
-							$drop.append($dropDiv1, $dropDiv2);
-							$boardBox.append($drop);
-						}
-						
-						const $info = $('<div class="boardBoxSelectInfo"></div>');
-						const $title = $('<div class="font-weight-bold text-20 pb-4"></div>');
-						$title.html(camperList[i].title);
-						const $area = $('<div class="font-weight-bold text-13"></div>');
-						$area.html(camperList[i].area);
-						const $dates = $('<div class="font-weight-bold text-13"></div>');
-						const departureDate = camperList[i].departureDate;
-						const arrivalDate = camperList[i].arrivalDate;
-						$dates.html(departureDate.year + "." + f(departureDate.monthValue) + "." + f(departureDate.dayOfMonth) + " ~ " + arrivalDate.year + "." + f(arrivalDate.monthValue) + "." + f(arrivalDate.dayOfMonth)); 
-						const $content = $('<div class="py-4"></div>');
-						camperList[i].content.length > 110 ? $content.html(camperList[i].content.substring(0, 110) + "...") : $content.html(camperList[i].content); 
-						const $status = $('<div class="font-weight-bold text-13">');
-						camperList[i].status === "I" ? $status.html("모집중") : $status.html("모집완료");
-						const $camperNo = $('<input type="hidden"/>');
-						$camperNo.data("no", camperList[i].camperNo);
-						$info.append($title, $area, $dates, $content, $status, $camperNo);
-						$boardBox.append($info);
-						
-						$("#listSection").append($boardBox);
-					}
-				},
-				error: console.log
-			});
 			cPage++;
+			if(document.querySelector("#isChk").checked) renderBoardBoxMore();
+			else renderBoardBoxMore("selectAll");
 		}
 	}, 500);
-	
-	
 });
 
-const selectBoardBox = (boardBox) => {
+// camperNo로 상세보기 비동기 요청처리
+const renderBoardBoxDetail = (boardBox) => {
 	$("#listSection .boardBoxSelect").removeClass("boardBoxSelect").addClass("boardBox");
 	$(boardBox).removeClass("boardBox").addClass("boardBoxSelect");
 	
@@ -220,37 +167,90 @@ const selectBoardBox = (boardBox) => {
 			$("#purpose").html(camper.purpose);
 			$("#expectedCost").html(camper.expectedCost);
 			$("#chatUrl").val(camper.chatUrl);
-			$("#chatUrl").on("click", () => window.open(camper.chatUrl));
 		},
 		error: console.log
 	});
-	
+}
+
+const renderBoardBoxMore = (isChk) => {
+	$.ajax({
+		url: "${pageContext.request.contextPath}/community/camper/moreCamperList",
+		data: {
+				cPage, isChk, 
+				searchType : "${searchType}", searchKeyword : "${searchKeyword}"},
+		async: false,
+		success(response) {
+			const {camperList} = response;
+			for(let i = 0; i < camperList.length; i++) {
+				const $boardBox = $('<div class="boardBox my-4 p-4" onclick="renderBoardBoxDetail(this);"></div>');
+				// 현재 로그인된 아이디와 동일할 때
+				if (${not empty loginMember}) {
+					if("${loginMember.memberId}" == camperList[i].memberId) {
+						const $drop = $('<div class="drop-down drop-down-1"></div>');
+						const $dropDiv1 = $('<div class="selected text-right"></div>');
+						const $dropI = $('<i class="fa-solid fa-ellipsis-vertical d-block" onclick="dropdown(this);"></i>');
+						const $dropDiv2 = $('<div class="options text-right"></div>');
+						const $dropUl = $('<ul class="border-top border-dark"></ul>');
+						const $dropLi1 = $('<li>수정</li>');
+						const $dropLi2 = $('<li>삭제</li>');
+						$dropLi1.on("click", (li) => {
+							$(li).closest('ul').hide();
+							location.href = "${pageContext.request.contextPath}/community/camper/camperUpdate";
+						});
+						$dropLi2.on("click", (li) => $(li).closest('ul').hide());
+						$dropUl.append($dropLi1, $dropLi2);
+						$dropDiv2.append($dropUl);
+						$dropDiv1.append($dropI);
+						$drop.append($dropDiv1, $dropDiv2);
+						$boardBox.append($drop);
+					}
+				}
+				const $info = $('<div class="boardBoxSelectInfo"></div>');
+				const $title = $('<div class="font-weight-bold text-20 pb-4"></div>');
+				$title.html(camperList[i].title);
+				const $area = $('<div class="font-weight-bold text-13"></div>');
+				$area.html(camperList[i].area);
+				const $dates = $('<div class="font-weight-bold text-13"></div>');
+				const departureDate = camperList[i].departureDate;
+				const arrivalDate = camperList[i].arrivalDate;
+				$dates.html(departureDate.year + "." + f(departureDate.monthValue) + "." + f(departureDate.dayOfMonth) + " ~ " + arrivalDate.year + "." + f(arrivalDate.monthValue) + "." + f(arrivalDate.dayOfMonth)); 
+				const $content = $('<div class="py-4"></div>');
+				camperList[i].content.length > 110 ? $content.html(camperList[i].content.substring(0, 110) + "...") : $content.html(camperList[i].content); 
+				const $status = $('<div class="font-weight-bold text-13">');
+				camperList[i].status === "I" ? $status.html("모집중") : $status.html("모집완료");
+				const $camperNo = $('<input type="hidden"/>');
+				$camperNo.data("no", camperList[i].camperNo);
+				$info.append($title, $area, $dates, $content, $status, $camperNo);
+				$boardBox.append($info);
+				
+				$("#boardBoxSection").append($boardBox);
+			}
+		},
+		error: console.log
+	});
+	// boardBoxSection의 첫번째 요소 리턴
+	return $("#boardBoxSection").find(":first");
 }
 
 const f = (n) => n < 10 ? "0" + n : n;
 
-document.querySelector(".chk_box").addEventListener('change', ()=> {
-	const isChecked = document.querySelector("#toggle").checked;
-	if(isChecked) {
-		$(".chk_box > span").removeClass("off").addClass("on");
-	} else {
-		$(".chk_box > span").removeClass("on").addClass("off");
-	}
+// open 채팅방 url 클릭시 새창열기
+document.querySelector("#chatUrl").addEventListener("click", (e) => {
+	const urlValue = $(e.target).val();
+	/* window.open(urlValue); */
+	window.open('https://open.kakao.com/o/gpoPerve');
 });
 
-//토글 ul
+// dropdown toggle
 const dropdown = (iTag) => {
 	const $options = $(iTag).parent().siblings('.options');
     $options.find('> ul').toggle();
 }
-
-//페이지의 다른 위치를 클릭하면 옵션 숨기기
 $(document).bind('click', function(e) {
     const $clicked = $(e.target);
     if (!$clicked.parents().hasClass("drop-down")){
         $(".drop-down .options ul").hide();
     }
 });
-
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

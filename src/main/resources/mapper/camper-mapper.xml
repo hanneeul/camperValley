@@ -25,6 +25,23 @@
 		default)
 </insert>
 
+<select id="selectMoreCamperList" resultType="Camper">
+	select 
+		*
+	from
+		camper
+	<where>
+	<if test="isChk == null or isChk == ''">
+		status = 'I'
+	</if>
+	<if test="searchType != null and searchType != '' and searchKeyword != null and searchKeyword != ''">
+		and ${searchType} like '%' || #{searchKeyword} || '%'
+	</if>
+	</where>
+	order by
+		camper_no desc
+</select>
+
 <select id="selectCamperOne" resultType="CamperExt">
 	select 
 		c.*,

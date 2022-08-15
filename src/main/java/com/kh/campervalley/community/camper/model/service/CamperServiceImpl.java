@@ -1,6 +1,7 @@
 package com.kh.campervalley.community.camper.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,11 @@ public class CamperServiceImpl implements CamperService {
 	}
 
 	@Override
-	public List<Camper> selectMoreCamperList(int cPage, int numPerPage) {
+	public List<Camper> selectMoreCamperList(int cPage, int numPerPage, Map<String, Object> param) {
 		int offset = (cPage - 1) * numPerPage;
 		int limit = numPerPage;
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		return camperDao.selectMoreCamperList(rowBounds);
+		return camperDao.selectMoreCamperList(rowBounds, param);
 	}
 
 	@Override
