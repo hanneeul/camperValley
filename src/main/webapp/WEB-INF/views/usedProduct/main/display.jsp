@@ -51,8 +51,7 @@
 
 <div id="display-list" class="row" style="width: 1200px;">
 	<c:forEach items="${list}" var="list">
-		<div class="item col-3"
-			onclick="location.href='/campervalley/usedProduct/product/productDetail'">
+		<div class="item col-3" onclick="productDetailNo(${item.productNo})">
 			<div class="item">
 				<div id="itemSolid">
 					<img src="${list.productImg1} class="rounded float-start" alt="상품이미지">
@@ -142,7 +141,6 @@ function getProductList(page) {
 	});
 }
 function productDetailNo(no) {
-	location.href = '${pageContext.request.contextPath}/usedProduct/product/productDetail?no=' + no;
+	location.href = '/campervalley/usedProduct/product/productDetail?no=' + no;
 }
 </script>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>

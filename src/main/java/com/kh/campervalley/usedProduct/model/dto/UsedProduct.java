@@ -32,5 +32,6 @@ public class UsedProduct {
 	private Date transactionDate;
 	private String buyerId;
 	private String isDelete;
+	private String heart;
 	
 }

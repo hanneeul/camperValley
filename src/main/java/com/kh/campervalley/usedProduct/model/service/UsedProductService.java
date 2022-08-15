@@ -1,11 +1,13 @@
 package com.kh.campervalley.usedProduct.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
+import com.kh.campervalley.usedProduct.model.dto.WishProduct;
 
 public interface UsedProductService {
 
@@ -18,6 +20,14 @@ public interface UsedProductService {
 	public void cateProductList(String cateNo, int page, String order, ModelAndView mav); // 카테고리
 
 	public List<ProductCategory> cateList();
+
+	public void viewUpdate(String no);
+
+	public UsedProduct productDetail(String no);
+
+	public UsedProduct saveHeart(WishProduct wishProduct, String productNo);
+
+	public UsedProduct removeHeart(WishProduct wishProduct, String productNo);
 
 
 }

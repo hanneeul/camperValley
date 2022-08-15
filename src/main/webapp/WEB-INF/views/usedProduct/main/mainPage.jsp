@@ -34,8 +34,7 @@
 			<a id="btn_menu" class="cateList"> <i class="fas fa-bars"></i></a>
 		</div>
 		
-		<div class="dropdown-area"
-							style="display: inline-block; height: 0px;">
+		<div class="dropdown-area" style="display: inline-block; height: 0px;">
 			<div>
 				 <div class="dropmenu" style="display: none;">
 					<ul>
@@ -115,9 +114,6 @@
  	});
  })
  
-function productDetailSeq(no) {
-	location.href = "/campervalley/usedProduct/product/productDetail?no=" + no
-}
 // 카테고리 마우스 오버 이벤트
 $("#btn_menu").hover(function(){
 	// 카테고리 보이기

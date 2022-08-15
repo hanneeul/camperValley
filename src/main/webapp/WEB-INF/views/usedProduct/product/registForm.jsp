@@ -39,7 +39,8 @@
 								<div class="image_con">
 									<ul class="image-ul" id="image-ul">
 										<li class="image-li">이미지 등록
-											<input type="file" id="productImg" name="productImg">
+				    							<input type="file" name="upFiles" id="upFiles" accept="image/*" multiple>
+				    							<label for="upFiles"></label>
 										</li>
 									</ul>
 									<div class="div-image" id="div-image">
@@ -169,7 +170,7 @@ $('#enrollForm').ready(function() {
 });
 
 /* 이미지 등록 (미리보기) */
-$('#productImg').on('change', readImage); // 파일 올릴떄마다 readImage함수 호출
+$('#upFiles').on('change', readImage); // 파일 올릴떄마다 readImage함수 호출
 const fileBuffer = []; // 파일 저장 변수
 
 function readImage() {
@@ -338,9 +339,6 @@ function confirm() {
 	 if($('#productPrice').val()=='') { $('#productPrice').show(); $('#productPrice').focus(); return true;}
  }
 
-document.enrollForm.onsubmit = () => {
-	 if(confirm()) return false;
-};
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -1,5 +1,7 @@
 package com.kh.campervalley.common;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -169,5 +171,6 @@ public class CamperValleyUtils {
 		
 		return sdf.format(new Date()) + df.format(Math.random() * 1000) + ext;
 	}
+
 
 }
