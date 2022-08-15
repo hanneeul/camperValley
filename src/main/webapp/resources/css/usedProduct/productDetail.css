@@ -15,7 +15,7 @@ button {
 	border-color: transparent;
 }
 .detail_area i {    
-	color: #787878;
+	color: white;
     margin-top: 0.5rem;
 }
 div {
@@ -33,16 +33,61 @@ div {
     flex-direction: column;
 }
 /**** 슬라이더 ****/
-.slideshow-container {
-    width: 26rem;
-    height: 28rem;
+*{
+        margin: 0; padding: 0;
 }
-.swiper-wrapper img {
-	width: 26rem;
-    height: 25rem;
+.slide{
+    width: 475px;
+    height: 450px;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
 }
-.swiper-container {
-	/* display: none */;
+.slide ul{
+    width: 5000px;
+    position: absolute;
+    top:0;
+    left:0;
+    font-size: 0;
+}
+.slide img {
+    width: 475px;
+	height: 444px;
+}
+.slide ul li{
+    display: inline-block;
+}
+#back{
+    position: absolute;
+    top: 215px;
+    left: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+#next{
+    position: absolute;
+    top: 215px;
+    right: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+#view {
+	margin-left: -40px;
+    margin-top: 10.3px;
+    color: #b4b4b4;
+}
+#zzim_btn {
+	margin-right: 10px;
+    background-color: #F5D08A;
+}
+#zzim_span {
+	color: black;
+}
+#zzim_span:hover {
+	color: black;
+}
+#zzim_span:active {
+	color: black;
 }
 .detail-info__image--prev, .detail-info__image--next {
     border-radius: 3px 0 0 3px;
@@ -112,12 +157,13 @@ div {
 	font-weight: 900;
 }
 .detail-info__text-body-top {
-	height: 30px;
+    height: 30px;
     margin-top: 1.2rem;
-    margin-bottom: 30px;
+    margin-bottom: 2.5rem;
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
+    margin-left: 6px;
 }
 .detail-info__text-body-topL {
 	height: 100%;
@@ -134,18 +180,20 @@ div {
     height: 100%;
 }
 .detail-info--topL-item i {
-	margin-right: 2.6rem;
+    margin-right: 3rem;
     font-size: 1.2rem;
+    color: lightgray;
 }
 .detail-info__text-body-bItem {
-	display: flex;
-	margin-bottom: 24px;
+    display: flex;
+    margin-bottom: 31.3px;
 }
 .detail-info__text-body-bItem-title {
 	position: relative;
     width: 90px;
     color: black;
     font-size: 16px;
+    margin-top: -1.7px;
 }
 .detail-info__text-body-bItem-content {
 	position: relative;
@@ -154,12 +202,10 @@ div {
 .detail-info__delivery {
 	position:: relative;
 	display: flex;
-	color: rgb(110, 71, 248);
 }
 .detail-info__location {
 	position: relative;
 	display: flex;
-	color: rgb(98, 188, 217);
 }
 .detail-info__btn-list {
 	display: flex;
@@ -181,7 +227,7 @@ div {
 /*************** 하단 상품 정보 *******************/
 #btmProdInfo_Wrap1 {
 	display: flex;
-    margin-top: 70px;
+    margin-top: 135px;
 }
 #btmProdInfo_Wrap2 {
 	flex: 1 1 0%;
@@ -222,13 +268,18 @@ div {
     left: -17px;
 }
 .storeInfo_Title {
-    font-size: 1.19rem;
+    font-size: 1.3rem;
     padding: 40px 0px 8px;
     border-bottom: 3px solid rgb(238, 238, 238);
     font-weight: 600;
     letter-spacing: 3px;
     text-align: center;
     margin-top: -29.5px;
+}
+.btmProdInfo_Title {
+	font-weight: bold; 
+	font-size: 1.3rem; 
+	letter-spacing: 3px;
 }
 .prodInfo_storeDetailWrap {
 	border-bottom: 1px solid lightgray;
@@ -274,7 +325,7 @@ div {
 }
 .prodInfo_wrap1 {
     border-right: 1px solid rgb(238, 238, 238);
-    height: calc(100% - 50px);
+    height: calc(85% - 50px);
 }
 .content_marginTop {
 	margin-top: 30px;
@@ -291,7 +342,7 @@ div {
     white-space: pre-line;
     margin-top: -30px;
     margin-bottom: 30px;
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 28px;
     width: 800px;
 }
@@ -414,8 +465,9 @@ div {
 .detail-info__zzim i {
     left: 0.1rem;
     position: relative;
-    top: 0.05rem;
-    font-size: 1rem;
+    top: 0.1rem;
+    font-size: 1.2rem;
+    color: red;
 }
 .detail-info__chat i {
     color: white;
@@ -446,3 +498,70 @@ div {
 #soldOutText1, #soldOutText2 {
 	font-size: 1.5rem;
 }
+#productLogtime, #productDeliveryFee p, #productLocation {
+	font-size: 15px;
+}
+
+
+.detail-info__btn-list {
+	display: flex;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+}
+.detail-info__btn-zzim__div {
+	position: relative;
+}
+.detail__area button:focus {
+	outline: 0px;
+}
+.detail-info__btn-list>* {
+	font-weight: 600;
+	margin-right: 10px;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: center;
+	height: 56px;
+	font-size: 18px;
+	-webkit-box-align: center;
+	align-items: center;
+	flex: 1 1 0%;
+}
+#productDetailForm > *{
+	font-weight: 600;
+	margin-right: 10px;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: center;
+	height: 56px;
+	font-size: 18px;
+	-webkit-box-align: center;
+	align-items: center;
+	flex: 1 1 0%;
+}
+.detail-info__btn-zzim {
+	width: 100%;
+    height: 100%;
+    font-weight: 600;
+    background: rgb(204, 204, 204);
+    border: rgb(204, 204, 204);
+    color: rgb(255, 255, 255);
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    line-height: 1;
+}
+.detail-info__btn-zzim_click {
+	width: 100%;
+    height: 100%;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    line-height: 1;
+    background: rgb(51, 51, 51);
+    border: 1px solid black;

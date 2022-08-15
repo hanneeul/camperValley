@@ -136,7 +136,7 @@ function getProductList(page) {
 			}
 		},
 		error : function(err) {
-			console.log(err);s
+			console.log(err);
 		}
 	});
 }

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.campervalley.usedProduct.model.dao.UsedProductDao;
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
+import com.kh.campervalley.usedProduct.model.dto.WishProduct;
 
 @Service
 public class UsedProductServiceImpl implements UsedProductService {
@@ -99,6 +100,42 @@ public class UsedProductServiceImpl implements UsedProductService {
 	@Override
 	public UsedProduct productDetail(String no) {
 		return usedProductDao.productDetail(no);
+	}
+
+	@Override
+	public UsedProduct saveHeart(WishProduct wishProduct, String productNo) {
+		UsedProduct usedProduct = new UsedProduct();
+		usedProduct.setProductNo(wishProduct.getProductNo());
+		
+		// 해당 게시글 heart +1
+		usedProductDao.updateUpHeart(usedProduct);
+		
+		// wishProduct테이블에 추가
+		int result = usedProductDao.insertHeart(wishProduct);
+		
+		if (result == 1) {
+			// 갱신된 하트 갯스 가져오기
+			usedProduct = usedProductDao.getHeartCount(usedProduct);
+		}
+		return usedProduct;
+	}
+
+	@Override
+	public UsedProduct removeHeart(WishProduct wishProduct, String productNo) {
+		UsedProduct usedProduct = new UsedProduct();
+		usedProduct.setProductNo(wishProduct.getProductNo());
+		
+		// 해당 게시글 heart -1
+		usedProductDao.updateDownHeart(usedProduct);
+		
+		// wishProduct테이블에 추가
+		int result = usedProductDao.deleteHeart(wishProduct);
+		
+		if (result == 1) {
+			// 갱신된 하트 갯스 가져오기
+			usedProduct = usedProductDao.getHeartCount(usedProduct);
+		}
+		return usedProduct;
 	}
 
 }

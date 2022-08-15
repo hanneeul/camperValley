@@ -3,31 +3,31 @@ package com.kh.campervalley.usedProduct.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
+import com.kh.campervalley.usedProduct.model.dto.WishProduct;
 import com.kh.campervalley.usedProduct.model.service.UsedProductService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -132,17 +132,20 @@ public class UsedProductController  {
 	/* 상품 상세보기 - 상품 정보 */
 	// 상품 리스트 - > 상세페이지
 	@GetMapping("/product/productDetail")
-	public String productDetail(@RequestParam String no, Model model, @AuthenticationPrincipal Member member) {
+	public String productDetail(@RequestParam String no, Model model) {
 
 		usedProductService.viewUpdate(no); //조회수 증가
 		
 		// 상품 정보 받아옴
 		UsedProduct usedProduct = usedProductService.productDetail(no);
 		
+		log.debug("no = {}", no);
+		log.debug("productNo = {}", usedProduct.getProductNo());
+		
 		model.addAttribute("no", no);
 		model.addAttribute("usedProduct", usedProduct);
-		model.addAttribute("display", "/usedProduct/product/productDetail.jsp");
-		return "/usedProduct/main/mainPage";
+		model.addAttribute("/usedProduct/product/productDetail.jsp");
+		return "/usedProduct/product/productDetail";
 	}
 	
 	@GetMapping("/product/productUpdate")
@@ -153,4 +156,39 @@ public class UsedProductController  {
 	
 	@PostMapping("/chat/chatList")
 	public void chatList() {};
+	
+	@GetMapping("/product/saveHeart")
+	@ResponseBody
+	public UsedProduct saveHeart(@RequestParam String productNo, @AuthenticationPrincipal Member loginMember) {
+		WishProduct wishProduct = new WishProduct();
+		
+		// 글 번호 세팅
+		wishProduct.setProductNo(Integer.parseInt(productNo));
+		
+		// memberId 세팅
+		wishProduct.setMemberId(loginMember.getMemberId());
+		
+		// +1된 하트 갯수 가져오기
+		UsedProduct usedProduct = usedProductService.saveHeart(wishProduct, productNo);
+		
+		return usedProduct;
+	}
+	
+	@GetMapping("/product/removeHeart")
+	@ResponseBody
+	public UsedProduct removeHeart(@RequestParam String productNo, @AuthenticationPrincipal Member loginMember) {
+		WishProduct wishProduct = new WishProduct();
+		
+		// 글 번호 세팅
+		wishProduct.setProductNo(Integer.parseInt(productNo));
+		
+		// memberId 세팅
+		wishProduct.setMemberId(loginMember.getMemberId());
+		
+		// +1된 하트 갯수 가져오기
+		UsedProduct usedProduct = usedProductService.removeHeart(wishProduct, productNo);
+		
+		return usedProduct;
+	}
+	
 }

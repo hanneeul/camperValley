@@ -15,15 +15,13 @@
 	<input type="hidden" class="loginId" value="${member.username}"/>
 </sec:authorize>
 
+<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/productDetail.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
 
-<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-<input type="hidden" class="hiddenNo" value="${no}"/>
+<input type="hidden" class="hiddenNo" value="${usedProduct.productNo}"/>
 <input type="hidden" class="owner" value=""/>
-<div id="section" style="width: 98%; margin:50px auto">
+<div id="section" style="width: 98%; margin-top:50px; margin-bottom:20px;">
 	<div class="detail_area">
 	<div class="detail_div">
         <div class="delete_update">
@@ -36,31 +34,33 @@
 			<div class="detail-info__div">
 				<div class="detail-info__image__div">
 					<input id="prodno" type="hidden" data-no="78">
-					<!-- 이미지 리스트 -->
-					<div class="slideshow-container">
+					    <div class="slide">
+						      <i id="back" class="fa-solid fa-chevron-left" width="100"></i>
+						      <ul>
+						    	<c:if test="${usedProduct.productImg1 ne null}">
+						        	<li><img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${usedProduct.productImg1}" alt="1"></li>
+						       	</c:if>
+						    	<c:if test="${usedProduct.productImg2 ne null}">
+						        	<li><img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${usedProduct.productImg2}" alt="2"></li>
+						         </c:if>
+						    	<c:if test="${usedProduct.productImg3 ne null}">
+						        	<li><img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${usedProduct.productImg3}" alt="3"></li>
+						        </c:if>
+						    	<c:if test="${usedProduct.productImg4 ne null}">
+						        	<li><img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${usedProduct.productImg4}" alt="4"></li>
+						        </c:if>
+						    	<c:if test="${usedProduct.productImg5 ne null}">
+						        	<li><img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${usedProduct.productImg5}" alt="5"></li>
+						      	</c:if>
+						      </ul>
+						      <i id="next" class="fa-solid fa-chevron-right" width="100"></i>
+						    </div>
+						
+						<div class="slideshow-container">
 						<div class="swiper-container detail-info__image__list">
 							<div class="swiper-wrapper">
-									<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${usedProduct.productImg1}" id="product_img1" alt="상품이미지">
-									<img src="${usedProduct.productImg2}" id="product_img2" alt="상품이미지">
-									<img src="${usedProduct.productImg3}" id="product_img3" alt="상품이미지">
-									<img src="${usedProduct.productImg4}" id="product_img4" alt="상품이미지">
-									<img src="${usedProduct.productImg5}" id="product_img5" alt="상품이미지">
 							</div>
 							<!-- 확대 버튼-->
-							<button class="detail-info__image--enlg">
-								<i class="fas fa-search"></i> 확대
-							</button>
-							<div class="detail-info__image--prev swiper-button-next swiper-button-white" 
-											style="top: -206px;" onclick="moveSlides(-1)">&#10094;</div>
-							<div class="detail-info__image--next swiper-button-prev swiper-button-white" 
-											style="top: -227px; float: right;" onclick="moveSlides(1)">&#10095;</div>
-							<!-- 슬라이더 버튼 수 -->
-							<div class="swiper-pagination">
-								<div class="paginationBtn" style="">
-									<!-- js -->
-								</div>
-							</div>
-							
 							<!-- 확대  -->
 							<div class="prodDetailImgWrap1">
 								<div class="prodDetailImgWrap2"> 
@@ -102,66 +102,78 @@
 									<!-- 찜, 조회수, 시간 -->
 									<div class="detail-info__text-body-topL">
 										<div class="detail-info--topL-item">
-											<i class="fa-regular fa-heart"></i>
+											<i class="fa-solid fa-heart"></i>
 											<!-- 찜 수 -->
 											<div id="zzim"></div>
 										</div>
 										<div class="detail-info--topL-item">
-											<i class="fa-regular fa-eye"></i>
+											<i class="fa-solid fa-eye"></i>
 											<!-- 상품 조회수 -->
 											<div id="view">
 												${usedProduct.productViews}
 											</div>
 										</div>
-										<div class="detail-info--topL-item">
-											<i class="fa-regular fa-clock"></i>
-											<!-- 시간 -->
-											<c:set var="b_time" value="${usedProduct.productEnrollTime}" />
-											<c:set var="time"
-												value="${b_time > (60 * 24) ? Math.round( b_time / (60 * 24) ) : ( b_time > 60 ? Math.round( b_time / 60 ) : b_time ) }" />
-								
-											<c:if test="${60 > b_time}">
-												<c:set var="unit" value="분 전" />
-											</c:if>
-											<c:if test="${b_time > 60}">
-												<c:set var="unit" value="시간 전" />
-											</c:if>
-											<c:if test="${b_time > (60 * 24)}">
-												<c:set var="unit" value="일 전" />
-											</c:if>
-											<div id="productLogtime">${time}${unit}</div> 
-										</div>
 										</div>
 									</div>
 								</div>
 								<div class="detail-info__text-body-bottom">
-									<div class="detail-info__text-body-bItem">
-										<div class="detail-info__text-body-bItem-title">▪배송비</div>
-										<!-- 배송비 -->
-										<div class="detail-info__delivery" id="productDeliveryFee">
-											<c:set var="delivery" target="${usedproduct.productDeliveryFee}"/>
-												<c:if test="${delivery == 1}">
-													<p>배송비 별도</p>
-												</c:if>
-												<c:if test="${delivery == 0}">
-													<p>배송비 별도</p>
-												</c:if>
-										</div>
-				
-									</div>
-									<div class="detail-info__text-body-bItem">
-										<div class="detail-info__text-body-bItem-title">▪거래지역</div>
+								<div class="detail-info__text-body-bItem">
+									<div class="detail-info__text-body-bItem-title">▪등록시간 : </div>
+										<!-- 시간 -->
+										<c:set var="b_time" value="${usedProduct.productEnrollTime}" />
+										<c:set var="time"
+											value="${b_time > (60 * 24) ? Math.round( b_time / (60 * 24) ) : ( b_time > 60 ? Math.round( b_time / 60 ) : b_time ) }" />
+							
+										<c:if test="${60 > b_time}">
+											<c:set var="unit" value="분 전" />
+										</c:if>
+										<c:if test="${b_time > 60}">
+											<c:set var="unit" value="시간 전" />
+										</c:if>
+										<c:if test="${b_time > (60 * 24)}">
+											<c:set var="unit" value="일 전" />
+										</c:if>
+										<div id="productLogtime">${time}${unit}</div> 
+								</div>					
+								<div class="detail-info__text-body-bItem">
+										<div class="detail-info__text-body-bItem-title">▪거래지역 : </div>
 										<!-- 거래지역 -->
-										<div class="detail-info__location" id="productLocation"></div>
-									</div>
+										<div class="detail-info__location" id="productLocation">${usedProduct.productLocation}</div>
+								</div>
+								<div class="detail-info__text-body-bItem">
+									<div class="detail-info__text-body-bItem-title">▪배송비 : </div>
+									<!-- 배송비 -->
+									<div class="detail-info__delivery" id="productDeliveryFee">
+										<c:set var="delivery" target="${usedproduct.productDeliveryFee}"/>
+											<c:if test="${delivery == 1}">
+												<p>배송비 별도</p>
+											</c:if>
+											<c:if test="${delivery == 0}">
+												<pddd>배송비 포함</p>
+											</c:if>
+								 	</div>
+								 </div>
 									<div class="detail-info__text-body-bottom">
-										<div class="detail-info__zzim-chat" style="display: flex;">
-										   <!-- 관심상품(찜) -->
-											   <div class="detail-info__zzim">
-													<button type="submit" value="2" id="zzim_btn" style="margin-right: 10px; margin-right: 10px; background-color: #a0a0a0;">
-														<i class="fa-solid fa-heart" style="color: white"></i>							 
-													관심상품</button>
-											   </div>
+										<div class="detail-info__btn-list" style="display: flex;">
+												<!-- 관심상품(찜) -->
+										   		<c:choose>
+										   			<c:when test="${empty wishProduct}">
+												   		<!-- 빈하트  -->
+												   		<div class="detail-info__zzim">
+															<button idx="${no}" id="zzim_btn" class="heartBtn heart-click">
+																<i class="fa-regular fa-heart"></i>
+															<span id="zzim_span">관심상품</span></button>
+														</div>
+													</c:when>
+													<c:otherwise>
+														<!-- 꽉찬하트 -->
+												   		<div class="detail-info__zzim">
+															<button idx="${no}" id="zzim_btn" class="heartBtn heart-click">
+																<i class="fa-solid fa-heart"></i> 관심상품
+															</button>
+														</div>
+													</c:otherwise>
+												</c:choose>
 										   <!-- 채팅하기 -->
 										   <!-- post 날린 요청의 결과 chatRoom(윈도우 팝업창)에서 볼 수 있음 -->
 										   <form 
@@ -177,9 +189,6 @@
 								</div>
 							</div>
 						</div>
-						<div class="detail-info__btn-list">
-							<!-- productDetail.js -->
-						</div>
 					</div>
 				</div>
 			</div>
@@ -190,7 +199,7 @@
 			<div id="btmProdInfo_Wrap2">
 				<!-- '상품정보'-->
 				<div class="btmProdInfo_TitleWrap">
-					<div class="btmProdInfo_Title" style="font-weight: bold; font-size: 1.2rem; letter-spacing: 3px;">
+					<div class="btmProdInfo_Title">
 						상품정보<span class="btmProdInfo_TitleSpan"></span>
 					</div>
 				</div>
@@ -201,7 +210,9 @@
 						<div class="prodInfo_contentWrap">
 							<div class="content_marginTop"></div>
 							<!-- 상품내용 -->
-							<div class="prodInfo_contentText"></div>
+							<div class="prodInfo_contentText">
+								${usedProduct.productContent}
+							</div>
 					</div>
 				</div>
 				</div>
@@ -264,151 +275,114 @@
 
 
 <script>
-$(document).ready(function() {
-			
-			// 상품 이미지 - 스와이퍼 
-			var product_img = [{product_img : usedProduct.productImg1},
-							  {product_img : usedProduct.productImg2}
-							  {product_img : usedProduct.productImg3}
-							  {product_img : usedProduct.productImg4}
-							  {product_img : usedProduct.productImg5}];
-			
-			// 확대
-			$('.detailImg_prodName').text(usedProduct.productTitle);
-			
-	 
-			$.each(product_img, function(index, items) {
-				if(itemms.product_img, != '') {
-					if(items.product_img == null) {
-						return false;
-					} else {
-						// ======================== 스와이퍼 ===========================
-							$('.swiper-wrapper').append($('<div>', {
-								class : 'swiper-slide' 
-							}).append($('<img/>', {
-								src : '${pageContext.request.contextPath}/resources/upload/usedProduct/' + items.product_img,
-								alt : '상세 상품 이미지',
-								id : 'product_img' + index
-							})))
-							
-							// 첫 장 빼고 display: none
-							if(index != 0) {
-								$('#product_img'+index).parent().css('display', 'none');
-								$('#product_img0').parent().css('display', 'block');
-							}
-							
-							// 슬라이더 버튼
-							$('.paginationBtn').append($('<span/>', {
-								class : 'dot',
-								onclick : 'currentSlide('+(index)+')'
-							}))
-							
-							// 첫장만 도트 검정
-							if(index == 0) {
-								$('.dot').attr('class', 'dot active');
-							}
-							
-							// 확대버튼
-							$('.detailImgList').append($('<div>', {
-								class : 'detailImg_wrap',
-							}).append($('<img/>', {
-								src : '${pageContext.request.contextPath}/resources/upload/usedProduct/' + items.product_img,
-								alt : '리뷰 이미지'
-							})))
-							
-							// 버튼
-							$('.detailImg_buttonWrap').append($('<button/>', {
-								class : 'detailImg_button'+index
-							}));
-							
-							// 첫번째 버튼 흰색
-							if(index==0) {
-								$('.detailImg_button'+index).css('opacity', '0.6');
-							}
-							
-							$('.detailImg_button'+index).click(function() {
-								$(this).css('opacity', '0.6');	
-							
-								$('.detailImgList').attr('class', 'detailImgList_' + index);
-								
-								var i;
-								if(index == 0) {
-									for(i=1; i<=4; i++) 
-										$('.deatilImgList_' + i).attr('class', 'detailImgList_0');	
-								} else if(index==1) {
-									$('.detailImgList_0, .detailImgList_2, .detailImgList_3, .detailImgList_4').attr('class', 'detailImgList_1');
-								} else if(index==2) {
-									$('.detailImgList_0, .detailImgList_1, .detailImgList_3, .detailImgList_4').attr('class', 'detailImgList_2');
-								} else if(index==3) {
-									$('.detailImgList_0, .detailImgList_1, .detailImgList_2, .detailImgList_4').attr('class', 'detailImgList_3');
-								} else if(index==4) {
-									for(var i=0; i<=3; i++) {
-										$('.detailImgList_'+i).attr('class', 'detailImgList_4');
-									}
-						}
-				}
-				
-				// 판매완료
-				if(usedProduct.buyerId != null) {
-					$('#product_img' + index).after($('<div/>', {
-						class : 'soldOut',
-					}).append($('<div/>', {
-						
-					}).append($('<span/>', {
-						id : 'soldOutText1',
-						text: '판매'
-					})).append($('<span/>', {
-						id : 'soldOutText2',
-						text : '완료'
-					})))
-				}
-			}); // each 끝
-			
-			// 판매자 정보
-		}
-
-	})
+$(".heart-click").click(function() {
+    
+    var productNo = $('.hiddenNo').val();
+    console.log("heart-click");
+    
+    // 빈하트 클릭
+    if($(this).children('i').attr('class') == "fa-regular fa-heart") {
+    	console.log("빈하트 클릭" + productNo);
+    	
+	   	$.ajax({
+	   		url : '/campervalley/usedProduct/product/saveHeart',
+	   		type : 'get',
+	   		data : {
+	   			productNo : productNo,
+	   		},
+	   		success : function(usedProduct) {
+	   			let heart = usedProduct.heart;
+	   			
+	   			// 하트 수 갱신
+	   			$('#zzim').text(heart);
+	   			$('#zzim_btn').text(heart);
+	   			
+	   			console.log('하트 추가 성공!');
+	   		}, 
+	   		error : function() {
+	   			alert('에러1')
+	   		}
+	   	});
+	   	console.log("꽉찬하트로 바꾸기");
+	   	
+	   	// 꽉찬하트로 바꾸기
+	   	$(this).html('<i class="fa-solid fa-heart"></i> 관심상품');
+	   	
+   } else if($(this).children('i').attr('class') == "fa-solid fa-heart") {
+	   console.log("꽉찬 하트 클릭!" + productNo);
+	   
+	   $.ajax({
+		  url : '/campervalley/usedProduct/product/removeHeart',
+		  type : 'get',
+		  data : {
+			  productNo : productNo,
+		  },
+		  success : function(usedProduct) {
+			  let heart = usedProduct.heart;
+			  
+	  		  // 하트 수 갱신
+	  		  $('#zzim').text(heart);
+	  		  $('#zzim_btn').text(heart);
+	  			
+	  		  console.log('하트 삭제 성공!');
+		  },
+		  error : function() {
+			 alert('에러2');
+		  }
+	   });
+	   console.log("빈하트로 바꾸기");
+	   
+	   // 빈하트로 바꾸기
+	   $(this).html('<i class="fa-regular fa-heart"></i> 관심상품');
+   }
 });
 
-// 채팅하기 관련
+// 채팅하기
 document.querySelector("#update_btn").addEventListener('click', (e) => {
-	location.href = '${pageContext.request.contextPath}/usedProduct/product/productUpdate';
+	location.href = '/campervalley/usedProduct/product/productUpdate';
 });
 $('#chat_btn').click(function() {
 	window.open('', 'chat', resizable=no);	
 });
-
-// 슬라이더 관련
-var slideIndex = 0; // slide index
-function currentSlide(n) {
-	  slideIndex = n;
-	  showSlides(slideIndex);
-	}
-	
-function moveSlides(n) { // Next/previous controls
-  slideIndex = slideIndex + n
-  showSlides(slideIndex);
-}
-function showSlides(n) {
-    var slides = document.getElementsByClassName("swiper-slide");
-    var dots = document.getElementsByClassName("dot");
-    var size = slides.length;
-    if ((n+1) > size) {
-      slideIndex = 0; n = 0;
-    }else if (n < 0) {
-      slideIndex = (size-1);
-      n = (size-1);
-    }
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-	
-    slides[n].style.display = "block";
-    dots[n].className += " active";
-  }
-  
   
 </script>
+<script type="text/javascript">
+ $(document).ready(function(){
+   var imgs;
+   var img_count;
+   var img_position = 1;
+
+   imgs = $(".slide ul");
+   img_count = imgs.children().length;
+
+   //버튼을 클릭했을 때 함수 실행
+   $('#back').click(function () {
+     back();
+   });
+   $('#next').click(function () {
+     next();
+   });
+
+   function back() {
+     if(1<img_position){
+       imgs.animate({
+         left:'+=475px'
+       });
+       img_position--;
+     }
+   }
+   function next() {
+     if(img_count>img_position){
+       imgs.animate({
+         left:'-=475px'
+       });
+       img_position++;
+     }
+   }
+
+   //이미지 끝까지 가면 버튼 사라지기
+
+   //첫 이미지로 돌아오기=
+ });
+</script>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

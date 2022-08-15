@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
+import com.kh.campervalley.usedProduct.model.dto.WishProduct;
 
 @Mapper
 public interface UsedProductDao {
@@ -28,5 +29,15 @@ public interface UsedProductDao {
 	void viewUpdate(String no);
 
 	UsedProduct productDetail(String no);
+
+	void updateUpHeart(UsedProduct usedProduct);
+
+	int insertHeart(WishProduct wishProduct);
+
+	UsedProduct getHeartCount(UsedProduct usedProduct);
+
+	void updateDownHeart(UsedProduct usedProduct);
+
+	int deleteHeart(WishProduct wishProduct);
 
 }

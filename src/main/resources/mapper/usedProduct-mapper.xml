@@ -26,6 +26,7 @@
 		0,
 		default,
 		null,
+		default,
 		default
 	)
 	<selectKey keyProperty="productNo" resultType="_int" order="AFTER">
@@ -69,7 +70,8 @@ select *
 				product_views,
 				transaction_date,
 				buyer_id,
-				is_delete
+				is_delete,
+				heart
 			from
 				used_product
             where
@@ -112,6 +114,7 @@ select *
 				p.transaction_date,
 				p.buyer_id,
 				p.is_delete,
+				p.heart
 				m.member_id
 			from
 				used_product p, member m
@@ -172,8 +175,39 @@ select *
 		product_views,
 		transaction_date,
 		buyer_id,
-		is_delete
+		is_delete,
+		heart
 	from used_product where product_no=#{no}	
 </select>
+
+<!-- 찜 -->
+<!-- 관심상품 추가 -->
+<insert id="insertHeart" parameterType="WishProduct">
+	insert into wish_product
+	values(seq_wish_product_no.nextval, #{memberId}, #{productNo})
+</insert>
+
+<update id="updateUpHeart" parameterType="UsedProduct">
+	update used_product set heart=heart+1
+	where product_no=#{productNo}
+</update>
+
+<!-- 하트 갯수 -->
+<select id="getHeartCount" parameterType="UsedProduct" resultType="UsedProduct">
+	select heart
+	from used_product
+	where product_no=#{productNo}
+</select>
+
+<!-- 관심상품 삭제 -->
+<delete id="deleteHeart" parameterType="WishProduct">
+	delete from wish_product
+	where product_no=#{productNo} and member_id=#{memberId}
+</delete>
+
+<update id="updateDownHeart" parameterType="UsedProduct">
+	update used_product set heart=heart-1
+	where product_no=#{productNo}
+</update>
 
 </mapper>

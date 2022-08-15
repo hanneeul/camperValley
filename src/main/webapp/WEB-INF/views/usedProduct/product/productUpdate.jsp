@@ -170,4 +170,5 @@
 		<jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 	</div>
 </div>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
