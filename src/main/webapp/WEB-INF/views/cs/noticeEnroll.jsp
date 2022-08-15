@@ -42,8 +42,6 @@
 			<td>
 				<input type="file" class="custom-file-input" name="upFile" id="upFile1" style="width:30px" multiple>
 				<label class="custom-file-label" for="upFile1">파일 선택</label>
-				<input type="file" class="custom-file-input" name="upFile" id="upFile2" style="width:30px" multiple>
-		   		<label class="custom-file-label" for="upFile2">파일 선택</label> 
 			</td>
 		</tr>
 	</table>

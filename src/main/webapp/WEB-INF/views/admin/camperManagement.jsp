@@ -9,17 +9,24 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/admin/admin.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-
+<style>
+.modalOpen:hover {
+	cursor: pointer;
+}
+</style>
 <div class="container" style="display: flex;" id="admin-container">
 	<jsp:include page="/WEB-INF/views/common/adminSidebar.jsp" />
 	<div class="admin-content" style="width: 80%;">
 		<h5 class="admin-hd">캠퍼모집 관리</h5>
 		<div class="camper-hd" style="margin-top:40px;">
-	<div class="search-group float-right mb-2">
-						<select id="searchType">
-							<option value="title">제목</option>
-						<option value="content">내용</option>
-							<option value="title">작성자</option>
+		<div class="float-right">
+					<button type="button" class="btn-delete btn btn-danger btn-sm">선택삭제
+					</button>
+				</div>
+	<div class="search-group float-left mb-2">
+						<select id="search-type">
+							<option value="title" ${map.searchType eq 'title' ? 'selected' : ''}>제목</option>
+							<option value="content" ${map.searchType eq 'content' ? 'selected' : ''}>내용</option>
 						</select>
 						<input type="hidden" name="searchType" value="title">
 						<input type="hidden" name="searchType" value="content">
@@ -30,35 +37,39 @@
 					</div>
 				</div>
 					
-			<table class="table text-center" id="tb-member">
+			<table class="table table-hover text-center" id="tb-admin">
 				<thead>
 					<tr>
+						<th class="col-md-1"><input name="checkAll" id="checkAll" type="checkbox" /></th>
 						<th class="col-md-1">No.</th>
-						<th>모집상태</th>
 						<th class="col-md-4">제목</th>
 						<th>지역</th>
-						<th>모집인원</th>
-						<th>작성자</th>
-						<th></th>
+						<th>아이디</th>
+						<th>작성일</th>
 					</tr>
 				</thead>
 				<tbody>
+				<form action="${pageContext.request.contextPath}/admin/camperDelete" method="post" name="deleteCamperFrm">
+				<c:forEach items="${list}" var="list" varStatus="vs">
 					<tr>
-						<td>48</td>
-						<td>모집중</td>
-						<td>같이가실분</td>
-						<td>경기도 @@시</td>
-						<td>2</td>
-						<td>동그랑땡</td>
+						<td><input name="deleteList" type="checkbox" class="deleteList" value="${list.camperNo}" /></td>
+						<td>${list.camperNo}</td>
+						<td><span class="modalOpen" data-toggle="" data-target="" >${list.title}</span></td>
+						<td>${list.area}</td>
+						<td>${list.memberId}</td>
 						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminCamperModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
+							<fmt:parseDate value="${list.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+							<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
 						</td>
+						
+
 					</tr>
-					
+					</c:forEach>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</form>
 				</tbody>
 			</table>
+			<div class="mt-5" id="pageBar">${pagebar}</div>
 	</div>
 </div>
 
@@ -67,7 +78,7 @@
 		  <div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 			  <div class="modal-header">
-				<h5 class="modal-title" id="adminCamperModalLabel">캠핑용품거래 관리</h5>
+				<h5 class="modal-title" id="adminCamperModalLabel">캠퍼모집</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				  <span aria-hidden="true" style="color:#fff">&times;</span>
 				</button>
@@ -77,7 +88,7 @@
 					<table class="table" id="tb-modal">
 					<tr>
 						<td>제목</td>
-						<td><input class="form-control"></td>
+						<td><input type="text" class="form-control body-contents" id="title" value=""></td>
 					</tr>
 					<tr>
 						<td>모집상태</td>
@@ -106,16 +117,56 @@
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td><textarea name="" id="" cols="30" rows="10" class="form-control" style="height:150px;"></textarea></td>
+						<td><textarea name="" id="text-contents" cols="30" rows="10" class="form-control body-contents" style="height:150px;"></textarea></td>
 					</tr>
 				  </table>
 				</div>
 				  </form> 
 			  <div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">수정</button>
-				<button type="button" class="btn btn-primary" id="btn-product-update">처리</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 			  </div>
 			</div>
 		  </div>
 		</div>
+<script>
+document.querySelectorAll('.btn-search').forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		let keyword = document.getElementById('searchKeyword').value;
+		let searchType = document.getElementById('search-type').value;
+
+		let url = "${pageContext.request.contextPath}/admin/camperManagement";
+		url = url + "?searchType=" + searchType;
+		url = url + "&searchKeyword=" + keyword;
+		location.href = url;
+		console.log(url);
+		
+	})
+})
+
+document.querySelectorAll('.btn-delete').forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		document.deleteCamperFrm.submit();
+	})
+});
+
+$(document).ready(function() {
+    $("input:checkbox[name='checkAll']").click(function() {
+        if($("input:checkbox[name='checkAll']").is(":checked") == true) {
+            $("input:checkbox[name='deleteList']").prop("checked", true);
+        } else {
+            $("input:checkbox[name='deleteList']").prop("checked", false);
+        }
+    });
+
+    $("input:checkbox[name='deleteList']").click(function() {
+        var allCnt = $("input:checkbox[name='deleteList']").length;         
+        var selCnt = $("inupt:checkbox[name='deleteList']:checked").length; 
+
+        if(allCnt != selCnt) {
+            $("input:checkbox[name='checkAll']").prop("checked", false);
+        }
+    });
+});
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
