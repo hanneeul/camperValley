@@ -1,9 +1,12 @@
 package com.kh.campervalley.admin.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
+import com.kh.campervalley.cs.model.dto.NoticeExt;
 import com.kh.campervalley.member.model.dto.Member;
 
 @Mapper
@@ -14,6 +17,12 @@ public interface AdminDao {
 	Member selectOneMember(String memberId);
 
 	int memberUpdate(String memberId);
+
+	List<NoticeExt> selectProductList(Map<String, Object> map, RowBounds rowBounds);
+
+	int selectTotalProductList(Map<String, Object> map);
+
+	int productDelete(Integer productNo);
 
 
 }

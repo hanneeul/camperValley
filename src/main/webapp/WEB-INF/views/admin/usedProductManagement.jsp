@@ -6,6 +6,8 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/admin/admin.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
@@ -15,14 +17,19 @@
 	<div class="admin-content" style="width: 80%;">
 		<h5 class="admin-hd">캠핑용품 거래 관리</h5>
 		<div class="product-hd" style="margin-top:40px;">
-
-					<div class="search-group float-right mb-2">
-					<select id="searchType">
-						<option value="title">제목</option>
-						<option value="title">내용</option>
-						<option value="title">작성자</option>
+				<div class="float-right">
+					<button type="button" class="btn-delete btn btn-danger btn-sm">선택삭제
+					</button>
+				</div>
+					<div class="search-group float-left mb-2">
+					<select id="search-type">
+						<option value="productTitle" ${map.searchType eq 'productTitle' ? 'selected' : ''}>제목</option>
+						<option value="productContent" ${map.searchType eq 'productContent' ? 'selected' : ''}>내용</option>
+						<option value="memberId">작성자</option>
 					</select>
-						<input class="input-search" type="text" name="searchType" placeholder="검색어 입력">
+						<input type="hidden" name="searchType" value="productTitle">
+						<input type="hidden" name="searchType" value="productContent">
+						<input class="input-search" type="text" placeholder="검색어 입력" name="searchKeyword" id="searchKeyword">
 						<button class="btn-search" type="button">
 							<i class="fa fa-search"></i>
 						</button>
@@ -32,85 +39,36 @@
 			<table class="table text-center" id="tb-member">
 				<thead>
 					<tr>
+						<th class="col-md-1"><input name="checkAll" id="checkAll" type="checkbox" /></th>
 						<th class="col-md-1">No.</th>
-						<th class="col-md-4">제목</th>
-						<th>카테고리</th>
-						<th>거래지역</th>
-						<th>가격</th>
+						<th class="col-md-6">제목</th>
 						<th>작성자</th>
-						<th></th>
+						<th>작성일</th>
 					</tr>
 				</thead>
 				<tbody>
+				<form action="${pageContext.request.contextPath}/admin/usedProductDelete" method="post" name="deleteProductFrm">
+				<c:forEach items="${list}" var="list" varStatus="vs">
 					<tr>
-						<td>48</td>
-						<td>팝니다팝니닾ㅂ</td>
-						<td>뭐라고하지</td>
-						<td>경기도 @@시</td>
-						<td>32,000</td>
-						<td>동그랑땡</td>
+						<td><input name="deleteList" type="checkbox" class="deleteList" value="${list.productNo}" /></td>
+						<td>${list.productNo}</td>
+						<td><a href="${pageContext.request.contextPath}/usedProduct/product/getProductDetail?productNo=${list.productNo}">${list.productTitle}</a></td>
+						<td>${list.sellerId}</td>
 						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminProductModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
+							<fmt:parseDate value="${list.productEnrollTime}" pattern="yyyy-MM-dd HH:mm:ss" var="productEnrollTime"/>
+							<fmt:formatDate value="${productEnrollTime}" pattern="yyyy-MM-dd"/>
 						</td>
+						
 					</tr>
-					<tr>
-						<td>48</td>
-						<td>팝니다팝니닾ㅂ</td>
-						<td>뭐라고하지</td>
-						<td>경기도 @@시</td>
-						<td>32,000</td>
-						<td>동그랑땡</td>
-						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminProductModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>48</td>
-						<td>팝니다팝니닾ㅂ</td>
-						<td>뭐라고하지</td>
-						<td>경기도 @@시</td>
-						<td>32,000</td>
-						<td>동그랑땡</td>
-						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminProductModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>48</td>
-						<td>팝니다팝니닾ㅂ</td>
-						<td>뭐라고하지</td>
-						<td>경기도 @@시</td>
-						<td>32,000</td>
-						<td>동그랑땡</td>
-						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminProductModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>48</td>
-						<td>팝니다팝니닾ㅂ</td>
-						<td>뭐라고하지</td>
-						<td>경기도 @@시</td>
-						<td>32,000</td>
-						<td>동그랑땡</td>
-						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminProductModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-						</td>
-					</tr>
+					</c:forEach>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				</form>
 				</tbody>
 			</table>
+<div class="mt-5" id="pageBar">${pagebar}</div>
 	</div>
 </div>
+
 
 <!-- 모달창 -->
 <div class="modal fade" id="adminProductModal" tabindex="-1" role="dialog" aria-labelledby="#adminProductModalLabel" aria-hidden="true">
@@ -160,4 +118,46 @@
 			</div>
 		  </div>
 		</div>
+		
+<script>
+document.querySelectorAll('.btn-search').forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		let keyword = document.getElementById('searchKeyword').value;
+		let searchType = document.getElementById('search-type').value;
+
+		let url = "${pageContext.request.contextPath}/admin/usedProductManagement";
+		url = url + "?searchType=" + searchType;
+		url = url + "&searchKeyword=" + keyword;
+		location.href = url;
+		console.log(url);
+		
+	})
+})
+
+document.querySelectorAll('.btn-delete').forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		document.deleteProductFrm.submit();
+	})
+});
+
+$(document).ready(function() {
+    $("input:checkbox[name='checkAll']").click(function() {
+        if($("input:checkbox[name='checkAll']").is(":checked") == true) {
+            $("input:checkbox[name='deleteList']").prop("checked", true);
+        } else {
+            $("input:checkbox[name='deleteList']").prop("checked", false);
+        }
+    });
+
+    $("input:checkbox[name='deleteList']").click(function() {
+        var allCnt = $("input:checkbox[name='deleteList']").length;         
+        var selCnt = $("inupt:checkbox[name='deleteList']:checked").length; 
+
+        if(allCnt != selCnt) {
+            $("input:checkbox[name='checkAll']").prop("checked", false);
+        }
+    });
+});
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

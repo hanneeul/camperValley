@@ -1,9 +1,33 @@
 @charset "UTF-8";
 
+#tb-member tr:last-child {
+	border-bottom: 1px solid #dee2e6;
+}
+
+/* 페이지바 */
+.page-item.active span.page-link {
+	background-color: #639A67;
+    border-color: #639A67;
+}
+
+.page-item .page-link {
+	color: #2B380C;
+}
+.page-item .page-link:hover {
+	color: #2B380C;
+}
+
+
 /* 버튼 */
 button.btn-primary, button.btn-primary:hover {
 	background-color: #639A67;
 	border: #639A67;
+}
+
+.btn-delete {
+	border: none;
+    background: #fff;
+    color: #e52714;
 }
 
 /* footer 임시 */
@@ -121,6 +145,14 @@ input:focus {
 	margin-top: 20px;
 }
 
+#tb-member a {
+	color: #000;
+}
+
+#tb-member a:hover {
+	color: #000;
+}
+
 .admin-hd {
 	margin-bottom: 15px;
 	font-weight: bold;
@@ -204,7 +236,7 @@ tr:last-child {
 	margin-left: 5px;
 }
 
-#searchType {
+#search-type {
 	border: 1px solid #dee2e6;
 	width: 77px;
 	height: 28px;

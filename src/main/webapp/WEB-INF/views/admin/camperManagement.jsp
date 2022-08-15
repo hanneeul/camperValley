@@ -15,22 +15,15 @@
 	<div class="admin-content" style="width: 80%;">
 		<h5 class="admin-hd">캠퍼모집 관리</h5>
 		<div class="camper-hd" style="margin-top:40px;">
-		<div class="select-box float-left" style="font-size: 0.87rem;">
-						
-						<label for="state-category">모집상태</label>
-						<select class="state-category">
-							<option>전체</option>
-							<option>모집중</option>
-							<option>모집완료</option>
-						</select>
-		</div>
-					<div class="search-group float-right mb-2">
+	<div class="search-group float-right mb-2">
 						<select id="searchType">
 							<option value="title">제목</option>
-							<option value="title">내용</option>
+						<option value="content">내용</option>
 							<option value="title">작성자</option>
 						</select>
-						<input class="input-search" type="text" name="searchType" placeholder="검색어 입력">
+						<input type="hidden" name="searchType" value="title">
+						<input type="hidden" name="searchType" value="content">
+						<input class="input-search" type="text" name="searchType" placeholder="검색어 입력" name="searchKeyword" id="searchKeyword">
 						<button class="btn-search" type="button">
 							<i class="fa fa-search"></i>
 						</button>
@@ -63,45 +56,7 @@
 							</button>
 						</td>
 					</tr>
-					<tr>
-						<td>48</td>
-						<td>모집중</td>
-						<td>같이가실분</td>
-						<td>경기도 @@시</td>
-						<td>2</td>
-						<td>동그랑땡</td>
-						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminCamperModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>48</td>
-						<td>모집중</td>
-						<td>같이가실분</td>
-						<td>경기도 @@시</td>
-						<td>2</td>
-						<td>동그랑땡</td>
-						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminCamperModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>48</td>
-						<td>모집중</td>
-						<td>같이가실분</td>
-						<td>경기도 @@시</td>
-						<td>2</td>
-						<td>동그랑땡</td>
-						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminCamperModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-						</td>
-					</tr>
+					
 				</tbody>
 			</table>
 	</div>
