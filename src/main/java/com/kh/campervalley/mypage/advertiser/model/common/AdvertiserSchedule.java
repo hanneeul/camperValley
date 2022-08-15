@@ -25,7 +25,7 @@ public class AdvertiserSchedule {
 		dailyInsertPerformance();
 	}
 
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "1 0 0 * * *", zone = "Asia/Seoul")
 	public void dailyInsertPerformance() {
 		log.debug("[매일 자정 실행] 운영중인 광고 일일성과 insert");
 		List<Integer> advertisementNoList = advertiserService.selectAdvertisementForInsertPerform();
