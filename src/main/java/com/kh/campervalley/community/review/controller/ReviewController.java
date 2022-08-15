@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.community.review.model.dto.CampsiteReview;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
+import com.kh.campervalley.community.review.model.dto.ReviewComment;
 import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
 import com.kh.campervalley.community.review.model.service.ReviewService;
 
@@ -229,6 +230,30 @@ public class ReviewController {
 			throw e;
 		}
 		return "redirect:/community/review/reviewList";
+	}
+	
+	@PostMapping("/commentEnroll")
+	public String commentEnroll(
+			CampsiteReviewExt review, 
+			ReviewComment comment, 
+			@RequestParam int reviewNo, 
+			@RequestParam String memberId, 
+			@RequestParam int commentLevel, 
+			@RequestParam String commentRef, 
+			@RequestParam String commentContent) {
+		
+		try {
+			comment.setReviewNo(reviewNo);
+			comment.setCommentLevel(commentLevel);
+			comment.setCommentRef(Integer.parseInt(commentRef));
+			comment.setCommentContent(commentContent);
+			int result = reviewService.insertReviewComment(comment);
+			review.addReviewComment(comment);
+		} catch (Exception e) {
+			log.error("댓글 등록 오류", e);
+			throw e;
+		}
+		return "redirect:/community/review/reviewDetail?reviewNo=" + reviewNo;
 	}
 	
 }

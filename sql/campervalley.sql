@@ -440,7 +440,6 @@ create table review_comment (
 create sequence seq_review_comment_no; --sequence 추가
 
 
-
 create table campsite_bookmark (
 	camp_bm_no number not null,
 	member_id varchar2(15) not null,

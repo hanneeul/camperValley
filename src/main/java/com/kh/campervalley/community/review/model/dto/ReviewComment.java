@@ -2,6 +2,8 @@ package com.kh.campervalley.community.review.model.dto;
 
 import java.time.LocalDateTime;
 
+import com.kh.campervalley.member.model.dto.Member;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,5 @@ public class ReviewComment {
 	@NonNull
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	private Member member;
 }

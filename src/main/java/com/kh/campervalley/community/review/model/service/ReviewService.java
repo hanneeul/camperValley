@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.campervalley.community.review.model.dto.CampsiteReview;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
+import com.kh.campervalley.community.review.model.dto.ReviewComment;
 import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
 
 public interface ReviewService {
@@ -34,5 +35,7 @@ public interface ReviewService {
 	int updateReview(CampsiteReviewExt review);
 
 	int deleteReview(int reviewNo);
+
+	int insertReviewComment(ReviewComment comment);
 
 }

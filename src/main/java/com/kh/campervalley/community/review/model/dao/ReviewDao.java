@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.kh.campervalley.community.review.model.dto.CampsiteReview;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
+import com.kh.campervalley.community.review.model.dto.ReviewComment;
 import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
 
 @Mapper
@@ -38,5 +39,7 @@ public interface ReviewDao {
 	int updateReview(CampsiteReviewExt review);
 
 	int deleteReview(int reviewNo);
+
+	int insertReviewComment(ReviewComment comment);
 
 }
