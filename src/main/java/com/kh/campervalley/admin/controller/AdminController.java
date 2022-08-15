@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.admin.model.service.AdminService;
 import com.kh.campervalley.common.CamperValleyUtils;
+import com.kh.campervalley.cs.model.dto.NoticeExt;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
@@ -165,7 +166,50 @@ public class AdminController {
 	public void camperManagement() {}
 
 	@GetMapping("/usedProductManagement")
-	public void usedProductManagement() {}
+	public ModelAndView usedProductManagement(ModelAndView mav, 
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "1") int cPage,
+			HttpServletRequest request) {
+		try {
+			int numPerPage = 7;
+			int offset = (cPage - 1) * numPerPage;
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("searchType", searchType);
+			map.put("searchKeyword", searchKeyword);
+			map.put("numPerPage", numPerPage);
+			map.put("offset", offset);
+			
+			List<NoticeExt> list = adminService.selectProductList(map);
+			int totalContent = adminService.selectTotalProductList(map);
+			log.debug("list = {}", list);
+			
+			String url = request.getRequestURI();
+			String pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalContent, url);
+			log.debug("map = {}" + map);
+			
+			mav.addObject("list", list);
+			mav.addObject("map", map);
+			mav.addObject("pagebar", pagebar);
+			
+			mav.setViewName("admin/usedProductManagement");
+		} catch (Exception e) {
+			log.error("캠핑용품거래목록 조회 오류", e);
+		}
+		return mav;
+	}
+	
+	@PostMapping("/usedProductDelete")
+	public String usedProductDelete(@RequestParam("deleteList") List<Integer> usedProductNo, RedirectAttributes redirectAttr) {
+		try {
+			for (Integer productNo : usedProductNo) adminService.productDelete(productNo);
+			redirectAttr.addFlashAttribute("msg", "게시글이 삭제되었습니다.");
+		} catch (Exception e) {
+			log.error("중고거래 삭제 오류", e);
+		}
+		return "redirect:/admin/usedProductManagement";
+	}
 
 	@GetMapping("/reportManagement")
 	public void reportManagement() {}

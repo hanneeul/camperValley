@@ -34,6 +34,45 @@
 			member_id = #{memberId}
 </select>
 
+<select id="selectProductList" resultMap="productMap">
+	select 
+		* 
+	from
+		used_product 
+	<where>
+		<if test="searchType == 'productTitle'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'productContent'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+	</where>
+	order by product_no desc
+</select>
+
+<select id="selectTotalProductList" resultType="_int">
+	select
+		count(*)
+	from
+		used_product
+	<where>
+	<if test="searchType == 'product_title'">
+		${searchType} like '%' || #{searchKeyword} || '%'
+	</if>
+	<if test="searchType == 'product_content'">
+		${searchType} like '%' || #{searchKeyword} || '%'
+	</if>
+	</where>
+</select>
+
+<delete id="productDelete">
+	delete
+		from
+	used_product
+	where
+		product_no = #{productNo}
+</delete>
+
 
 
 
@@ -55,4 +94,25 @@
 			</constructor>	
 		</collection>
 	</resultMap>
+	
+<resultMap type="usedProduct" id="productMap">
+	<id column="product_no" property="productNo"/>
+	<result column="seller_id" property="sellerId"/>
+	<result column="cate_no" property="cateNo"/>
+	<result column="product_title" property="productTitle"/>
+	<result column="product_content" property="productContent"/>
+	<result column="product_img1" property="productImg1"/>
+	<result column="product_img2" property="productImg2"/>
+	<result column="product_img3" property="productImg3"/>
+	<result column="product_img4" property="productImg4"/>
+	<result column="product_img5" property="productImg5"/>
+	<result column="product_price" property="productPrice"/>
+	<result column="product_location" property="productLocation"/>
+	<result column="product_delivery_fee" property="productDeliveryFee"/>
+	<result column="product_enroll_time" property="productEnrollTime"/>
+	<result column="product_views" property="productViews"/>
+	<result column="transcation_date" property="transactionDate"/>
+	<result column="buyer_id" property="buyerId"/>
+	<result column="is_delete" property="isDelete"/>
+</resultMap>
 </mapper>
