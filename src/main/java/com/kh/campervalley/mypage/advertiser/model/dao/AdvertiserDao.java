@@ -79,11 +79,10 @@ public interface AdvertiserDao {
 	@Insert("insert into ad_attach values (seq_ad_attach_no.nextval, #{advertisementNo}, #{originalFilename}, #{renamedFilename}, default)")
 	int insertAdAttach(AdAttach adAttach);
 
-	@Insert("insert into ad_performance values (seq_ad_performance_no.nextval, #{advertisementNo}, default, default)")
+	@Insert("insert into ad_performance values (seq_ad_performance_no.nextval, #{advertisementNo}, default, default, default)")
 	int insertAdPerformance(int advertisementNo);
 
-	@Select("select * from advertisement where advertiser_no = #{advertiserNo} and deleted_at is null order by created_at desc")
-	List<Advertisement> selectAdListByAdvertiserNo(int advertiserNo, RowBounds rowBounds);
+	List<AdvertisementExt> selectAdListByAdvertiserNo(int advertiserNo, RowBounds rowBounds);
 
 	@Select("select count(*) from advertisement where advertiser_no = #{advertiserNo} and deleted_at is null")
 	int selectTotalAdvertisement(int advertiserNo);
@@ -104,5 +103,23 @@ public interface AdvertiserDao {
 	List<Integer> selectAdvertisementForInsertPerform();
 
 	int dailyInsertPerformance(List<Integer> advertisementNoList);
+
+	int InsertTodayPerformance(List<Integer> advertisementNoList);
+
+	List<AdvertisementExt> selectDisplayAd(Map<String, Object> param);
+
+	@Update("update ad_performance set daily_view_cnt = daily_view_cnt + 1 where advertisement_no = #{advertisementNo} and display_at = trunc(sysdate)")
+	int updatePerformView(int advertisementNo);
+
+	@Update("update ad_performance set daily_click_cnt = daily_click_cnt + 1 where advertisement_no = #{advertisementNo} and display_at = trunc(sysdate)")
+	int updatePerformClick(int advertisementNo);
+
+	Map<String, Object> selectOneAdmoneyNo(int advertisementNo);
+
+	@Update("update admoney set balance = balance - ( select ad_cpc from advertisement where advertisement_no = #{advertisementNo} ) where admoney_no = #{admoneyNo}")
+	int updateAdmoneyAfterClick(Map<String, Object> param);
+
+	@Update("update advertisement set ad_status = 0 where (advertiser_no = #{advertiserNo} and ad_cpc > #{newBalance}) or ((ad_daily_budget - #{todayCost}) < #{adCpc})")
+	int updateAdvertisementOff(Map<String, Object> param);
 
 }

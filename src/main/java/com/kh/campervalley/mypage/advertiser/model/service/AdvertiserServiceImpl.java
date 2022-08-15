@@ -11,14 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.campervalley.mypage.advertiser.model.dao.AdvertiserDao;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
-import com.kh.campervalley.mypage.advertiser.model.dto.AdPerformance;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertiser;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserExt;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertiserMoneyExt;
-import com.kh.campervalley.mypage.advertiser.model.dto.BizStatus;
 import com.kh.campervalley.mypage.advertiser.model.dto.LicenseFile;
 import com.kh.campervalley.mypage.advertiser.model.dto.Pay;
 
@@ -162,7 +160,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	}
 
 	@Override
-	public List<Advertisement> selectAdListByAdvertiserNo(int advertiserNo, int cPage, int numPerPage) {
+	public List<AdvertisementExt> selectAdListByAdvertiserNo(int advertiserNo, int cPage, int numPerPage) {
 		int offset = (cPage - 1) * numPerPage;
 		int limit = numPerPage;
 		RowBounds rowBounds = new RowBounds(offset, limit);
@@ -219,11 +217,54 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	public List<Integer> selectAdvertisementForInsertPerform() {
 		return advertiserDao.selectAdvertisementForInsertPerform();
 	}
-	
+
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int dailyInsertPerformance(List<Integer> advertisementNoList) {
 		return advertiserDao.dailyInsertPerformance(advertisementNoList);
 	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int InsertTodayPerformance(List<Integer> advertisementNoList) {
+		return advertiserDao.InsertTodayPerformance(advertisementNoList);
+	}
 
+	@Override
+	public List<AdvertisementExt> selectDisplayAd(Map<String, Object> param) {
+		return advertiserDao.selectDisplayAd(param);
+	}
+
+	@Override
+	public int updatePerformView(int advertisementNo) {
+		return advertiserDao.updatePerformView(advertisementNo);
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int updatePerformClick(int advertisementNo) {
+		int result = 0;
+		
+		// 일일성과테이블 클릭수 증가
+		result = advertiserDao.updatePerformClick(advertisementNo);
+
+		// 광고주 admoney 차감
+		Map<String, Object> param = new HashMap<>();
+		param.put("advertisementNo", advertisementNo);
+		Map<String, Object> target = advertiserDao.selectOneAdmoneyNo(advertisementNo);
+		// log.debug("target = {}", target);
+		param.put("admoneyNo", target.get("ADMONEY_NO"));
+		result = advertiserDao.updateAdmoneyAfterClick(param);
+		
+		// 갱신된 admoney보다 높은 cpc로 설정된 광고 && 일예산초과 광고 off처리
+		int adCpc = Integer.parseInt(target.get("AD_CPC").toString());
+		param.put("adCpc", adCpc);
+		int newBalance = Integer.parseInt(target.get("BALANCE").toString()) - adCpc;
+		param.put("newBalance", newBalance);
+		param.put("advertiserNo", Integer.parseInt(target.get("ADVERTISER_NO").toString()));
+		param.put("todayCost", Integer.parseInt(target.get("TODAY_COST").toString()));
+		result = advertiserDao.updateAdvertisementOff(param);
+		
+		return result;
+	}
 }

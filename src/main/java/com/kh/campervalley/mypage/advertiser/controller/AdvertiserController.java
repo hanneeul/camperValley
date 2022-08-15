@@ -132,7 +132,7 @@ public class AdvertiserController {
 			log.debug("advertiser = {}", advertiser);
 
 			// 운영광고목록
-			List<Advertisement> adList = advertiserService.selectAdListByAdvertiserNo(advertiser.getAdvertiserNo(), cPage, numPerPage);
+			List<AdvertisementExt> adList = advertiserService.selectAdListByAdvertiserNo(advertiser.getAdvertiserNo(), cPage, numPerPage);
 			int totalAdvertisement = advertiserService.selectTotalAdvertisement(advertiser.getAdvertiserNo());
 			String pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalAdvertisement, url);
 			log.debug("adList = {}", adList);
@@ -248,7 +248,7 @@ public class AdvertiserController {
 	public void loadEnrollAdPage() {}
 
 	@PostMapping("/enrollAd")
-	public String submitEnrollAdFrm(AdvertisementExt advertisement, @RequestParam("adImg") MultipartFile upFile) {
+	public String submitEnrollAdFrm(AdvertisementExt advertisement, @RequestParam("adImg") MultipartFile upFile) throws Exception {
 		log.debug("advertisement = {}", advertisement);
 		log.debug("upFile = {}", upFile);
 		
@@ -270,6 +270,7 @@ public class AdvertiserController {
 			
 		} catch(Exception e) {
 			log.error("광고소재 등록 오류", e);
+			throw e;
 		}
 		return "redirect:/mypage/advertiser/dashboard";
 	}
@@ -282,6 +283,8 @@ public class AdvertiserController {
 			map.put("msg", "광고소재가 정상적으로 삭제되었습니다.");
 		} catch(Exception e) {
 			log.error("광고소재 삭제처리 오류", e);
+			map.put("msg", "광고소재 삭제처리 오류");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map);
 		}
 		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
 	}
@@ -294,6 +297,8 @@ public class AdvertiserController {
 			int result = advertiserService.updateAdvertisement(advertisement);
 		} catch(Exception e) {
 			log.error("광고소재 정보변경 오류", e);
+			map.put("msg", "광고소재 정보변경 오류");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map);
 		}
 		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
 	}
@@ -310,6 +315,38 @@ public class AdvertiserController {
 			}
 		} catch(Exception e) {
 			log.error("CPC-잔여애드머니 비교 오류", e);
+			map.put("msg", "CPC-잔여애드머니 비교 오류");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map);
+		}
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	}
+
+	@PostMapping("/viewUp")
+	public ResponseEntity<?> viewUp(int advertisementNo) {
+		log.debug("advertisementNo = {}", advertisementNo);
+		Map<String, Object> map = new HashMap<>();
+		try {
+			int result = advertiserService.updatePerformView(advertisementNo);
+			map.put("msg", "[" + advertisementNo + "] 조회수 증가완료");
+		} catch (Exception e) {
+			log.error("광고 조회수 업데이트 오류", e);
+			map.put("msg", "[" + advertisementNo + "] 조회수 증가 오류");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map);
+		}
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	};
+
+	@PostMapping("/clickUp")
+	public ResponseEntity<?> clickUp(int advertisementNo) {
+		log.debug("advertisementNo = {}", advertisementNo);
+		Map<String, Object> map = new HashMap<>();
+		try {
+			int result = advertiserService.updatePerformClick(advertisementNo);
+			map.put("msg", "[" + advertisementNo + "] 클릭수 증가완료");
+		} catch (Exception e) {
+			log.error("광고 클릭수 업데이트 오류", e);
+			map.put("msg", "[" + advertisementNo + "] 클릭수 증가 오류");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map);
 		}
 		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
 	}

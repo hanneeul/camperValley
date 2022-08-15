@@ -14,14 +14,19 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class AdvertisementExt extends Advertisement {
 
+	private int adClickCnt;
+	private int adViewCnt;
 	private AdAttach adAttach;
 	private List<AdPerformance> performanceList = new ArrayList<>();
 
 	public AdvertisementExt(int advertisementNo, int advertiserNo, String adName, AdZone adZone, String adLink,
-			int adCpc, int adDailyBudget, int adViewCnt, int adClickCnt, boolean adStatus, LocalDateTime createdAt,
-			LocalDateTime updatedAt, LocalDateTime deletedAt, List<AdPerformance> performanceList) {
-		super(advertisementNo, advertiserNo, adName, adZone, adLink, adCpc, adDailyBudget, adViewCnt, adClickCnt,
-				adStatus, createdAt, updatedAt, deletedAt);
+			int adCpc, int adDailyBudget, boolean adStatus, LocalDateTime createdAt, LocalDateTime updatedAt,
+			LocalDateTime deletedAt, int adClickCnt, int adViewCnt, AdAttach adAttach, List<AdPerformance> performanceList) {
+		super(advertisementNo, advertiserNo, adName, adZone, adLink, adCpc, adDailyBudget, adStatus, createdAt,
+				updatedAt, deletedAt);
+		this.adClickCnt = adClickCnt;
+		this.adViewCnt = adViewCnt;
+		this.adAttach = adAttach;
 		this.performanceList = performanceList;
 	}
 
