@@ -64,11 +64,12 @@
 						</ul>
 			    	</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
+					<sec:authentication property="principal" var="loginMember" scope="session"/>
 					<form action="${pageContext.request.contextPath}/member/logout" method="post" style="display:contents;">
 						<ul class="navbar-nav col-md-3 mt-4 ml-5">
 							<li class="nav-item pt-2"><span class="camper-color"><i class="fa-solid fa-user fa-1x"></i>&nbsp;[<sec:authentication property="principal.nickname"/>]</span>님</li>
 							<li class="nav-item ml-4"><button class="nav-link small btn btn-link" href="${pageContext.request.contextPath}/member/logout"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:11px;"></i>&nbsp;<span id="logout" >로그아웃</span></button></li>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />			    	
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</ul>
 					</form>
 			   		</sec:authorize>

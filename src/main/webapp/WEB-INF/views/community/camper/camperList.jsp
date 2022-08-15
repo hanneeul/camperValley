@@ -11,18 +11,17 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
-
 	<div class="container-md campsite-review-list-wrap pt-2">
 		<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
 			<div class="col-md float-right">
 				<div class="input-group align-items-center community-search-enroll">
 			    	<select id="searchType" class="custom-select btn-outline-success btn-outline-camper-color">
 						<option value="" disabled selected>선택</option>
-						<option value="nickname">작성자</option>
+						<option value="member_id" ${param.searchType }>작성자</option>
 					   	<option value="title">제목</option>
 					    <option value="content">내용</option>
 					</select>
-					<input type="text" id="searchKeyword" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
+					<input type="text" id="searchKeyword" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn" value="${param.searchKeyword}">
 				  	<div class="input-group-append">
 				    	<button id="searchBtn" class="btn btn-outline-success btn-outline-camper-color" type="button" id="communitySearchBtn">
 				    		<i class="fa-solid fa-magnifying-glass camper-color"></i>
@@ -87,7 +86,23 @@ let cPage = 1;
 $(document).ready(async () => {
 	$(review).removeClass("active");
 	$(camper).addClass("active");
-	renderBoardBoxDetail(renderBoardBoxMore());
+	const firstBoardBox = renderBoardBoxMore();
+	if(firstBoardBox.length == 0) {
+		// 조회된 검색결과 x
+		$("#boardBoxSection").html("");
+		$("#detailSection").html("").removeClass("boardBoxSelect");
+		const $result = $('<div class="my-5 py-4 text-20">에 대한 검색결과가 없습니다.</div>');
+		const $keyword = $('<span class="text-danger text-20">"${param.searchKeyword}"</span>');
+		const $info1 = $('<div class="pt-5 pb-2">&#183;&nbsp;단어의 철자가 정확한지 확인해 보세요.</div>');
+		const $info2 = $('<div class="py-2">&#183;&nbsp;한글을 영어로 혹은 영어를 한글로 입력했는지 확인해 보세요.</div>');
+		const $info3 = $('<div class="py-2">&#183;&nbsp;검색어의 단어 수를 줄이거나, 보다 일반적인 검색어로 다시 검색해 보세요.</div>');
+		$result.prepend($keyword);
+		$result.append($info1, $info2, $info3);
+		$("#listSection").append($result);
+	} else {
+		$("#detailSection").addClass("boardBoxSelect");
+		renderBoardBoxDetail(firstBoardBox);
+	}
 });
 
 // 검색
@@ -168,31 +183,28 @@ const renderBoardBoxMore = (isChk) => {
 			const {camperList} = response;
 			for(let i = 0; i < camperList.length; i++) {
 				const $boardBox = $('<div class="boardBox my-4 p-4" onclick="renderBoardBoxDetail(this);"></div>');
-				// 현재 로그인된 아이디로 분기처리 필요
-				if(${not empty loginMember}) { // 동일하지 않을 때
-					const $dropdown = $('<div class="drop-down drop-down-1"></div>');
-					const $selected = $('<div class="selected text-right"></div>');
-					const $icon = $('<i class="fa-solid fa-ellipsis-vertical d-block"></i>');
-				} else { // 동일할 때
-					const $drop = $('<div class="drop-down drop-down-1"></div>');
-					const $dropDiv1 = $('<div class="selected text-right"></div>');
-					const $dropI = $('<i class="fa-solid fa-ellipsis-vertical d-block" onclick="dropdown(this);"></i>');
-					const $dropDiv2 = $('<div class="options text-right"></div>');
-					const $dropUl = $('<ul class="border-top border-dark"></ul>');
-					const $dropLi1 = $('<li>수정</li>');
-					const $dropLi2 = $('<li>삭제</li>');
-					$dropLi1.on("click", (li) => {
-						$(li).closest('ul').hide();
-						location.href = "${pageContext.request.contextPath}/community/camper/camperUpdate";
-					});
-					$dropLi2.on("click", (li) => $(li).closest('ul').hide());
-					$dropUl.append($dropLi1, $dropLi2);
-					$dropDiv2.append($dropUl);
-					$dropDiv1.append($dropI);
-					$drop.append($dropDiv1, $dropDiv2);
-					$boardBox.append($drop);
+				// 현재 로그인된 아이디와 동일할 때
+				if (${not empty loginMember}) {
+					if("${loginMember.memberId}" == camperList[i].memberId) {
+						const $drop = $('<div class="drop-down drop-down-1"></div>');
+						const $dropDiv1 = $('<div class="selected text-right"></div>');
+						const $dropI = $('<i class="fa-solid fa-ellipsis-vertical d-block" onclick="dropdown(this);"></i>');
+						const $dropDiv2 = $('<div class="options text-right"></div>');
+						const $dropUl = $('<ul class="border-top border-dark"></ul>');
+						const $dropLi1 = $('<li>수정</li>');
+						const $dropLi2 = $('<li>삭제</li>');
+						$dropLi1.on("click", (li) => {
+							$(li).closest('ul').hide();
+							location.href = "${pageContext.request.contextPath}/community/camper/camperUpdate";
+						});
+						$dropLi2.on("click", (li) => $(li).closest('ul').hide());
+						$dropUl.append($dropLi1, $dropLi2);
+						$dropDiv2.append($dropUl);
+						$dropDiv1.append($dropI);
+						$drop.append($dropDiv1, $dropDiv2);
+						$boardBox.append($drop);
+					}
 				}
-				
 				const $info = $('<div class="boardBoxSelectInfo"></div>');
 				const $title = $('<div class="font-weight-bold text-20 pb-4"></div>');
 				$title.html(camperList[i].title);
