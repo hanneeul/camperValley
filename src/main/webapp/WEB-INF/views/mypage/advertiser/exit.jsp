@@ -20,7 +20,7 @@
 			<form name="exitAdvertiserFrm" action="" style="width: 800px;">
 				<div class="divInputWrapper">
 					<label for="bizName">광고계정 이름</label>
-					<input type="text" name="bizName" id="bizName" class="form-control form-control-sm" readonly>
+					<input type="text" name="bizName" id="bizName" class="form-control form-control-sm" value="${advertiser.bizName}" readonly>
 				</div>
 				<div class="divInputWrapper">
 					<label for="bizLicenseNo">사업자등록번호</label>
@@ -30,7 +30,7 @@
 				</div>
 				<div class="divInputWrapper">
 					<label for="admoney">잔여애드머니</label>
-					<input type="text" name="admoney" id="admoney" class="form-control form-control-sm" readonly>
+					<input type="text" name="admoney" id="admoney" class="form-control form-control-sm" value="${advertiser.admoney.balance}" readonly>
 				</div>
 				<div class="divInputWrapper">
 					<label>광고주 해제 규정</label>

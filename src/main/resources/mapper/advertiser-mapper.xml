@@ -266,4 +266,40 @@
 	where ad.advertisement_no = #{advertisementNo}
 </select>
 
+<select id="selectAdvertisementForInsertPerform" resultType="int">
+	select
+		advertisement_no
+	from
+		advertisement ad
+	where
+		(select ad_performance_no from ad_performance where advertisement_no = ad.advertisement_no and display_at = trunc(sysdate)) is null
+		and ad_status = 1
+</select>
+
+<insert id="dailyInsertPerformance" parameterType="java.util.List">
+	insert into
+		ad_performance (ad_performance_no, advertisement_no)
+	select
+		seq_ad_performance_no.nextval,
+		A.*
+	from (
+		<foreach collection="list" item="advertisementNo" separator="union all">
+			select #{advertisementNo} advertisement_no
+			from dual
+		</foreach> ) A
+</insert>
+
+<!-- 
+<select id="selectPayByMerchantUidList" parameterType="java.util.List" resultType="pay">
+	select *
+	from pay
+	<where>
+		merchant_uid in
+		<foreach collection="list" item="merchantUid" open="(" close=")" separator=",">
+		 #{merchantUid}
+		</foreach>
+	</where>
+</select>
+ -->
+
 </mapper>

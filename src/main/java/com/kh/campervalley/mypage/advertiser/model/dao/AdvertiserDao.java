@@ -101,4 +101,8 @@ public interface AdvertiserDao {
 	@Select("select count(*) from ad_performance where advertisement_no = #{advertisementNo} and trunc(display_at) = trunc(sysdate)")
 	int checkTodayPerformanceCnt(int advertisementNo);
 
+	List<Integer> selectAdvertisementForInsertPerform();
+
+	int dailyInsertPerformance(List<Integer> advertisementNoList);
+
 }

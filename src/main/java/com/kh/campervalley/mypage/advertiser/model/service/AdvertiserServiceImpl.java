@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.campervalley.mypage.advertiser.model.dao.AdvertiserDao;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdPerformance;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
@@ -213,4 +214,16 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 
 		return result;
 	}
+
+	@Override
+	public List<Integer> selectAdvertisementForInsertPerform() {
+		return advertiserDao.selectAdvertisementForInsertPerform();
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int dailyInsertPerformance(List<Integer> advertisementNoList) {
+		return advertiserDao.dailyInsertPerformance(advertisementNoList);
+	}
+
 }

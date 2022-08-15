@@ -151,7 +151,7 @@ create sequence seq_ad_attach_no;
 create table ad_performance (
     ad_performance_no number not null,
     advertisement_no number not null,
-    display_at date default sysdate,
+    display_at date default trunc(sysdate),
     daily_click_cnt number default 0,
     
     constraint pk_ad_performance primary key(ad_performance_no),

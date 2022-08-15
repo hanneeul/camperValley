@@ -106,7 +106,18 @@ public class AdvertiserController {
 	}
 	
 	@GetMapping("/exit")
-	public void exitAdvertiser() { }
+	public ModelAndView exitAdvertiser(ModelAndView mav, @AuthenticationPrincipal Member loginMember) {
+		String memberId = loginMember.getMemberId();
+		try {
+			AdvertiserMoneyExt advertiser = advertiserService.selectOneAdvertiserMoney(memberId);
+			log.debug("advertiser = {}", advertiser);
+			mav.addObject("advertiser", advertiser);
+		} catch(Exception e) {
+			log.error("광고주 정보 조회 오류", e);
+			throw e;
+		}
+		return mav;
+	}
 	
 	@GetMapping("/dashboard")
 	public ModelAndView advertiserDashBoard(ModelAndView mav, @AuthenticationPrincipal Member loginMember, 

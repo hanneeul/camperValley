@@ -75,4 +75,7 @@
 		<beans:property name="maxInMemorySize" value="10240"/> <!-- 메모리사용 최대크기. 이 크기를 초과하면 임시파일 생성. (현재값 = 10 * 1024) -->
 	</beans:bean>
 	
+	<task:annotation-driven scheduler="scheduler"/>
+	<task:scheduler id="scheduler" pool-size="10"/>
+	
 </beans:beans>
