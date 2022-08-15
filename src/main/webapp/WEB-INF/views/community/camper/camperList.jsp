@@ -17,9 +17,9 @@
 				<div class="input-group align-items-center community-search-enroll">
 			    	<select id="searchType" class="custom-select btn-outline-success btn-outline-camper-color">
 						<option value="" disabled selected>선택</option>
-						<option value="member_id" ${param.searchType }>작성자</option>
-					   	<option value="title">제목</option>
-					    <option value="content">내용</option>
+						<option value="member_id" ${param.searchType eq "member_id" ? "selected" : ""}>작성자</option>
+					   	<option value="title" ${param.searchType eq "title" ? "selected" : ""}>제목</option>
+					    <option value="content" ${param.searchType eq "content" ? "selected" : ""}>내용</option>
 					</select>
 					<input type="text" id="searchKeyword" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn" value="${param.searchKeyword}">
 				  	<div class="input-group-append">
@@ -117,7 +117,6 @@ document.querySelector("#searchBtn").addEventListener("click", (e) => {
 document.querySelector(".chk_box").addEventListener('change', ()=> {
 	$("#boardBoxSection").html("");
 	cPage = 1;
-	// 검색어 가져와서 renderBoardBoxMore에 넘겨줄 필요
 	if(document.querySelector("#isChk").checked) {
 		$(".chk_box > span").removeClass("off").addClass("on");
 		renderBoardBoxDetail(renderBoardBoxMore()); // 체크/체크해제 시 chk값 분기처리 필요
@@ -147,7 +146,7 @@ const renderBoardBoxDetail = (boardBox) => {
 	$("#listSection .boardBoxSelect").removeClass("boardBoxSelect").addClass("boardBox");
 	$(boardBox).removeClass("boardBox").addClass("boardBoxSelect");
 	
-	const $hidden = $(boardBox).find("input[type=hidden]");
+	const $hidden = $(boardBox).find(".hidden");
 	const camperNo = $hidden.data("no");
 	// detailBox 비동기 요청
 	$.ajax({
@@ -186,23 +185,31 @@ const renderBoardBoxMore = (isChk) => {
 				// 현재 로그인된 아이디와 동일할 때
 				if (${not empty loginMember}) {
 					if("${loginMember.memberId}" == camperList[i].memberId) {
+						const $dropFrm = $(`<form name="deleteFrm" action="${pageContext.request.contextPath}/community/camper/camperDelete?camperNo=\${camperList[i].camperNo}" method="post"></form>`);
+						const $dropInputHidden = $('<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>');
 						const $drop = $('<div class="drop-down drop-down-1"></div>');
 						const $dropDiv1 = $('<div class="selected text-right"></div>');
 						const $dropI = $('<i class="fa-solid fa-ellipsis-vertical d-block" onclick="dropdown(this);"></i>');
 						const $dropDiv2 = $('<div class="options text-right"></div>');
 						const $dropUl = $('<ul class="border-top border-dark"></ul>');
 						const $dropLi1 = $('<li>수정</li>');
-						const $dropLi2 = $('<li>삭제</li>');
 						$dropLi1.on("click", (li) => {
 							$(li).closest('ul').hide();
 							location.href = "${pageContext.request.contextPath}/community/camper/camperUpdate";
 						});
-						$dropLi2.on("click", (li) => $(li).closest('ul').hide());
+						const $dropLi2 = $('<li>삭제</li>');
+						$dropLi2.on("click", (li) => {
+							$(li).closest('ul').hide();
+							if(confirm("삭제하시겠습니까?")) {
+								$dropFrm.submit();
+							}
+						});
 						$dropUl.append($dropLi1, $dropLi2);
 						$dropDiv2.append($dropUl);
 						$dropDiv1.append($dropI);
 						$drop.append($dropDiv1, $dropDiv2);
-						$boardBox.append($drop);
+						$dropFrm.append($dropInputHidden, $drop);
+						$boardBox.append($dropFrm);
 					}
 				}
 				const $info = $('<div class="boardBoxSelectInfo"></div>');
@@ -218,7 +225,7 @@ const renderBoardBoxMore = (isChk) => {
 				camperList[i].content.length > 110 ? $content.html(camperList[i].content.substring(0, 110) + "...") : $content.html(camperList[i].content); 
 				const $status = $('<div class="font-weight-bold text-13">');
 				camperList[i].status === "I" ? $status.html("모집중") : $status.html("모집완료");
-				const $camperNo = $('<input type="hidden"/>');
+				const $camperNo = $('<input class="hidden" type="hidden"/>');
 				$camperNo.data("no", camperList[i].camperNo);
 				$info.append($title, $area, $dates, $content, $status, $camperNo);
 				$boardBox.append($info);
@@ -237,8 +244,7 @@ const f = (n) => n < 10 ? "0" + n : n;
 // open 채팅방 url 클릭시 새창열기
 document.querySelector("#chatUrl").addEventListener("click", (e) => {
 	const urlValue = $(e.target).val();
-	/* window.open(urlValue); */
-	window.open('https://open.kakao.com/o/gpoPerve');
+	window.open(urlValue);
 });
 
 // dropdown toggle

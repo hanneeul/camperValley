@@ -74,7 +74,6 @@ public class CamperController {
 	public String camperEnroll(Camper camper, RedirectAttributes redirectAttr) {
 		try {
 			camper.setMemberId("honggd");
-			log.debug("camper = {}", camper);
 			int result = camperService.insertCamper(camper);
 			redirectAttr.addFlashAttribute("msg", "글을 성공적으로 등록했습니다.");
 		} catch(Exception e) {
@@ -95,5 +94,17 @@ public class CamperController {
 			throw e;
 		}
 		return "jsonView";
+	}
+	
+	@PostMapping("/camperDelete")
+	public String camperDelete(@RequestParam int camperNo, RedirectAttributes redirectAttr) {
+		try {
+			int result = camperService.deleteCamper(camperNo);
+			redirectAttr.addAttribute("msg", "게시글이 삭제되었습니다.");
+		} catch(Exception e) {
+			log.error("캠퍼모집 삭제 오류", e);
+			throw e;
+		}
+		return "redirect:/community/camper/camperList";
 	}
 }

@@ -22,4 +22,6 @@ public interface CamperDao {
 
 	CamperExt selectCamperOne(int camperNo);
 
+	int deleteCamper(int camperNo);
+
 }

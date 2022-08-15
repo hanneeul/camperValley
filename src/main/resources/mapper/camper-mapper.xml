@@ -51,4 +51,11 @@
 	where
 		camper_no = #{camperNo}
 </select>
+
+<delete id="deleteCamper">
+	delete from
+		camper
+	where
+		camper_no = #{camperNo}
+</delete>
 </mapper>
