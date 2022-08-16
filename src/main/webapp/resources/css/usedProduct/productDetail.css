@@ -72,16 +72,19 @@ div {
     z-index: 1;
 }
 #view {
-	margin-left: -40px;
-    margin-top: 10.3px;
+	margin-left: -27px;
+    margin-top: 10.4px;
     color: #b4b4b4;
+}
+#zzim span {
+	position: relative;
+    top: 5px;
+    left: -26px;
+    font-size: 17px;
 }
 #zzim_btn {
 	margin-right: 10px;
-    background-color: #F5D08A;
-}
-#zzim_span {
-	color: black;
+    background-color: #DCAD67;
 }
 #zzim_span:hover {
 	color: black;
@@ -180,7 +183,7 @@ div {
     height: 100%;
 }
 .detail-info--topL-item i {
-    margin-right: 3rem;
+    margin-right: 2rem;
     font-size: 1.2rem;
     color: lightgray;
 }
@@ -227,7 +230,7 @@ div {
 /*************** 하단 상품 정보 *******************/
 #btmProdInfo_Wrap1 {
 	display: flex;
-    margin-top: 135px;
+    margin-top: 105px;
 }
 #btmProdInfo_Wrap2 {
 	flex: 1 1 0%;
@@ -237,13 +240,13 @@ div {
 	height: 50px;
 }
 .btmProdInfo_Title {
-	flex: 1 1 0%;
+    flex: 1 1 0%;
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
     display: flex;
-    border-bottom: 3px solid rgb(238, 238, 238);
+    border-bottom: 1px solid rgb(238, 238, 238);
     border-right: 1px solid rgb(255, 255, 255);
     border-left: 1px solid rgb(255, 255, 255);
     background: rgb(255, 255, 255);
@@ -324,8 +327,7 @@ div {
 	margin-top: -20px;
 }
 .prodInfo_wrap1 {
-    border-right: 1px solid rgb(238, 238, 238);
-    height: calc(85% - 50px);
+    height: 500px;
 }
 .content_marginTop {
 	margin-top: 30px;
@@ -339,12 +341,11 @@ div {
 	margin-top: 250px;
 }
 .prodInfo_contentText {
-    white-space: pre-line;
-    margin-top: -30px;
-    margin-bottom: 30px;
+	white-space: pre-line;
     font-size: 1.2rem;
     line-height: 28px;
     width: 800px;
+    margin: -29px 29px;
 }
 .prodInfo_detailWrap1 {
 	padding: 20px 0px;
@@ -466,7 +467,7 @@ div {
     left: 0.1rem;
     position: relative;
     top: 0.1rem;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: red;
 }
 .detail-info__chat i {
