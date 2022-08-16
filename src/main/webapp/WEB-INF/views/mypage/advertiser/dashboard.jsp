@@ -304,7 +304,7 @@ document.querySelectorAll(".updateAdBtn").forEach((btn) => {
 				adDailyBudget
 			},
 			success(response) {
-				console.log(response);
+				// console.log(response);
 				const {msg} = response;
 				$.confirm({
 					title: '변경완료',
