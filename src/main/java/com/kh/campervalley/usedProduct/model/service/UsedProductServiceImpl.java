@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.campervalley.usedProduct.model.dao.UsedProductDao;
@@ -147,4 +148,15 @@ public class UsedProductServiceImpl implements UsedProductService {
 	public int productDelete(int productNo) throws Exception {
 		return usedProductDao.productDelete(productNo);
 	}
+
+	@Override
+	public void searchProductList(String keyword, int parseInt, String order, Model model) {
+		
+		Map<String, Object> param = new HashMap<>();
+		
+		// 검색어
+//		if(keyword.substring)
+		
+	}
+
 }

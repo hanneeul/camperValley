@@ -92,6 +92,7 @@ public class UsedProductController  {
 	
 	};
 
+	/* 카테고리 검색 */
 	@PostMapping("/main/getProductList") 
 	@ResponseBody
 	public ModelAndView getProductList(@RequestParam(name = "page") int page) {
@@ -128,9 +129,16 @@ public class UsedProductController  {
 		return mav;
 	}
 	
+	/* 검색어 검색 */
 	@GetMapping("/main/searchDisplay")
-	public void searchDisplay() {};
-
+	public String searchDisplay(Model model, @RequestParam(value = "keyword") String keyword,
+								@RequestParam(value = "page", required = false, defaultValue = "0") String page,
+								@RequestParam(value = "order", required = false) String order) {
+		
+		usedProductService.searchProductList(keyword, Integer.parseInt(page), order, model);
+		return "";
+		
+	};
 	
 	/* 상품 상세보기 - 상품 정보 */
 	// 상품 리스트 - > 상세페이지
@@ -156,8 +164,7 @@ public class UsedProductController  {
 	@PostMapping("/chat/chatList")
 	public void chatList() {};
 
-	
-	
+	/* 관심상품 */
 	@GetMapping("/product/findHeart")
 	@ResponseBody
 	public ModelAndView findHeart( @RequestParam String productNo, @AuthenticationPrincipal Member loginMember) {
@@ -210,11 +217,13 @@ public class UsedProductController  {
 		return usedProduct;
 	}
 	
+	/* 상품 삭제 */
 	@PostMapping("/product/productDelete")
-	public String productDelete(@RequestParam String productNo) throws Exception {
-			int result = usedProductService.productDelete(Integer.parseInt(productNo));		
-			
-			return "redirect:/usedProduct/main/mainPage";
+	public String productDelete(@RequestParam String productNo) throws Exception {	
+		
+		int result = usedProductService.productDelete(Integer.parseInt(productNo));		
+		
+		return "redirect:/usedProduct/main/mainPage";
 	}
 	
 }

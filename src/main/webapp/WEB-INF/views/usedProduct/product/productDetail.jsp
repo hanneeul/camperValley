@@ -54,7 +54,13 @@ function next() {
 	<div class="detail_div">
 		<c:if test="${not empty loginMember && loginMember.memberId eq usedProduct.sellerId}">
 	        <div class="delete_update">
-	        	 <button id="delete_btn">삭제하기</button>
+		         <form:form 
+					name="productDeleteFrm" 
+					method="POST" 
+					action="${pageContext.request.contextPath}/usedProduct/product/productDelete">
+					<input type="hidden" name="productNo" id="productNo" value="${usedProduct.productNo}" />
+				 </form:form>
+	        	 <button id="delete_btn" onclick="productDelete();">삭제하기</button>
 	        	 <button id="update_btn" style="margin-right: 8px; background-color: #D8EBB5">수정하기</button>
 	        </div>
 	    </c:if>
@@ -389,6 +395,21 @@ $(".heart-click").click(function() {
 	   $(this).html('<i class="fa-regular fa-heart"></i> 관심상품');
    }
 });
+
+/* 상품 삭제 */
+const productDelete = () => {
+	const bool = confirm('게시글을 정말 삭제하시겠습니까?');
+	
+	if(!bool) {
+		alert('삭제를 취소했습니다.');
+	}
+	else {
+		const frm = document.productDeleteFrm;
+		frm.submit();
+		alert('게시글이 삭제되었습니다.');
+	}
+};
+
 // 채팅하기
 document.querySelector("#update_btn").addEventListener('click', (e) => {
 	location.href = '/campervalley/usedProduct/product/productUpdate';

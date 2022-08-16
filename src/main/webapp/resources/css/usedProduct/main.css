@@ -228,15 +228,22 @@ body {
 }
 
 /* 검색어 */
-.input-group {
+.search-area {
     display: flex;
     align-content: space-around;
     justify-content: flex-end;
     position: relative;
     top: -4.87rem;
 }
-.input-group:active {
+.search-area:active {
 	border: none;
+}
+#searchProduct {
+	border: 1px solid gray;	
+}	
+#searchBtn {
+	border: 1px solid #639A67; 
+	background-color: white;
 }
 /* 광고 */
 .adPlace {    

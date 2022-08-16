@@ -8,12 +8,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/main.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
 
-<input type="hidden" id="cateNo" name="cateNo" value="${cateNo}"/>
-<input type="hidden" id="cateName" name="cateName" value="${cateName}"/>
-<input type="hidden" id="cnt" name="cnt" value="${cnt}"/>
+<input type="hidden" id="keyword" name="keyword" value="${keyword}"/>
 <input type="hidden" id="order" name="order" value="${order}"/>
 <input type="hidden" id="page" name="page" value="${page}"/>
-
 
 <div id="section">
 	<hr />
@@ -119,3 +116,17 @@
 		 <jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 	</div>
 </div>
+
+<script>
+
+function order(order) {
+	location.href = '/campervalley/usedProduct/main/searchDisplay?keyword='
+				  + $("#keyword").val()
+				  + "&page=" + $("#page").val()
+				  + "&order=" + order
+}
+
+function test(no) {
+	location.href = '/campervalley/usedProduct/product/productDetail?no=' + no
+}
+</script>
