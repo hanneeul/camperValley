@@ -216,4 +216,12 @@ select *
 	where product_no=#{productNo} and member_id=#{memberId}
 </select>
 
+<!-- 게시글 삭제 -->
+<delete id="productDelete" parameterType="int">
+	delete from
+		used_product
+	where
+		product_no = #{productNo}
+</delete>
+
 </mapper>

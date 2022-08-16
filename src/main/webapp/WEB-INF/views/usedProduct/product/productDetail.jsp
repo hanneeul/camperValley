@@ -20,7 +20,6 @@ $(document).ready(function() {
 var imgs;
 var img_count;
 var img_position = 1;
-
 imgs = $(".slide ul");
 img_count = imgs.children().length;
 //버튼을 클릭했을 때 함수 실행
@@ -306,7 +305,6 @@ function next() {
 <script>
 var productNo = $('.hiddenNo').val();
 var memberId = $('.memberId').val();
-
 $(document).ready(function() {
 	$.ajax({
 	   	url : '/campervalley/usedProduct/product/findHeart',
@@ -323,11 +321,10 @@ $(document).ready(function() {
 	   		}
 	   	}, 
 	   	error : function() {
-	   		alter('ㅈ회오류');
+	   		alter('하트조회오류');
 	   	}
 	});
 });
-
 $(".heart-click").click(function() {
     
     var productNo = $('.hiddenNo').val();
@@ -344,6 +341,8 @@ $(".heart-click").click(function() {
 	   			productNo : productNo,
 	   		},
 	   		success : function(usedProduct) {
+	   			document.location.reload(true);
+	   			
 	   			let heart = usedProduct.heart;
 	   			// 하트 수 갱신
 	   			$('#zzim').text(heart);
@@ -370,6 +369,8 @@ $(".heart-click").click(function() {
 			  productNo : productNo,
 		  },
 		  success : function(usedProduct) {
+			  document.location.reload(true);
+			  
 			  let heart = usedProduct.heart;
 			  
 	  		  // 하트 수 갱신

@@ -53,7 +53,8 @@ public class UsedProductController  {
 	public void registForm() {};
 	
 	@PostMapping("/product/productEnroll")
-	public String productEnroll(@ModelAttribute UsedProduct usedProduct, RedirectAttributes redirectAttr,
+	@ResponseBody
+	public ModelAndView productEnroll(@ModelAttribute UsedProduct usedProduct, RedirectAttributes redirectAttr,
 										@RequestParam MultipartFile[] upFiles, @AuthenticationPrincipal Member loginMember) {
 		// 이미지 파일 복사
 		String saveDirectory = application.getRealPath("/resources/upload/usedProduct");
@@ -71,10 +72,10 @@ public class UsedProductController  {
 				}
 			       
 			        if(i == 0) usedProduct.setProductImg1(fileName);
-			        if(i == 1) usedProduct.setProductImg2(fileName);
-			        if(i == 2)  usedProduct.setProductImg3(fileName);
-			        if(i == 3)  usedProduct.setProductImg4(fileName);
-			        if(i == 4)  usedProduct.setProductImg5(fileName);
+			        else if(i == 1) usedProduct.setProductImg2(fileName);
+			        else if(i == 2)  usedProduct.setProductImg3(fileName);
+			        else if(i == 3)  usedProduct.setProductImg4(fileName);
+			        else if(i == 4)  usedProduct.setProductImg5(fileName);
 			        
 			}
 			// 로그인한 회원의 아이디
@@ -85,11 +86,12 @@ public class UsedProductController  {
 			// DB 
 			int result = usedProductService.productInsert(usedProduct);
 			
-			return "redirect:/usedProduct/product/productDetail?no=" + usedProduct.getProductNo();
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("jsonView");
+			return mav;
+	
 	};
-	
-	
-	
+
 	@PostMapping("/main/getProductList") 
 	@ResponseBody
 	public ModelAndView getProductList(@RequestParam(name = "page") int page) {
@@ -140,10 +142,6 @@ public class UsedProductController  {
 		// 상품 정보 받아옴
 		UsedProduct usedProduct = usedProductService.productDetail(no);
 		
-		log.debug("no = {}", no);
-		log.debug("productNo = {}", usedProduct.getProductNo());
-		
-		model.addAttribute("no", no);
 		model.addAttribute("usedProduct", usedProduct);
 		model.addAttribute("/usedProduct/product/productDetail.jsp");
 		return "/usedProduct/product/productDetail";
@@ -210,6 +208,13 @@ public class UsedProductController  {
 		UsedProduct usedProduct = usedProductService.removeHeart(wishProduct, productNo);
 		
 		return usedProduct;
+	}
+	
+	@PostMapping("/product/productDelete")
+	public String productDelete(@RequestParam String productNo) throws Exception {
+			int result = usedProductService.productDelete(Integer.parseInt(productNo));		
+			
+			return "redirect:/usedProduct/main/mainPage";
 	}
 	
 }

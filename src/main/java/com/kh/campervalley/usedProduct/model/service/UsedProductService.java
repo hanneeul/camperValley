@@ -31,5 +31,7 @@ public interface UsedProductService {
 
 	public WishProduct findHeart(Map<String, Object> map);
 
+	public int productDelete(int productNo) throws Exception;
+
 
 }

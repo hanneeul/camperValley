@@ -20,10 +20,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <div id="section" style="width: 98%; margin:50px auto">
-	<form:form id="enrollForm" name="enrollForm" 
-				action="${pageContext.request.contextPath}/usedProduct/product/productEnroll"
-				method="post"
-				enctype="multipart/form-data">
+	<form id="enrollForm">
 		<div class="enrollWrap">
 			<!--------- enrollBody  --------->
 			<div class="enrollBody">
@@ -39,17 +36,13 @@
 								<div class="image_con">
 									<ul class="image-ul" id="image-ul">
 										<li class="image-li">이미지 등록
-				    							<input type="file" name="upFiles" id="upFiles" accept="image/*" multiple>
-				    							<label for="upFiles"></label>
+				    							<input type="file" id="upFiles" multiple="">
 										</li>
 									</ul>
 									<div class="div-image" id="div-image">
-												상품 사진을 등록해주세요.</div>
+												* 상품 이미지는 640x640에 최적화 되어 있습니다.</div>
 									<div class="add_description" style="">
-										<b>* 상품 이미지는 640x640에 최적화 되어 있습니다.</b><br>
 										- 이미지는 상품등록 시 정사각형으로 짤려서 등록됩니다.<br>
-										- 이미지를 클릭 할 경우 원본이미지를 확인할 수 있습니다.<br>
-										- 이미지를 클릭 후 이동하여 등록순서를 변경할 수 있습니다.<br>
 										- 큰 이미지일경우 이미지가 깨지는 경우가 발생할 수 있습니다.<br>
 									</div>
 								</div>
@@ -154,13 +147,14 @@
 				</div>
 			</footer>
 		</div>
-	</form:form>
+	</form>
 	<div id="nav">
 		<jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 	</div>
 </div>
 
 <script>
+
 $('#enrollForm').ready(function() {
 	 $('#div-image').hide();
 	 $('#div-subject').hide();
@@ -185,6 +179,7 @@ function readImage() {
 			alert ('사진은 최대 5장까지 등록 가능합니다.');
 			return false;
 		}
+		
 		var index = 0;
 		
 		reader.onload = function(e) {
@@ -206,7 +201,7 @@ function readImage() {
 			fileBuffer.push(image); // push
 			
 			// 이미지 태그 생성
-			const $li = $('<li></li>').addClass('registImages');
+			const $li = $('<li></li>').attr({draggable: 'false'}).addClass('registImages');
 			const $div = $('<div></div>').addClass('regist-div');
 			const $img = $('<img/>').attr({'src':this.result, alt: '상품이미지'});
 			const $button = $('<button></button>');
@@ -219,7 +214,7 @@ function readImage() {
 			
 			// ul 태그 아래 붙임
 			$('.image-ul').append($li); 
-			$li.append($div, $img, $button); // li태그 아래 세개 태그 붙암
+			$li.append($div, $img, $button); // li태그 아래 세개 태그 붙이기
 			
 			// 삭제 버튼 클릭
 			$button.attr('type', 'button').addClass('image_delete_btn').click(deleteImage);
@@ -274,7 +269,6 @@ $('.category >.cate_btn').on("click", function(){
 	
 	$('#cateNoInput').val(cateNo);
 });
-
 
 /* 거래지역 */
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
@@ -339,6 +333,49 @@ function confirm() {
 	 if($('#productPrice').val()=='') { $('#productPrice').show(); $('#productPrice').focus(); return true;}
  }
 
+//ajax 통신을 위한 csrf 설정
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$(document).ajaxSend(function(e, xhr, options) {
+    xhr.setRequestHeader(header, token);
+});
+
+$('#enrollBtn').click(function(){
+	
+	registAction.call(this);
+	
+	//submit
+	function registAction() {
+		$('#enrollForm').ajaxForm({
+			type: 'post',
+			enctype: 'multipart/form-data',
+			processData: false, //데이터를 컨텐트 타입에 맞게 변환 여부
+			contentType: false, //요청 컨텐트 타입
+			url: '/campervalley/usedProduct/product/productEnroll',
+			dataType: 'json',
+			beforeSubmit: function(data, form, option) { //submit 전 실행
+				//이미지 정보 동적 할당
+				fileBuffer.forEach(function(e, i) {
+					const imgObj = {
+						name : 'upFiles',
+						id : 'productImg'+i,
+						type : 'file',
+						value : e
+					}
+					data.push(imgObj);
+				});
+			},
+			success: function(data) {
+				window.location.href = '/campervalley/usedProduct/main/mainPage'
+				alert('상품이 등록되었습니다.');
+			},
+			error: function(error) {
+				alert('error : ', error);
+			}
+			
+		});
+	}
+});
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

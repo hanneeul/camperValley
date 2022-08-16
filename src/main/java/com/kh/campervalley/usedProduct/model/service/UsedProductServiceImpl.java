@@ -142,4 +142,9 @@ public class UsedProductServiceImpl implements UsedProductService {
 	public WishProduct findHeart(Map<String, Object> map) {
 		return usedProductDao.findHeart(map);
 	}
+
+	@Override
+	public int productDelete(int productNo) throws Exception {
+		return usedProductDao.productDelete(productNo);
+	}
 }

@@ -42,4 +42,6 @@ public interface UsedProductDao {
 
 	WishProduct findHeart(Map<String, Object> map);
 
+	int productDelete(int productNo) throws Exception;
+
 }

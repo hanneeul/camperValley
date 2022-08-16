@@ -41,6 +41,7 @@
 						<li id="category">
 							<p>카테고리 선택</p>
 							<ul>
+								<a href="/campervalley/usedProduct/main/mainPage">전체상품목록</a>
 								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=100" data-category="100">텐트/타프</a>
 								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=200" data-category="200">침낭/매트</a>
 								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=300" data-category="300">테이블/의자</a>
