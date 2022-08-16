@@ -49,5 +49,10 @@ public class CamperServiceImpl implements CamperService {
 	public int deleteCamper(int camperNo) {
 		return camperDao.deleteCamper(camperNo);
 	}
+
+	@Override
+	public int updateCamper(Camper camper) {
+		return camperDao.updateCamper(camper);
+	}
 	
 }

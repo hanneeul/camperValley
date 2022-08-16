@@ -58,4 +58,22 @@
 	where
 		camper_no = #{camperNo}
 </delete>
+
+<update id="updateCamper">
+	update 
+		camper
+	set
+		title = #{title},
+		content = #{content},
+		purpose = #{purpose},
+		expected_cost = #{expectedCost},
+		chat_url = #{chatUrl},
+		<!-- departure_date = #{departureDate},
+		arrival_date = #{arrivalDate},
+		area = #{area}, -->
+		member_count = #{memberCount},
+		updated_at = sysdate
+	where
+		camper_no = #{camperNo}
+</update>
 </mapper>

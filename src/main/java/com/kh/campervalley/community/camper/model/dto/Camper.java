@@ -17,28 +17,28 @@ public class Camper {
 
 	@NonNull
 	private int camperNo;
-	@NonNull
  	private String memberId;
 	@NonNull
 	private String title;
 	@NonNull
 	private String content;
+	@NonNull
 	private String purpose;
+	@NonNull
 	private String expectedCost;
 	@NonNull
 	private String chatUrl;
-	@NonNull
+	/* @NonNull */
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate departureDate;
-	@NonNull
+	/* @NonNull */
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate arrivalDate;
-	@NonNull
+	/* @NonNull */
 	private String area;
 	@NonNull
 	private int memberCount;
 	private int readCount;
-	@NonNull
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private Status status;

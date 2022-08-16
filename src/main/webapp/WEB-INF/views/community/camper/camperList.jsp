@@ -8,9 +8,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/camper/camperList.css" />
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css"> -->
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script> -->
 	<div class="container-md campsite-review-list-wrap pt-2">
 		<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
 			<div class="col-md float-right">
@@ -21,9 +21,9 @@
 					   	<option value="title" ${param.searchType eq "title" ? "selected" : ""}>제목</option>
 					    <option value="content" ${param.searchType eq "content" ? "selected" : ""}>내용</option>
 					</select>
-					<input type="text" id="searchKeyword" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn" value="${param.searchKeyword}">
+					<input type="text" id="searchKeyword" value="${param.searchKeyword}" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
 				  	<div class="input-group-append">
-				    	<button id="searchBtn" class="btn btn-outline-success btn-outline-camper-color" type="button" id="communitySearchBtn">
+				    	<button class="btn btn-outline-success btn-outline-camper-color" type="button" id="communitySearchBtn">
 				    		<i class="fa-solid fa-magnifying-glass camper-color"></i>
 				    	</button>
 				  	</div>
@@ -80,10 +80,13 @@
 			</div>
 		</div>
 	</div>
+	
+	<%-- update modal --%>
+	<jsp:include page="/WEB-INF/views/community/camper/camperUpdate.jsp"/>
 <script>
 let cPage = 1;
 
-$(document).ready(async () => {
+$(document).ready(() => {
 	$(review).removeClass("active");
 	$(camper).addClass("active");
 	const firstBoardBox = renderBoardBoxMore();
@@ -93,9 +96,9 @@ $(document).ready(async () => {
 		$("#detailSection").html("").removeClass("boardBoxSelect");
 		const $result = $('<div class="my-5 py-4 text-20">에 대한 검색결과가 없습니다.</div>');
 		const $keyword = $('<span class="text-danger text-20">"${param.searchKeyword}"</span>');
-		const $info1 = $('<div class="pt-5 pb-2">&#183;&nbsp;단어의 철자가 정확한지 확인해 보세요.</div>');
-		const $info2 = $('<div class="py-2">&#183;&nbsp;한글을 영어로 혹은 영어를 한글로 입력했는지 확인해 보세요.</div>');
-		const $info3 = $('<div class="py-2">&#183;&nbsp;검색어의 단어 수를 줄이거나, 보다 일반적인 검색어로 다시 검색해 보세요.</div>');
+		const $info1 = $('<div class="pt-5 pb-2 text-13">&#183;&nbsp;단어의 철자가 정확한지 확인해 보세요.</div>');
+		const $info2 = $('<div class="py-2 text-13">&#183;&nbsp;한글을 영어로 혹은 영어를 한글로 입력했는지 확인해 보세요.</div>');
+		const $info3 = $('<div class="py-2 text-13">&#183;&nbsp;검색어의 단어 수를 줄이거나, 보다 일반적인 검색어로 다시 검색해 보세요.</div>');
 		$result.prepend($keyword);
 		$result.append($info1, $info2, $info3);
 		$("#listSection").append($result);
@@ -106,7 +109,7 @@ $(document).ready(async () => {
 });
 
 // 검색
-document.querySelector("#searchBtn").addEventListener("click", (e) => {
+document.querySelector("#communitySearchBtn").addEventListener("click", (e) => {
 	const searchType = $("#searchType").val();
 	const searchKeyword = $("#searchKeyword").val();
 	if(!searchType || ! searchKeyword) return false;
@@ -195,7 +198,26 @@ const renderBoardBoxMore = (isChk) => {
 						const $dropLi1 = $('<li>수정</li>');
 						$dropLi1.on("click", (li) => {
 							$(li).closest('ul').hide();
-							location.href = "${pageContext.request.contextPath}/community/camper/camperUpdate";
+							const areas = camperList[i].area.split(" ");
+							document.querySelectorAll("#sido1 option").forEach((option) => {
+								if(areas[0] === $(option).val()) {
+									$(option).prop("selected", true);
+									document.querySelectorAll("#gugun1 option").forEach((option) => {
+										console.log(option);
+									});
+								}
+							});
+							$("#camperUpdate #memberCount").val(camperList[i].memberCount);
+							$("#camperUpdate #title").val(camperList[i].title);
+							$("#camperUpdate #content").val(camperList[i].content);
+							$("#camperUpdate #purpose").val(camperList[i].purpose);
+							$("#camperUpdate #expectedCost").val(camperList[i].expectedCost);
+							$("#camperUpdate #chatUrl").val(camperList[i].chatUrl);
+							$("#camperUpdate #camperNo").val(camperList[i].camperNo);
+							
+							$("#camperUpdate")
+							.modal()
+							.on('hide.bs.modal');
 						});
 						const $dropLi2 = $('<li>삭제</li>');
 						$dropLi2.on("click", (li) => {
@@ -258,5 +280,9 @@ $(document).bind('click', function(e) {
         $(".drop-down .options ul").hide();
     }
 });
+
+// modal update camper 비동기 요청
+
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

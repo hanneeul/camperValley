@@ -18,6 +18,7 @@ textarea {
 	resize: none;
 }
 i {
+	cursor: pointer;
 	color: rgb(230, 185, 20);
 }
 .label {

@@ -19,5 +19,7 @@ public interface CamperService {
 	CamperExt selectCamperOne(int camperNo);
 
 	int deleteCamper(int camperNo);
+
+	int updateCamper(Camper camper);
 	
 }

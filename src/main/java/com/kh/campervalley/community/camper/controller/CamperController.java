@@ -67,9 +67,6 @@ public class CamperController {
 	@GetMapping("/camperEnroll")
 	public void camperEnroll() {}
 	
-	@GetMapping("/camperUpdate")
-	public void camperUpdate() {}
-	
 	@PostMapping("/camperEnroll")
 	public String camperEnroll(Camper camper, RedirectAttributes redirectAttr) {
 		try {
@@ -100,11 +97,26 @@ public class CamperController {
 	public String camperDelete(@RequestParam int camperNo, RedirectAttributes redirectAttr) {
 		try {
 			int result = camperService.deleteCamper(camperNo);
-			redirectAttr.addAttribute("msg", "게시글이 삭제되었습니다.");
+			redirectAttr.addFlashAttribute("msg", "게시글이 삭제되었습니다.");
 		} catch(Exception e) {
 			log.error("캠퍼모집 삭제 오류", e);
 			throw e;
 		}
 		return "redirect:/community/camper/camperList";
 	}
+	
+	
+	@PostMapping("/camperUpdate") 
+	public String camperUpdate(Camper camper, RedirectAttributes redirectAttr) {
+		try {
+			log.debug("camper = {}", camper);
+			int result = camperService.updateCamper(camper);
+			redirectAttr.addFlashAttribute("msg", "수정이 완료되었습니다.");
+		} catch(Exception e) {
+			log.debug("캠퍼모집 수정 오류", e);
+			throw e;
+		}
+		return "redirect:/community/camper/camperList";
+	}
+	 
 }

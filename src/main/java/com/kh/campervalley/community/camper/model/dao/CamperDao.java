@@ -24,4 +24,6 @@ public interface CamperDao {
 
 	int deleteCamper(int camperNo);
 
+	int updateCamper(Camper camper);
+
 }
