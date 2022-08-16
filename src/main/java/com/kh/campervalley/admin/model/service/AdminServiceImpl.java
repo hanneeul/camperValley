@@ -56,5 +56,41 @@ public class AdminServiceImpl implements AdminService {
 		return (int) adminDao.productDelete(productNo);
 	}
 	
+	@Override
+	public List<NoticeExt> selectCamperList(Map<String, Object> map) {
+		int offset = (int)map.get("offset");
+		int numPerPage = (int)map.get("numPerPage");
+		RowBounds rowBounds = new RowBounds(offset, numPerPage);
+		return adminDao.selectCamperList(map, rowBounds);
+	}
+	
+	@Override
+	public int selectTotalCamperList(Map<String, Object> map) {
+		return adminDao.selectTotalCamperList(map);
+	}
+	
+	@Override
+	public int camperDelete(Integer camperNo) {
+		return (int) adminDao.camperDelete(camperNo);
+	}
+	
+	@Override
+	public int reviewDelete(Integer reviewNo) {
+		return (int) adminDao.reviewDelete(reviewNo);
+	}
+	
+	@Override
+	public List<NoticeExt> selectReviewList(Map<String, Object> map) {
+		int offset = (int)map.get("offset");
+		int numPerPage = (int)map.get("numPerPage");
+		RowBounds rowBounds = new RowBounds(offset, numPerPage);
+		return adminDao.selectReviewList(map, rowBounds);
+	}
+	
+	@Override
+	public int selectTotalReviewList(Map<String, Object> map) {
+		return adminDao.selectTotalReviewList(map);
+	}
+	
 
 }

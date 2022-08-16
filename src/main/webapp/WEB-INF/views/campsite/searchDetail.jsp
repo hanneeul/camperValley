@@ -51,17 +51,17 @@
 <!-- modal insert -->
 <%-- 나중에 파일 분리? --%>
 <div class="modal fade" id="conditionsModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="conditionsModalLabel" aria-hidden="true">
-  	<div class="modal-dialog modal-dialog-scrollable">
+  	<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
     	<div class="modal-content">
 	      	<div class="modal-header">
-	        	<h5 class="modal-title" id="conditionsModalLabel">상세조건</h5>
+	        	<h5 class="modal-title font-weight-bold" id="conditionsModalLabel">상세조건</h5>
 	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          	<span aria-hidden="true">&times;</span>
 	        	</button>
 	      	</div>
 	      	<div class="modal-body">
-	        	<h6>운영형태</h6>
-	        	<div class="form-check-inline form-check">
+	        	<h6 class="font-weight-bold">운영형태</h6>
+	        	<div class="form-check-inline form-check d-flex">
 					<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm0" value="지자체">
 					<label for="facltDivNm0" class="form-check-label">지자체</label>&nbsp;
 					<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm1" value="국립공원">
@@ -74,20 +74,93 @@
 					<label for="facltDivNm4" class="form-check-label">민간</label>&nbsp;
 				</div>
 				<hr />
-				<h6>입지구분</h6>
+				<h6 class="font-weight-bold">입지구분</h6>
 	        	<div class="form-check-inline form-check">
 					<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl0" value="해변">
 					<label for="lctCl0" class="form-check-label">해변</label>&nbsp;
-					<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl1" value="계곡">
-					<label for="lctCl1" class="form-check-label">계곡</label>&nbsp;
-					<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl2" value="숲">
-					<label for="lctCl2" class="form-check-label">숲</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl1" value="섬">
+					<label for="lctCl1" class="form-check-label">섬</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl2" value="산">
+					<label for="lctCl2" class="form-check-label">산</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl3" value="숲">
+					<label for="lctCl3" class="form-check-label">숲</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl4" value="계곡">
+					<label for="lctCl4" class="form-check-label">계곡</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl5" value="강">
+					<label for="lctCl5" class="form-check-label">강</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl6" value="호수">
+					<label for="lctCl6" class="form-check-label">호수</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl7" value="도심">
+					<label for="lctCl7" class="form-check-label">도심</label>&nbsp;
+				</div>
+				<hr />
+				<h6 class="font-weight-bold">주요시설</h6>
+	        	<div class="form-check-inline form-check">
+					<input type="checkbox" class="form-check-input" name="induty" id="induty0" value="일반야영장">
+					<label for="induty0" class="form-check-label">일반야영장</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="induty" id="induty1" value="자동차야영장">
+					<label for="induty1" class="form-check-label">자동차야영장</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="induty" id="induty2" value="카라반">
+					<label for="induty2" class="form-check-label">카라반</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="induty" id="induty3" value="글램핑">
+					<label for="induty3" class="form-check-label">글램핑</label>&nbsp;
+				</div>
+				<hr />
+				<h6 class="font-weight-bold">바닥형태</h6>
+	        	<div class="form-check-inline form-check">
+					<input type="checkbox" class="form-check-input" name="siteBottomCl1" id="siteBottomCl1" value="잔디">
+					<label for="siteBottomCl1" class="form-check-label">잔디</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="siteBottomCl2" id="siteBottomCl2" value="데크">
+					<label for="siteBottomCl2" class="form-check-label">데크</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="siteBottomCl3" id="siteBottomCl3" value="파쇄석">
+					<label for="siteBottomCl3" class="form-check-label">파쇄석</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="siteBottomCl4" id="siteBottomCl4" value="자갈">
+					<label for="siteBottomCl4" class="form-check-label">자갈</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="siteBottomCl5" id="siteBottomCl5" value="맨흙">
+					<label for="siteBottomCl5" class="form-check-label">맨흙</label>&nbsp;
+				</div>
+				<hr />
+				<h6 class="font-weight-bold">부대시설</h6>
+	        	<div class="form-check-inline form-check">
+					<input type="checkbox" class="form-check-input" name="sbrsCl" id="sbrsCl0" value="전기">
+					<label for="sbrsCl0" class="form-check-label">전기</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="sbrsCl" id="sbrsCl1" value="무선인터넷">
+					<label for="sbrsCl1" class="form-check-label">무선인터넷</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="sbrsCl" id="sbrsCl2" value="장작판매">
+					<label for="sbrsCl2" class="form-check-label">장작판매</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="sbrsCl" id="sbrsCl3" value="온수">
+					<label for="sbrsCl3" class="form-check-label">온수</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="sbrsCl" id="sbrsCl4" value="트렘폴린">
+					<label for="sbrsCl4" class="form-check-label">트렘폴린</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="sbrsCl" id="sbrsCl5" value="물놀이장">
+					<label for="sbrsCl5" class="form-check-label">물놀이장</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="sbrsCl" id="sbrsCl6" value="놀이터">
+					<label for="sbrsCl6" class="form-check-label">놀이터</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="sbrsCl" id="sbrsCl7" value="산책로">
+					<label for="sbrsCl7" class="form-check-label">산책로</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="sbrsCl" id="sbrsCl8" value="운동장">
+					<label for="sbrsCl8" class="form-check-label">운동장</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="sbrsCl" id="sbrsCl9" value="운동시설">
+					<label for="sbrsCl9" class="form-check-label">운동시설</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="sbrsCl" id="sbrsCl10" value="마트.편의점">
+					<label for="sbrsCl10" class="form-check-label">마트.편의점</label>&nbsp;
+				</div>
+				<hr />
+				<h6 class="font-weight-bold">기타정보</h6>
+	        	<div class="form-check-inline form-check">
+					<input type="checkbox" class="form-check-input" name="trlerAcmpnyAt" id="trlerAcmpnyAt" value="개인 트레일러 입장가능">
+					<label for="trlerAcmpnyAt" class="form-check-label">개인 트레일러 입장가능</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="caravAcmpnyAt" id="caravAcmpnyAt" value="개인 캠핑카 입장가능">
+					<label for="caravAcmpnyAt" class="form-check-label">개인 캠핑카 입장가능</label>&nbsp;
+					<input type="checkbox" class="form-check-input" name="animalCmgCl" id="animalCmgCl" value="반려동물 동반가능">
+					<label for="animalCmgCl" class="form-check-label">반려동물 동반가능</label>&nbsp;
 				</div>
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 	        	<button type="button" class="btn btn-success" id="conditionsSubmitBtn">확인</button>
 	      	</div>
+	      	
     	</div>
   	</div>
 </div>

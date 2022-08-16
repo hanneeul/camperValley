@@ -2,6 +2,7 @@ package com.kh.campervalley.usedProduct.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -156,7 +157,27 @@ public class UsedProductController  {
 	
 	@PostMapping("/chat/chatList")
 	public void chatList() {};
+
 	
+	
+	@GetMapping("/product/findHeart")
+	@ResponseBody
+	public ModelAndView findHeart( @RequestParam String productNo, @AuthenticationPrincipal Member loginMember) {
+		String memberId = loginMember.getMemberId();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("productNo", Integer.parseInt(productNo));
+		map.put("memberId", memberId);
+		
+		WishProduct wishProduct = usedProductService.findHeart(map);
+		System.out.println("wishProduct" + wishProduct);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("wishProduct", wishProduct);		
+		mav.setViewName("jsonView");
+		return mav;
+	}
+			
 	@GetMapping("/product/saveHeart")
 	@ResponseBody
 	public UsedProduct saveHeart(@RequestParam String productNo, @AuthenticationPrincipal Member loginMember) {

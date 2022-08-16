@@ -15,7 +15,7 @@
 <div class="container" style="display: flex;" id="admin-container">
 	<jsp:include page="/WEB-INF/views/common/adminSidebar.jsp" />
 	<div class="admin-content" style="width: 80%;">
-		<h5 class="admin-hd">캠핑용품 거래 관리</h5>
+		<h5 class="admin-hd">캠핑장후기 관리</h5>
 		<div class="product-hd" style="margin-top:40px;">
 				<div class="float-right">
 					<button type="button" class="btn-delete btn btn-danger btn-sm">선택삭제
@@ -23,17 +23,17 @@
 				</div>
 					<div class="search-group float-left mb-2">
 					<select id="search-type">
-						<option value="product_title" ${map.searchType eq 'product_title' ? 'selected' : ''}>제목</option>
-						<option value="product_content" ${map.searchType eq 'product_content' ? 'selected' : ''}>내용</option>
+						<option value="title" ${map.searchType eq 'title' ? 'selected' : ''}>제목</option>
+						<option value="content" ${map.searchType eq 'content' ? 'selected' : ''}>내용</option>
 					</select>
-						<input type="hidden" name="searchType" value="product_title">
-						<input type="hidden" name="searchType" value="product_content">
+						<input type="hidden" name="searchType" value="title">
+						<input type="hidden" name="searchType" value="content">
 						<input class="input-search" type="text" placeholder="검색어 입력" name="searchKeyword" id="searchKeyword">
 						<button class="btn-search" type="button">
 							<i class="fa fa-search"></i>
 						</button>
 					</div>
-				</div> <!--product-hd-->
+				</div> 
 					
 			<table class="table table-hover text-center" id="tb-admin">
 				<thead>
@@ -46,16 +46,16 @@
 					</tr>
 				</thead>
 				<tbody>
-				<form action="${pageContext.request.contextPath}/admin/usedProductDelete" method="post" name="deleteProductFrm">
+				<form action="${pageContext.request.contextPath}/admin/reviewDelete" method="post" name="deleteReviewFrm">
 				<c:forEach items="${list}" var="list" varStatus="vs">
 					<tr>
-						<td><input name="deleteList" type="checkbox" class="deleteList" value="${list.productNo}" /></td>
-						<td>${list.productNo}</td>
-						<td><a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=${list.productNo}">${list.productTitle}</a></td>
-						<td>${list.sellerId}</td>
+						<td><input name="deleteList" type="checkbox" class="deleteList" value="${list.reviewNo}" /></td>
+						<td>${list.reviewNo}</td>
+						<td><a href="${pageContext.request.contextPath}/community/review/reviewDetail?reviewNo=${list.reviewNo}">${list.title}</a></td>
+						<td>${list.memberId}</td>
 						<td>
-							<fmt:parseDate value="${list.productEnrollTime}" pattern="yyyy-MM-dd HH:mm:ss" var="productEnrollTime"/>
-							<fmt:formatDate value="${productEnrollTime}" pattern="yyyy-MM-dd"/>
+							<fmt:parseDate value="${list.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+							<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
 						</td>
 						
 					</tr>
@@ -80,7 +80,7 @@
 				</button>
 			  </div>
 			  <div class="modal-body pb-1">
-				 <form name="adminProductUpdateFrm">
+				 <form name="adminProductUpdateFrm" method="post">
 					<table class="table" id="tb-modal">
 					<tr>
 						<td>제목</td>
@@ -124,7 +124,7 @@ document.querySelectorAll('.btn-search').forEach((btn) => {
 		let keyword = document.getElementById('searchKeyword').value;
 		let searchType = document.getElementById('search-type').value;
 
-		let url = "${pageContext.request.contextPath}/admin/usedProductManagement";
+		let url = "${pageContext.request.contextPath}/admin/reviewManagement";
 		url = url + "?searchType=" + searchType;
 		url = url + "&searchKeyword=" + keyword;
 		location.href = url;
@@ -135,7 +135,7 @@ document.querySelectorAll('.btn-search').forEach((btn) => {
 
 document.querySelectorAll('.btn-delete').forEach((btn) => {
 	btn.addEventListener('click', (e) => {
-		document.deleteProductFrm.submit();
+		document.deleteReviewFrm.submit();
 	})
 });
 

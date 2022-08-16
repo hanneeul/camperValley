@@ -26,28 +26,9 @@ public class HomeController {
 	@Autowired
 	private AdvertiserService advertiserService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String home(Locale locale, Model model) {
-//		logger.info("Welcome home! The client locale is {}.", locale);
-//		
-//		Date date = new Date();
-//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-//		
-//		String formattedDate = dateFormat.format(date);
-//		
-//		model.addAttribute("serverTime", formattedDate );
-//		
-//		return "home";
-//	}
-	
 	@GetMapping("/")
 	public ModelAndView index(ModelAndView mav) {
-		logger.info("GET / 요청!");
+		log.debug("GET / 요청!");
 		Map<String, Object> param = new HashMap<>();
 		try {
 			param.put("topN", 3);

@@ -40,4 +40,6 @@ public interface UsedProductDao {
 
 	int deleteHeart(WishProduct wishProduct);
 
+	WishProduct findHeart(Map<String, Object> map);
+
 }

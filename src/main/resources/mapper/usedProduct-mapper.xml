@@ -7,7 +7,7 @@
 <!-- 상품 등록 -->
 <insert id="productInsert" parameterType="usedProduct">
 	insert into 
-		used_product(product_no, seller_id, cate_no, product_title, product_content, product_img1, product_img2, product_img3, product_img4, product_img5, product_price, product_location, product_delivery_fee, product_enroll_date, product_views, transaction_date, buyer_id, is_delete)
+		used_product
 	values(
 		seq_used_product_no.nextval,
 		#{sellerId},
@@ -22,10 +22,10 @@
 		#{productPrice},
 		#{productLocation},
 		#{productDeliveryFee},
-		default,
 		0,
-		default,
 		null,
+		null,
+		default,
 		default,
 		default
 	)
@@ -114,7 +114,7 @@ select *
 				p.transaction_date,
 				p.buyer_id,
 				p.is_delete,
-				p.heart
+				p.heart,
 				m.member_id
 			from
 				used_product p, member m
@@ -122,7 +122,7 @@ select *
 			order by
 			<choose>
 				<when test='order =="A"'>p.product_enroll_time desc</when>
-				<when test='order =="B"'>p.product_views asc</when>
+				<when test='order =="B"'>to_number(p.product_views) desc</when>
 				<when test='order =="C"'>to_number(p.product_price) asc</when>
 				<when test='order =="D"'>to_number(p.product_price) desc</when>
 				<otherwise>
@@ -209,5 +209,11 @@ select *
 	update used_product set heart=heart-1
 	where product_no=#{productNo}
 </update>
+
+<select id="findHeart" parameterType="java.util.HashMap" resultType="WishProduct">
+	select *
+	from wish_product
+	where product_no=#{productNo} and member_id=#{memberId}
+</select>
 
 </mapper>

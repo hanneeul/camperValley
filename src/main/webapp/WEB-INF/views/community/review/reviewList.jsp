@@ -27,7 +27,6 @@
 				    		<i class="fa-solid fa-magnifying-glass camper-color"></i>
 				    	</button>
 				  	</div>
-					<sec:authentication property="principal" var="loginMember"/>
 				  	<c:if test="${not empty loginMember}">
 						<div class="ml-1">
 							<button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color">글쓰기</button>

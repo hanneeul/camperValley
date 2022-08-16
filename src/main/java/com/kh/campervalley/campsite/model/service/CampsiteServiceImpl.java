@@ -35,4 +35,9 @@ public class CampsiteServiceImpl implements CampsiteService {
 		return campsiteDao.recentCampsiteList();
 	}
 	
+	@Override
+	public int campsiteListReset() {
+		return campsiteDao.campsiteListReset();
+	}
+	
 }
