@@ -10,4 +10,6 @@ public interface CampsiteService {
 
 	List<CampsiteExt> recentCampsiteList();
 
+	int campsiteListReset();
+
 }

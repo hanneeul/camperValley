@@ -27,6 +27,7 @@ import com.kh.campervalley.community.review.model.dto.CampsiteReview;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
 import com.kh.campervalley.community.review.model.dto.ReviewComment;
 import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
+import com.kh.campervalley.community.review.model.dto.ReviewRecommend;
 import com.kh.campervalley.community.review.model.service.ReviewService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +49,7 @@ public class ReviewController {
 			@RequestParam(defaultValue = "") String searchType, 
 			@RequestParam(defaultValue = "") String searchKeyword, 
 			ModelAndView mav,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws Exception {
 		try {			
 			int numPerPage = ReviewService.REVIEW_NUM_PER_PAGE;
 			
@@ -140,7 +141,7 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/reviewUpdate")
-	public void reviewUpdate(@RequestParam int reviewNo, Model model) {
+	public void reviewUpdate(@RequestParam int reviewNo, Model model) throws Exception {
 		try {
 			CampsiteReviewExt review = reviewService.selectOneReview(reviewNo);
 			model.addAttribute("review", review);
@@ -195,11 +196,13 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/reviewDetail")
-	public ModelAndView reviewDetail(ModelAndView mav, @RequestParam int reviewNo) {
+	public ModelAndView reviewDetail(ModelAndView mav, @RequestParam int reviewNo) throws Exception {
 		try {
 			int result = reviewService.updateReadCount(reviewNo);
 			CampsiteReviewExt review = reviewService.selectOneReview(reviewNo);
+			List<ReviewComment> commentList = reviewService.selectReviewCommentList(reviewNo);
 			mav.addObject("review", review);
+			mav.addObject("commentList", commentList);
 		} catch (Exception e) {
 			log.error("후기 상세 조회 오류", e);
 			throw e;
@@ -208,9 +211,7 @@ public class ReviewController {
 	}
 	
 	@PostMapping("/reviewDelete")
-	public String reviewDelete(
-			@RequestParam int reviewNo, 
-			RedirectAttributes redirectAttr) {
+	public String reviewDelete(@RequestParam int reviewNo, RedirectAttributes redirectAttr) throws Exception {
 		try {
 			String delDirectory = application.getRealPath("/resources/upload/community/review");
 			List<ReviewPhoto> photos = reviewService.selectOneReview(reviewNo).getPhotos();
@@ -240,7 +241,8 @@ public class ReviewController {
 			@RequestParam String memberId, 
 			@RequestParam int commentLevel, 
 			@RequestParam String commentRef, 
-			@RequestParam String commentContent) {
+			@RequestParam String commentContent, 
+			Model model) throws Exception {
 		
 		try {
 			comment.setReviewNo(reviewNo);
@@ -249,8 +251,64 @@ public class ReviewController {
 			comment.setCommentContent(commentContent);
 			int result = reviewService.insertReviewComment(comment);
 			review.addReviewComment(comment);
+			model.addAttribute("comment", comment);
 		} catch (Exception e) {
 			log.error("댓글 등록 오류", e);
+			throw e;
+		}
+		return "redirect:/community/review/reviewDetail?reviewNo=" + reviewNo;
+	}
+	
+	@PostMapping("/commentDelete")
+	public String commentDelete(@RequestParam int reviewCommentNo, @RequestParam int reviewNo) throws Exception {
+		try {
+			int result = reviewService.deleteReviewComment(reviewCommentNo);
+		} catch (Exception e) {
+			log.error("댓글 삭제 오류", e);
+			throw e;
+		}
+		return "redirect:/community/review/reviewDetail?reviewNo=" + reviewNo;
+	}
+	
+	@PostMapping("/commentUpdate")
+	public String commentUpdate(
+			CampsiteReviewExt review, 
+			ReviewComment comment, 
+			@RequestParam int reviewNo, 
+			@RequestParam int reviewCommentNo, 
+			@RequestParam String commentContent) throws Exception {
+		
+		try {
+			comment.setCommentContent(commentContent);
+			int result = reviewService.updateReviewComment(comment);
+		} catch (Exception e) {
+			log.error("댓글 삭제 오류", e);
+			throw e;
+		}
+		return "redirect:/community/review/reviewDetail?reviewNo=" + reviewNo;
+	}
+	
+	@PostMapping("/recommend")
+	public String recommend(
+			CampsiteReviewExt review, 
+			@RequestParam int reviewNo,
+			@RequestParam String memberId) throws Exception {
+		try {
+			Map<String, Object> param = new HashMap<>();
+			param.put("reviewNo", reviewNo);
+			param.put("memberId", memberId);
+			
+			ReviewRecommend recommend = reviewService.recommendCheck(param);
+			
+			if(recommend == null) {
+				int result = reviewService.insertReviewRecommend(param);
+			}
+			else {
+				int result = reviewService.setReviewRecommendStatus(recommend);
+			}
+			review.addReviewRecommend(recommend);
+		} catch (Exception e) {
+			log.error("후기 추천 오류", e);
 			throw e;
 		}
 		return "redirect:/community/review/reviewDetail?reviewNo=" + reviewNo;

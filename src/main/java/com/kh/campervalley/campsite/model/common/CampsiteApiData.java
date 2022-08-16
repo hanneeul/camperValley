@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +20,23 @@ import com.kh.campervalley.campsite.model.dao.CampsiteDao;
 import com.kh.campervalley.campsite.model.dto.CampsiteExt;
 import com.kh.campervalley.campsite.model.dto.CampsiteFacility;
 import com.kh.campervalley.campsite.model.service.CampsiteService;
+import com.kh.campervalley.mypage.advertiser.model.common.AdvertiserSchedule;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 @PropertySource("classpath:datasource.properties")
 public class CampsiteApiData {
 	
 	@Autowired
 	private CampsiteService campsiteService;
 	
-//	@Autowired
-//	private CampsiteDao campsiteDao;
+//	@PostConstruct
+//	public void campsiteApiServiceInit() {
+//		log.debug("[캠핑장 정보 매달 1회 실행]");
+//		getCampsiteApiData();
+//	}
 	
 	@Value("${api.goCamping}")
 	String SERVICE_KEY;
@@ -37,7 +46,7 @@ public class CampsiteApiData {
 	final static String imageListURL = "https://api.visitkorea.or.kr/openapi/service/rest/GoCamping/imageList";
 	// final String RES_PARAM = &MobileOS=ETC&MobileApp=AppTest&contentId=3429
 	
-	// @Scheduled(cron = "0 10 23 51 * ?", zone = "Asia/Seoul")
+	@Scheduled(cron = "0 0 0 18 * ?", zone = "Asia/Seoul")
 	public void getCampsiteApiData() {
 		ArrayList<HashMap<String, Object>> list = null;
 		List<CampsiteExt> campsiteList = new ArrayList<>();
@@ -89,7 +98,7 @@ public class CampsiteApiData {
 			list = CampsiteUtils.jsonArray(items.get("item"));
 			
 //			if(list.size() == totalCount) {
-//				campsiteDao.campsiteListReset();
+//				int api = campsiteService.campsiteListReset();
 	            
 				for(int i = 0; i < list.size(); i++) {
 					HashMap<String, Object> item = list.get(i);

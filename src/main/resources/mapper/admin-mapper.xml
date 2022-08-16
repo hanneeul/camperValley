@@ -34,16 +34,47 @@
 			member_id = #{memberId}
 </select>
 
+<select id="selectCamperList" resultMap="camperMap">
+	select
+		*
+	from
+		camper
+	<where>
+		<if test="searchType == 'title'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'content'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+	</where>
+	order by camper_no desc
+</select>
+
+<select id="selectTotalCamperList" resultType="_int">
+	select
+		count(*)
+	from
+		camper
+	<where>
+		<if test="searchType == 'title'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'content'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+	</where>
+</select>
+
 <select id="selectProductList" resultMap="productMap">
 	select 
 		* 
 	from
 		used_product 
 	<where>
-		<if test="searchType == 'productTitle'">
+		<if test="searchType == 'product_title'">
 			${searchType} like '%' || #{searchKeyword} || '%'
 		</if>
-		<if test="searchType == 'productContent'">
+		<if test="searchType == 'product_content'">
 			${searchType} like '%' || #{searchKeyword} || '%'
 		</if>
 	</where>
@@ -66,11 +97,55 @@
 </select>
 
 <delete id="productDelete">
-	delete
-		from
-	used_product
+	delete from
+		used_product
 	where
 		product_no = #{productNo}
+</delete>
+
+<select id="selectReviewList" resultMap="reviewMap">
+	select
+		*
+	from
+		campsite_review
+	<where>
+		<if test="searchType == 'title'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'content'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+	</where>
+	order by review_no desc
+</select>
+
+<select id="selectTotalReviewList" resultType="_int">
+	select
+		count(*)
+	from
+		campsite_review
+	<where>
+		<if test="searchType == 'title'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="searchType == 'content'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+	</where>
+</select>
+
+<delete id="camperDelete">
+	delete from
+		camper
+	where
+		camper_no = #{camperNo}
+</delete>
+
+<delete id="reviewDelete">
+	delete from
+		campsite_review
+	where
+		review_no = #{reviewNo}
 </delete>
 
 
@@ -94,6 +169,39 @@
 			</constructor>	
 		</collection>
 	</resultMap>
+
+<resultMap type="campsiteReview" id="reviewMap">
+	<id column="review_no" property="reviewNo"/>
+	<result column="member_id" property="memberId"/>
+	<result column="content_id" property="contentId"/>
+	<result column="faclt_nm" property="facltNm"/>
+	<result column="review_grade" property="reviewGrade"/>
+	<result column="stay" property="stay"/>
+	<result column="merit" property="merit"/>
+	<result column="title" property="title"/>
+	<result column="content" property="content"/>
+	<result column="created_at" property="createdAt"/>
+	<result column="updated_at" property="updatedAt"/>
+	<result column="read_count" property="readCount"/>
+</resultMap>
+
+<resultMap type="camper" id="camperMap">
+	<id column="camper_no" property="camperNo"/>
+	<result column="member_id" property="memberId"/>
+	<result column="title" property="title"/>
+	<result column="content" property="content"/>
+	<result column="purpose" property="purpose"/>
+	<result column="expected_cost" property="expectedCost"/>
+	<result column="chat_url" property="chatUrl"/>
+	<result column="departure_date" property="departureDate"/>
+	<result column="arrival_date" property="arrivalDate"/>
+	<result column="area" property="area"/>
+	<result column="member_count" property="memberCount"/>
+	<result column="read_count" property="readCount"/>
+	<result column="created_at" property="createdAt"/>
+	<result column="updated_at" property="updatedAt"/>
+	<result column="status" property="status"/>
+</resultMap>
 	
 <resultMap type="usedProduct" id="productMap">
 	<id column="product_no" property="productNo"/>

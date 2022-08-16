@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
-#tb-member tr:last-child {
-	border-bottom: 1px solid #dee2e6;
+#tb-admin tr {
+	border-bottom: 1px solid #dee2e6 !important;
 }
 
 /* 페이지바 */
@@ -136,20 +136,20 @@ input:focus {
 	color: #fff;
 }
 
-#tb-member th, #tb-member td {
+#tb-admin th, #tb-admin td {
 	padding: 13px;
 	font-size: 0.870rem;
 }
 
-#tb-member {
+#tb-admin {
 	margin-top: 20px;
 }
 
-#tb-member a {
+#tb-admin a {
 	color: #000;
 }
 
-#tb-member a:hover {
+#tb-admin a:hover {
 	color: #000;
 }
 

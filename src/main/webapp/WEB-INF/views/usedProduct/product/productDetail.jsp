@@ -15,6 +15,41 @@
 <input type="hidden" class="wp" value="${wishProduct}"/>
 <input type="hidden" class="owner" value=""/>
 
+<script>
+$(document).ready(function() {
+var imgs;
+var img_count;
+var img_position = 1;
+
+imgs = $(".slide ul");
+img_count = imgs.children().length;
+//버튼을 클릭했을 때 함수 실행
+$('#back').click(function () {
+  back();
+});
+$('#next').click(function () {
+  next();
+});
+function back() {
+  if(1<img_position){
+    imgs.animate({
+      left:'+=475px'
+    });
+    img_position--;
+  }
+}
+function next() {
+  if(img_count>img_position){
+    imgs.animate({
+      left:'-=475px'
+    });
+    img_position++;
+  }
+}
+});
+//이미지 끝까지 가면 버튼 사라지기
+//첫 이미지로 돌아오기=
+</script>
 <div id="section" style="width: 98%; margin-top:50px; margin-bottom:20px;">
 	<div class="detail_area">
 	<div class="detail_div">
@@ -271,7 +306,6 @@
 <script>
 var productNo = $('.hiddenNo').val();
 var memberId = $('.memberId').val();
-var wp = $('.wp').val();
 
 $(document).ready(function() {
 	$.ajax({
@@ -292,7 +326,7 @@ $(document).ready(function() {
 	   		alter('ㅈ회오류');
 	   	}
 	});
-})
+});
 
 $(".heart-click").click(function() {
     
@@ -361,40 +395,5 @@ document.querySelector("#update_btn").addEventListener('click', (e) => {
 $('#chat_btn').click(function() {
 	window.open('', 'chat', resizable=no);	
 });
-  
-</script>
-<script type="text/javascript">
- $(document).ready(function(){
-   var imgs;
-   var img_count;
-   var img_position = 1;
-   imgs = $(".slide ul");
-   img_count = imgs.children().length;
-   //버튼을 클릭했을 때 함수 실행
-   $('#back').click(function () {
-     back();
-   });
-   $('#next').click(function () {
-     next();
-   });
-   function back() {
-     if(1<img_position){
-       imgs.animate({
-         left:'+=475px'
-       });
-       img_position--;
-     }
-   }
-   function next() {
-     if(img_count>img_position){
-       imgs.animate({
-         left:'-=475px'
-       });
-       img_position++;
-     }
-   }
-   //이미지 끝까지 가면 버튼 사라지기
-   //첫 이미지로 돌아오기=
- });
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
