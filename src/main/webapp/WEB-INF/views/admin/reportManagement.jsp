@@ -47,7 +47,7 @@
 					</div>
 				</div> <!--report-hd-->
 					
-			<table class="table text-center" id="tb-member">
+			<table class="table table-hover text-center" id="tb-admin">
 				<thead style="border-top: 2px solid #dee2e6;">
 					<tr>
 						<th class="col-md-1">No.</th>

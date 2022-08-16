@@ -63,7 +63,7 @@
 				<i class="fa fa-search"></i>
 			</button>
 		</div>
-		<table class="table text-center" id="tb-member">
+		<table class="table table-hover text-center" id="tb-admin">
 			<thead>
 				<tr>
 					<th>권한</th>

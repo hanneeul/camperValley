@@ -20,6 +20,18 @@ public interface AdminService {
 
 	int productDelete(Integer productNo);
 
+	int camperDelete(Integer camperNo);
+
+	List<NoticeExt> selectCamperList(Map<String, Object> map);
+
+	int selectTotalCamperList(Map<String, Object> map);
+
+	int reviewDelete(Integer reviewNo);
+
+	List<NoticeExt> selectReviewList(Map<String, Object> map);
+
+	int selectTotalReviewList(Map<String, Object> map);
+
 
 
 

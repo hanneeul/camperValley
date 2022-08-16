@@ -162,9 +162,6 @@ public class AdminController {
 	}
 	// --------------------- EJ end
 
-	@GetMapping("/camperManagement")
-	public void camperManagement() {}
-
 	@GetMapping("/usedProductManagement")
 	public ModelAndView usedProductManagement(ModelAndView mav, 
 			@RequestParam(defaultValue = "") String searchType,
@@ -199,6 +196,76 @@ public class AdminController {
 		}
 		return mav;
 	}
+
+	@GetMapping("/camperManagement")
+	public ModelAndView camperManagement(ModelAndView mav, 
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "1") int cPage,
+			HttpServletRequest request) {
+		try {
+			int numPerPage = 7;
+			int offset = (cPage - 1) * numPerPage;
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("searchType", searchType);
+			map.put("searchKeyword", searchKeyword);
+			map.put("numPerPage", numPerPage);
+			map.put("offset", offset);
+			
+			List<NoticeExt> list = adminService.selectCamperList(map);
+			int totalContent = adminService.selectTotalCamperList(map);
+			log.debug("list = {}", list);
+			
+			String url = request.getRequestURI();
+			String pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalContent, url);
+			log.debug("map = {}" + map);
+			
+			mav.addObject("list", list);
+			mav.addObject("map", map);
+			mav.addObject("pagebar", pagebar);
+			
+			mav.setViewName("admin/camperManagement");
+		} catch (Exception e) {
+			log.error("캠퍼모집 목록 조회 오류", e);
+		}
+		return mav;
+	}
+	
+	@GetMapping("/reviewManagement")
+	public ModelAndView reviewManagement(ModelAndView mav, 
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "1") int cPage,
+			HttpServletRequest request) {
+		try {
+			int numPerPage = 7;
+			int offset = (cPage - 1) * numPerPage;
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("searchType", searchType);
+			map.put("searchKeyword", searchKeyword);
+			map.put("numPerPage", numPerPage);
+			map.put("offset", offset);
+			
+			List<NoticeExt> list = adminService.selectReviewList(map);
+			int totalContent = adminService.selectTotalReviewList(map);
+			log.debug("list = {}", list);
+			
+			String url = request.getRequestURI();
+			String pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalContent, url);
+			log.debug("map = {}" + map);
+			
+			mav.addObject("list", list);
+			mav.addObject("map", map);
+			mav.addObject("pagebar", pagebar);
+			
+			mav.setViewName("admin/reviewManagement");
+		} catch (Exception e) {
+			log.error("캠핑장후기 목록 조회 오류", e);
+		}
+		return mav;
+	}
 	
 	@PostMapping("/usedProductDelete")
 	public String usedProductDelete(@RequestParam("deleteList") List<Integer> usedProductNo, RedirectAttributes redirectAttr) {
@@ -209,6 +276,28 @@ public class AdminController {
 			log.error("중고거래 삭제 오류", e);
 		}
 		return "redirect:/admin/usedProductManagement";
+	}
+	
+	@PostMapping("/camperDelete")
+	public String camperDelete(@RequestParam("deleteList") List<Integer> camperBoardNo, RedirectAttributes redirectAttr) {
+		try {
+			for (Integer camperNo : camperBoardNo) adminService.camperDelete(camperNo);
+			redirectAttr.addFlashAttribute("msg", "게시글이 삭제되었습니다.");
+		} catch (Exception e) {
+			log.error("캠퍼모집 삭제 오류", e);
+		}
+		return "redirect:/admin/camperManagement";
+	}
+	
+	@PostMapping("/reviewDelete")
+	public String reviewDelete(@RequestParam("deleteList") List<Integer> reviewBoardNo, RedirectAttributes redirectAttr) {
+		try {
+			for (Integer reviewNo : reviewBoardNo) adminService.reviewDelete(reviewNo);
+			redirectAttr.addFlashAttribute("msg", "게시글이 삭제되었습니다.");
+		} catch (Exception e) {
+			log.error("캠퍼모집 삭제 오류", e);
+		}
+		return "redirect:/admin/reviewManagement";
 	}
 
 	@GetMapping("/reportManagement")
