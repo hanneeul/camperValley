@@ -111,7 +111,7 @@
 									<c:set var="clickCnt" value="${advertisement.adClickCnt}"/>
 									<c:set var="viewCnt" value="${advertisement.adViewCnt}"/>
 									<c:if test="${viewCnt ne 0}">
-										<fmt:formatNumber value="${clickCnt / viewCnt * 100}" pattern="#.##"/><br>									
+										<fmt:formatNumber value="${clickCnt / viewCnt * 100}" pattern="#.##"/>								
 									</c:if>
 									<c:if test="${viewCnt eq 0}">0</c:if>									
 									<small>%</small>
@@ -304,7 +304,7 @@ document.querySelectorAll(".updateAdBtn").forEach((btn) => {
 				adDailyBudget
 			},
 			success(response) {
-				console.log(response);
+				// console.log(response);
 				const {msg} = response;
 				$.confirm({
 					title: '변경완료',

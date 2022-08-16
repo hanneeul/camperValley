@@ -50,7 +50,7 @@ public interface AdvertiserService {
 
 	int insertAdvertisement(AdvertisementExt advertisement);
 
-	List<Advertisement> selectAdListByAdvertiserNo(int advertiserNo, int cPage, int numPerPage);
+	List<AdvertisementExt> selectAdListByAdvertiserNo(int advertiserNo, int cPage, int numPerPage);
 
 	int selectTotalAdvertisement(int advertiserNo);
 
@@ -65,5 +65,13 @@ public interface AdvertiserService {
 	List<Integer> selectAdvertisementForInsertPerform();
 
 	int dailyInsertPerformance(List<Integer> advertisementNoList);
+	
+	int InsertTodayPerformance(List<Integer> advertisementNoList);
+
+	List<AdvertisementExt> selectDisplayAd(Map<String, Object> param);
+
+	int updatePerformView(int advertisementNo);
+
+	int updatePerformClick(int advertisementNo);
 
 }

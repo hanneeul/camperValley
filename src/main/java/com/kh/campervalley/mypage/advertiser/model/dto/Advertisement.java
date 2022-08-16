@@ -18,8 +18,6 @@ public class Advertisement {
 	private String adLink;
 	private int adCpc;
 	private int adDailyBudget;
-	private int adViewCnt;
-	private int adClickCnt;
 	private boolean adStatus;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;

@@ -15,5 +15,6 @@ public class AdPerformance {
 	private int advertisementNo;
 	private LocalDate displayAt;
 	private int dailyClickCnt;
+	private int dailyViewCnt;
 
 }

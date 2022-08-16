@@ -123,8 +123,6 @@ create table advertisement (
 	ad_link varchar(2000) not null,
 	ad_cpc number not null,
 	ad_daily_budget number,
-	ad_view_cnt number default 0 not null,
-	ad_click_cnt number default 0 not null,
 	ad_status number default 1,
 	created_at date default sysdate,
 	updated_at date,
@@ -153,6 +151,7 @@ create table ad_performance (
     advertisement_no number not null,
     display_at date default trunc(sysdate),
     daily_click_cnt number default 0,
+    daily_view_cnt number default 0,
     
     constraint pk_ad_performance primary key(ad_performance_no),
     constraint fk_ad_performance_advertisement_no foreign key(advertisement_no) references advertisement(advertisement_no) on delete cascade

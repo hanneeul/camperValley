@@ -242,6 +242,17 @@
 	</selectKey>
 </insert>
 
+<select id="selectAdListByAdvertiserNo" parameterType="_int" resultType="advertisementExt">
+	select
+		ad.*,
+		( select sum(daily_click_cnt) from ad_performance perform where perform.advertisement_no = ad.advertisement_no ) ad_click_cnt,
+		( select sum(daily_view_cnt) from ad_performance perform where perform.advertisement_no = ad.advertisement_no ) ad_view_cnt
+	from
+		advertisement ad
+	where
+		advertiser_no = #{advertiserNo} and deleted_at is null order by created_at desc
+</select>
+
 <select id="selectAdvertiserByMemberId" resultType="advertiser">
 	select
 		ader.*
@@ -278,6 +289,20 @@
 
 <insert id="dailyInsertPerformance" parameterType="java.util.List">
 	insert into
+		ad_performance (ad_performance_no, advertisement_no, display_at)
+	select
+		seq_ad_performance_no.nextval,
+		A.*,
+		trunc(sysdate + 1) display_at
+	from (
+		<foreach collection="list" item="advertisementNo" separator="union all">
+			select #{advertisementNo} advertisement_no
+			from dual
+		</foreach> ) A
+</insert>
+
+<insert id="InsertTodayPerformance" parameterType="java.util.List">
+	insert into
 		ad_performance (ad_performance_no, advertisement_no)
 	select
 		seq_ad_performance_no.nextval,
@@ -289,17 +314,80 @@
 		</foreach> ) A
 </insert>
 
-<!-- 
-<select id="selectPayByMerchantUidList" parameterType="java.util.List" resultType="pay">
-	select *
-	from pay
-	<where>
-		merchant_uid in
-		<foreach collection="list" item="merchantUid" open="(" close=")" separator=",">
-		 #{merchantUid}
-		</foreach>
-	</where>
+<select id="selectDisplayAd" parameterType="map" resultMap="AdvertisementCollectionMap">
+	select
+		rowtable.advertisement_no,
+		advertiser_no,
+		ad_name,
+		ad_zone,
+		ad_link,
+		ad_cpc,
+		ad_daily_budget,
+		ad_status,
+		ad_attach_no,
+		original_filename,
+		renamed_filename
+	from
+		(
+			select
+				rownum rnum,
+				a1.*
+			from (
+				select a.*, dbms_random.random random
+				from advertisement a
+				where
+					deleted_at is null
+					and ad_status = 1
+					<if test="adZone != null and adZone != ''">
+					and ad_zone = #{adZone}
+					</if>
+				order by ad_cpc desc, random desc
+			) a1
+			<if test="topN != null and topN != ''">
+			where rownum between 1 and #{topN}
+			</if>
+		) rowtable
+		join ad_attach attach
+			on rowtable.advertisement_no = attach.advertisement_no
+	order by rnum
 </select>
- -->
 
+<resultMap type="advertisementExt" id="AdvertisementCollectionMap">
+	<id column="advertisement_no" property="advertisementNo"/>
+	<result column="advertiser_no" property="advertiserNo"/>
+	<result column="ad_name" property="adName"/>
+	<result column="ad_zone" property="adZone"/>
+	<result column="ad_link" property="adLink"/>
+	<result column="ad_cpc" property="adCpc"/>
+	<result column="ad_daily_budget" property="adDailyBudget"/>
+	<result column="ad_status" property="adStatus"/>
+	<result column="created_at" property="createdAt"/>
+	<result column="updated_at" property="updatedAt"/>
+	<result column="deleted_at" property="deletedAt"/>
+	<result column="ad_click_cnt" property="adClickCnt"/>
+	<result column="ad_view_cnt" property="adViewCnt"/>
+	
+	<association property="adAttach" javaType="adAttach">
+		<id column="ad_attach_no" property="adAttachNo"/>
+		<result column="advertisement_no" property="advertisementNo"/>
+		<result column="original_filename" property="originalFilename"/>
+		<result column="renamed_filename" property="renamedFilename"/>
+		<result column="file_created_at" property="createdAt"/>
+	</association>
+</resultMap>
+
+<select id="selectOneAdmoneyNo" resultType="map">
+	select
+		ad.*,
+		money.*,
+		(select daily_click_cnt from ad_performance where ad.advertisement_no = advertisement_no and display_at = trunc(sysdate)) * ad_cpc today_cost
+	from
+		advertisement ad
+			join advertiser ader
+				on ad.advertiser_no = ader.advertiser_no
+			join admoney money
+				on ad.advertiser_no = money.advertiser_no
+	where advertisement_no = #{advertisementNo}
+</select>
+		
 </mapper>

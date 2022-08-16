@@ -22,10 +22,10 @@ public class AdvertiserSchedule {
 	@PostConstruct
 	public void advertiserInit() {
 		log.debug("[서버실행시 1회 실행]");
-		dailyInsertPerformance();
+		todayInsertPerformance();
 	}
 
-	@Scheduled(cron = "1 0 0 * * *", zone = "Asia/Seoul")
+	@Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
 	public void dailyInsertPerformance() {
 		log.debug("[매일 자정 실행] 운영중인 광고 일일성과 insert");
 		List<Integer> advertisementNoList = advertiserService.selectAdvertisementForInsertPerform();
@@ -33,6 +33,15 @@ public class AdvertiserSchedule {
 
 		if (advertisementNoList.size() > 0) {
 			int result = advertiserService.dailyInsertPerformance(advertisementNoList);
+		}
+	}
+	
+	public void todayInsertPerformance() {
+		List<Integer> advertisementNoList = advertiserService.selectAdvertisementForInsertPerform();
+		log.debug("advertisementNoList = {}", advertisementNoList);
+
+		if (advertisementNoList.size() > 0) {
+			int result = advertiserService.InsertTodayPerformance(advertisementNoList);
 		}
 	}
 
