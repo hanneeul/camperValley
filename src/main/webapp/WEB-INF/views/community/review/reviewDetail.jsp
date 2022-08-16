@@ -37,7 +37,7 @@
 	margin: auto;
 	display: block;
 	width: 80%;
-	max-width: 700px;
+	max-width: fit-content;
 	animation-name: zoom;
 	animation-duration: 0.6s;
 }
@@ -97,7 +97,7 @@
 					class="text-decoration-none" 
 					onMouseOver="this.innerHTML='${review.member.nickname}님의 게시글 보러가기'" 
 					onMouseOut="this.innerHTML='${review.member.nickname}'" 
-					href="${pageContext.request.contextPath}/community/review/reviewList?searchType=memberId&searchKeyword=${review.member.nickname}">
+					href="${pageContext.request.contextPath}/community/review/reviewList?searchType=nickname&searchKeyword=${review.member.nickname}">
 					${review.member.nickname}
 				</a>
 			</c:if>
@@ -270,6 +270,10 @@ modalClose.addEventListener('click', () => {
 	photoModal.style.display = "none";
 });
 
+$('.photo-modal').click(function() {
+	$('#photoModal').hide();
+});
+
 /**
  * 리뷰평점 개수 제어
  */
@@ -294,6 +298,8 @@ new Swiper('.swiper-container', {
 	slidesPerView : 3,
 	spaceBetween : 10,
 	slidesPerGroup : 3,
+	debugger: true,
+	mousewheel: true,
 	loopFillGroupWithBlank : true,
 	loop : true,
 	navigation : {

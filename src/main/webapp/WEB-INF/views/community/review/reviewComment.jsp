@@ -60,17 +60,16 @@
 						<div class="col-md-12 py-3">
 							<c:if test="${comment.commentLevel eq 1}">
 								<div class="media">
-									<img class="mr-3 rounded-circle" src="${pageContext.request.contextPath}/resources/upload/member/default-profile.svg"/>
-									<%-- <c:if test="${not empty comment.member.profileImg}">
-										<img class="mr-3 rounded-circle" src="${pageContext.request.contextPath}/resources/upload/member/default-profile.svg"/>
+									<c:if test="${not empty comment.member.profileImg}">
+										<img class="mr-3 rounded-circle" src="${pageContext.request.contextPath}/resources/upload/member/${comment.member.profileImg}"/>
 									</c:if>
 									<c:if test="${empty comment.member.profileImg}">
 										<img class="mr-3 rounded-circle" src="${pageContext.request.contextPath}/resources/upload/member/default-profile.svg"/>
-									</c:if> --%>
+									</c:if>
 									<div class="media-body">
 										<div class="row">
 											<div class="col-md-8 d-flex my-2">
-										    	<span class="font-weight-bold">${not empty comment.memberId ? comment.memberId : '탈퇴회원'}</span>&nbsp;
+										    	<span class="font-weight-bold">${not empty comment.member.nickname ? comment.member.nickname : '탈퇴회원'}</span>&nbsp;
 										    	<span>
 										    		<fmt:parseDate value="${comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
 													<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
@@ -94,17 +93,16 @@
 							</c:if>
 							<c:if test="${comment.commentLevel eq 2}">
 								<div class="media pl-5">
-									<img class="mr-3 rounded-circle" src="${pageContext.request.contextPath}/resources/upload/member/default-profile.svg"/>
-									<%-- <c:if test="${not empty comment.member.profileImg}">
-										<img class="mr-3 rounded-circle" src="${pageContext.request.contextPath}/resources/upload/member/default-profile.svg"/>
+									<c:if test="${not empty comment.member.profileImg}">
+										<img class="mr-3 rounded-circle" src="${pageContext.request.contextPath}/resources/upload/member/${comment.member.profileImg}"/>
 									</c:if>
 									<c:if test="${empty comment.member.profileImg}">
 										<img class="mr-3 rounded-circle" src="${pageContext.request.contextPath}/resources/upload/member/default-profile.svg"/>
-									</c:if> --%>
+									</c:if>
 									<div class="media-body">
 										<div class="row">
 											<div class="col-md d-flex my-2">
-										    	<span class="font-weight-bold">${not empty comment.memberId ? comment.memberId : '탈퇴회원'}</span>&nbsp;
+										    	<span class="font-weight-bold">${not empty comment.member.nickname ? comment.member.nickname : '탈퇴회원'}</span>&nbsp;
 										    	<span>
 										    		<fmt:parseDate value="${comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
 													<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
@@ -113,7 +111,7 @@
 										 	<div class="col-md-4 d-flex reply-wrap">
 										 		<div class="reply">
 											 		<c:if test="${not empty loginMember && loginMember.getMemberId() eq comment.memberId}">
-											 			<button type="button" class="badge btn-outline-camper-color btn-update" value="${comment.reviewCommentNo}"><i class="fa-solid fa-pen"></i>&nbsp;수정</button>
+											 			<button type="button" class="badge btn-ouline-camper-yellow btn-update" value="${comment.reviewCommentNo}"><i class="fa-solid fa-pen"></i>&nbsp;수정</button>
 											 			<button type="button" class="badge btn-outline-camper-delete btn-delete" value="${comment.reviewCommentNo}"><i class="fa-solid fa-circle-minus"></i>&nbsp;삭제</button>
 											 		</c:if>
 											 	</div>

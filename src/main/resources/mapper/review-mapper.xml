@@ -98,7 +98,8 @@
 	select
  		count(*)
  	from
- 		campsite_review
+ 		campsite_review left join member
+            using(member_id)
  	<where>
   		<if test="searchType != null and searchType != '' and searchKeyword != null and searchKeyword != ''">
 			<if test="searchType == 'nickname'">
@@ -180,11 +181,14 @@
 		review_no = #{reviewNo}
 </delete>
 
-<select id="selectReviewCommentList" resultType="reviewComment">
+<select id="selectReviewCommentList" resultMap="reviewCommentCollectionMap">
 select
-	*
+	rc.*,
+    m.nickname nickname,
+    m.profile_img profile_img
 from
-	review_comment
+	review_comment rc left join member m
+		on rc.member_id = m.member_id
 where
 	review_no = #{reviewNo}
 </select>
@@ -262,7 +266,6 @@ where
 	recommend_no = #{recommendNo}
 </update>
 
-
 <resultMap type="campsiteReviewExt" id="reviewCollectionMap">
 	<id column="review_no" property="reviewNo"/>
 	<result column="member_id" property="memberId"/>
@@ -314,6 +317,30 @@ where
   		<result column="created_at" property="createdAt"/>
 		<result column="updated_at" property="updatedAt"/>
   	</collection>
+</resultMap>
+
+<resultMap type="reviewComment" id="reviewCommentCollectionMap">
+	<id column="review_comment_no" property="reviewCommentNo"/>
+	<result column="review_no" property="reviewNo"/>
+	<result column="member_id" property="memberId"/>
+	<result column="comment_content" property="commentContent"/>
+	<result column="comment_level" property="commentLevel"/>
+	<result column="comment_ref" property="commentRef"/>
+	<result column="created_at" property="createdAt"/>
+	<result column="updated_at" property="updatedAt"/>
+	
+	<association property="member" javaType="member">
+		<id column="member_id" property="memberId"/>
+		<result column="name" property="name"/>
+		<result column="nickname" property="nickname"/>
+		<result column="password" property="password"/>
+		<result column="email" property="email"/>
+		<result column="tel" property="tel"/>
+		<result column="profile_img" property="profileImg"/>
+		<result column="enroll_date" property="enrollDate"/>
+		<result column="withdraw" property="withdraw"/>
+		<result column="enabled" property="enabled"/>
+	</association>
 </resultMap>
 
 </mapper>
