@@ -138,4 +138,8 @@ public class UsedProductServiceImpl implements UsedProductService {
 		return usedProduct;
 	}
 
+	@Override
+	public WishProduct findHeart(Map<String, Object> map) {
+		return usedProductDao.findHeart(map);
+	}
 }

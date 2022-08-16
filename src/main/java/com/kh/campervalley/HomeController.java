@@ -30,10 +30,10 @@ public class HomeController {
 //		return "home";
 //	}
 	
-	@GetMapping("/")
-	public String index() {
-//		logger.info("GET / 요청!");
-		return "forward:/index.jsp";
-	}
+    @GetMapping("/")
+    public String index() {
+//        logger.info("GET / 요청!");
+        return "index";
+    }
 	
 }

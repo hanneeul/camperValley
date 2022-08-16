@@ -29,5 +29,7 @@ public interface UsedProductService {
 
 	public UsedProduct removeHeart(WishProduct wishProduct, String productNo);
 
+	public WishProduct findHeart(Map<String, Object> map);
+
 
 }
