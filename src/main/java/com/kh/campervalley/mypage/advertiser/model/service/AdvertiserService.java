@@ -63,6 +63,8 @@ public interface AdvertiserService {
 	int updateAdvertisement(Advertisement advertisement);
 
 	List<Integer> selectAdvertisementForInsertPerform();
+	
+	List<Integer> selectAdvertisementForDailyInsertPerform();
 
 	int dailyInsertPerformance(List<Integer> advertisementNoList);
 	
