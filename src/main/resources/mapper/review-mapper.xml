@@ -180,6 +180,15 @@
 		review_no = #{reviewNo}
 </delete>
 
+<select id="selectReviewCommentList" resultType="reviewComment">
+select
+	*
+from
+	review_comment
+where
+	review_no = #{reviewNo}
+</select>
+
 <insert id="insertReviewComment">
 insert into
 	review_comment
@@ -188,10 +197,71 @@ values (
 	#{reviewNo}, 
 	#{memberId}, 
 	#{commentContent}, 
-	#{commentLevel}, 
-	#{commentRef}, 
-	sysdate, null)
+	#{commentLevel},
+	<if test="commentRef == 0">
+		null, sysdate, null)
+	</if>
+	<if test="commentRef gt 0">
+		#{commentRef}, sysdate, null)
+	</if>
 </insert>
+
+<delete id="deleteReviewComment">
+delete from
+	review_comment
+where
+	review_comment_no = #{reviewCommentNo}
+</delete>
+
+<update id="updateReviewComment">
+update
+	review_comment
+set
+	comment_content = #{commentContent}, 
+	updated_at = sysdate
+where
+	review_comment_no = #{reviewCommentNo}
+</update>
+
+<select id="recommendCheck" resultType="reviewRecommend">
+select 
+	* 
+from 
+	review_recommend 
+where 
+	review_no = #{reviewNo} 
+	and 
+	member_id = #{memberId}
+</select>
+
+<insert id="insertReviewRecommend">
+insert into
+	review_recommend
+values (
+	seq_review_recommend_no.nextval, 
+	#{reviewNo}, 
+	#{memberId}, 
+	status = 'Y')
+</insert>
+
+<update id="setReviewRecommendStatusY">
+update
+	review_recommend
+set
+	status = 'Y'
+where
+	recommend_no = #{recommendNo}
+</update>
+
+<update id="setReviewRecommendStatusN">
+update
+	review_recommend
+set
+	status = 'N'
+where
+	recommend_no = #{recommendNo}
+</update>
+
 
 <resultMap type="campsiteReviewExt" id="reviewCollectionMap">
 	<id column="review_no" property="reviewNo"/>

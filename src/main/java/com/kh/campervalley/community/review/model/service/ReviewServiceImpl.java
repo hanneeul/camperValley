@@ -13,6 +13,7 @@ import com.kh.campervalley.community.review.model.dto.CampsiteReview;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
 import com.kh.campervalley.community.review.model.dto.ReviewComment;
 import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
+import com.kh.campervalley.community.review.model.dto.ReviewRecommend;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -107,6 +108,43 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int insertReviewComment(ReviewComment comment) {
 		return reviewDao.insertReviewComment(comment);
+	}
+	
+	@Override
+	public int deleteReviewComment(int reviewCommentNo) {
+		return reviewDao.deleteReviewComment(reviewCommentNo);
+	}
+	
+	@Override
+	public int updateReviewComment(ReviewComment comment) {
+		return reviewDao.updateReviewComment(comment);
+	}
+	
+	@Override
+	public ReviewRecommend recommendCheck(Map<String, Object> param) {
+		return reviewDao.recommendCheck(param);
+	}
+	
+	@Override
+	public int insertReviewRecommend(Map<String, Object> param) {
+		return reviewDao.insertReviewRecommend(param);
+	}
+	
+	@Override
+	public int setReviewRecommendStatus(ReviewRecommend recommend) {
+		int result = 0;
+		if(recommend.getStatus().equals("N")) {
+			 result = reviewDao.setReviewRecommendStatusY(recommend);						
+		}
+		else if(recommend.getStatus().equals("Y")) {
+			result = reviewDao.setReviewRecommendStatusN(recommend);									
+		}
+		return result;
+	}
+	
+	@Override
+	public List<ReviewComment> selectReviewCommentList(int reviewNo) {
+		return reviewDao.selectReviewCommentList(reviewNo);
 	}
 	
 }

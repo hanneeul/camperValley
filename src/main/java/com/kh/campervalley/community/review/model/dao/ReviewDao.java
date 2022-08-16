@@ -10,6 +10,7 @@ import com.kh.campervalley.community.review.model.dto.CampsiteReview;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
 import com.kh.campervalley.community.review.model.dto.ReviewComment;
 import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
+import com.kh.campervalley.community.review.model.dto.ReviewRecommend;
 
 @Mapper
 public interface ReviewDao {
@@ -41,5 +42,19 @@ public interface ReviewDao {
 	int deleteReview(int reviewNo);
 
 	int insertReviewComment(ReviewComment comment);
+
+	int deleteReviewComment(int reviewCommentNo);
+
+	int updateReviewComment(ReviewComment comment);
+
+	ReviewRecommend recommendCheck(Map<String, Object> param);
+
+	int insertReviewRecommend(Map<String, Object> param);
+
+	int setReviewRecommendStatusY(ReviewRecommend recommend);
+
+	int setReviewRecommendStatusN(ReviewRecommend recommend);
+
+	List<ReviewComment> selectReviewCommentList(int reviewNo);
 
 }
