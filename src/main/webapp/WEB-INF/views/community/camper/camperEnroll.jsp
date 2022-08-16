@@ -54,10 +54,6 @@
 								<div class="form-group mb-0">
 									<input type="text" class="input form-control form-control-sm input-daterange" style="margin: 10px 5px 10px 3px; width:104%;"name="arrivalDate" autocomplete="off" placeholder="0000-00-00" readonly />
 								</div>
-							
-							
-							
-							
 								<!-- <input type="text" name="dates" class="input" style="width:40%" placeholder="0000년 00월 00일 ~ 0000년 00월 00일"/> -->
 							</td>
 						</tr>

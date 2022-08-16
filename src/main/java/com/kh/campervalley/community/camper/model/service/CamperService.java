@@ -17,5 +17,9 @@ public interface CamperService {
 	List<Camper> selectMoreCamperList(int cPage, int numPerPage, Map<String, Object> param);
 
 	CamperExt selectCamperOne(int camperNo);
+
+	int deleteCamper(int camperNo);
+
+	int updateCamper(Camper camper);
 	
 }

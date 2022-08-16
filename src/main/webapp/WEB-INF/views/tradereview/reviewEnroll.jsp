@@ -38,7 +38,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form action="" name="camperEnrollFrm" method="POST">
+				<form:form action="${pageContext.request.contextPath}/tradereview/reviewEnroll" name="reviewEnrollFrm" method="POST">
 					<div class="modal-body">
 						<div class="text-13 text-secondary">&#183; 작성하신 후기는 다른 회원들에게 공개됩니다.</div>
 						<div class="text-13 text-secondary">&#183; 개인정보 및 광고, 비속어가 포함된 내용의 후기는 신고의 대상이 될 수 있습니다.</div>
@@ -49,12 +49,12 @@
 										<div id="starscore">별점</div>
 									</td>
 									<td class="col-md-10 px-0 py-2">
-										<i class="fa-solid fa-star"></i>
-										<i class="fa-solid fa-star"></i>
-										<i class="fa-solid fa-star"></i>
-										<i class="fa-solid fa-star"></i>
-										<i class="fa-solid fa-star pr-2"></i>
-										<span>5점</span>
+										<i class="fa-solid fa-star"></i></span>
+										<i class="fa-solid fa-star"></i></span>
+										<i class="fa-solid fa-star"></i></span>
+										<i class="fa-solid fa-star"></i></span>
+										<i class="fa-solid fa-star pr-2"></i></span>
+										<span><span id="score">5</span>점</span>
 									</td>
 								</tr>
 								<tr>
@@ -62,7 +62,8 @@
 										<label for="content">내용</label>
 									</td>
 									<td class="col-md-10 px-0 py-2">
-										<textarea class="p-2" name="content" cols="100" rows="5" style="width:100%" placeholder="내용을 입력하세요."></textarea>
+										<textarea id="ctent" class="p-2" maxlength="40" name="content" cols="100" rows="3" style="width:100%" placeholder="내용을 입력하세요."></textarea>
+										<div class="text-13 text-right">0<span id="wordCount"></span>/40자</div>
 									</td>
 								</tr>
 							</tbody>
@@ -71,18 +72,42 @@
                     <div class="modal-footer justify-content-center">
 						<div>
 							<button type="submit" class="btn btn-outline-camper-color px-4 m-2">등록</button>
-							<button type="button" class="btn btn-outline-camper-color px-4 my-2">취소</button>
+							<button type="button" class="btn btn-outline-danger px-4 my-2">취소</button>
 						</div>
 	                </div>
-				</form>
+				</form:form>
 			</div>
 		</div>
 	</div>
 </body>
 <script>
-	$("#reviewEnroll")
-	.modal()
-	.on('hide.bs.modal', (e) => {
+$("#reviewEnroll")
+.modal()
+.on('hide.bs.modal', (e) => {
+});
+
+document.querySelectorAll(".fa-star").forEach((star) => {
+	star.addEventListener("click", (e) => {
+		$(".fa-star").css("color", "rgb(245, 245, 245)");
+		const index = $(e.target).index();
+		for(let i = 0; i < 5; i++) {
+			if(i <= index) $(`.fa-star:nth-child(\${i+1})`).css("color", "rgb(230, 185, 20)");
+		}
+		$("#score").html(`\${index + 1}`);
 	});
+});
+
+document.querySelector("#ctent").addEventListener("keyup", () => {
+	$("#wordCount").html($("#ctent").val().length);
+});
+
+const frm = document.reviewEnrollFrm;
+frm.addEventListener("submit", (e) => {
+	if(!frm.content.value) {
+		alert("내용을 입력하세요.");
+		e.preventDefault();
+		return;
+	}
+});
 </script>
 </html>

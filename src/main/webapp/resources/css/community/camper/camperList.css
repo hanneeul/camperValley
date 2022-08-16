@@ -1,12 +1,9 @@
 @charset "UTF-8";
-.text-13{font-size: 13px;}
-.text-15{font-size: 15px;}
-.text-18{font-size: 18px;}
-.text-20{font-size: 20px;}
-.text-25{font-size: 25px;}
-* {
-	font-size: .9rem;
-}
+.text-13 {font-size: 13px;}
+.text-15 {font-size: 15px;}
+.text-18 {font-size: 18px;}
+.text-20 {font-size: 20px;}
+.text-25 {font-size: 25px;}
 
 /* reviewList.jsp start */
 .campsite-review-list-wrap {
@@ -44,6 +41,9 @@
 #listSection {
 	width: 400px;
 }
+#listSection li {
+	font-size: 0.9rem;
+}
 #detailSection {
 	width: 600px;
 	height: 85vh;
@@ -72,7 +72,7 @@
 #detailFooter label {
 	color: #d9bf77;
 }
-#chatUrl {
+#detailBody #chatUrl {
 	cursor: pointer;
 	background-color: white;
 }
