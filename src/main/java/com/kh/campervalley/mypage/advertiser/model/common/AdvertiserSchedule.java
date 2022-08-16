@@ -28,7 +28,7 @@ public class AdvertiserSchedule {
 	@Scheduled(cron = "59 59 23 * * *")
 	public void dailyInsertPerformance() {
 		// oracle clude systimestamp와 차이가 있기때문에 display_at = (sysdate + 1) 적용
-		log.debug("[매일 23:59:59 실행] 운영중인 광고 일일성과 insert");
+		log.debug("[매일 23:59:59 실행] 운영중인 광고 익일 일일성과 insert");
 
 		List<Integer> advertisementNoList = advertiserService.selectAdvertisementForDailyInsertPerform();
 		log.debug("advertisementNoList = {}", advertisementNoList);
