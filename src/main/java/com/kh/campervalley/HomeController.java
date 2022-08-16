@@ -33,7 +33,7 @@ public class HomeController {
 	@GetMapping("/")
 	public String index() {
 //		logger.info("GET / 요청!");
-		return "forward:/index.jsp";
+		return "index";
 	}
 	
 }

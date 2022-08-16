@@ -29,7 +29,7 @@ public interface CampsiteDao {
 	int insertCampsiteFacility(CampsiteFacility campsiteFacility);
 
 	@Delete("delete from campsite")
-	void campsiteListReset();
+	int campsiteListReset();
 
 	List<CampsiteExt> recentCampsiteList();
 	
