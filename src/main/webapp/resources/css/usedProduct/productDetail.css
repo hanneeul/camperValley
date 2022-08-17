@@ -258,40 +258,40 @@ div {
 .prodInfo_RightWrap {
     width: 350px;
 }
-.store {
+.seller {
 	height: 120px;
     border-bottom: 1px solid lightgray;
     margin-top: 30px;
 }
-.prodInfo_storeWrap1 {
+.prodInfo_sellerWrap1 {
 	height: calc(100% - 50px);
     border-right: 1px solid rgb(238, 238, 238);
     padding: 0px 32px 250px;
     position: relative;
     left: -17px;
 }
-.storeInfo_Title {
-    font-size: 1.3rem;
+.sellerInfo_Title {
+	font-size: 1.25rem;
     padding: 40px 0px 8px;
-    border-bottom: 3px solid rgb(238, 238, 238);
+    border-bottom: 2px solid rgb(238, 238, 238);
     font-weight: 600;
     letter-spacing: 3px;
     text-align: center;
-    margin-top: -29.5px;
+    margin-top: -28.5px;
 }
 .btmProdInfo_Title {
 	font-weight: bold; 
 	font-size: 1.3rem; 
 	letter-spacing: 3px;
 }
-.prodInfo_storeDetailWrap {
+.prodInfo_sellerDetailWrap {
 	border-bottom: 1px solid lightgray;
 	padding: 0px 10px;
 }
-.storeInfo_product {
+.sellerInfo_product {
 	width: calc(50% - 3px);
 }
-.storeInfo_moreProd {
+.sellerInfo_moreProd {
 	height: 40px;
     display: flex;
     -webkit-box-align: center;
@@ -323,7 +323,7 @@ div {
     margin-left: 3px;
     margin-top: 1.5px;
 }
-.storeScore_title {
+.sellerScore_title {
 	margin-top: -20px;
 }
 .prodInfo_wrap1 {
@@ -332,7 +332,7 @@ div {
 .content_marginTop {
 	margin-top: 30px;
 }
-.storeStar {
+.sellerStar {
 	font-size: 1.3rem;
     letter-spacing: -2px;
     margin-bottom: 12px;
@@ -488,12 +488,12 @@ div {
 	font-size: 1.25px;
 }
 
-.storeProfileImg_Link img {
+.sellerProfileImg_Link img {
     width: 55px;
     height: 55px;
     border-radius: 100px;
 }
-.storeInfo_name {
+.sellerInfo_name {
 	font-size: 0.9rem;
     float: right;
     position: relative;
