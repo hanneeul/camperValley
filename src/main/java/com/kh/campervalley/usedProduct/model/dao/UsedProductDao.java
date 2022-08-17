@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.dto.WishProduct;
@@ -47,5 +48,9 @@ public interface UsedProductDao {
 	List<UsedProduct> searchProductList(Map<String, Object> param);
 
 	int searchProductCount(Map<String, Object> param);
+
+	Member getSellerInfo(int productNo);
+
+	int getSellerProdNum(int productNo);
 
 }

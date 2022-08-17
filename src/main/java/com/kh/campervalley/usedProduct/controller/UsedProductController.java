@@ -140,10 +140,15 @@ public class UsedProductController  {
 		// 검색어
 		String searchResult="";
 		
-		searchResult = " 의 검색 결과";
+		if (keyword.substring(0, 1).equals("@")) {
+			searchResult = " 회원이 올린 상품";			
+		} else {
+			searchResult = " 의 검색 결과";
+		}
 		
 		model.addAttribute("searchResult", searchResult);
 		model.addAttribute("display", "/usedProduct/main/searchDisplay.jsp");
+		
 		return "/usedProduct/main/mainPage";
 		
 	};
@@ -234,4 +239,24 @@ public class UsedProductController  {
 		return "redirect:/usedProduct/main/mainPage";
 	}
 	
+	/* 판매자 정보 */
+	@GetMapping("/product/getSellerInfo")
+	@ResponseBody
+	public ModelAndView getSellerInfo(@RequestParam String productNo) {
+		System.out.println(productNo);
+		
+		// 판매자
+		Member member = usedProductService.getSellerInfo(Integer.parseInt(productNo));
+		log.debug("member = {}", member);
+		// 물건 총 개수
+		int sellerProdNum = usedProductService.getSellerProdNum(Integer.parseInt(productNo));
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("profileImg", member.getProfileImg());
+		mav.addObject("member", member);
+		mav.addObject("sellerProdNum", sellerProdNum);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
 }

@@ -259,9 +259,10 @@ div {
     width: 350px;
 }
 .seller {
-	height: 120px;
+	height: 130px;
     border-bottom: 1px solid lightgray;
-    margin-top: 30px;
+    margin-top: 22px;
+    margin-left: 15px;
 }
 .prodInfo_sellerWrap1 {
 	height: calc(100% - 50px);
@@ -305,8 +306,8 @@ div {
     -webkit-box-align: center;
     align-items: center;
     color: rgb(102, 102, 102);
-    margin-top: -95px;
-    margin-left: 70px;
+    margin-top: -99px;
+    margin-left: 9px;
 }
 .moreProdLink_Num {
 	margin-right: 3px;
@@ -494,11 +495,11 @@ div {
     border-radius: 100px;
 }
 .sellerInfo_name {
-	font-size: 0.9rem;
-    float: right;
-    position: relative;
-    top: -47px;
-    left: -60px;
+    font-size: 1.1rem;
+}
+.sellerInfoWrap {
+	margin-top: -48px;
+    margin-left: 67px;
 }
 
 #soldOutText1, #soldOutText2 {
@@ -571,3 +572,12 @@ div {
     line-height: 1;
     background: rgb(51, 51, 51);
     border: 1px solid black;
+}
+.productNumLink {
+    float: right;
+    margin-right: 137px;
+    font-size: 0.85rem;
+    color: #a0a0a0;
+    white-space: nowrap;
+}
+}

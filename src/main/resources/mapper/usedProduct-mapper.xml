@@ -156,39 +156,44 @@ select *
 			a.*
 		from (
 			select
-				product_no,
-				seller_id,
-				cate_no,
-				product_title,
-				product_content,
-				product_img1,
-				product_img2,
-				product_img3,
-				product_img4,
-				product_img5,
-				to_char(product_price, 'FM99,999,999') ||'원' as product_price,
-				product_location,
-				product_delivery_fee,
-				round((sysdate-product_enroll_time)*24*60) as product_enroll_time,
-				product_views,
-				transaction_date,
-				buyer_id,
-				is_delete,
-				heart
+				p.product_no,
+				p.seller_id,
+				p.cate_no,
+				p.product_title,
+				p.product_content,
+				p.product_img1,
+				p.product_img2,
+				p.product_img3,
+				p.product_img4,
+				p.product_img5,
+				to_char(p.product_price, 'FM99,999,999') ||'원' as product_price,
+				p.product_location,
+				p.product_delivery_fee,
+				round((sysdate-p.product_enroll_time)*24*60) as product_enroll_time,
+				p.product_views,
+				p.transaction_date,
+				p.buyer_id,
+				p.is_delete,
+				p.heart, 
+				m.nickname
 			from
-				used_product
+				used_product p, member m
 			where 
+				p.seller_id = m.member_id
 				<if test=" productTitle != null and productTitle != '' ">
-				product_title Like '%' || #{productTitle} || '%'
+				and p.product_title Like '%' || #{productTitle} || '%'
+				</if>
+				<if test=" nickname != null and nickname != '' ">
+				and m.nickname Like '%' || #{nickname} || '%'
 				</if>
 			order by
 			<choose>
-				<when test='order =="A"'>product_enroll_time desc</when>
-				<when test='order =="B"'>to_number(product_views) desc</when>
-				<when test='order =="C"'>to_number(product_price) asc</when>
-				<when test='order =="D"'>to_number(product_price) desc</when>
+				<when test='order =="A"'>p.product_enroll_time desc</when>
+				<when test='order =="B"'>to_number(p.product_views) desc</when>
+				<when test='order =="C"'>to_number(p.product_price) asc</when>
+				<when test='order =="D"'>to_number(p.product_price) desc</when>
 				<otherwise>
-					product_enroll_time desc
+					p.product_enroll_time desc
 				</otherwise>
 			</choose>
 		) a		
@@ -198,10 +203,14 @@ select *
 
 <select id="searchProductCount" parameterType="java.util.HashMap" resultType="int">
 	select count(0)
-	from used_product p
+	from used_product p, member m
 	where 
+		p.seller_id = m.member_id
 		<if test=" productTitle != null and productTitle != '' ">
-		p.product_title Like '%' || #{productTitle} || '%'
+		and p.product_title Like '%' || #{productTitle} || '%'
+		</if>
+		<if test=" nickname != null and nickname != '' ">
+		and m.nickname Like '%' || #{nickname} || '%'
 		</if>
 </select>
 <!-- 조회수 증가 -->
@@ -279,4 +288,19 @@ select *
 		product_no = #{productNo}
 </delete>
 
+<select id="getSellerInfo" parameterType="int" resultType="Member">
+	select member_id, nickname, profile_img
+	from member m
+	join used_product u on (m.member_id = u.seller_id)
+	where product_no = #{productNo}
+</select>
+
+<select id="getSellerProdNum" parameterType="int" resultType="int">
+    select count(*)
+	from used_product
+	where seller_id = (select member_id
+					   from member m
+					   join used_product u on (m.member_id = u.seller_id)
+					   where product_no = #{productNo})
+</select>
 </mapper>
