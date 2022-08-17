@@ -15,5 +15,15 @@ public class TradereviewServiceImpl implements TradereviewService {
 	@Override
 	public int insertReview(TradeReview tradeReview) {
 		return tradereviewDao.insertReview(tradeReview);
+	}
+
+	@Override
+	public int deleteReview(int reviewNo) {
+		return tradereviewDao.deleteReview(reviewNo);
+	}
+
+	@Override
+	public int updateReview(TradeReview tradeReview) {
+		return tradereviewDao.updateReview(tradeReview);
 	} 
 }

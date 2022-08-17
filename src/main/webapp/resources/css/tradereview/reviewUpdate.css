@@ -10,16 +10,21 @@
 		max-width: 600px;
 	}
 }
-textarea {
+#reviewUpdate #starScore {
+	border-style: none;
+	width: 15px;
+}
+#reviewUpdate #ctent {
 	background-color: rgb(245, 245, 245);
 	font-size: 12px;
 	border-color: #639A67;
 	outline: none;
 	resize: none;
 }
-i {
+.fa-star {
+	cursor: pointer;
 	color: rgb(230, 185, 20);
 }
-.label {
+#reviewUpdate .label {
 	vertical-align: top;
 }

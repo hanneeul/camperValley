@@ -7,10 +7,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/camper/camperList.css" />
-<!-- Latest compiled and minified CSS -->
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css"> -->
-<!-- Latest compiled and minified JavaScript -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script> -->
 	<div class="container-md campsite-review-list-wrap pt-2">
 		<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
 			<div class="col-md float-right">
@@ -73,7 +69,10 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="basic-addon3">URL</span>
 							</div>
-						<input id="chatUrl" type="text" class="form-control bg-light" aria-describedby="basic-addon3" value="" readonly>
+							<input id="chatUrl" type="text" class="form-control bg-light" aria-describedby="basic-addon3" readonly>
+							<input type="hidden" name="camperNo" />
+						</div>
+						<div id="loginMemberSection">
 						</div>
 					</div>
 				</div>
@@ -164,11 +163,66 @@ const renderBoardBoxDetail = (boardBox) => {
 			const arrivalDate = camper.arrivalDate;
 			$("#dates").html(departureDate.year + "." + f(departureDate.monthValue) + "." + f(departureDate.dayOfMonth) + " ~ " + arrivalDate.year + "." + f(arrivalDate.monthValue) + "." + f(arrivalDate.dayOfMonth));
 			$("#memberCount").html(camper.memberCount + "명");
-			camper.status === "I" ? $("#status").html("모집중") : $("#status").html("모집완료");
+			if(camper.status === "I") {
+				$("#status").html("모집중");
+				$("#status").removeClass("text-danger");
+			} else{
+				$("#status").html("모집완료");
+				$("#status").addClass("text-danger");
+			}
 			$("#ctent").html(camper.content);
 			$("#purpose").html(camper.purpose);
 			$("#expectedCost").html(camper.expectedCost);
 			$("#chatUrl").val(camper.chatUrl);
+			
+			if (${not empty loginMember}) {
+				if("${loginMember.memberId}" == camper.memberId) {
+					$("#loginMemberSection").html("");
+					const $frm = $(`<form name="deleteFrm" class="text-right" action="${pageContext.request.contextPath}/community/camper/camperDelete?camperNo=\${camperNo}" method="post"></form>`);
+					const $updateBtn = $('<button type="button" class="btn btn-outline-camper-color text-13 px-4 mx-2">수정</button>');
+					const $deleteBtn = $('<button type="button" class="btn btn-outline-danger text-13 px-4">삭제</button>');
+					const $inputHidden = $('<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>');
+					$updateBtn.on("click", () => {
+						const areas = (camper.area).split(" ");
+						document.querySelectorAll("#sido1 option").forEach((option) => {
+							if(areas[0] === $(option).val()) {
+								$(option).prop("selected", true);
+								document.querySelectorAll("#gugun1 option").forEach((option) => {
+									console.log(option);
+								});
+							}
+						});
+						$("#camperUpdate #memberCount").val(camper.memberCount);
+						$("#camperUpdate #title").val(camper.title);
+						$("#camperUpdate #content").val(camper.content);
+						$("#camperUpdate #purpose").val(camper.purpose);
+						$("#camperUpdate #expectedCost").val(camper.expectedCost);
+						$("#camperUpdate #chatUrl").val(camper.chatUrl);
+						$("#camperUpdate #camperNo").val(camperNo);
+						
+						$("#camperUpdate")
+						.modal()
+						.on('hide.bs.modal');
+					});
+					$deleteBtn.on("click", () => {
+						$.confirm({
+						    icon: 'fa fa-warning',
+						    title: '',
+						    content: '삭제하시겠습니까?',
+						    buttons: {
+						    	확인: function () {
+									$frm.submit();
+						    	},
+						    	취소: function () {}
+								
+						    }
+						});
+					});
+					$frm.append($updateBtn, $deleteBtn, $inputHidden);
+					$("#loginMemberSection").append($frm);
+				}
+			}
+			
 		},
 		error: console.log
 	});
@@ -222,9 +276,18 @@ const renderBoardBoxMore = (isChk) => {
 						const $dropLi2 = $('<li>삭제</li>');
 						$dropLi2.on("click", (li) => {
 							$(li).closest('ul').hide();
-							if(confirm("삭제하시겠습니까?")) {
-								$dropFrm.submit();
-							}
+							$.confirm({
+							    icon: 'fa fa-warning',
+							    title: '',
+							    content: '삭제하시겠습니까?',
+							    buttons: {
+							    	확인: function () {
+										$dropFrm.submit();
+							    	},
+							    	취소: function () {}
+									
+							    }
+							});
 						});
 						$dropUl.append($dropLi1, $dropLi2);
 						$dropDiv2.append($dropUl);
@@ -245,8 +308,13 @@ const renderBoardBoxMore = (isChk) => {
 				$dates.html(departureDate.year + "." + f(departureDate.monthValue) + "." + f(departureDate.dayOfMonth) + " ~ " + arrivalDate.year + "." + f(arrivalDate.monthValue) + "." + f(arrivalDate.dayOfMonth)); 
 				const $content = $('<div class="py-4"></div>');
 				camperList[i].content.length > 110 ? $content.html(camperList[i].content.substring(0, 110) + "...") : $content.html(camperList[i].content); 
-				const $status = $('<div class="font-weight-bold text-13">');
-				camperList[i].status === "I" ? $status.html("모집중") : $status.html("모집완료");
+				const $status = $('<div class="text-13">');
+				if(camperList[i].status === "I") {
+					$status.html("모집중");
+				} else{
+					$status.html("모집완료");
+					$status.addClass("text-danger");
+				}
 				const $camperNo = $('<input class="hidden" type="hidden"/>');
 				$camperNo.data("no", camperList[i].camperNo);
 				$info.append($title, $area, $dates, $content, $status, $camperNo);
@@ -280,9 +348,6 @@ $(document).bind('click', function(e) {
         $(".drop-down .options ul").hide();
     }
 });
-
-// modal update camper 비동기 요청
-
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

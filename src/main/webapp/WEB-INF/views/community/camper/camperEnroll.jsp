@@ -70,7 +70,7 @@
 								<label for="title">제목<span class="text-danger">*</span></label>
 							</td>
 							<td class="col-md-10 px-0">
-								<input type="text" name="title" class="input" style="width:98%" placeholder="제목을 입력해주세요."/>
+								<input type="text" name="title" class="input" style="width:98%" placeholder="제목을 입력해주세요." spellcheck="false"/>
 							</td>
 						</tr>
 						<tr>
@@ -78,7 +78,7 @@
 								<label for="content">상세내용<span class="text-danger">*</span></label>
 							</td>
 							<td class="col-md-10 px-0">
-								<textarea name="content" cols="30" rows="5" style="width:98%" placeholder="상세내용을 입력해주세요."></textarea>
+								<textarea name="content" cols="30" rows="5" style="width:98%" placeholder="상세내용을 입력해주세요." spellcheck="false"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -86,7 +86,7 @@
 								<label for="purpose">모임취지<span class="text-danger">*</span></label>
 							</td>
 							<td class="col-md-10 px-0">
-								<textarea name="purpose" cols="30" rows="2" style="width:98%" placeholder="모임취지를 입력해주세요."></textarea>
+								<textarea name="purpose" cols="30" rows="2" style="width:98%" placeholder="모임취지를 입력해주세요." spellcheck="false"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -94,7 +94,7 @@
 								<label for="expectedCost">예상비용<span class="text-danger">*</span></label>
 							</td>
 							<td class="col-md-10 px-0">
-								<textarea name="expectedCost" cols="30" rows="2" style="width:98%" placeholder="예상비용과 비용내용 입력해주세요."></textarea>
+								<textarea name="expectedCost" cols="30" rows="2" style="width:98%" placeholder="예상비용과 비용내용 입력해주세요." spellcheck="false"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -102,7 +102,7 @@
 								<label for="chatUrl">오픈채팅 URL<span class="text-danger">*</span></label>
 							</td>
 							<td class="col-md-10 px-0">
-								<input type="text" name="chatUrl" class="input" style="width:98%" placeholder="https://open.kakao.com/"/>
+								<input type="text" name="chatUrl" class="input" style="width:98%" placeholder="https://open.kakao.com/" spellcheck="false"/>
 							</td>
 						</tr>
 					</tbody>
@@ -110,13 +110,11 @@
 				<hr />
 				<div class="text-right">
 					<button type="submit" class="btn btn-outline-camper-color px-5 m-4">등록</button>
-					<button type="button" class="btn btn-outline-danger px-5 my-4" onclick="location.href='${pageContext.request.contextPath}/community/camper/camperList'">취소</button>
+					<button type="button" class="btn btn-outline-danger px-5 my-4" onclick="cancle();">취소</button>
 				</div>
 			</form:form>
 		</div>
 	</div>
-	
-		
 <script>
 $(document).ready(() => {
 	$(review).removeClass("active");
@@ -187,21 +185,49 @@ frm.addEventListener("submit", (e) => {
 	frm.area.value = frm.sido1.value + " " + frm.gugun1.value;
 	
 	if(!frm.area.value || !frm.memberCount.value || !frm.title.value || !frm.content.value || !frm.chatUrl.value) {
-		alert("필수항목을 모두 입력해주세요.");
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '필수항목을 모두 입력해주세요.',
+		    buttons: {'확인': function() {}}
+		});
 		e.preventDefault();
 		return;
 	}
 	
 	if(frm.departureDate.value > frm.arrivalDate.value || !frm.departureDate.value || !frm.arrivalDate.value) {
-		alert("기간을 정확히 선택해주세요.");
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '기간을 정확히 선택해주세요.',
+		    buttons: {'확인': function() {}}
+		});
 		e.preventDefault();
 		return;
 	}
 	if(!/^(https?:\/\/open.kakao.com\/)/.test(frm.chatUrl.value)) {
-		alert("오픈채팅방 url을 정확히 입력해주세요.");
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '오픈채팅방 url을 정확히 입력해주세요.',
+		    buttons: {'확인': function() {}}
+		});
 		e.preventDefault();
 		return;
 	}
 });
+
+const cancle = () => {
+	$.alert({
+	    title: ' ',
+	    content: '취소하시겠습니까?',
+	    buttons: {
+	    	'확인': function() {
+	    		location.href='${pageContext.request.contextPath}/community/camper/camperList';
+	    	},
+	    	'취소': function() {}
+		}
+	});
+}
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

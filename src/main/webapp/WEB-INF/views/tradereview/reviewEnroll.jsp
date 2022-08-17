@@ -14,6 +14,8 @@
 <meta charset="UTF-8">
 <title>trade review enroll</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 	<!-- bootstrap js -->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
@@ -46,24 +48,24 @@
 							<tbody>
 								<tr>
 									<td class="label col-md-2 px-0 py-2">
-										<div id="starscore">별점</div>
+										<div>별점</div>
 									</td>
 									<td class="col-md-10 px-0 py-2">
-										<i class="fa-solid fa-star"></i></span>
-										<i class="fa-solid fa-star"></i></span>
-										<i class="fa-solid fa-star"></i></span>
-										<i class="fa-solid fa-star"></i></span>
-										<i class="fa-solid fa-star pr-2"></i></span>
-										<span><span id="score">5</span>점</span>
+										<i class="fa-solid fa-star"></i>
+										<i class="fa-solid fa-star"></i>
+										<i class="fa-solid fa-star"></i>
+										<i class="fa-solid fa-star"></i>
+										<i class="fa-solid fa-star pr-2"></i>
+										<span><input id="starScore" name="starScore" type="text" value="5" readonly/>점</span>
 									</td>
 								</tr>
 								<tr>
 									<td class="label col-md-2 px-0 py-2">
-										<label for="content">내용</label>
+										<label for="ctent">내용</label>
 									</td>
 									<td class="col-md-10 px-0 py-2">
-										<textarea id="ctent" class="p-2" maxlength="40" name="content" cols="100" rows="3" style="width:100%" placeholder="내용을 입력하세요."></textarea>
-										<div class="text-13 text-right">0<span id="wordCount"></span>/40자</div>
+										<textarea id="ctent" class="p-2" maxlength="60" name="content" cols="100" rows="3" style="width:100%" placeholder="내용을 입력하세요." spellcheck="false"></textarea>
+										<div class="text-13 text-right"><span id="wordCount">0</span>/60자</div>
 									</td>
 								</tr>
 							</tbody>
@@ -72,7 +74,7 @@
                     <div class="modal-footer justify-content-center">
 						<div>
 							<button type="submit" class="btn btn-outline-camper-color px-4 m-2">등록</button>
-							<button type="button" class="btn btn-outline-danger px-4 my-2">취소</button>
+							<button type="button" class="btn btn-outline-danger px-4 my-2" onclick="cancle();">취소</button>
 						</div>
 	                </div>
 				</form:form>
@@ -86,28 +88,45 @@ $("#reviewEnroll")
 .on('hide.bs.modal', (e) => {
 });
 
-document.querySelectorAll(".fa-star").forEach((star) => {
+document.querySelectorAll("#reviewEnroll .fa-star").forEach((star) => {
 	star.addEventListener("click", (e) => {
-		$(".fa-star").css("color", "rgb(245, 245, 245)");
+		$("#reviewEnroll .fa-star").css("color", "rgb(235, 235, 235)");
 		const index = $(e.target).index();
 		for(let i = 0; i < 5; i++) {
 			if(i <= index) $(`.fa-star:nth-child(\${i+1})`).css("color", "rgb(230, 185, 20)");
 		}
-		$("#score").html(`\${index + 1}`);
+		$("#reviewEnroll #starScore").val(`\${index + 1}`);
 	});
 });
 
-document.querySelector("#ctent").addEventListener("keyup", () => {
-	$("#wordCount").html($("#ctent").val().length);
+document.querySelector("#reviewEnroll #ctent").addEventListener("keyup", () => {
+	$("#reviewEnroll #wordCount").html($("#reviewEnroll #ctent").val().length);
 });
 
 const frm = document.reviewEnrollFrm;
 frm.addEventListener("submit", (e) => {
 	if(!frm.content.value) {
-		alert("내용을 입력하세요.");
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '내용을 입력해주세요.',
+		    buttons: {'확인': function() {}}
+		});
 		e.preventDefault();
-		return;
 	}
 });
+
+const cancle = () => {
+	$.alert({
+	    title: ' ',
+	    content: '취소하시겠습니까?',
+	    buttons: {
+	    	'확인': function() {
+	    		location.href = "${pageContext.request.contextPath}/mypage/trade/purchased";
+	    	},
+	    	'취소': function() {}
+		}
+	});
+}
 </script>
 </html>
