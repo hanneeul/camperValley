@@ -27,14 +27,14 @@
 			<div class="d-flex mr-2">
 				<div class="input-group mb-3">
 				  <div class="input-group-prepend">
-				    <button id="search-option" class="btn btn-outline-camper dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">제목&nbsp;&nbsp;&nbsp;</button>
-					  <ul id="search-option-item" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					    <li><a class="dropdown-item" href="#" value="title">제목&nbsp;&nbsp;&nbsp;</a></li>
-					    <li><a class="dropdown-item" href="#" value="content">내용&nbsp;&nbsp;&nbsp;</a></li>
+				    <button id="searchOption" class="btn btn-outline-camper dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">제목</button>
+					  <ul id="searchOptionItem" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+					    <li><a class="dropdown-item" href="#" value="title">제목</a></li>
+					    <li><a class="dropdown-item" href="#" value="content">내용</a></li>
 					  </ul>
 				  </div>
-				  <input type="text" class="form-control" aria-label="Text input with dropdown button">
-				<button class="btn btn-outline-camper">
+				  <input type="text" class="form-control" aria-label="Text input with dropdown button" name="searchKeyword">
+				<button class="btn btn-outline-camper" id="search" type="button">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#639A67" class="bi bi-binoculars-fill" viewBox="0 0 16 16">
 					  <path d="M4.5 1A1.5 1.5 0 0 0 3 2.5V3h4v-.5A1.5 1.5 0 0 0 5.5 1h-1zM7 4v1h2V4h4v.882a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V13H9v-1.5a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5V13H1V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V4h4zM1 14v.5A1.5 1.5 0 0 0 2.5 16h3A1.5 1.5 0 0 0 7 14.5V14H1zm8 0v.5a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5V14H9zm4-11H9v-.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5V3z"/>
 					</svg>
@@ -47,243 +47,74 @@
             	<thead>
                 	<tr>
                         <th>
-                          No.
+                          제목
                         </th>
                         <th>
-                          제목
+                          야영장명
                          </th>
                          <th>
-                            작성자
+                            평점
                     	 </th>
                          <th>
-                            평점
+                            조회수
                         </th>
                         <th>
                             추천수
                         </th>
                         <th>
-                            조회수
+                            작성일
                         </th>
                         <th>
-                            작성일
+                           	삭제
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            1
+					<c:if  test="${empty list}">
+	                	<tr>
+	                		<td><td colspan="6" class="text-center">작성하신 글이 존재하지 않습니다.</td></td>
+	                	</tr>
+	                </c:if>
+                <c:forEach items="${list}" var="review" varStatus="vs">
+                    <tr data-no="${board.no}">
+                        <td class="text-left">
+                            <a href="${pageContext.request.contextPath}/community/review/reviewDetail?reviewNo=${review.reviewNo}">${review.title}[${review.commentCount}]</a>
                         </td>
                         <td class="text-left">
-                            <a href="">제목제목</a>
+                          ${review.facltNm}
                         </td>
                         <td>
-                            닉네임
+                          ${review.reviewGrade}
                         </td>
                         <td>
-                            4
+                          ${review.readCount}
                         </td>
                         <td>
-                            10
+                          ${review.recommendCount}
                         </td>
                         <td>
-                            1
+							<fmt:parseDate value="${review.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+							<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
                         </td>
                         <td>
-                            01/04/2012
+                        	<form action="${pageContext.request.contextPath}/mypage/community/myReview/delete" method="post">
+                        		<input type="hidden" name="reviewNo" value="${review.reviewNo}" />
+		                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	                        	<button>
+			                        <i class="fa-solid fa-trash-can"></i>
+		                        </button>
+	                        </form>
                         </td>
 	                    </tr>
-                        <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            제목제목
-                        </td>
-                        <td>
-                            닉네임
-                        </td>
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            10
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            제목제목
-                        </td>
-                        <td>
-                            닉네임
-                        </td>
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            10
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            제목제목
-                        </td>
-                        <td>
-                            닉네임
-                        </td>
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            10
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-	                    </tr>
-                        <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            제목제목
-                        </td>
-                        <td>
-                            닉네임
-                        </td>
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            10
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            제목제목
-                        </td>
-                        <td>
-                            닉네임
-                        </td>
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            10
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            제목제목
-                        </td>
-                        <td>
-                            닉네임
-                        </td>
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            10
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-	                    </tr>
-                        <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            제목제목
-                        </td>
-                        <td>
-                            닉네임
-                        </td>
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            10
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            제목제목
-                        </td>
-                        <td>
-                            닉네임
-                        </td>
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            10
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                      </tr>
+
+                      </c:forEach>
                   </tbody>
               </table>          
 		</div>
 		<%-- 페이징 --%>
 
 		<div class="mt-3" id="pagebar-wrp">
-			<jsp:include page="/WEB-INF/views/common/pagebar.jsp" />
+			<c:if test="${not empty list}">${pagebar}</c:if>
 		</div>
 	</div>
 		<%-- 본문 끝 --%>
@@ -291,10 +122,22 @@
 	</div>
 	
 <script>
-$('#search-option-item li > a').on('click', function() {
+$('#searchOptionItem li > a').on('click', function() {
     // 버튼에 선택된 항목 텍스트 넣기 
-    $('#search-option').text($(this).text());
+    $('#searchOption').text($(this).text());
     
+});
+$("#search").click(e=>{
+
+	const searchOption = $("#searchOption").text()=== "제목" ? "title" : "content";
+	const searchKeyword = $("input[name=searchKeyword]").val();
+	
+	if(searchKeyword === "") return;
+	console.log(searchOption);
+	console.log(searchKeyword);
+	location.href = `${pageContext.request.contextPath}/mypage/community/myReview/?searchOption=\${searchOption}&searchKeyword=\${searchKeyword}`;
+	
+	
 });
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
