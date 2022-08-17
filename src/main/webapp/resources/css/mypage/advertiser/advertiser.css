@@ -71,7 +71,7 @@ form[name="chartPeriodFrm"] .form-row > *, .divAdMoney > * {
 }
 #chartSection {
 	height: 12rem;
-	background-color: #ddd;
+	/* background-color: #ddd; */
 }
 #tblAdList thead {
 	background-color: #f0f0f0;

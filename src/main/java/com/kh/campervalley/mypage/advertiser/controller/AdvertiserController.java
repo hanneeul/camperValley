@@ -2,6 +2,9 @@ package com.kh.campervalley.mypage.advertiser.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +37,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
-import com.kh.campervalley.mypage.advertiser.model.dto.AdZone;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
@@ -129,13 +131,38 @@ public class AdvertiserController {
 			
 			// 광고주 계정 상태
 			AdvertiserMoneyExt advertiser = advertiserService.selectOneAdvertiserMoney(memberId);
-			log.debug("advertiser = {}", advertiser);
+
+			// 차트
+			Map<String, Object> chartParam = new HashMap<>();
+			chartParam.put("advertiserNo", advertiser.getAdvertiserNo());
+			chartParam.put("startDate", LocalDate.now().minusDays(6));
+			chartParam.put("endDate", LocalDate.now());
+			List<Map<String, Object>> chartData = advertiserService.selectChartData(chartParam);
+
+			List<String> dateList = new ArrayList<>();
+			List<Integer> viewList = new ArrayList<>();
+			List<Integer> clickList = new ArrayList<>();
+			for (int i = 0; i < 7; i++) {
+				dateList.add("'" + LocalDate.now().minusDays(6 - i) + "'");
+				viewList.add(0);
+				clickList.add(0);
+				for (int j = 0; j < chartData.size(); j++) {
+					String date = chartData.get(j).get("DISPLAY_AT").toString().substring(0, 10);
+					if (date.equals(LocalDate.now().minusDays(6 - i).toString())) {
+						viewList.set(i, Integer.parseInt(chartData.get(j).get("SUM_VIEW").toString()));
+						clickList.set(i, Integer.parseInt(chartData.get(j).get("SUM_CLICK").toString()));
+						break;
+					}
+				}
+			}
+			mav.addObject("dateList", dateList);
+			mav.addObject("viewList", viewList);
+			mav.addObject("clickList", clickList);
 
 			// 운영광고목록
 			List<AdvertisementExt> adList = advertiserService.selectAdListByAdvertiserNo(advertiser.getAdvertiserNo(), cPage, numPerPage);
 			int totalAdvertisement = advertiserService.selectTotalAdvertisement(advertiser.getAdvertiserNo());
 			String pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalAdvertisement, url);
-			log.debug("adList = {}", adList);
 
 			mav.addObject("advertiser", advertiser);
 			mav.addObject("adList", adList);

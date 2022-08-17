@@ -79,4 +79,6 @@ public interface AdvertiserService {
 
 	List<AdvertisementExt> getDisplayAdList(int length, AdZone adZone);
 
+	List<Map<String, Object>> selectChartData(Map<String, Object> param);
+
 }

@@ -284,4 +284,8 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		return adList;
 	}
 
+	@Override
+	public List<Map<String, Object>> selectChartData(Map<String, Object> param) {
+		return advertiserDao.selectChartData(param);
+	}
 }
