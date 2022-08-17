@@ -6,6 +6,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%
+	pageContext.setAttribute("newLine", "\n"); 
+	pageContext.setAttribute("br", "<br/>");
+%>
 <style>
 .card-footer {
     position: relative;
@@ -69,7 +73,7 @@
 									<div class="media-body">
 										<div class="row">
 											<div class="col-md-8 d-flex my-2">
-										    	<span class="font-weight-bold">${not empty comment.member.nickname ? comment.member.nickname : '탈퇴회원'}</span>&nbsp;
+										    	<span class="font-weight-bold">${not empty comment.member.nickname ? comment.member.nickname : '(탈퇴회원)'}</span>&nbsp;
 										    	<span>
 										    		<fmt:parseDate value="${comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
 													<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
@@ -85,7 +89,20 @@
 											 	</div>
 											</div>
 											<div class="row mx-3">
-												${comment.commentContent}
+												<c:choose>
+													<c:when test="${fn:contains(comment.commentContent, '<')}">
+												     	${fn:replace(comment.commentContent, '<', '&lt;')}
+													</c:when>
+													<c:when test="${fn:contains(comment.commentContent, '>')}">
+														${fn:replace(comment.commentContent, '>', '&gt;')}
+													</c:when>
+													<c:when test="${fn:contains(comment.commentContent, newLine)}">
+														${fn:replace(comment.commentContent, newLine, br)}
+													</c:when>
+													<c:otherwise>
+														${comment.commentContent}
+													</c:otherwise>
+												</c:choose>
 											</div>
 										</div>
 									</div>
@@ -102,7 +119,7 @@
 									<div class="media-body">
 										<div class="row">
 											<div class="col-md d-flex my-2">
-										    	<span class="font-weight-bold">${not empty comment.member.nickname ? comment.member.nickname : '탈퇴회원'}</span>&nbsp;
+										    	<span class="font-weight-bold">${not empty comment.member.nickname ? comment.member.nickname : '(탈퇴회원)'}</span>&nbsp;
 										    	<span>
 										    		<fmt:parseDate value="${comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
 													<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
@@ -118,7 +135,20 @@
 											</div>
 										</div>
 										<div class="row mx-1">
-											${comment.commentContent}
+											<c:choose>
+												<c:when test="${fn:contains(comment.commentContent, '<')}">
+											     	${fn:replace(comment.commentContent, '<', '&lt;')}
+												</c:when>
+												<c:when test="${fn:contains(comment.commentContent, '>')}">
+													${fn:replace(comment.commentContent, '>', '&gt;')}
+												</c:when>
+												<c:when test="${fn:contains(comment.commentContent, newLine)}">
+													${fn:replace(comment.commentContent, newLine, br)}
+												</c:when>
+												<c:otherwise>
+													${comment.commentContent}
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</div>

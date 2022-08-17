@@ -31,13 +31,18 @@ public class CampsiteServiceImpl implements CampsiteService {
 	}
 	
 	@Override
+	public int campsiteListReset() {
+		return campsiteDao.campsiteListReset();
+	}
+	
+	@Override
 	public List<CampsiteExt> recentCampsiteList() {
 		return campsiteDao.recentCampsiteList();
 	}
 	
 	@Override
-	public int campsiteListReset() {
-		return campsiteDao.campsiteListReset();
+	public List<CampsiteExt> searchCampsiteByFacltNm(String facltNm) {
+		return campsiteDao.searchCampsiteByFacltNm(facltNm);
 	}
 	
 }

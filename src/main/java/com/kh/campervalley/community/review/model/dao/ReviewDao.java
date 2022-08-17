@@ -57,4 +57,6 @@ public interface ReviewDao {
 
 	List<ReviewComment> selectReviewCommentList(int reviewNo);
 
+	List<ReviewPhoto> selectReviewPhotoList(int reviewNo);
+
 }

@@ -8,8 +8,10 @@ public interface CampsiteService {
 	
 	int insertCampsiteList(List<CampsiteExt> campsiteList);
 
-	List<CampsiteExt> recentCampsiteList();
-
 	int campsiteListReset();
+
+	List<CampsiteExt> recentCampsiteList();
+	
+	List<CampsiteExt> searchCampsiteByFacltNm(String facltNm);
 
 }

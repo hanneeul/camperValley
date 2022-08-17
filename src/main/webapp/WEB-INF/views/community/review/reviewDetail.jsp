@@ -147,12 +147,12 @@
 				</ul>
 			</div>
 		</div>
-		<c:if test="${not empty review.photos}">
-			<c:forEach items="${review.photos}" var="photo">
+		<c:if test="${not empty photoList}">
+			<c:forEach items="${photoList}" var="photo">
 				<!-- Photo Swiper -->
 				<div class="swiper-container detail-photo-list">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide"><img id="photo" src="${pageContext.request.contextPath}/resources/upload/community/review/${photo.renamedFilename}" alt="${photo.originalFilename}"></div>
+						<div class="swiper-slide"><img id="photo" onclick="photoZoomIn();" src="${pageContext.request.contextPath}/resources/upload/community/review/${photo.renamedFilename}" alt="${photo.originalFilename}"></div>
 					</div>
 					<div class="swiper-button-next"></div>
 					<div class="swiper-button-prev"></div>
@@ -160,9 +160,12 @@
 			</c:forEach>
 			<!-- Photo Modal -->
 			<div id="photoModal" class="modal photo-modal">
-			  	<span class="modal-close">&times;</span>
+			  	<span class="modal-close" onclick="photoModalClose();">&times;</span>
 			  	<img class="modal-content" id="photoModalContent">
 			</div>
+		</c:if>
+		<c:if test="${empty photoList}">
+			<div class="p-3 m-3"></div>
 		</c:if>
 		<div class="detail-content p-4 bg-light rounded">
 			${review.content}
@@ -180,16 +183,23 @@
 				<input type="hidden" name="memberId" id="memberId" value="${loginMember.memberId}" />
 				<div class="text-center mt-3 pt-3">
 					<c:forEach items="${review.recommends}" var="recommend">
-						<c:if test="${recommend.status eq 'N'}">
-							<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue" onclick="recommend();">
-								<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천하기
-							</button>
-						</c:if>
-						<c:if test="${recommend.status eq 'Y'}">
-							<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue active" onclick="recommend();">
-								<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천하기
-							</button>
-						</c:if>
+						<c:choose>
+							<c:when test="${recommend.status eq 'N'}">
+								<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue" onclick="recommend();">
+									<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천하기
+								</button>
+							</c:when>
+							<c:when test="${recommend.status eq 'Y'}">
+								<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue active" onclick="recommend();">
+									<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천완료
+								</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue" onclick="recommend();">
+									<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천하기
+								</button>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 				</div>
 			</form:form>
@@ -260,15 +270,15 @@ const reviewDelete = () => {
 let photoModal = document.getElementById("photoModal");
 let photo = document.getElementById("photo");
 let photoModalContent = document.getElementById("photoModalContent");
-photo.onclick = function() {
+const photoZoomIn = () => {
 	photoModal.style.display = "block";
-	photoModalContent.src = this.src;
+	photoModalContent.src = photo.src;
 };
 
 let modalClose = document.getElementsByClassName("modal-close")[0];
-modalClose.addEventListener('click', () => {
+const photoModalClose = () => {
 	photoModal.style.display = "none";
-});
+};
 
 $('.photo-modal').click(function() {
 	$('#photoModal').hide();

@@ -32,5 +32,7 @@ public interface CampsiteDao {
 	int campsiteListReset();
 
 	List<CampsiteExt> recentCampsiteList();
+
+	List<CampsiteExt> searchCampsiteByFacltNm(String keywordSearch);
 	
 }

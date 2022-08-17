@@ -147,4 +147,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.selectReviewCommentList(reviewNo);
 	}
 	
+	@Override
+	public List<ReviewPhoto> selectReviewPhotoList(int reviewNo) {
+		return reviewDao.selectReviewPhotoList(reviewNo);
+	}
+	
 }
