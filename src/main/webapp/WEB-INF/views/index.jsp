@@ -123,19 +123,19 @@
 	    			data-advertisement-no="${advertisement.advertisementNo}"
 	    			onclick="clickUpAndMove(${advertisement.advertisementNo}, '${advertisement.adLink}');">
 	    			<img src="${pageContext.request.contextPath}/resources/upload/mypage/advertiser/advertisement/${advertisement.adAttach.renamedFilename}"
-	    				alt="메인홈광고이미지${vs.count}" />
+	    				alt="메인홈 광고이미지${vs.count}" style="cursor: pointer;"/>
 				</div>
 			</c:forEach>
 		</div>
 		<c:if test="${fn:length(adList) > 1}">
-		<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="sr-only">Previous</span>
-		</a>
-		<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="sr-only">Next</span>
-		</a>
+			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
 		</c:if>
 	</div>
 	<%-- EJ end --%>

@@ -3,6 +3,7 @@ package com.kh.campervalley.mypage.advertiser.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.campervalley.mypage.advertiser.model.dto.AdZone;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
@@ -75,5 +76,7 @@ public interface AdvertiserService {
 	int updatePerformView(int advertisementNo);
 
 	int updatePerformClick(int advertisementNo);
+
+	List<AdvertisementExt> getDisplayAdList(int length, AdZone adZone);
 
 }

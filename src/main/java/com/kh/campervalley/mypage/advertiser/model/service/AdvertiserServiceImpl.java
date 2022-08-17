@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.campervalley.mypage.advertiser.model.dao.AdvertiserDao;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdAttach;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdZone;
 import com.kh.campervalley.mypage.advertiser.model.dto.Admoney;
 import com.kh.campervalley.mypage.advertiser.model.dto.Advertisement;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
@@ -271,6 +272,16 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		result = advertiserDao.updateAdvertisementOff(param);
 		
 		return result;
+	}
+
+	@Override
+	public List<AdvertisementExt> getDisplayAdList(int length, AdZone adZone) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("topN", length);
+		param.put("adZone", adZone.toString());
+		List<AdvertisementExt> adList = selectDisplayAd(param);
+		log.debug("adList = {}", adList);
+		return adList;
 	}
 
 }
