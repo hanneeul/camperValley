@@ -163,8 +163,11 @@ input.custom-control-input:checked~.custom-control-label::before {
 	cursor: pointer;
 }
 .divAdZoneOptions .imgWrapper {
-	background-color: #f0f0f0;
-	height: 9rem;
+	background-size: contain;
+	border: 0.3rem solid #f6f6f6;
+}
+.divAdZoneOptions .imgWrapper img {
+	width: 100%;
 }
 .divAdZoneOptions .selectedImgWapper {
 	border: 0.3rem solid #D8EBB5;
