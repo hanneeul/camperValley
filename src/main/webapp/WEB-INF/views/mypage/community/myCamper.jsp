@@ -25,36 +25,33 @@
 				<a href="${pageContext.request.contextPath}/mypage/community/myReview" class="pl-2 text-dark">작성후기</a>
 			</div>
 			<div class="d-flex mr-2">
-				<div class="input-group mb-3">
-				  <div class="input-group-prepend">
-				    <button id="search-option" class="btn btn-outline-camper dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">제목&nbsp;&nbsp;&nbsp;</button>
-					  <ul id="search-option-item" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-					    <li><a class="dropdown-item" href="#" value="title">제목&nbsp;&nbsp;&nbsp;</a></li>
-					    <li><a class="dropdown-item" href="#" value="content">내용&nbsp;&nbsp;&nbsp;</a></li>
-					  </ul>
-				  </div>
-				  <input type="text" class="form-control" aria-label="Text input with dropdown button">
-				<button class="btn btn-outline-camper">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#639A67" class="bi bi-binoculars-fill" viewBox="0 0 16 16">
-					  <path d="M4.5 1A1.5 1.5 0 0 0 3 2.5V3h4v-.5A1.5 1.5 0 0 0 5.5 1h-1zM7 4v1h2V4h4v.882a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V13H9v-1.5a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5V13H1V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V4h4zM1 14v.5A1.5 1.5 0 0 0 2.5 16h3A1.5 1.5 0 0 0 7 14.5V14H1zm8 0v.5a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5V14H9zm4-11H9v-.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5V3z"/>
-					</svg>
-				</button>
-				</div>
+					<div class="input-group mb-3">
+					  <div class="input-group-prepend">
+					    <button id="searchOption" class="btn btn-outline-camper dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">제목</button>
+						  <ul id="searchOptionItem" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+						    <li><a class="dropdown-item" href="#" value="title">제목</a></li>
+						    <li><a class="dropdown-item" href="#" value="content">내용</a></li>
+						  </ul>
+					  </div>
+					 	<input type="text" class="form-control" aria-label="Text input with dropdown button" name="searchKeyword">
+						<button class="btn btn-outline-camper" id="search" type="button">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#639A67" class="bi bi-binoculars-fill" viewBox="0 0 16 16">
+							  <path d="M4.5 1A1.5 1.5 0 0 0 3 2.5V3h4v-.5A1.5 1.5 0 0 0 5.5 1h-1zM7 4v1h2V4h4v.882a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V13H9v-1.5a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5V13H1V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V4h4zM1 14v.5A1.5 1.5 0 0 0 2.5 16h3A1.5 1.5 0 0 0 7 14.5V14H1zm8 0v.5a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5V14H9zm4-11H9v-.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5V3z"/>
+							</svg>
+						</button>
+					</div>
 			</div>
 		</div>
 		<div class="review-list pb-3" id="my-community-body">
-			<table class="table table-hover text-center border-bottom" id="my-camper-table">
+			<table class="table table-hover text-center border-bottom table-sm" id="my-camper-table">
             	<thead>
-                	<tr>
+                	<tr >
                         <th>
                           상태
                         </th>
                         <th>
                           제목
                          </th>
-                         <th>
-                            작성자
-                    	 </th>
                          <th>
                             캠핑기간
                         </th>
@@ -64,85 +61,65 @@
                         <th>
                             모집인원
                         </th>
+                        <th>
+                        	삭제
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                <c:if  test="${empty list}">
+                	<tr>
+                		<td><td colspan="6" class="text-center">작성하신 글이 존재하지 않습니다.</td></td>
+                	</tr>
+                </c:if>
+                <c:forEach items="${list}" var="camper" varStatus="vs">
+                    <tr data-no="${camper.camperNo}">
                         <td>
                            	<select class="recruitment-status">
-								<option value="">모집중</option>
-								<option value="">모집완료</option>
+								<option value="I"
+									<c:if test="${camper.status eq 'I'}">
+									selected
+									</c:if>
+								>모집중</option>
+								<option value="C"
+									<c:if test="${camper.status eq 'C'}">
+									selected
+									</c:if>
+								>모집완료</option>
+
 							</select>
                         </td>
                         <td class="text-left">
-                            <span class="title" data-toggle="modal" data-target="#camper-detail">제천 캠핑장 놀러가실분들...</span>
+                            <span class="title" data-toggle="modal" data-target="#camper-detail">${camper.title}</span>
                         </td>
                         <td>
-                            최강길동
+							${camper.departureDate} ~ ${camper.arrivalDate}
                         </td>
                         <td>
-                            2022-07-19 ~ 2022-07-20
+                            ${camper.area}
                         </td>
-                        <td>
-                            충청북도 제천시
+                        <td class="align-middle">
+                            ${camper.memberCount}명
                         </td>
-                        <td>
-                            4명
+						<td>
+                        	<form action="${pageContext.request.contextPath}/mypage/community/myCamper/delete" method="post">
+                        		<input type="hidden" name="camperNo" value="${camper.camperNo}" />
+		                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	                        	<button>
+			                        <i class="fa-solid fa-trash-can"></i>
+		                        </button>
+	                        </form>
                         </td>
-	                    </tr>
-                        <tr>
-                        <td>
-                           	<select class="recruitment-status">
-								<option value="">모집중</option>
-								<option value="">모집완료</option>
-							</select>
-                        </td>
-                        <td class="text-left">
-                            <span class="title" data-toggle="modal" data-target="#camper-detail">제천 캠핑장 놀러가실분들...</span>
-                        </td>
-                        <td>
-                            최강길동
-                        </td>
-                        <td>
-                            2022-07-19 ~ 2022-07-20
-                        </td>
-                        <td>
-                            충청북도 제천시
-                        </td>
-                        <td>
-                            4명
-                        </td>
-	                    </tr>
-	                    <tr>
-                        <td>
-                           	<select class="recruitment-status">
-								<option value="">모집중</option>
-								<option value="">모집완료</option>
-							</select>
-                        </td>
-                        <td class="text-left">
-                            <span class="title" data-toggle="modal" data-target="#camper-detail">제천 캠핑장 놀러가실분들...</span>
-                        </td>
-                        <td>
-                            최강길동
-                        </td>
-                        <td>
-                            2022-07-19 ~ 2022-07-20
-                        </td>
-                        <td>
-                            충청북도 제천시
-                        </td>
-                        <td>
-                            4명
-                        </td>
-	                    </tr>
+	                </tr>
+	            </c:forEach>
+                
                   </tbody>
               </table>          
 		</div>
 		<%-- 페이징 --%>
 
 		<div class="mt-3" id="pagebar-wrp">
-			<jsp:include page="/WEB-INF/views/common/pagebar.jsp" />
+			<c:if test="${not empty list}">${pagebar}</c:if>
 		</div>
 	</div>
 		<%-- 본문 끝 --%>
@@ -151,37 +128,38 @@
 	
 		<div class="modal fade" id="camper-detail" tabindex="-1" role="dialog"
 		aria-labelledby="camper-detail-label" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered px-5 modal-dialog-scrollable modal-lg" role="document">
-				<div class="modal-content px-3  pt-3">
-					<div class="modal-header  d-block  pb-4">
-						<h4 class="text-center mb-4 font-weight-bold">캠퍼모집 제목</h4>
-						<div class="d-flex justify-content-between font-weight-bold" >
+			<div class="modal-dialog modal-dialog-centered pl-5 pr-2 modal-dialog-scrollable modal-lg" role="document">
+				<div class="modal-content px-3 pt-3">
+					<div class="modal-header d-block pb-3">
+						<h4 class="text-center mb-4 font-weight-bold" id="detailTitle">캠퍼모집 제목</h4>
+						<div class="d-flex justify-content-between" style="line-height: 2" >
 							<div class="align-self-bottom align-self-end">
-								2022-07-19 ~ 2022-07-20
+								<span id="date"></span>
+								
 								<br />
-								충청북도 제천시
+								<span id="area"></span>
 							</div>
 							<div>
 							<br />
-								<div class="text-center">4명</div>
+								<div class="text-right pr-3" id="memberCount"></div>
 								<select class="recruitment-status font-weight-bold">
-									<option value="" >모집중</option>
-									<option value="">모집완료</option>
+									<option value="I">모집중</option>
+									<option value="C">모집완료</option>
 								</select>
 							</div>
 						</div>
 					</div>
 					<div class="modal-body py-4">
 						<h6 class="font-weight-bold">상세내용</h6>
-						<p>캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.</p>
+						<p id="content"></p>
 						<h6 class="font-weight-bold">이용수칙</h6>
-						<p>캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.</p>
+						<p id="purpose"></p>
 						<h6 class="font-weight-bold">예상비용</h6>
-						<p>캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요. 캠핑초보도 좋습니다. 같이 캠핑하고 싶은 분들 편한하게 연락주세요.</p>
+						<p id="expectedCost"></p>
 					</div>
 					<div class="modal-footer px-0 pt-4">
-							<a class="btn btn-outline-camper-color btn-lg border-2 shadow-sm">수정</a>
-							<button class="btn btn-camper-color btn-lg shadow-sm" data-dismiss="modal">닫기</button>
+						<a class="btn btn-outline-camper-color btn-lg border-2 shadow-sm">수정</a>
+						<button class="btn btn-camper-color btn-lg shadow-sm" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
 	        </div>
@@ -191,10 +169,78 @@
 	
 	
 <script>
-$('#search-option-item li > a').on('click', function() {
+$('#searchOptionItem li > a').on('click', function() {
     // 버튼에 선택된 항목 텍스트 넣기 
-    $('#search-option').text($(this).text());
-    
+    $('#searchOption').text($(this).text());
 });
+
+$("select.recruitment-status").change((e)=>{
+	const status = $(e.target).val();
+	console.log(status);
+	const camperNo = $(e.target).parents("tr").data('no');
+	const headers = {
+			"${_csrf.headerName}" : "${_csrf.token}"
+		};
+	//비동기 요청
+	$.ajax({
+		url: "${pageContext.request.contextPath}/mypage/community/myCamper/status/update",
+		method : "post",
+		headers,
+		data: {
+			camperNo, status
+		},
+		success(response){
+			alert(response.msg);
+		},
+		error: console.log
+	});
+	
+});
+
+$("span.title").click((e)=>{
+	console.log($(e.target));
+	console.log('click');
+	const status = $(e.target).val();
+	//글번호
+	const camperNo = $(e.target).parents("tr").data('no');
+	//비동기 요청
+	$.ajax({
+		url: "${pageContext.request.contextPath}/community/camper/camperDetail",
+		data: {camperNo},
+		success(response) {
+			const {camper} = response;
+			$("h4#detailTitle").html(camper.title);
+			$("span#area").html(camper.area);
+			const departureDate = camper.departureDate;
+			const arrivalDate = camper.arrivalDate;
+			$("span#date").html(departureDate.year + "년 " + departureDate.monthValue + "월 " + departureDate.dayOfMonth + "일 ~ " + arrivalDate.year + "년 " + arrivalDate.monthValue + "월 " + arrivalDate.dayOfMonth +"일");
+			console.log(typeof(camper.departureDate));
+			console.log((camper.departureDate));
+			$("div#memberCount").html(camper.memberCount + "명");
+			//상태
+			camper.status === "C" ? $("#camper-detail option[value=C]").attr("selected",true) : $("#camper-detail option[value=C]").attr("selected",false);
+			$("p#content").html(camper.content);
+			$("p#purpose").html(camper.purpose);
+			$("p#expectedCost").html(camper.expectedCost);
+		},
+		error: console.log
+	});			
+});
+
+$("#search").click(e=>{
+
+	const searchOption = $("#searchOption").text()=== "제목" ? "title" : "content";
+	const searchKeyword = $("input[name=searchKeyword]").val();
+	
+	if(searchKeyword === "") return;
+	console.log(searchOption);
+	console.log(searchKeyword);
+	location.href = `${pageContext.request.contextPath}/mypage/community/myCamper/?searchOption=\${searchOption}&searchKeyword=\${searchKeyword}`;
+	
+	
+});
+
+
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
