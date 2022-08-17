@@ -34,7 +34,7 @@ public interface UsedProductService {
 
 	public int productDelete(int productNo) throws Exception;
 
-	public void searchProductList(String keyword, int parseInt, String order, Model model);
+	public void searchProductList(String keyword, int page, String order, Model model);
 
 
 }

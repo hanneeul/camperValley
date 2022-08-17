@@ -11,6 +11,7 @@
 <input type="hidden" id="keyword" name="keyword" value="${keyword}"/>
 <input type="hidden" id="order" name="order" value="${order}"/>
 <input type="hidden" id="page" name="page" value="${page}"/>
+<input type="hidden" id="searchResult" name="searchResult" value="${searchResult}"/>
 
 <div id="section">
 	<hr />
@@ -54,8 +55,8 @@
 	<div id="productTop">
 		<!-- 상품+개수 -->
 		<div>
-			<span id="productName">${cateName}</span>
-			<span class="productNum" style="#639A67">${cnt}개</span>
+			<span id="productName">${keyword}</span><span>${searchResult}</span>
+			<span class="productNum">${cnt}개</span>
 		</div>
 	</div>
 	
@@ -81,13 +82,13 @@
 		<c:set var="time"
 			value="${ b_time > (60 * 24) ? Math.round( b_time / (60 * 24) ) : ( b_time > 60 ? Math.round( b_time / 60 ) : b_time ) }" />
 
-		<c:if test="${60 > b_time }">
+		<c:if test="${60 > b_time}">
 			<c:set var="time_before" value="분 전" />
 		</c:if>
-		<c:if test="${ b_time > 60 }">
+		<c:if test="${ b_time > 60}">
 			<c:set var="time_before" value="시간 전" />
 		</c:if>
-		<c:if test="${ b_time > (60 * 24) }">
+		<c:if test="${ b_time > (60 * 24)}">
 			<c:set var="time_before" value="일 전" />
 		</c:if>
 		

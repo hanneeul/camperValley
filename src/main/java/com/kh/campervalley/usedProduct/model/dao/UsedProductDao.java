@@ -44,4 +44,8 @@ public interface UsedProductDao {
 
 	int productDelete(int productNo) throws Exception;
 
+	List<UsedProduct> searchProductList(Map<String, Object> param);
+
+	int searchProductCount(Map<String, Object> param);
+
 }

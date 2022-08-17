@@ -14,6 +14,9 @@ import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.dto.WishProduct;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UsedProductServiceImpl implements UsedProductService {
 
@@ -150,12 +153,39 @@ public class UsedProductServiceImpl implements UsedProductService {
 	}
 
 	@Override
-	public void searchProductList(String keyword, int parseInt, String order, Model model) {
-		
+	public void searchProductList(String keyword, int page, String order, Model model) {
+
 		Map<String, Object> param = new HashMap<>();
 		
 		// 검색어
-//		if(keyword.substring)
+		param.put("productTitle", keyword);
+		
+		// 페이징 처리
+		int pageSize = 20;
+		if(page == 0) {
+			page = 1;
+		}
+		
+		int start = (page - 1) * pageSize;
+		int end = (page) * pageSize;
+	
+		param.put("start", start);
+		param.put("end", end);
+		param.put("order", order);
+		
+		// 목록 조회
+		List<UsedProduct> list = usedProductDao.searchProductList(param);
+		
+		int count = usedProductDao.searchProductCount(param);
+		
+		log.debug("list = {}", list);
+		log.debug("list = {}", list);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("cnt", count);
+		model.addAttribute("page", page);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("order", order);
 		
 	}
 

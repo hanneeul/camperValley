@@ -136,7 +136,15 @@ public class UsedProductController  {
 								@RequestParam(value = "order", required = false) String order) {
 		
 		usedProductService.searchProductList(keyword, Integer.parseInt(page), order, model);
-		return "";
+		
+		// 검색어
+		String searchResult="";
+		
+		searchResult = " 의 검색 결과";
+		
+		model.addAttribute("searchResult", searchResult);
+		model.addAttribute("display", "/usedProduct/main/searchDisplay.jsp");
+		return "/usedProduct/main/mainPage";
 		
 	};
 	
