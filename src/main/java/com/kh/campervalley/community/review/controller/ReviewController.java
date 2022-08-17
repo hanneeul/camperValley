@@ -201,8 +201,15 @@ public class ReviewController {
 			int result = reviewService.updateReadCount(reviewNo);
 			CampsiteReviewExt review = reviewService.selectOneReview(reviewNo);
 			List<ReviewComment> commentList = reviewService.selectReviewCommentList(reviewNo);
+			List<ReviewPhoto> photoList = reviewService.selectReviewPhotoList(reviewNo);
+			
+			review.setTitle(review.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+			review.setContent(review.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+			review.setContent(review.getContent().replaceAll("\n", "<br/>"));
+			
 			mav.addObject("review", review);
 			mav.addObject("commentList", commentList);
+			mav.addObject("photoList", photoList);
 		} catch (Exception e) {
 			log.error("후기 상세 조회 오류", e);
 			throw e;
@@ -292,7 +299,8 @@ public class ReviewController {
 	public String recommend(
 			CampsiteReviewExt review, 
 			@RequestParam int reviewNo,
-			@RequestParam String memberId) throws Exception {
+			@RequestParam String memberId, 
+			Model model) throws Exception {
 		try {
 			Map<String, Object> param = new HashMap<>();
 			param.put("reviewNo", reviewNo);
@@ -307,6 +315,7 @@ public class ReviewController {
 				int result = reviewService.setReviewRecommendStatus(recommend);
 			}
 			review.addReviewRecommend(recommend);
+			model.addAttribute("recommend", recommend);
 		} catch (Exception e) {
 			log.error("후기 추천 오류", e);
 			throw e;

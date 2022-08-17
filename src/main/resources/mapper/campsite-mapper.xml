@@ -20,4 +20,15 @@ where
 	rownum &lt;= 30
 </select>
 
+<select id="searchCampsiteByFacltNm" resultType="campsite">
+select
+	*
+from
+	campsite
+where
+	faclt_nm like '%' || #{facltNm} || '%'
+order by
+	content_id desc
+</select>
+
 </mapper>

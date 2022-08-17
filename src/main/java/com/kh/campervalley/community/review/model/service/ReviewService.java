@@ -51,5 +51,6 @@ public interface ReviewService {
 
 	List<ReviewComment> selectReviewCommentList(int reviewNo);
 
+	List<ReviewPhoto> selectReviewPhotoList(int reviewNo);
 
 }

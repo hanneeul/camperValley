@@ -31,7 +31,7 @@
 	font-size: .9rem;
 }
 
-#sido1, #gugun1 {
+#sido, #gugun {
 	height: inherit;
     max-width: max-content;
 	font-size: .9rem;
@@ -52,12 +52,12 @@ select.custom-select:hover {
 	align-self: center;
 }
 
-label[for=keywordSearch] {
+label[for=facltNm] {
 	align-self: center;
 	margin: 0;
 }
 
-.keyword-search-btn-wrap {
+.facltNm-search-btn-wrap {
 	height: 2.3rem;
 	border-radius: 4px 0 0 4px!important;
 }
@@ -94,6 +94,20 @@ label[for=keywordSearch] {
 
 .result-list-content>.list-group-flush>.list-group-item {
     width: 25rem!important;
+}
+
+#conditionsModal .modal-footer button {
+	font-size: .8rem!important;
+}
+
+#conditionsModal .modal-body div {
+	justify-content: center;
+}
+
+#conditionsModal small {
+	align-self: center!important;
+	font-size: .8rem!important;
+	color: #c7392b;
 }
 /* searhDetail/searchTheme.jsp end */
 
