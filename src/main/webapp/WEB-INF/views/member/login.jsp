@@ -73,7 +73,7 @@
                             <button type="submit" class="btn btn-camper-color">로그인</button>
                         </div>
                         <div>
-							<a type="button" class="btn btn-outline-camper-color bg-white btn-block">회원가입</a>
+							<a  href="${pageContext.request.contextPath}/member/enroll" type="button" class="btn btn-outline-camper-color bg-white btn-block" >회원가입</a>
 						</div>
 					</div>
                 </div>
