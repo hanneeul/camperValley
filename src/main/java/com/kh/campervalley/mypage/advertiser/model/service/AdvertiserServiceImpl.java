@@ -218,6 +218,11 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		return advertiserDao.selectAdvertisementForInsertPerform();
 	}
 
+	@Override
+	public List<Integer> selectAdvertisementForDailyInsertPerform() {
+		return advertiserDao.selectAdvertisementForDailyInsertPerform();
+	}
+
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int dailyInsertPerformance(List<Integer> advertisementNoList) {
@@ -256,7 +261,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		param.put("admoneyNo", target.get("ADMONEY_NO"));
 		result = advertiserDao.updateAdmoneyAfterClick(param);
 		
-		// 갱신된 admoney보다 높은 cpc로 설정된 광고 && 일예산초과 광고 off처리
+		// 갱신된 admoney보다 높은 cpc로 설정된 광고 + 일예산초과 광고 off처리
 		int adCpc = Integer.parseInt(target.get("AD_CPC").toString());
 		param.put("adCpc", adCpc);
 		int newBalance = Integer.parseInt(target.get("BALANCE").toString()) - adCpc;
@@ -267,4 +272,5 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		
 		return result;
 	}
+
 }

@@ -74,7 +74,7 @@
 				</thead>
 				<tbody class="adListBody">
 					<c:if test="${empty adList}">
-						<tr><td colspan="10">등록된 광고소재가 없습니다.</td></tr>
+						<tr class="text-center"><td class="py-2" colspan="10">등록된 광고소재가 없습니다.</td></tr>
 					</c:if>
 					<c:if test="${not empty adList}">
 						<c:forEach items="${adList}" var="advertisement" varStatus="vs">

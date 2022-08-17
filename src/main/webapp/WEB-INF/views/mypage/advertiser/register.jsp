@@ -4,9 +4,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/advertiser.css" />
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <div class="container">
 	<div class="row d-flex justify-content-between">
@@ -76,23 +76,20 @@ const checkBizNo = () => {
 	const msg = document.querySelector("#bizNoMsg");
 	
 	// 테스트(배민사업자번호) : 1208765763
+	// 테스트(오늘의집사업자번호) : 1198691245
 	var data = {
 		"b_no" : [ inputData ]
-	};
-
-	const headers = {
-		"${_csrf.headerName}" : "${_csrf.token}"
 	};
 
 	$.ajax({
 		url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${ckBusinessNo}",
 		type: "POST",
 		data: JSON.stringify(data),
-		headers,
 		dataType: "JSON",
 		contentType: "application/json",
 		accept: "application/json",
 		success(response) {
+			console.log(response);
 			if(response.match_cnt) {
 				result.value = "true";
 				msg.innerHTML = "사업자등록번호 검증에 성공하였습니다.";

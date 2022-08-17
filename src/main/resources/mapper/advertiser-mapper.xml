@@ -227,8 +227,6 @@
 		#{adLink},
 		#{adCpc},
 		#{adDailyBudget},
-		default,
-		default,
 		#{adStatus},
 		default,
 		null,
@@ -284,6 +282,16 @@
 		advertisement ad
 	where
 		(select ad_performance_no from ad_performance where advertisement_no = ad.advertisement_no and display_at = trunc(sysdate)) is null
+		and ad_status = 1
+</select>
+
+<select id="selectAdvertisementForDailyInsertPerform" resultType="int">
+	select
+		advertisement_no
+	from
+		advertisement ad
+	where
+		(select ad_performance_no from ad_performance where advertisement_no = ad.advertisement_no and display_at = trunc(sysdate + 1)) is null
 		and ad_status = 1
 </select>
 

@@ -102,6 +102,8 @@ public interface AdvertiserDao {
 
 	List<Integer> selectAdvertisementForInsertPerform();
 
+	List<Integer> selectAdvertisementForDailyInsertPerform();
+
 	int dailyInsertPerformance(List<Integer> advertisementNoList);
 
 	int InsertTodayPerformance(List<Integer> advertisementNoList);

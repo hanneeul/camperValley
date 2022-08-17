@@ -191,6 +191,7 @@ input.custom-control-input:checked~.custom-control-label::before {
 #adPolicyBody {
 	display: none;
 	border-bottom: 1px solid #ddd;
+	font-size: .91rem
 }
 /* ----------------------------- enroll AD ----------------------------- */
 

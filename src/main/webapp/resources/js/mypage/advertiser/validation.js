@@ -19,8 +19,8 @@ if(document.enrollAdvertiserFrm != null){
 	document.enrollAdvertiserFrm.onsubmit = () => {
 		let result = true;
 		
-		if(!/^[a-zA-Z가-힣0-9]{5,20}$/.test(bizName.value)) {
-			printErrSmall("#bizNameMsg", "광고계정명은 5자 이상 20자 이내의 영문/한글/숫자로 구성되어야합니다.");
+		if(!/^[a-zA-Z가-힣0-9]{3,20}$/.test(bizName.value)) {
+			printErrSmall("#bizNameMsg", "광고계정명은 3자 이상 20자 이내의 영문/한글/숫자로 구성되어야합니다.");
 			result = false;
 		} else resetMsg("#bizNameMsg");
 		
