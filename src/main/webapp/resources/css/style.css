@@ -83,6 +83,7 @@ body {
 }
 #navbarMain {
     height: 100px;
+    background-color: white;
 }
 #navbarMain img {
 	cursor: pointer;

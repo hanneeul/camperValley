@@ -35,7 +35,7 @@
 						<div><i class="fa-solid fa-circle-user fa-6x" style="color: #639A67;"></i></div>
 					</div>
 					<div class="ml-5">
-						<div class="text-15">캠퍼길동</div>
+						<div class="text-15"></div>
 						<div>
 							<span class="text-13">판매상품 : 10개, </span>
 							<span class="text-13">거래리뷰 : 12개</span>

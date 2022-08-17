@@ -10,17 +10,21 @@
 		max-width: 600px;
 	}
 }
-textarea {
+#reviewEnroll #starScore {
+	border-style: none;
+	width: 15px;
+}
+#reviewEnroll #ctent {
 	background-color: rgb(245, 245, 245);
 	font-size: 12px;
 	border-color: #639A67;
 	outline: none;
 	resize: none;
 }
-i {
+.fa-star {
 	cursor: pointer;
 	color: rgb(230, 185, 20);
 }
-.label {
+#reviewEnroll .label {
 	vertical-align: top;
 }

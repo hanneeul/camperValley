@@ -12,8 +12,8 @@
 <head>
 	<meta charset="UTF-8">
 	<!-- ajax 통신을 위한 meta tag -->
-<meta name="_csrf" content="${_csrf.token}">
-<meta name="_csrf_header" content="${_csrf.headerName}">
+	<meta name="_csrf" content="${_csrf.token}">
+	<meta name="_csrf_header" content="${_csrf.headerName}">
 	<title>campervalley</title>
 	<!-- favicon_io -->
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/favicon/favicon.ico">
@@ -23,6 +23,9 @@
     <link rel="manifest" href="/site.webmanifest">
 	<!-- jquery js -->
 	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<!-- alert js -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 	<!-- bootstrap js -->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
@@ -35,13 +38,17 @@
 	<script src="https://kit.fontawesome.com/${fontawesomeKey}.js" crossorigin="anonymous"></script>
 	<script>
 	<c:if test="${not empty msg}">
-		alert('${msg}');
+		$.alert({
+		    title: ' ',
+		    content: '${msg}',
+		    buttons: {'확인': function() {}}
+		});
 	</c:if>
 	</script>
 </head>
 <body class="mx-auto">
 	<header class="container p-0 fixed-top">
-		<nav class="navbar navbar-expand-lg navbar-light bg-light p-0" id="navbarMain">
+		<nav class="navbar navbar-expand-lg navbar-light p-0" id="navbarMain">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>

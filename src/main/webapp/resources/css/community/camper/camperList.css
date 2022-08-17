@@ -36,7 +36,7 @@
 .chk_box { display: block; position: relative; padding-left: 23px; margin-bottom: 10px; cursor: pointer; font-size: 14px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 /* 기본 체크박스 숨기기 */
 .chk_box input[type="checkbox"] { display: none; }
-.off {width: 6px; height: 10px; border: solid rgb(205, 205, 205); border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 2px;  }
+.off {width: 6px; height: 10px; border: solid rgb(225, 225, 225); border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 2px;  }
 .on {width: 6px; height: 10px; border: solid #639A67; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 2px;  }
 #listSection {
 	width: 400px;
@@ -72,7 +72,7 @@
 #detailFooter label {
 	color: #d9bf77;
 }
-#detailBody #chatUrl {
+#detailFooter #chatUrl {
 	cursor: pointer;
 	background-color: white;
 }

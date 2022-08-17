@@ -72,7 +72,7 @@ public class CamperController {
 		try {
 			camper.setMemberId("honggd");
 			int result = camperService.insertCamper(camper);
-			redirectAttr.addFlashAttribute("msg", "글을 성공적으로 등록했습니다.");
+			redirectAttr.addFlashAttribute("msg", "게시글을 성공적으로 등록했습니다.");
 		} catch(Exception e) {
 			log.error("캠퍼모집글 등록 오류");
 			throw e;
@@ -111,7 +111,7 @@ public class CamperController {
 		try {
 			log.debug("camper = {}", camper);
 			int result = camperService.updateCamper(camper);
-			redirectAttr.addFlashAttribute("msg", "수정이 완료되었습니다.");
+			redirectAttr.addFlashAttribute("msg", "게시글이 수정되었습니다.");
 		} catch(Exception e) {
 			log.debug("캠퍼모집 수정 오류", e);
 			throw e;

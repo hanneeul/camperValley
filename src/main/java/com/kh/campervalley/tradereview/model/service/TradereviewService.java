@@ -6,4 +6,8 @@ public interface TradereviewService {
 
 	int insertReview(TradeReview tradeReview);
 
+	int deleteReview(int reviewNo);
+
+	int updateReview(TradeReview tradeReview);
+
 }
