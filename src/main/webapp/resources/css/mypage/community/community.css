@@ -22,6 +22,7 @@
 	color: #fff;
 	background-color: #639A67;
 	height:35px;
+	border-top: 0;
 }
 #my-community-header .camper-color {
 	color: #639A67 !important;
@@ -52,25 +53,57 @@
 #my-community-body th{
 	border-left-width: 2px;
 }
+#my-community-body td{
+	vertical-align: middle;
+}
 #my-community-body select, #camper-detail select.recruitment-status{
-	width:74px;
+	width:81px;
 	outline: 0;
     border: 0;
 	box-shadow: none;
 	cursor: pointer;
-	background-color: inherit;
-	
+	background-color: inherit;;
+}
+#camper-detail select.recruitment-status{
+	text-align: right
 }
 #my-community-body tr > td:nth-child(2){
 	text-align: left;
 }
+.fa-trash-can:before{
+	color: #6c5f3b;
+	font-size: 1rem;
+}
+td form > button{
+	display: contents;
+}
+#my-community-body tr > td:nth-child(6) .btn:hover{
+	background-color : #e4d29f;
+	transition-duration : 500ms; 
+/* 	color: #978553; */
+}
+
 #my-camper-table tr > td:first-child{
 	text-align: right;
 }
 #my-camper-table tr > th:first-child{
 	width: 6.2rem;
 }
+#my-community-body tr > td > form{
+ 	display: contents; 
+}
 #camper-detail div.modal-footer .btn{
 	width:48.7%;
 	border: 2px solid #639A67 !important;
+}
+.page-item.active span.page-link {
+	background-color: #639A67;
+    border-color: #639A67;
+}
+
+.page-item .page-link {
+	color: #2B380C;
+}
+.page-item .page-link:hover {
+	color: #2B380C;
 }
