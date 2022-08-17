@@ -26,7 +26,8 @@
 							<div class="image_con">
 								<ul class="registImages" id="imageList">
 									<li class="imageList">이미지 등록
-										<input type="file" multiple="" id="inputImage">
+										    	<input type="file" class="custom-file-input" name="upFile" id="upFiles" accept="image/*" multiple>
+														    										    		<label for="upFiles">첨부파일을 선택해주세요.</label>
 									</li>
 								</ul>
 								<div class="imageDiv" id="imageDiv" style="margin-left: 2.5rem;">
@@ -170,5 +171,22 @@
 		<jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 	</div>
 </div>
-
+<script>
+window.onload = function() {
+	const target = document.getElementById('upFiles');
+	const label = target.nextElementSibling;
+	target.addEventListener('change', () => {
+		let upFileList = '';
+		if(upFileList != null) {
+	        for(i = 0; i < target.files.length; i++) {
+	        	upFileList += target.files[i].name + ' ';
+	        }
+	        label.innerText = upFileList;
+		}
+		else {
+			label.innerText = '첨부파일을 선택해주세요.';
+		}
+    });
+}
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

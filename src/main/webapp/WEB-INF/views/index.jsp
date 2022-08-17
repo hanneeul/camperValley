@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -185,7 +185,6 @@
 			});
 			$selsido.next().append("<option value=''>시/군/구</option>");
 		});
-
 		// 시/도 선택시 구/군 설정
 		$("select[name^=sido]").change(function() {
 			const area = "area"+$("option",$(this)).index($("option:selected",$(this))); // 선택지역의 구군 Array
@@ -290,7 +289,6 @@
     
     renderCalendar();
     renderSelectDate();
-
     $("#weather-btn span").mouseover((e) => {
     });
     
@@ -330,13 +328,11 @@ window.addEventListener('load', (e) => {
 	// 첫번째 광고 조회수 증가처리
 	viewUpFirstAd();
 });
-
 const viewUpFirstAd = () => {
 	const active = document.querySelector(".carousel-inner .active");
 	const advertisementNo = active.dataset.advertisementNo;
 	viewUpAd(advertisementNo);
 };
-
 // 조회수 증가
 const viewUpAd = (advertisementNo) => {
 	$.ajax({
@@ -351,14 +347,12 @@ const viewUpAd = (advertisementNo) => {
 		error: console.log
 	});
 };
-
 // 슬라이드 시 조회수증가 function 실행
 $('#carouselExampleIndicators').on('slid.bs.carousel', function () {
 	const active = document.querySelector(".carousel-inner .active");
 	const advertisementNo = active.dataset.advertisementNo;
 	viewUpAd(advertisementNo);
 });
-
 // 클릭수 증가 -> 광고 링크 이동
 const clickUpAndMove = (advertisementNo, adLink) => {
 	console.log(advertisementNo);

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.campervalley.usedProduct.model.dao.UsedProductDao;
@@ -13,6 +14,9 @@ import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.dto.WishProduct;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UsedProductServiceImpl implements UsedProductService {
 
@@ -142,4 +146,47 @@ public class UsedProductServiceImpl implements UsedProductService {
 	public WishProduct findHeart(Map<String, Object> map) {
 		return usedProductDao.findHeart(map);
 	}
+
+	@Override
+	public int productDelete(int productNo) throws Exception {
+		return usedProductDao.productDelete(productNo);
+	}
+
+	@Override
+	public void searchProductList(String keyword, int page, String order, Model model) {
+
+		Map<String, Object> param = new HashMap<>();
+		
+		// 검색어
+		param.put("productTitle", keyword);
+		
+		// 페이징 처리
+		int pageSize = 20;
+		if(page == 0) {
+			page = 1;
+		}
+		
+		int start = (page - 1) * pageSize;
+		int end = (page) * pageSize;
+	
+		param.put("start", start);
+		param.put("end", end);
+		param.put("order", order);
+		
+		// 목록 조회
+		List<UsedProduct> list = usedProductDao.searchProductList(param);
+		
+		int count = usedProductDao.searchProductCount(param);
+		
+		log.debug("list = {}", list);
+		log.debug("list = {}", list);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("cnt", count);
+		model.addAttribute("page", page);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("order", order);
+		
+	}
+
 }

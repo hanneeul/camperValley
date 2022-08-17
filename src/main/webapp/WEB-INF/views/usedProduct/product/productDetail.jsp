@@ -16,46 +16,53 @@
 <input type="hidden" class="owner" value=""/>
 
 <script>
+/* 슬라이더 */
 $(document).ready(function() {
-var imgs;
-var img_count;
-var img_position = 1;
-
-imgs = $(".slide ul");
-img_count = imgs.children().length;
-//버튼을 클릭했을 때 함수 실행
-$('#back').click(function () {
-  back();
-});
-$('#next').click(function () {
-  next();
-});
-function back() {
-  if(1<img_position){
-    imgs.animate({
-      left:'+=475px'
-    });
-    img_position--;
-  }
-}
-function next() {
-  if(img_count>img_position){
-    imgs.animate({
-      left:'-=475px'
-    });
-    img_position++;
-  }
+	var imgs;
+	var img_count;
+	var img_position = 1;
+	imgs = $(".slide ul");
+	img_count = imgs.children().length;
+	//버튼을 클릭했을 때 함수 실행
+	$('#back').click(function () {
+	  back();
+	});
+	$('#next').click(function () {
+	  next();
+	});
+	function back() {
+	  if(1<img_position){
+	    imgs.animate({
+	      left:'+=475px'
+	    });
+	    img_position--;
+	  }
+	}
+	
+	function next() {
+	  if(img_count>img_position){
+	    imgs.animate({
+	      left:'-=475px'
+	    });
+	    img_position++;
+	  }
 }
 });
 //이미지 끝까지 가면 버튼 사라지기
 //첫 이미지로 돌아오기=
 </script>
-<div id="section" style="width: 98%; margin-top:50px; margin-bottom:20px;">
+<div id="section" style="width: 98%; margin:30px auto;">
 	<div class="detail_area">
 	<div class="detail_div">
 		<c:if test="${not empty loginMember && loginMember.memberId eq usedProduct.sellerId}">
 	        <div class="delete_update">
-	        	 <button id="delete_btn">삭제하기</button>
+		         <form:form 
+					name="productDeleteFrm" 
+					method="POST" 
+					action="${pageContext.request.contextPath}/usedProduct/product/productDelete">
+					<input type="hidden" name="productNo" id="productNo" value="${usedProduct.productNo}" />
+				 </form:form>
+	        	 <button id="delete_btn" onclick="productDelete();">삭제하기</button>
 	        	 <button id="update_btn" style="margin-right: 8px; background-color: #D8EBB5">수정하기</button>
 	        </div>
 	    </c:if>
@@ -248,41 +255,39 @@ function next() {
 				</div>
 			</div>
 				
-<!-- 			<div class="prodInfo_RightWrap">
-				상점정보
-				<div class="prodInfo_storeWrap1">
-					<div class="prodInfo_storeWrap2">
-						<div class="storeInfo_Title">판매자정보</div>
-					</div>//storeWrap2
-					<div class="prodInfo_storeDetailWrap">
-						프로필 & 판매자닉네임 & 상품 개수
-						<div class="store">
-							<a class="storeProfileImg_Link" href="#">
-								productDetail.js
+			<div class="prodInfo_RightWrap">
+				<div class="prodInfo_sellerWrap1">
+					<div class="prodInfo_sellerWrap2">
+						<div class="sellerInfo_Title">판매자정보</div>
+					</div>
+						<div class="seller">
+							<a class="sellerProfileImg_Link" href="#">
+								<!-- productDetail.js -->
+								<img src="" class="float-start" alt="">
 							</a>
-							<div class="storeInfoWrap">
-								<a class="storeInfo_name" href="#" 
-										style="font-size: 14px;">홍길동길동productDetail.js</a>
-								<div class="storeInfo_productNum">
-									<a class="productNumLink" href="#">productDetail.js</a>
+							<div class="sellerInfoWrap">
+								<a class="sellerInfo_name" href="#" 
+										style="font-size: 14px;">홍길동길동<!-- productDetail.js --></a>
+								<div class="sellerInfo_productNum">
+									<a class="productNumLink" href="#"><!-- productDetail.js --></a>
 								</div>
 							</div>
-						</div>//store
-						판매자가 올린 최신 상품 2개 
-						<div class="storeInfo_productWrap">
-							productDetail.js
+						</div><!-- //store -->
+						<!-- 판매자가 올린 최신 상품 2개  -->
+						<div class="sellerInfo_productWrap">
+							<!-- productDetail.js -->
 						</div>
-						<div class="storeInfo_moreProd">
+						<div class="sellerInfo_moreProd">
 							<a class="moreProdLink" href="#">
 								<span style="color: rgb(247, 47, 51);">9개</span><span class="moreProdLink_Num">&nbsp판매상품 더보기</span>		 
 							</a>
 						</div>
-						별점 & 평점
-						<div class="storeInfo_IndiWrap">
-							상점평점
-							<div class="storeScore_title">
+						<!-- 별점 & 평점 -->
+						<div class="sellerInfo_IndiWrap">
+							<!-- 상점평점 -->
+							<div class="sellereScore_title">
 								<div style="margin-bottom:1px;">판매자평점</div>
-								<div class="storeStar"> 
+								<div class="sellerStar"> 
 									<i class="star fa-solid fa-star"></i>
 									<i class="star fa-solid fa-star"></i>
 									<i class="star fa-solid fa-star"></i>
@@ -293,7 +298,7 @@ function next() {
 						
 						</div>
 					</div>
-				</div> -->
+				</div>
 			</div>
 		</div>
 	 	<!-- nav -->
@@ -301,16 +306,16 @@ function next() {
 			 <jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 		 </div>
 	 </div>
-</div>
 
 <script>
+/* 관심상품 */
 var productNo = $('.hiddenNo').val();
 var memberId = $('.memberId').val();
 
 $(document).ready(function() {
 	$.ajax({
 	   	url : '/campervalley/usedProduct/product/findHeart',
-	   	type : 'get',
+	   	type : 'GET',
 	   	dataType : 'json',
 	   	data : {
 	   		productNo : productNo
@@ -323,9 +328,24 @@ $(document).ready(function() {
 	   		}
 	   	}, 
 	   	error : function() {
-	   		alter('ㅈ회오류');
+	   		alter('하트조회오류');
 	   	}
 	});
+});
+
+/* 판매자 정보 */
+$(document).ready(function() {
+	$.ajax({
+		type : 'GET',
+		url : '/campervalley/usedProduct/product/getSellerInfo',
+		data : {
+			productNo : productNo
+		},
+		dataType : 'json',
+		success :
+		
+	});
+
 });
 
 $(".heart-click").click(function() {
@@ -339,11 +359,13 @@ $(".heart-click").click(function() {
     	
 	   	$.ajax({
 	   		url : '/campervalley/usedProduct/product/saveHeart',
-	   		type : 'get',
+	   		type : 'GET',
 	   		data : {
 	   			productNo : productNo,
 	   		},
 	   		success : function(usedProduct) {
+	   			document.location.reload(true);
+	   			
 	   			let heart = usedProduct.heart;
 	   			// 하트 수 갱신
 	   			$('#zzim').text(heart);
@@ -365,11 +387,13 @@ $(".heart-click").click(function() {
 	   
 	   $.ajax({
 		  url : '/campervalley/usedProduct/product/removeHeart',
-		  type : 'get',
+		  type : 'GET',
 		  data : {
 			  productNo : productNo,
 		  },
 		  success : function(usedProduct) {
+			  document.location.reload(true);
+			  
 			  let heart = usedProduct.heart;
 			  
 	  		  // 하트 수 갱신
@@ -388,7 +412,22 @@ $(".heart-click").click(function() {
 	   $(this).html('<i class="fa-regular fa-heart"></i> 관심상품');
    }
 });
-// 채팅하기
+
+/* 상품 삭제 */
+const productDelete = () => {
+	const bool = confirm('게시글을 정말 삭제하시겠습니까?');
+	
+	if(!bool) {
+		alert('삭제를 취소했습니다.');
+	}
+	else {
+		const frm = document.productDeleteFrm;
+		frm.submit();
+		alert('게시글이 삭제되었습니다.');
+	}
+};
+
+/* 채팅하기 */
 document.querySelector("#update_btn").addEventListener('click', (e) => {
 	location.href = '/campervalley/usedProduct/product/productUpdate';
 });

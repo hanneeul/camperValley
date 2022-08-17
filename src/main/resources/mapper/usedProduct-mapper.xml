@@ -88,7 +88,6 @@ select *
 </select>
 
 <select id="cateProductList" parameterType="java.util.HashMap" resultType="UsedProduct">
-
 	select *
 	from (
 		select 
@@ -133,7 +132,6 @@ select *
 		) a		
 	)
 	where rnum between nvl(#{start},1) and nvl(#{end},20)
-
 </select>
 
 <select id="cateProductCount" parameterType="java.util.HashMap" resultType="int">
@@ -149,6 +147,63 @@ select *
 	from category 
 </select>
 
+<!-- 검색 -->
+<select id="searchProductList" parameterType="java.util.HashMap" resultType="UsedProduct">
+	select *
+	from (
+		select 
+			rownum rnum,
+			a.*
+		from (
+			select
+				product_no,
+				seller_id,
+				cate_no,
+				product_title,
+				product_content,
+				product_img1,
+				product_img2,
+				product_img3,
+				product_img4,
+				product_img5,
+				to_char(product_price, 'FM99,999,999') ||'원' as product_price,
+				product_location,
+				product_delivery_fee,
+				round((sysdate-product_enroll_time)*24*60) as product_enroll_time,
+				product_views,
+				transaction_date,
+				buyer_id,
+				is_delete,
+				heart
+			from
+				used_product
+			where 
+				<if test=" productTitle != null and productTitle != '' ">
+				product_title Like '%' || #{productTitle} || '%'
+				</if>
+			order by
+			<choose>
+				<when test='order =="A"'>product_enroll_time desc</when>
+				<when test='order =="B"'>to_number(product_views) desc</when>
+				<when test='order =="C"'>to_number(product_price) asc</when>
+				<when test='order =="D"'>to_number(product_price) desc</when>
+				<otherwise>
+					product_enroll_time desc
+				</otherwise>
+			</choose>
+		) a		
+	)
+	where rnum between nvl(#{start},1) and nvl(#{end},20)
+</select>
+
+<select id="searchProductCount" parameterType="java.util.HashMap" resultType="int">
+	select count(0)
+	from used_product p
+	where 
+		<if test=" productTitle != null and productTitle != '' ">
+		p.product_title Like '%' || #{productTitle} || '%'
+		</if>
+</select>
 <!-- 조회수 증가 -->
 <update id="viewUpdate" parameterType="String">
 	update used_product
@@ -215,5 +270,13 @@ select *
 	from wish_product
 	where product_no=#{productNo} and member_id=#{memberId}
 </select>
+
+<!-- 게시글 삭제 -->
+<delete id="productDelete" parameterType="int">
+	delete from
+		used_product
+	where
+		product_no = #{productNo}
+</delete>
 
 </mapper>

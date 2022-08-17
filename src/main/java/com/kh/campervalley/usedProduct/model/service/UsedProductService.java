@@ -3,6 +3,7 @@ package com.kh.campervalley.usedProduct.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
@@ -30,6 +31,10 @@ public interface UsedProductService {
 	public UsedProduct removeHeart(WishProduct wishProduct, String productNo);
 
 	public WishProduct findHeart(Map<String, Object> map);
+
+	public int productDelete(int productNo) throws Exception;
+
+	public void searchProductList(String keyword, int page, String order, Model model);
 
 
 }

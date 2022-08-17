@@ -15,12 +15,12 @@
 		<hr class="line"/>
 		
 		<!-- 검색창 영역 -->
-		<div class="input-group">
+		<div class="search-area">
 		  <div class="form-outline">
-		    <input type="search" id="form1" class="form-control" 
-		    				placeholder="상품명, @닉네임 검색" style="border: 1px solid gray;"/>
+		    <input type="text" id="searchProduct" name="searchProduct" 
+		    		class="form-control" autocomplete="off" placeholder="@상품명 검색">
 		  </div>
-		  <button type="button" class="btn btn-primary" style="border: 1px solid #639A67; background-color: white;">
+		  <button id="searchBtn" class="btn btn-primary" style="cursor: pointer;" onclick="search()">
 		      <i class="fas fa-search" style="color: #639A67;"></i>
 		  </button>
 		  <div class="ml-1">
@@ -41,6 +41,7 @@
 						<li id="category">
 							<p>카테고리 선택</p>
 							<ul>
+								<a href="/campervalley/usedProduct/main/mainPage">전체상품목록</a>
 								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=100" data-category="100">텐트/타프</a>
 								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=200" data-category="200">침낭/매트</a>
 								<a href="/campervalley/usedProduct/main/cateDisplay?cateNo=300" data-category="300">테이블/의자</a>
@@ -114,6 +115,7 @@
  	});
  })
  
+/* 카테고리 검색 */
 // 카테고리 마우스 오버 이벤트
 $("#btn_menu").hover(function(){
 	// 카테고리 보이기
@@ -131,6 +133,14 @@ $(".dropmenu").mouseleave(function() {
 	$(".dropmenu li:first a").removeClass("active");
 	$(".dropmenu").hide();
 })
+
+/* 검색어 검색 */
+function search() {
+	var keyword = $('#searchProduct').val();
+	
+	location.href = '/campervalley/usedProduct/main/searchDisplay?keyword=' + keyword;
+}
+ 
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
