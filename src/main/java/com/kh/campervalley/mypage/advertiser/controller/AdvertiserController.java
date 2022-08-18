@@ -401,7 +401,7 @@ public class AdvertiserController {
 			List<Integer> viewList = new ArrayList<>();
 			List<Integer> clickList = new ArrayList<>();
 			for (int i = 0; i < period.getDays() + 1; i++) {
-				dateList.add("'" + endDate.minusDays(period.getDays() - i) + "'");
+				dateList.add(endDate.minusDays(period.getDays() - i).toString());
 				viewList.add(0);
 				clickList.add(0);
 				for (int j = 0; j < chartData.size(); j++) {
