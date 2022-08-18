@@ -173,8 +173,6 @@ $('#carouselExampleIndicators').on('slid.bs.carousel', function () {
 });
 // 클릭수 증가 -> 광고 링크 이동
 const clickUpAndMove = (advertisementNo, adLink) => {
-	console.log(advertisementNo);
-	console.log(adLink);
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/mypage/advertiser/clickUp",

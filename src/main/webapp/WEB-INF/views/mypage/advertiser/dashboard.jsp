@@ -28,7 +28,7 @@
 		<div class="col-lg-10">
 			<div class="d-flex justify-content-between" id="dashboardTop">
 				<div class="align-self-center">
-					<form action="" name="chartPeriodFrm" class="m-0">
+					<form name="chartPeriodFrm" class="m-0" onsubmit="return false;">
 						<div class="form-row align-items-center">
 							<label for="" class="mb-0">조회기간</label>
 							<div class="form-group mb-0">
@@ -41,7 +41,7 @@
 								<input type="text" class="form-control form-control-sm input-daterange" name="chartEnd" autocomplete="off" readonly />
 							</div>
 							<div>
-								<button class="btn btn-camper-color btn-sm">조회</button>
+								<button id="rangeSubmitBtn" class="btn btn-camper-color btn-sm">조회</button>
 							</div>
 						</div>
 					</form>
@@ -154,7 +154,8 @@ window.addEventListener('load', (e) => {
 	    yearSuffix: '년',
 		todayHighlight: true,
 		showMonthAfterYear: true,
-		startDate: '0d'
+		startDate: '0d',
+		maxDate: 0
 	});
 	
 	printlineChart(${dateList}, ${viewList}, ${clickList});
@@ -163,6 +164,30 @@ window.addEventListener('load', (e) => {
 const headers = {
 	"${_csrf.headerName}" : "${_csrf.token}"
 };
+
+document.querySelector('#rangeSubmitBtn').addEventListener('click', () => {
+	const frm = document.chartPeriodFrm;
+	const date1 = frm.chartStart.value;
+	const date2 = frm.chartEnd.value;
+	const advertiserNo = ${advertiser.advertiserNo};
+	$.ajax({
+		url: "${pageContext.request.contextPath}/mypage/advertiser/searchChart",
+		type: "POST",
+		headers,
+		data: {
+			advertiserNo,
+			date1,
+			date2
+		},
+		success(response) {
+			const {dateList, viewList, clickList} = response;
+			document.querySelector("#chartSection").innerHTML = `<canvas id="lineChart"></canvas>`;
+			printlineChart(dateList, viewList, clickList);
+		},
+		error: console.log
+	});
+});
+
 const printlineChart = (days, viewData, clickData) => {
 	const context = document.querySelector('#lineChart').getContext("2d");
 	const lineChart = new Chart(context, {
@@ -171,18 +196,18 @@ const printlineChart = (days, viewData, clickData) => {
 			labels: days,
 			datasets: [
 				{
-					label: '조회수',
-					lineTension: 0,
-					backgroundColor: '#D9BF77',
-					borderColor: '#D9BF77',
-					data: viewData
-				},
-				{
 					label: '클릭수',
 					lineTension: 0,
 					backgroundColor: '#639A67',
 					borderColor: '#639A67',
 					data: clickData
+				},
+				{
+					label: '조회수',
+					lineTension: 0,
+					backgroundColor: '#D9BF77',
+					borderColor: '#D9BF77',
+					data: viewData
 				}
 			]
 		},
