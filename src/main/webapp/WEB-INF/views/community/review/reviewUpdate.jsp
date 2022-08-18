@@ -190,8 +190,14 @@ body {overflow-y: auto!important;}
 			  	<label for="name" class="col-md-1 col-form-label font-weight-bold">첨부파일</label>
 				<div class="form-group col-md-5 mx-3 mb-0">
 					<div class="input-group row mb-3">
-						<c:if test="${not empty review.photos}">
-							<c:forEach items="${review.photos}" var="photo" varStatus="vs">
+					  	<div class="custom-file">
+					    	<input type="file" class="custom-file-input" name="upFile" id="upFile" accept="image/*" multiple>
+				    		<label class="custom-file-label" for="upFile">첨부파일을 선택해주세요.</label>
+					  	</div>
+					</div>
+					<div class="input-group row mb-3">
+						<c:forEach items="${review.photos}" var="photo" varStatus="vs">
+							<c:if test="${not empty photo.originalFilename}">
 								<div class="btn-group-toggle" data-toggle="buttons">
 									<label class="btn btn-outline-danger btn-outline-camper-red delete-file-ckb-wrap" title="${photo.originalFilename} 삭제">
 										<input type="checkbox" id="delFile${vs.count}" name="delFile" value="${photo.reviewPhotoNo}">
@@ -205,15 +211,9 @@ body {overflow-y: auto!important;}
 					                   	</c:if>
 									</label>
 				                </div>
-			                </c:forEach>
-		                </c:if>
+			                </c:if>
+		                </c:forEach>
 		            </div>
-					<div class="input-group row my-3">
-					  	<div class="custom-file">
-					    	<input type="file" class="custom-file-input" name="upFile" id="upFile" accept="image/*" multiple>
-				    		<label class="custom-file-label" for="upFile">첨부파일을 선택해주세요.</label>
-					  	</div>
-					</div>
 				</div>
 			</div>
 			<hr />

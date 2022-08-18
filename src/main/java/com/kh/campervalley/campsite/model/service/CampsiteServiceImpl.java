@@ -1,6 +1,7 @@
 package com.kh.campervalley.campsite.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,20 @@ public class CampsiteServiceImpl implements CampsiteService {
 	public List<CampsiteExt> recentCampsiteList() {
 		return campsiteDao.recentCampsiteList();
 	}
+
+	@Override
+	public List<CampsiteExt> searchCampsiteList(Map<String, Object> searchParam) {
+		return campsiteDao.searchCampsiteList(searchParam);
+	}
 	
 	@Override
-	public List<CampsiteExt> searchCampsiteByFacltNm(String facltNm) {
-		return campsiteDao.searchCampsiteByFacltNm(facltNm);
+	public List<CampsiteExt> searchCampsiteThemeList(Map<String, Object> searchParam) {
+		return campsiteDao.searchCampsiteThemeList(searchParam);
+	}
+	
+	@Override
+	public CampsiteExt selectOneCampsite(long contentId) {
+		return campsiteDao.selectOneCampsite(contentId);
 	}
 	
 }

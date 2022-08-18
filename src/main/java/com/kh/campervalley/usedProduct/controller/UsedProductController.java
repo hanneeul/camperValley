@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.member.model.dto.Member;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdZone;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
+import com.kh.campervalley.mypage.advertiser.model.service.AdvertiserService;
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.dto.WishProduct;
@@ -43,10 +44,24 @@ public class UsedProductController  {
 	
 	@Autowired
 	private UsedProductService usedProductService;
+	
+	@Autowired
+	private AdvertiserService advertiserService;
 
 	/* 메인페이지 */
 	@GetMapping("/main/mainPage")
-	public void mainPage() {};
+	public ModelAndView mainPage(ModelAndView mav) {
+		try {
+			List<AdvertisementExt> adList = advertiserService.getDisplayAdList(3, AdZone.usedProductHome);
+			log.debug("adList = {}", adList);
+			
+			mav.addObject("adList", adList);
+		} catch (Exception e) {
+			log.error("광고목록 조회 오류", e);
+			throw e;
+		}
+		return mav;
+	};
 	
 	/* 상품 등록 */
 	@GetMapping("/product/registForm")
@@ -140,10 +155,15 @@ public class UsedProductController  {
 		// 검색어
 		String searchResult="";
 		
-		searchResult = " 의 검색 결과";
+		if (keyword.substring(0, 1).equals("@")) {
+			searchResult = " 회원이 올린 상품";			
+		} else {
+			searchResult = " 의 검색 결과";
+		}
 		
 		model.addAttribute("searchResult", searchResult);
 		model.addAttribute("display", "/usedProduct/main/searchDisplay.jsp");
+		
 		return "/usedProduct/main/mainPage";
 		
 	};
@@ -234,4 +254,24 @@ public class UsedProductController  {
 		return "redirect:/usedProduct/main/mainPage";
 	}
 	
+	/* 판매자 정보 */
+	@GetMapping("/product/getSellerInfo")
+	@ResponseBody
+	public ModelAndView getSellerInfo(@RequestParam String productNo) {
+		System.out.println(productNo);
+		
+		// 판매자
+		Member member = usedProductService.getSellerInfo(Integer.parseInt(productNo));
+		log.debug("member = {}", member);
+		// 물건 총 개수
+		int sellerProdNum = usedProductService.getSellerProdNum(Integer.parseInt(productNo));
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("profileImg", member.getProfileImg());
+		mav.addObject("member", member);
+		mav.addObject("sellerProdNum", sellerProdNum);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
 }

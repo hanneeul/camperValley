@@ -25,8 +25,8 @@ public class CampsiteExt extends Campsite {
 			String induty, String lctCl, String addr1, String addr2, String mapX, String mapY, String tel,
 			String homepage, String resveCl, String operPdCl, String operDeCl, String posblFcltyCl, String themaEnvrnCl,
 			String firstImageUrl, CampsiteFacility campsiteFacility, CampsiteImage campsiteImage) {
-		super(contentId, facltNm, lineIntro, intro, facltDivNm, induty, lctCl, addr1, addr2, mapX, mapY, tel, homepage,
-				resveCl, operPdCl, operDeCl, posblFcltyCl, themaEnvrnCl, firstImageUrl);
+		super(contentId, facltNm, lineIntro, intro, facltDivNm, induty, lctCl, addr1, addr2, mapX, mapY, tel, homepage, resveCl,
+				operPdCl, operDeCl, posblFcltyCl, themaEnvrnCl, firstImageUrl);
 		this.campsiteFacility = campsiteFacility;
 		this.campsiteImage = campsiteImage;
 	}

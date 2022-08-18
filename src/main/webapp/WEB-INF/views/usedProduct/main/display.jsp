@@ -14,34 +14,30 @@
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-bs-ride="carousel">
 		<ol class="carousel-indicators">
-			<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-				class="active"></li>
-			<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-			<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+			<c:forEach items="${adList}" var="advertisement" varStatus="vs">
+				<li data-target="#carouselExampleIndicators" data-slide-to="${vs.count - 1}" ${vs.count eq 1 ? 'active' : ''}></li>
+			</c:forEach>
 		</ol>
 		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img src="" id="ad1" class="d-block w-100"
-					alt="광고이미지" style="cursor: pointer;">
-			</div>
-			<div class="carousel-item">
-				<img src="" id="ad2"
-					class="d-block w-100" alt="ad2" style="cursor: pointer;">
-			</div>
-			<div class="carousel-item">
-				<img src="" id="ad3"
-					class="d-block w-100" alt="ad3" style="cursor: pointer;">
-			</div>
+			<c:forEach items="${adList}" var="advertisement" varStatus="vs">
+	    		<div class="carousel-item ${vs.count eq 1 ? 'active' : ''}"
+	    			data-advertisement-no="${advertisement.advertisementNo}"
+	    			onclick="clickUpAndMove(${advertisement.advertisementNo}, '${advertisement.adLink}');">
+	    			<img src="${pageContext.request.contextPath}/resources/upload/mypage/advertiser/advertisement/${advertisement.adAttach.renamedFilename}"
+	    				alt="중고거래홈 광고이미지${vs.count}" id="${vs.count}" class="d-block w-100" style="cursor: pointer;"/>
+				</div>
+			</c:forEach>
 		</div>
-		<a class="carousel-control-prev mx-auto" href="#carouselExampleIndicators"
-			role="button" data-bs-slide="prev" style="margin-top: 133px;"> <span
-			class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-			class="visually-hidden">Previous</span>
-		</a> <a class="carousel-control-next mx-auto" href="#carouselExampleIndicators"
-			role="button" data-bs-slide="next" style="margin-top: 133px;"> <span
-			class="carousel-control-next-icon" aria-hidden="true"></span> <span
-			class="visually-hidden">Next</span>
-		</a>
+		<c:if test="${fn:length(adList) > 1}">
+			<a class="carousel-control-prev mx-auto" href="#carouselExampleIndicators" role="button" data-slide="prev" style="margin-top: 133px;">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</a>
+			<a class="carousel-control-next mx-auto" href="#carouselExampleIndicators" role="button" data-slide="next" style="margin-top: 133px;">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</a>
+		</c:if>
 	</div>
 </div>
 
@@ -144,3 +140,56 @@ function productDetailNo(no) {
 	location.href = '/campervalley/usedProduct/product/productDetail?no=' + no;
 }
 </script>
+<%-- EJ start --%>
+<script>
+window.addEventListener('load', (e) => {
+	// 첫번째 광고 조회수 증가처리
+	viewUpFirstAd();
+});
+const viewUpFirstAd = () => {
+	const active = document.querySelector(".carousel-inner .active");
+	const advertisementNo = active.dataset.advertisementNo;
+	viewUpAd(advertisementNo);
+};
+// 조회수 증가
+const viewUpAd = (advertisementNo) => {
+	$.ajax({
+		url: "${pageContext.request.contextPath}/mypage/advertiser/viewUp",
+		type: "POST",
+		headers: {
+			"${_csrf.headerName}" : "${_csrf.token}"
+		},
+		data: {
+			advertisementNo
+		},
+		error: console.log
+	});
+};
+// 슬라이드 시 조회수증가 function 실행
+$('#carouselExampleIndicators').on('slid.bs.carousel', function () {
+	const active = document.querySelector(".carousel-inner .active");
+	const advertisementNo = active.dataset.advertisementNo;
+	viewUpAd(advertisementNo);
+});
+// 클릭수 증가 -> 광고 링크 이동
+const clickUpAndMove = (advertisementNo, adLink) => {
+	console.log(advertisementNo);
+	console.log(adLink);
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/mypage/advertiser/clickUp",
+		type: "POST",
+		headers: {
+			"${_csrf.headerName}" : "${_csrf.token}"
+		},
+		data: {
+			advertisementNo
+		},
+		success(response) {
+			location.href = adLink;
+		},
+		error: console.log
+	});
+};
+</script>
+<%-- EJ end --%>

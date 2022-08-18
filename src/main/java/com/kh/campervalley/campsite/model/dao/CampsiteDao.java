@@ -1,6 +1,7 @@
 package com.kh.campervalley.campsite.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -33,6 +34,10 @@ public interface CampsiteDao {
 
 	List<CampsiteExt> recentCampsiteList();
 
-	List<CampsiteExt> searchCampsiteByFacltNm(String keywordSearch);
+	List<CampsiteExt> searchCampsiteList(Map<String, Object> searchParam);
+
+	List<CampsiteExt> searchCampsiteThemeList(Map<String, Object> searchParam);
+
+	CampsiteExt selectOneCampsite(long contentId);
 	
 }

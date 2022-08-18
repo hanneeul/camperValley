@@ -17,11 +17,17 @@
 				<div class="input-group align-items-center community-search-enroll">
 			    	<select id="searchType" name="searchType" class="custom-select btn-outline-success btn-outline-camper-color">
 						<option value="" disabled selected>선택</option>
-						<option value="nickname" ${searchParam.searchType eq 'nickname' ? 'selected' : ''}>작성자</option>
-					   	<option value="title" ${searchParam.searchType eq 'title' ? 'selected' : ''}>제목</option>
-					    <option value="content" ${searchParam.searchType eq 'content' ? 'selected' : ''}>내용</option>
+						<option value="nickname" ${param.searchType eq 'nickname' ? 'selected' : ''}>작성자</option>
+					   	<option value="title" ${param.searchType eq 'title' ? 'selected' : ''}>제목</option>
+					    <option value="content" ${param.searchType eq 'content' ? 'selected' : ''}>내용</option>
 					</select>
-					<input type="text" name="searchKeyword" class="form-control border-camper-color community-search-input" placeholder="검색어를 입력하세요." aria-label="Recipient's username" aria-describedby="communitySearchBtn">
+					<input 
+						type="text" 
+						name="searchKeyword" 
+						class="form-control border-camper-color community-search-input"
+						value="${param.searchKeyword}" 
+						placeholder="검색어를 입력하세요." aria-label="Recipient's username" 
+						aria-describedby="communitySearchBtn">
 				  	<div class="input-group-append">
 				    	<button class="btn btn-outline-success btn-outline-camper-color" type="submit" id="communitySearchBtn">
 				    		<i class="fa-solid fa-magnifying-glass camper-color"></i>

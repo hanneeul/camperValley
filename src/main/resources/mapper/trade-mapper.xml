@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.campervalley.mypage.trade.model.dao.TradeDao">
+
+	<select id="sellingListByMemberId" resultType="UsedProduct">
+		select
+		    *
+		from
+		    (
+		    select *
+		    from
+		    	used_product
+		    where seller_id = #{memberId}
+		        and
+		           transaction_date is null
+		    order by
+		    	product_enroll_time desc
+		    )
+		where
+			rownum between 1 and #{numPerReq}
+	</select>
+	
+	<select id="purchasedListByMemberId" resultType="UsedProduct">
+		select
+		    *
+		from
+		    (
+		    select *
+		    from
+		    	used_product
+		    where buyer_id = #{memberId}
+		        and
+		           transaction_date is not null
+		    order by
+		    	transaction_date desc
+		    )
+		where
+			rownum between 1 and #{numPerReq}
+	</select>
+	
+	<select id="selectMoreSalesProduct" resultType="UsedProduct">
+		    select 
+		    	*
+		    from
+		    	used_product
+		    where seller_id = #{memberId}
+		        and
+		           transaction_date is null
+		    order by
+		    	product_enroll_time desc
+	</select>
+	
+</mapper>

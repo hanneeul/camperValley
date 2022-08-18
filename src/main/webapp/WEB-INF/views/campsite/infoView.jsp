@@ -14,7 +14,7 @@
 	<div class="w-100 p-4 m-auto rounded campsite-info-view-wrap">
 		<div class="row m-0">
 			<div class="col-md info-view-title">
-				<h4 class="font-weight-bold m-0">○○ 캠핑장</h4>
+				<h4 class="font-weight-bold m-0">${campsite.facltNm}</h4>
 			</div>
 			<div class="col-md info-view-back-btn">
 				<button class="btn btn-success float-right bg-camper-color" onclick="history.go(-1);">
@@ -25,41 +25,53 @@
 		<hr />
 		<div class="row m-0 basic-info-wrap p-3 justify-content-center">
 			<div class="col-md basic-info-img bg-light mr-3">
-				<img src="#" class="rounded" alt="">
+				<c:if test="${not empty campsite.firstImageUrl}">
+					<img src="${campsite.firstImageUrl}" class="img-thumbnail" alt="${campsite.facltNm} 대표이미지">
+				</c:if>
+				<c:if test="${empty campsite.firstImageUrl}">
+					<img src="${pageContext.request.contextPath}/resources/images/noImg.png" class="img-thumbnail" alt="${campsite.facltNm} 대표이미지">
+				</c:if>
 			</div>
 			<div class="col-md ml-3">
 				<table class="table basic-info-table mb-0">
 			    	<tr>
 			      		<th scope="row">주소</th>
-			      		<td>○○도 ○○시 ○○동</td>
+	      				<td>${not empty campsite.addr1 ? campsite.addr1 : '-'} ${not empty campsite.addr2 ? campsite.addr2 : ''}</td>
 			    	</tr>
 			    	<tr>
 			      		<th scope="row">문의처</th>
-			      		<td>070-0000-0000</td>
+			      		<td>${not empty campsite.tel ? campsite.tel : '-'}</td>
 			    	</tr>
 			    	<tr>
 			      		<th scope="row">캠핑장 유형</th>
-			      		<td>일반야영장</td>
+			      		<td>${not empty campsite.induty ? campsite.induty : '-'}</td>
 			    	</tr>
 			    	<tr>
 			      		<th scope="row">운영기간</th>
-			      		<td>봄, 여름, 가을, 겨울</td>
+			      		<td>${not empty campsite.operPdCl ? campsite.operPdCl : '-'}</td>
 			    	</tr>
 			    	<tr>
 			      		<th scope="row">운영일</th>
-			      		<td>평일 + 주말</td>
+			      		<td>${campsite.operDeCl ? campsite.operDeCl : '-'}</td>
 			    	</tr>
 			    	<tr>
 			      		<th scope="row">홈페이지</th>
-			      		<td><a href="#">홈페이지 바로가기</a></td>
+			      		<td>
+			      			<c:if test="${not empty campsite.homepage}">
+			      				<a href="${campsite.homepage}">홈페이지 바로가기</a>
+			      			</c:if>
+			      			<c:if test="${empty campsite.homepage}">
+			      				-
+			      			</c:if>
+			      		</td>
 			    	</tr>
 			    	<tr>
 			      		<th scope="row">예약방법</th>
-			      		<td>전화</td>
+			      		<td>${not empty campsite.resveCl ? campsite.resveCl : '-'}</td>
 			    	</tr>
 			    	<tr>
 			    		<td scope="col" colspan="2" class="pb-0">
-			    			<button type="button" id="bookmarkBtn" class="btn btn-success bg-camper-color">
+			    			<button type="button" id="bookmarkBtn" class="btn btn-outline-success btn-outline-camper-color font-weight-bold">
 			    				<i class="fa-solid fa-star"></i>&nbsp;즐겨찾기
 			    			</button>
 			    		</td>

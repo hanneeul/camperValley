@@ -17,6 +17,8 @@
 <!-- jquery-confirm -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<!-- chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="container">
 	<div class="row d-flex justify-content-between">
@@ -41,7 +43,6 @@
 							<div>
 								<button class="btn btn-camper-color btn-sm">조회</button>
 							</div>
-							
 						</div>
 					</form>
 				</div>
@@ -55,7 +56,9 @@
 					</h5>
 				</div>
 			</div>
-			<div class="my-3" id="chartSection"></div>
+			<div class="my-3 py-2" id="chartSection">
+				<canvas id="lineChart"></canvas>
+			</div>
 			<button type="button" class="btn btn-camper-color btn-sm" onclick="location.href='${pageContext.request.contextPath}/mypage/advertiser/enrollAd?no=${advertiser.advertiserNo}'">광고만들기</button>
 			<table id="tblAdList" class="table my-3">
 				<thead class="adListHead">
@@ -153,10 +156,41 @@ window.addEventListener('load', (e) => {
 		showMonthAfterYear: true,
 		startDate: '0d'
 	});
+	
+	printlineChart(${dateList}, ${viewList}, ${clickList});
 });
 
 const headers = {
 	"${_csrf.headerName}" : "${_csrf.token}"
+};
+const printlineChart = (days, viewData, clickData) => {
+	const context = document.querySelector('#lineChart').getContext("2d");
+	const lineChart = new Chart(context, {
+		type: 'line',
+		data: { // 차트에 들어갈 데이터
+			labels: days,
+			datasets: [
+				{
+					label: '조회수',
+					lineTension: 0,
+					backgroundColor: '#D9BF77',
+					borderColor: '#D9BF77',
+					data: viewData
+				},
+				{
+					label: '클릭수',
+					lineTension: 0,
+					backgroundColor: '#639A67',
+					borderColor: '#639A67',
+					data: clickData
+				}
+			]
+		},
+		options: {
+			maintainAspectRatio: false,
+			legend: { display: false }
+		}
+	});
 };
 
 document.querySelectorAll(".delAdBtn").forEach((btn) => {

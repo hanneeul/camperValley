@@ -397,5 +397,38 @@
 				on ad.advertiser_no = money.advertiser_no
 	where advertisement_no = #{advertisementNo}
 </select>
-		
+
+<select id="selectChartData" parameterType="map" resultType="map">
+<![CDATA[
+	select
+		display_at,
+		sum(perform.daily_view_cnt) sum_view,
+		sum(perform.daily_click_cnt) sum_click
+	from
+		advertisement ad
+			join (
+				select
+					advertisement_no,
+					display_at,
+					sum(daily_view_cnt) daily_view_cnt,
+					sum(daily_click_cnt) daily_click_cnt
+				from
+					ad_performance
+				group by
+					advertisement_no, display_at
+				) perform
+			on ad.advertisement_no = perform.advertisement_no
+	where
+		advertiser_no = #{advertiserNo}
+		and
+			display_at >= trunc(#{startDate})
+		and
+			display_at <= trunc(#{endDate})
+	group by
+		display_at
+	order
+		by display_at
+]]>
+</select>
+
 </mapper>
