@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.member.model.dto.Member;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdZone;
+import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
+import com.kh.campervalley.mypage.advertiser.model.service.AdvertiserService;
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.dto.WishProduct;
@@ -43,10 +44,24 @@ public class UsedProductController  {
 	
 	@Autowired
 	private UsedProductService usedProductService;
+	
+	@Autowired
+	private AdvertiserService advertiserService;
 
 	/* 메인페이지 */
 	@GetMapping("/main/mainPage")
-	public void mainPage() {};
+	public ModelAndView mainPage(ModelAndView mav) {
+		try {
+			List<AdvertisementExt> adList = advertiserService.getDisplayAdList(3, AdZone.usedProductHome);
+			log.debug("adList = {}", adList);
+			
+			mav.addObject("adList", adList);
+		} catch (Exception e) {
+			log.error("광고목록 조회 오류", e);
+			throw e;
+		}
+		return mav;
+	};
 	
 	/* 상품 등록 */
 	@GetMapping("/product/registForm")

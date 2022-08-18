@@ -124,4 +124,6 @@ public interface AdvertiserDao {
 	@Update("update advertisement set ad_status = 0 where (advertiser_no = #{advertiserNo} and ad_cpc > #{newBalance}) or ((ad_daily_budget - #{todayCost}) < #{adCpc})")
 	int updateAdvertisementOff(Map<String, Object> param);
 
+	List<Map<String, Object>> selectChartData(Map<String, Object> param);
+
 }
