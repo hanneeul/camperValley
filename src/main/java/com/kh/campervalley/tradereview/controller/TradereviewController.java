@@ -1,15 +1,22 @@
 package com.kh.campervalley.tradereview.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.tradereview.model.dto.TradeReview;
+import com.kh.campervalley.tradereview.model.dto.TradeReviewExt;
 import com.kh.campervalley.tradereview.model.service.TradereviewService;
+import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,7 +61,7 @@ public class TradereviewController {
 	@PostMapping("/reviewDelete")
 	public String reviewDelete(@RequestParam int reviewNo, RedirectAttributes redirectAttr) {
 		try {
-			int reulst = tradereviewService.deleteReview(reviewNo);
+			int result = tradereviewService.deleteReview(reviewNo);
 			redirectAttr.addFlashAttribute("msg", "거래후기가 삭제되었습니다.");
 		} catch(Exception e) {
 			log.error("거래후기 삭제 오류", e);
@@ -68,6 +75,47 @@ public class TradereviewController {
 	public void reportEnroll() {}
 	
 	@GetMapping("/profileCheck")
-	public void profileCheck() {}
+	public ModelAndView profileCheck(@RequestParam(defaultValue = "honggd") String memberId, ModelAndView mav) {
+		try {
+			// 별점평균, 판매상품/거래리뷰 갯수
+			Map<String, Object> counts = tradereviewService.selectCounts(memberId);
+			
+			mav.addObject("counts", counts);
+			mav.addObject("member", memberId);
+			mav.setViewName("/tradereview/profileCheck");
+		} catch(Exception e) {
+			log.error("판매자 정보 조회 오류", e);
+			throw e;
+		}
+		return mav;
+	}
+	
+//	@GetMapping("/productList")
+//	public ModelAndView productList(@RequestParam(defaultValue = "honggd") String memberId, ModelAndView mav) {
+//		try {
+//			List<UsedProduct> productList = usedProduct
+//		} catch(Exception e) {
+//			log.error("판매자 판매상품 목록 조회 오류", e);
+//			throw e;
+//		}
+//		return mav;
+//	}
+	
+	@GetMapping("/reviewList")
+	public ModelAndView reviewList(
+			@RequestParam(defaultValue = "1") int cPage,
+			@RequestParam(defaultValue = "honggd") String memberId, 
+			ModelAndView mav) {
+		try {
+			int numPerPage = TradereviewService.NUM_PER_PAGE;
+			List<TradeReviewExt> reviewList = tradereviewService.selectReviewList(cPage, numPerPage, memberId);
+			mav.addObject("reviewList", reviewList);
+			mav.setViewName("jsonView");
+		} catch(Exception e) {
+			log.error("판매자 거래리뷰 목록 조회 오류", e);
+			throw e;
+		}
+		return mav;
+	}
 	
 }

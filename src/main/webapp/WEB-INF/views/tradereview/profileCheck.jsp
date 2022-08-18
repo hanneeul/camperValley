@@ -27,7 +27,7 @@
 	<script src="https://kit.fontawesome.com/${fontawesomeKey}.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="modal fade" id="profileCheck">
+	<div class="modal fade" id="profileCheck">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content px-5 py-2">
 				<div class="modal-header px-2 py-3">
@@ -35,28 +35,29 @@
 						<div><i class="fa-solid fa-circle-user fa-6x" style="color: #639A67;"></i></div>
 					</div>
 					<div class="ml-5">
-						<div class="text-15"></div>
+						<div class="text-15">${member}님</div>
 						<div>
-							<span class="text-13">판매상품 : 10개, </span>
-							<span class="text-13">거래리뷰 : 12개</span>
+							<span class="text-13">판매상품 : ${counts.productCount}개, </span>
+							<span class="text-13">거래리뷰 : ${counts.reviewCount}개</span>
 						</div>
 						<div class="mt-4">
 							<span><i class="fa-solid fa-star"></i></span>
-							<span>&nbsp;4.5점</span>
+							<span>&nbsp;${counts.starScoreAvg}점</span>
 						</div>
 					</div>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-					<div class="modal-body px-0 my-3">
-						<div class="col-md-7 mb-4">
-							<ul class="nav profile-nav">
-							  	<li id="productList" class="nav-item mr-3 active">판매상품</li>
-							  	<li id="reviewList" class="nav-item">거래리뷰</li>
-							</ul>
-						</div>
-						
+				<div class="modal-body px-0 my-3">
+					<div class="col-md-7 mb-4">
+						<ul class="nav profile-nav">
+						  	<li id="productList" class="nav-item mr-3 active">판매상품</li>
+						  	<li id="reviewList" class="nav-item">거래리뷰</li>
+						</ul>
+					</div>
+					
+					<div id="listSection">
 						<%-- product Box --%>
 						<%-- 
 						<div class="productBox d-flex ml-3 mb-4">
@@ -72,37 +73,10 @@
 								<div class="content text-13">좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. ...더보기</div>
 							</div>
 						</div>
-						<div class="productBox d-flex ml-3 mb-4">
-							<div class="image col-md-3 px-0">
-								<img src="${pageContext.request.contextPath}/resources/images/index/caravan.jpg" />
-							</div>
-							<div class="info col-md-9 px-0">
-								<div class="d-flex justify-content-between">
-									<div class="title text-15 font-weight-bold">Title Title Title Title</div>
-									<div class="createdAt text-13 text-secondary">2022-07-20</div>
-								</div>
-								<div class="price my-2 font-weight-bold">20,000원</div>
-								<div class="content text-13">좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. ...더보기</div>
-							</div>
-						</div>
-						<div class="productBox d-flex ml-3 mb-4">
-							<div class="image col-md-3 px-0">
-								<img src="${pageContext.request.contextPath}/resources/images/index/caravan.jpg" />
-							</div>
-							<div class="info col-md-9 px-0">
-								<div class="d-flex justify-content-between">
-									<div class="title text-15 font-weight-bold">Title Title Title Title</div>
-									<div class="createdAt text-13 text-secondary">2022-07-20</div>
-								</div>
-								<div class="price my-2">20,000원</div>
-								<div class="content text-13">좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. ...더보기</div>
-							</div>
-						</div> 
 						--%>
 						
-						
 						<%-- review Box --%>
-						<div class="reviewBox d-flex ml-3 mb-5">
+						<!-- <div class="reviewBox d-flex ml-3 mb-5">
 							<div class="image col-md-3 px-0">
 								<i class="fa-solid fa-circle-user fa-5x" style="color:rgb(235,235,235);"></i>
 							</div>
@@ -129,64 +103,10 @@
 								</div>
 								<div class="text-right text-secondary text-13">2022-07-20</div>
 							</div>
-						</div>
-						<div class="reviewBox d-flex ml-3 mb-5">
-							<div class="image col-md-3 px-0">
-								<i class="fa-solid fa-circle-user fa-5x" style="color:rgb(235,235,235);"></i>
-							</div>
-							<div class="info col-md-9 px-0">
-								<div class="d-flex justify-content-between">
-									<div>
-										<span>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-										</span>
-										<span class="ml-2 text-14">	캠퍼길동</span>
-									</div>
-									<div class="report text-13 text-secondary mt-1">
-										<i class="fa-regular fa-lightbulb fa-sm position-relative"></i>
-										<span>신고하기</span>
-									</div>
-								</div>
-								<div class="content text-13">
-									좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다.
-									좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다.
-								</div>
-								<div class="text-right text-secondary text-13">2022-07-20</div>
-							</div>
-						</div>
-						<div class="reviewBox d-flex ml-3 mb-5">
-							<div class="image col-md-3 px-0">
-								<i class="fa-solid fa-circle-user fa-5x" style="color:rgb(235,235,235);"></i>
-							</div>
-							<div class="info col-md-9 px-0">
-								<div class="d-flex justify-content-between">
-									<div>
-										<span>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-										</span>
-										<span class="ml-2 text-14">	캠퍼길동</span>
-									</div>
-									<div class="report text-13 text-secondary mt-1">
-										<i class="fa-regular fa-lightbulb fa-sm position-relative"></i>
-										<span>신고하기</span>
-									</div>
-								</div>
-								<div class="content text-13">
-									좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다.
-									좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다.
-								</div>
-								<div class="text-right text-secondary text-13">2022-07-20</div>
-							</div>
-						</div>
+						</div> -->
+						
 					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -197,9 +117,104 @@ $("#profileCheck")
 .on('hide.bs.modal', (e) => {
 });
 
+/* const memberId = ${memberId}; */
+const memberId = "honggd";
+let cPage = 1;
+
 $(".profile-nav li").click((e) => {
 	$(".profile-nav li").removeClass("active");
 	$(e.target).addClass("active");
 });
+
+// 판매자 정보 거래후기 목록 조회 비동기
+document.querySelector("#reviewList").addEventListener("click", (e) => {
+	$.ajax({
+		url: "${pageContext.request.contextPath}/tradereview/reviewList",
+		data: {memberId, cPage},
+		success(response) {
+			const {reviewList} = response;
+			console.log(reviewList, reviewList.length);
+			for(let i = 0; i < reviewList.length; i++) {
+				const $reviewBox = $('<div class="reviewBox d-flex ml-3 mb-5"></div>');
+				const $userImage = $('<div class="image col-md-3 px-0"></div>');
+				const $userIcon = $('<i class="fa-solid fa-circle-user fa-5x" style="color:rgb(235,235,235);"></i>');
+				const $reviewInfo = $('<div class="info col-md-9 px-0">');
+				const $infoDiv = $('<div class="d-flex justify-content-between">');
+				const $infoStarNickname = $('<div></div>');
+				const $star = $('<span></span>');
+				for(let j = 0; j < 5; j++) {
+					if(j <= reviewList[i].starScore - 1)
+						$star.append('<i class="fa-solid fa-star fa-xs" style="color: rgb(230, 185, 20)">');
+					else
+						$star.append('<i class="fa-solid fa-star fa-xs" style="color: rgb(235, 235, 235)">')
+				}
+				$star.append(`<span class="px-2">\${reviewList[i].starScore}점</span>`);
+				const $nickname = $(`<span class="ml-2 text-14">\${reviewList[i].nickname}</span>`);
+				// 분기처리 loginMember.memberId와 memberId비교
+				if(${not empty loginMember}) {
+					if("${loginMember.memberId}" === memberId) {
+						const $report = $('<div class="report text-13 text-secondary mt-1"></div>');
+						const $reportIcon = $('<i class="fa-regular fa-lightbulb fa-sm position-relative"></i>');
+						const $reportBtn = $('<span>신고하기</span>');
+						
+						$report.append($reportIcon, $reportBtn);
+						$infoDiv.append($report);
+					}
+				}
+				$infoStarNickname.append($star, $nickname);
+				$infoDiv.append($infoStarNickname);
+				$reviewInfo.append($infoDiv);
+				$userImage.append($userIcon);
+				$reviewBox.append($userImage, $reviewInfo);
+				$("#listSection").append($reviewBox);
+				
+			}
+			<%--
+			<div class="reviewBox d-flex ml-3 mb-5">
+				<div class="image col-md-3 px-0">
+					<i class="fa-solid fa-circle-user fa-5x" style="color:rgb(235,235,235);"></i>
+				</div>
+				<div class="info col-md-9 px-0">
+					<div class="d-flex justify-content-between">
+						<div>
+							<span>
+								<i class="fa-solid fa-star fa-xs"></i>
+								<i class="fa-solid fa-star fa-xs"></i>
+								<i class="fa-solid fa-star fa-xs"></i>
+								<i class="fa-solid fa-star fa-xs"></i>
+								<i class="fa-solid fa-star fa-xs"></i>
+							</span>
+							<span class="ml-2 text-14">	캠퍼길동</span>
+						</div>
+						<div class="report text-13 text-secondary mt-1">
+							<i class="fa-regular fa-lightbulb fa-sm position-relative"></i>
+							<span>신고하기</span>
+						</div>
+					</div>
+					<div class="content text-13">
+						좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다.
+						좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다.
+					</div>
+					<div class="text-right text-secondary text-13">2022-07-20</div>
+				</div>
+			</div>
+			--%>
+		},
+		error: console.log
+	});
+});
+
+// 판매자 정보 판매상품 목록 조회 비동기
+/* document.querySelect("#productList").addEventListener("click", (e) => {
+	$.ajax({
+		url: "${pageContext.request.contextPath}/tradereview/productList",
+		data: {memberId},
+		success(response) {
+			console.log(response);
+		},
+		error: console.log(error);
+	});
+}); */
+
 </script>
 </html>
