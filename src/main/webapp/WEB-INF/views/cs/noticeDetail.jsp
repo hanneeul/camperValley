@@ -54,7 +54,7 @@
 			<div class="noticeDetail_view">
 			<c:if test="${not empty notice.attachments}">
 				<c:forEach items="${notice.attachments}" var="attach" varStatus="vs">
-			<img src="${pageContext.request.contextPath}/resources/upload/cs/${attach.renamedFilename}" alt="" class="mt-3"/>
+			<img src="${pageContext.request.contextPath}/resources/upload/cs/${attach.renamedFilename}" alt="" class="mt-3" style="max-width:100%"/>
 			</c:forEach>
 		</c:if>
 			<p class="mt-3">${notice.content}</p>

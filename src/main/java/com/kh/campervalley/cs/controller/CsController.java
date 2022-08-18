@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.NotCompliantMBeanException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,7 +51,7 @@ public class CsController {
 			@RequestParam(defaultValue = "1") int cPage,
 			HttpServletRequest request) {
 		try {
-			int numPerPage = 7;
+			int numPerPage = 10;
 			int offset = (cPage - 1) * numPerPage;
 			
 			Map<String, Object> map = new HashMap<>();
@@ -204,6 +205,11 @@ public class CsController {
 			int readCnt = csService.readCntUpdate(noticeNo);
 			notice = csService.selectOneNoticeCollection(noticeNo);
 			log.debug("notice = {}", notice);
+			
+			notice.setTitle(notice.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+			notice.setContent(notice.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+			notice.setContent(notice.getContent().replaceAll("\n", "<br/>"));
+			
 			mav.addObject("notice", notice);
 			mav.addObject("move", csService.movePage(notice.getNoticeNo()));
 
@@ -222,7 +228,7 @@ public class CsController {
 			@RequestParam(defaultValue = "1") int cPage,
 			HttpServletRequest request) {
 		try {
-			int numPerPage = 7;
+			int numPerPage = 10;
 			int offset = (cPage - 1) * numPerPage;
 			
 			Map<String, Object> map = new HashMap<>();
