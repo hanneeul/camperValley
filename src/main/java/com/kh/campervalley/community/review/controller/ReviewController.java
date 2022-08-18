@@ -76,7 +76,6 @@ public class ReviewController {
 			}
 			
 			mav.addObject("list", list);
-			mav.addObject("searchParam", searchParam);
 			mav.addObject("pagebar", pagebar);
 			
 			mav.setViewName("community/review/reviewList");
@@ -222,7 +221,7 @@ public class ReviewController {
 		try {
 			String delDirectory = application.getRealPath("/resources/upload/community/review");
 			List<ReviewPhoto> photos = reviewService.selectOneReview(reviewNo).getPhotos();
-			if(photos != null && !photos.isEmpty()) {
+			if(photos != null && !photos.isEmpty() && photos.get(0).getRenamedFilename() != null) {
 				for(ReviewPhoto photo : photos) {
 					File delFile = new File(delDirectory, photo.getRenamedFilename());
 					if(delFile.exists()) {

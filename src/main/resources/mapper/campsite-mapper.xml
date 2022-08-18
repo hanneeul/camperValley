@@ -20,15 +20,65 @@ where
 	rownum &lt;= 30
 </select>
 
-<select id="searchCampsiteByFacltNm" resultType="campsite">
+<select id="searchCampsiteList" resultType="campsite">
+select
+	*
+from
+	campsite
+<where>
+	<if test="sido != null and sido != '' and gugun != null and gugun != ''">
+		addr1 like '%' || #{sido} || '%' ||' '|| '%' || #{gugun} || '%'
+	</if>
+	<if test="facltNm != null and facltNm != ''">
+		and faclt_nm like '%' || #{facltNm} || '%'
+	</if>
+	<if test="facltDivNm != null and facltDivNm !=''">
+    	and faclt_div_nm in
+        <foreach item="facltDivNm" index="index" collection="facltDivNm.split(',')"  open="(" separator="," close=")">
+            #{facltDivNm}
+        </foreach>
+	</if>
+	<if test="lctCl != null and lctCl !=''">
+    	and lct_cl in
+        <foreach item="lctCl" index="index" collection="lctCl.split(',')"  open="(" separator="," close=")">
+            #{lctCl}
+        </foreach>
+	</if>
+	<if test="induty != null and induty !=''">
+    	and induty in
+        <foreach item="induty" index="index" collection="induty.split(',')"  open="(" separator="," close=")">
+            #{induty}
+        </foreach>
+	</if>
+</where>
+order by
+	content_id desc
+</select>
+
+<select id="searchCampsiteThemeList" resultType="campsite">
 select
 	*
 from
 	campsite
 where
-	faclt_nm like '%' || #{facltNm} || '%'
+	<!-- thema_envrn_cl in
+	<foreach item="themaEnvrnCl" index="index" collection="themaEnvrnCl.split(',')"  open="(" separator="," close=")">
+		#{themaEnvrnCl}
+	</foreach> -->
+	thema_envrn_cl = #{themaEnvrnCl}
 order by
 	content_id desc
+</select>
+
+<select id="selectOneCampsite" resultType="campsiteExt">
+select
+	*
+from
+	campsite
+		left join campsite_facility
+			using(content_id)
+where
+	content_id = #{contentId}
 </select>
 
 </mapper>
