@@ -17,6 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.campervalley.campsite.model.common.CampsiteApiData;
 import com.kh.campervalley.campsite.model.dto.CampsiteExt;
 import com.kh.campervalley.campsite.model.service.CampsiteService;
+import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
+import com.kh.campervalley.community.review.model.dto.ReviewComment;
+import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,19 +41,27 @@ public class CampsiteController {
 			@RequestParam(required = false) String sido, 
 			@RequestParam(required = false) String gugun, 
 			@RequestParam(required = false) String facltNm, 
-			HttpServletRequest request) {
+			@RequestParam(required = false) String facltDivNm, 
+			@RequestParam(required = false) String lctCl, 
+			@RequestParam(required = false) String induty, 
+			HttpServletRequest request) throws Exception {
 		try {
 			List<CampsiteExt> list = null;
 			
-			Map<String, Object> addr1 = new HashMap<>();
-			addr1.put("sido", sido);
-			addr1.put("gugun", gugun);
+			Map<String, Object> searchParam = new HashMap<>();
+			searchParam.put("sido", sido);
+			searchParam.put("gugun", gugun);
+			searchParam.put("facltNm", facltNm);
+			searchParam.put("facltDivNm", facltDivNm);
+			searchParam.put("lctCl", lctCl);
+			searchParam.put("induty", induty);
 			
-			if(facltNm == null) {
+			if(sido == null && gugun == null && facltNm == null && 
+					facltDivNm == null && lctCl == null && induty == null) {
 				list = campsiteService.recentCampsiteList();
 			}
 			else {
-				list = campsiteService.searchCampsiteByFacltNm(facltNm);
+				list = campsiteService.searchCampsiteList(searchParam);
 			}
 			mav.addObject("list", list);
 			mav.setViewName("campsite/searchDetail");
@@ -63,12 +74,41 @@ public class CampsiteController {
 	}
 	
 	@GetMapping("/searchTheme")
-	public void searchTheme(Model model) {
-		List<CampsiteExt> list = campsiteService.recentCampsiteList();
-        model.addAttribute("list", list);
+	public ModelAndView searchTheme(
+			ModelAndView mav, 
+			@RequestParam(required = false) String themaEnvrnCl) throws Exception {
+		try {
+			List<CampsiteExt> list;
+			
+			Map<String, Object> searchParam = new HashMap<>();
+			searchParam.put("themaEnvrnCl", themaEnvrnCl);
+			
+			if(themaEnvrnCl == null) {
+				list = campsiteService.recentCampsiteList();
+			}
+			else {
+				list = campsiteService.searchCampsiteThemeList(searchParam);
+			}
+			mav.addObject("list", list);
+			mav.setViewName("campsite/searchTheme");
+		} catch (Exception e) {
+			log.error("캠핑장 목록 조회 오류", e);
+			throw e;
+		}
+		return mav;
 	}
 	
 	@GetMapping("/infoView")
-	public void infoView() {}
+	public ModelAndView infoView(ModelAndView mav, @RequestParam long contentId) throws Exception {
+		try {
+			CampsiteExt campsite = campsiteService.selectOneCampsite(contentId);
+			mav.addObject("campsite", campsite);
+			mav.setViewName("campsite/infoView");
+		} catch (Exception e) {
+			log.error("캠핑장 상세 조회 오류", e);
+			throw e;
+		}
+		return mav;
+	}
 	
 }
