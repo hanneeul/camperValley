@@ -8,7 +8,7 @@ import com.kh.campervalley.community.camper.model.dto.CamperExt;
 
 public interface CamperService {
 
-	public static final int CAMPER_NUM_PER_PAGE = 5;
+	int CAMPER_NUM_PER_PAGE = 5;
 	
 	int insertCamper(Camper camper);
 

@@ -41,12 +41,12 @@ public class CamperController {
 	
 	// 비동기 요청처리
 	@GetMapping("/moreCamperList")
-	public String moreCamperList(
+	public ModelAndView moreCamperList(
 			@RequestParam int cPage, 
 			@RequestParam(required = false) String isChk, 
 			@RequestParam(required = false) String searchType, 
 			@RequestParam(required = false) String searchKeyword, 
-			Model model) {
+			ModelAndView mav) {
 		try {
 			Map<String, Object> param = new HashMap<>();
 			
@@ -55,13 +55,14 @@ public class CamperController {
 			param.put("searchKeyword", searchKeyword);
 			int numPerPage = CamperService.CAMPER_NUM_PER_PAGE;
 			List<Camper> camperList = camperService.selectMoreCamperList(cPage, numPerPage, param);
-			model.addAttribute("camperList", camperList);
-			model.addAttribute("param", param);
+			mav.addObject("camperList", camperList);
+			mav.addObject("param", param);
+			mav.setViewName("jsonView");
 		} catch(Exception e) {
 			log.error("캠퍼모집 목록 추가 조회 오류", e);
 			throw e;
 		}
-		return "jsonView";
+		return mav;
 	}
 	
 	@GetMapping("/camperEnroll")
@@ -82,15 +83,16 @@ public class CamperController {
 	
 	// 비동기 요청처리
 	@GetMapping("/camperDetail")
-	public String camperDetail(@RequestParam int camperNo, Model model) {
+	public ModelAndView camperDetail(@RequestParam int camperNo, ModelAndView mav) {
 		try {
 			CamperExt camper = camperService.selectCamperOne(camperNo);
-			model.addAttribute("camper", camper);
+			mav.addObject("camper", camper);
+			mav.setViewName("jsonView");
 		} catch(Exception e) {
 			log.error("캠퍼모집 상세 조회 오류", e);
 			throw e;
 		}
-		return "jsonView";
+		return mav;
 	}
 	
 	@PostMapping("/camperDelete")

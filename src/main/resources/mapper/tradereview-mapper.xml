@@ -26,4 +26,35 @@
 	where
 		review_no = #{reviewNo}
 </update>
+
+<select id="selectReviewList" resultType="TradeReviewExt">
+	select 
+		t.*,
+		m.nickname
+	from
+    	trade_review t left join used_product u
+        	on(t.product_no = u.product_no)
+            	left join member m
+       		on(u.buyer_id = m.member_id)
+	where
+		seller_id = #{memberId}
+</select>
+
+
+<select id="selectCounts" resultMap="countsMap">
+	select
+		round(avg(case when u.seller_id = #{memberId} then t.star_score end), 1) star_score_avg,
+	    count(case when u.seller_id = #{memberId} then 1 end) product_count,
+	    count(case when u.seller_id = #{memberId} and t.review_no is not null then 1 end) review_count
+	from
+	    used_product u left join trade_review t
+	        on(u.product_no = t.product_no)
+</select>
+
+
+<resultMap type="map" id="countsMap">
+	<result column="star_score_avg" property="starScoreAvg"></result>
+	<result column="product_count" property="productCount"></result>
+	<result column="review_count" property="reviewCount"></result>
+</resultMap>
 </mapper>
