@@ -192,16 +192,11 @@ image_sub > .small {
 	padding: 0px 1rem;
 }
 .subjectSize {
-	margin-left: 1.5rem;
-	font-size: 0.8rem;
-	width: 5rem;
-	text-align: right;
-	color: gray;
-}
-.subjectSize > span {
-    position: absolute;
-    left: 1074px;
-    top: 586px;
+    margin-left: 40.8rem;
+    font-size: 0.8rem;
+    width: 5rem;
+    text-align: right;
+    color: gray;
 }
 .subjectCancle {
 	position: absolute;

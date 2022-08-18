@@ -265,6 +265,7 @@ public class UsedProductController  {
 		log.debug("member = {}", member);
 		// 물건 총 개수
 		int sellerProdNum = usedProductService.getSellerProdNum(Integer.parseInt(productNo));
+		System.out.println(member.getProfileImg());
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("profileImg", member.getProfileImg());

@@ -32,7 +32,7 @@
 							</div>
 						</div>
 					</div>
-					<button class="transaction_btn">거래완료</button>
+					<button id="transaction_btn">거래완료</button>
 				</div>
 				<div id="chat_container">
 					<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
@@ -81,4 +81,11 @@
 	</div>
 </body>
 </html>
+
+<script>
+$('#transaction_btn').click(function() {
+	
+});
+</script>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

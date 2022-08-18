@@ -67,19 +67,19 @@ $(document).ready(function() {
 			$('.owner').val(data.member.memberId);
 			
 			// 상점 사진
-			if(data.member.profileImg == null) {
+			if(data.profileImg == null) {
 				$('.sellerProfileImg_Link').append($('<img/>', {
-					src : "/campervalley/resources/images/noImg.png",
+					src : "/campervalley/resources/images/usedProduct/noProfile.png",
 					width : '54',
 					height : '54',
-					alt : '프로필 없음'
+					alt : ''
 				})) 
 			} else {
 				$('.sellerProfileImg_Link').append($('<img/>', {
-					src : '/campervalley/resources/upload/member/' + data.member.profileImg,
+					src : '/campervalley/resources/upload/member/' + data.profileImg,
 					width : '54',
 					height : '54',
-					alt : '판매자 프로필'
+					alt : ''
 				})) 
 			}
 			
@@ -266,7 +266,7 @@ $(document).ready(function() {
 										   		id="productDetailForm" method="post" action="/campervalley/usedProduct/chat/chat" target="chat">
 										   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />.
 										   		<div class="detail-info__chat" >
-													<button type="submit" id="chat_btn" style="background-color: #639A67">
+													<button type="submit" id="chat_btn" style="background-color: #639A67; margin-left: -12px;">
 														<i class="fa-solid fa-comment"></i>			 	
 													채팅하기</button>
 										   		</div>
@@ -451,9 +451,9 @@ const productDelete = () => {
 	}
 };
 
-document.querySelector("#update_btn").addEventListener('click', (e) => {
+/* document.querySelector("#update_btn").addEventListener('click', (e) => {
 	location.href = '/campervalley/usedProduct/product/productUpdate';
-});
+}); */
 
 /* 채팅하기 */ 
 $('#chat_btn').click(function() {
