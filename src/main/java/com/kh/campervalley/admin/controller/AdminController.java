@@ -169,7 +169,7 @@ public class AdminController {
 			@RequestParam(defaultValue = "1") int cPage,
 			HttpServletRequest request) {
 		try {
-			int numPerPage = 7;
+			int numPerPage = 10;
 			int offset = (cPage - 1) * numPerPage;
 			
 			Map<String, Object> map = new HashMap<>();
@@ -204,7 +204,7 @@ public class AdminController {
 			@RequestParam(defaultValue = "1") int cPage,
 			HttpServletRequest request) {
 		try {
-			int numPerPage = 7;
+			int numPerPage = 10;
 			int offset = (cPage - 1) * numPerPage;
 			
 			Map<String, Object> map = new HashMap<>();
@@ -239,7 +239,7 @@ public class AdminController {
 			@RequestParam(defaultValue = "1") int cPage,
 			HttpServletRequest request) {
 		try {
-			int numPerPage = 7;
+			int numPerPage = 10;
 			int offset = (cPage - 1) * numPerPage;
 			
 			Map<String, Object> map = new HashMap<>();

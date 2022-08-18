@@ -6,6 +6,9 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<% pageContext.setAttribute("replaceChar", "\n"); %>
+
 <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/cs/cs.css" />
@@ -51,13 +54,13 @@
                     <li class="article" id="a1" >
                         <p class="q"><a href="#a1">
                         <span class="icon_q ml-2">Q</span>
-                        <span style="margin-left : 20px;">${list.title}</span>
+                        <span style="margin-left : 20px;">${fn:replace(list.title, replaceChar, "</br>")}</span>
                         <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width: 15px;" alt="" class="mt-1 mr-2"></span>
                         </a></p>
 
                         <div class="a">
                         <span class="icon_a ml-2" >A</span>
-                        <div style="margin-left: 65px; margin-top: -28px;">${list.content}</div>
+                        <div style="margin-left: 65px; margin-top: -28px;">${fn:replace(list.content, replaceChar, "</br>")}</div>
                          <sec:authorize access="hasRole('ADMIN')">
                         <div class="faq-btn mt-3 mb-2" style="text-align: center;">
 								<button class="btn-update btn btn-outline-primary btn-sm" value="${list.noticeNo}">수정</button>
