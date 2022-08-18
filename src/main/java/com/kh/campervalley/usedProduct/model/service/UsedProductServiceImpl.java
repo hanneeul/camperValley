@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.usedProduct.model.dao.UsedProductDao;
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
@@ -158,7 +159,13 @@ public class UsedProductServiceImpl implements UsedProductService {
 		Map<String, Object> param = new HashMap<>();
 		
 		// 검색어
-		param.put("productTitle", keyword);
+		if (keyword.substring(0, 1).equals("@")) {
+			keyword = keyword.substring(1, keyword.length());
+			param.put("nickname", keyword);
+		} else {
+			
+			param.put("productTitle", keyword);
+		}
 		
 		// 페이징 처리
 		int pageSize = 20;
@@ -187,6 +194,16 @@ public class UsedProductServiceImpl implements UsedProductService {
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("order", order);
 		
+	}
+
+	@Override
+	public Member getSellerInfo(int productNo) {
+		return usedProductDao.getSellerInfo(productNo);
+	}
+
+	@Override
+	public int getSellerProdNum(int productNo) {
+		 return usedProductDao.getSellerProdNum(productNo);
 	}
 
 }

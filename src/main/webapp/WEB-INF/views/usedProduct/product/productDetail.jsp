@@ -12,7 +12,6 @@
 
 <input type="hidden" class="hiddenNo" value="${usedProduct.productNo}"/>
 <input type="hidden" class="memberId" value="${loginMember.memberId}"/>
-<input type="hidden" class="wp" value="${wishProduct}"/>
 <input type="hidden" class="owner" value=""/>
 
 <script>
@@ -50,6 +49,55 @@ $(document).ready(function() {
 });
 //이미지 끝까지 가면 버튼 사라지기
 //첫 이미지로 돌아오기=
+</script>
+<script>
+
+$(document).ready(function() {
+	
+	$.ajax({
+		type : 'GET',
+		url : '/campervalley/usedProduct/product/getSellerInfo',
+		data : {
+			productNo : $('.hiddenNo').val()
+		},
+		dataType : 'json',
+		success : function(data) {
+			// 클릭 -> 해당 판매자 정보로 이동
+			
+			$('.owner').val(data.member.memberId);
+			
+			// 상점 사진
+			if(data.member.profileImg == null) {
+				$('.sellerProfileImg_Link').append($('<img/>', {
+					src : "/campervalley/resources/images/noImg.png",
+					width : '54',
+					height : '54',
+					alt : '프로필 없음'
+				})) 
+			} else {
+				$('.sellerProfileImg_Link').append($('<img/>', {
+					src : '/campervalley/resources/upload/member/' + data.member.profileImg,
+					width : '54',
+					height : '54',
+					alt : '판매자 프로필'
+				})) 
+			}
+			
+			$('.sellerInfo_name').text(data.member.nickname);
+			
+			// 상품 총 개수
+			$('.productNumLink').text('상품 '+data.sellerProdNum);
+			
+			// -개 상품 더보기
+			$('.moreProdLink_Num').text((data.sellerProdNum-1) + '개');
+		
+		}, error : function() {
+			alert('에러!');
+		}
+		
+	});
+	
+});
 </script>
 <div id="section" style="width: 98%; margin:30px auto;">
 	<div class="detail_area">
@@ -195,28 +243,30 @@ $(document).ready(function() {
 										<div class="detail-info__btn-list" style="display: flex;">
 											<c:choose>
 												 <c:when test="${empty wishProduct}">
-												<!-- 관심상품(찜) -->			<!-- 꽉찬하트 -->
-												   		<div class="detail-info__zzim">
-															<button id="zzim_btn" class="heartBtn heart-click">
-																<i class="fa-solid fa-heart"></i> 관심상품
-															</button>
-														</div>
-												  </c:when>
-												  <c:otherwise>
+												   	<!-- 관심상품(찜) -->	
 												   		<div class="detail-info__zzim">
 															<button  id="zzim_btn" class="heartBtn heart-click">
 																<i class="fa-regular fa-heart"></i>
 															<span id="zzim_span"></span>관심상품</button>
+														</div>
+												  </c:when>
+												  <c:otherwise>
+														<!-- 꽉찬하트 -->
+												   		<div class="detail-info__zzim">
+															<button id="zzim_btn" class="heartBtn heart-click">
+																<i class="fa-solid fa-heart"></i> 관심상품
+															</button>
 														</div>
 
 												  </c:otherwise>
 												</c:choose>
 										   <!-- 채팅하기 -->
 										   <!-- post 날린 요청의 결과 chatRoom(윈도우 팝업창)에서 볼 수 있음 -->
-										   <form 
+	   									   <form 
 										   		id="productDetailForm" method="post" action="/campervalley/usedProduct/chat/chat" target="chat">
+										   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />.
 										   		<div class="detail-info__chat" >
-													<button type="submit" id="chat_btn" style="background-color: #639A67;">
+													<button type="submit" id="chat_btn" style="background-color: #639A67">
 														<i class="fa-solid fa-comment"></i>			 	
 													채팅하기</button>
 										   		</div>
@@ -262,12 +312,9 @@ $(document).ready(function() {
 					</div>
 						<div class="seller">
 							<a class="sellerProfileImg_Link" href="#">
-								<!-- productDetail.js -->
-								<img src="" class="float-start" alt="">
 							</a>
 							<div class="sellerInfoWrap">
-								<a class="sellerInfo_name" href="#" 
-										style="font-size: 14px;">홍길동길동<!-- productDetail.js --></a>
+								<a class="sellerInfo_name" href="#"><!-- productDetail.js --></a>
 								<div class="sellerInfo_productNum">
 									<a class="productNumLink" href="#"><!-- productDetail.js --></a>
 								</div>
@@ -279,23 +326,8 @@ $(document).ready(function() {
 						</div>
 						<div class="sellerInfo_moreProd">
 							<a class="moreProdLink" href="#">
-								<span style="color: rgb(247, 47, 51);">9개</span><span class="moreProdLink_Num">&nbsp판매상품 더보기</span>		 
+								<span class="moreProdLink_Num" style="color: rgb(247, 47, 51);"></span><span>상품 더보기</span>		 
 							</a>
-						</div>
-						<!-- 별점 & 평점 -->
-						<div class="sellerInfo_IndiWrap">
-							<!-- 상점평점 -->
-							<div class="sellereScore_title">
-								<div style="margin-bottom:1px;">판매자평점</div>
-								<div class="sellerStar"> 
-									<i class="star fa-solid fa-star"></i>
-									<i class="star fa-solid fa-star"></i>
-									<i class="star fa-solid fa-star"></i>
-									<i class="star fa-solid fa-star"></i>
-									<i class="star fa-solid fa-star"></i>
-								</div>
-							</div>
-						
 						</div>
 					</div>
 				</div>
@@ -308,6 +340,13 @@ $(document).ready(function() {
 	 </div>
 
 <script>
+//ajax 통신을 위한 csrf 설정
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$(document).ajaxSend(function(e, xhr, options) {
+    xhr.setRequestHeader(header, token);
+});
+
 /* 관심상품 */
 var productNo = $('.hiddenNo').val();
 var memberId = $('.memberId').val();
@@ -331,21 +370,6 @@ $(document).ready(function() {
 	   		alter('하트조회오류');
 	   	}
 	});
-});
-
-/* 판매자 정보 */
-$(document).ready(function() {
-	$.ajax({
-		type : 'GET',
-		url : '/campervalley/usedProduct/product/getSellerInfo',
-		data : {
-			productNo : productNo
-		},
-		dataType : 'json',
-		success :
-		
-	});
-
 });
 
 $(".heart-click").click(function() {
@@ -427,12 +451,18 @@ const productDelete = () => {
 	}
 };
 
-/* 채팅하기 */
 document.querySelector("#update_btn").addEventListener('click', (e) => {
 	location.href = '/campervalley/usedProduct/product/productUpdate';
 });
+
+/* 채팅하기 */ 
 $('#chat_btn').click(function() {
-	window.open('', 'chat', resizable=no);	
+	var popupWidth = 750;
+	var popupHeight = 500;
+	var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
+	var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
+	window.open('', 'chat', 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	
 });
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

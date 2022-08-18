@@ -22,7 +22,7 @@
 				<div class="info_container">
 					<!-- 상단(닉네임, 아이디, 프로필) -->
 					<div class="member-info_container" style="">
-						<img src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="float-start" alt="채팅상대프로필">
+						<img src="" class="float-start" alt="">
 						<div class="member-info_text-body">
 							<div class="nickname_text">
 								<p style="font-weight: 600">홍길동</p>
@@ -37,51 +37,6 @@
 				<div id="chat_container">
 					<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
 					<div class="my-chat-box"><div class="chat my-chat">안녕하세요!<input type="hidden"></div></div>
-					<!--<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
-					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
-										<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
-					<div class="my-chat-box"><div class="chat my-chat">안녕하세요!<input type="hidden"></div></div>
-					<!--<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
-					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
-										<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
-					<div class="my-chat-box"><div class="chat my-chat">안녕하세요!<input type="hidden"></div></div>
-					<!--<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
-					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
-										<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
-					<div class="my-chat-box"><div class="chat my-chat">안녕하세요!<input type="hidden"></div></div>
-					<!--<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
-					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
-					
-										<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
-					<div class="my-chat-box"><div class="chat my-chat">안녕하세요!<input type="hidden"></div></div>
-					<!--<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
-					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
-										<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
-					<div class="my-chat-box"><div class="chat my-chat">안녕하세요!<input type="hidden"></div></div>
-					<!--<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
-					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
-										<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
-					<div class="my-chat-box"><div class="chat my-chat">안녕하세요!<input type="hidden"></div></div>
-					<!--<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
-					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
-					
-										<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
-					<div class="my-chat-box"><div class="chat my-chat">안녕하세요!<input type="hidden"></div></div>
-					<!--<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
-					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
-										<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
-					<div class="my-chat-box"><div class="chat my-chat">안녕하세요!<input type="hidden"></div></div>
-					<!--<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
-					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
-										<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
-					<div class="my-chat-box"><div class="chat my-chat">안녕하세요!<input type="hidden"></div></div>
-					<!--<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
-					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
-					
-										<div class="chat-box"><div class="chat">안녕하세용 상품에 관심 있어서 채팅드립니다.<input type="hidden"></div></div>
-					<div class="my-chat-box"><div class="chat my-chat">안녕하세요!<input type="hidden"></div></div>
-					<!--<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
-					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>  -->
 				</div>
 				<!-- 하단 (입력창) -->
 				<div id="bottom_container" style="margin-top: 10.4px;">
@@ -112,7 +67,7 @@
 						</div>
 					</div>
 					<div class="chatRoom_profile">
-						<img class="other_member_img" src="${pageContext.request.contextPath}/resources/images/usedProduct/dog.jpg" class="rounded float-start" alt="다른사람프로필">
+						<img class="other_member_img" src="" class="rounded float-start" alt="">
 					</div>
 					<div class="chatRoom_content">
 						<div class="other_member_nickname">홍길동</div>

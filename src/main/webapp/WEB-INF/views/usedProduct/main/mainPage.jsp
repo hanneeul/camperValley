@@ -18,7 +18,7 @@
 		<div class="search-area">
 		  <div class="form-outline">
 		    <input type="text" id="searchProduct" name="searchProduct" 
-		    		class="form-control" autocomplete="off" placeholder="@상품명 검색">
+		    		class="form-control" autocomplete="off" placeholder="상품명, @닉네임 검색">
 		  </div>
 		  <button id="searchBtn" class="btn btn-primary" style="cursor: pointer;" onclick="search()">
 		      <i class="fas fa-search" style="color: #639A67;"></i>
