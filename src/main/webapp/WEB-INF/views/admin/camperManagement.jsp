@@ -54,7 +54,7 @@
 					<tr>
 						<td><input name="deleteList" type="checkbox" class="deleteList" value="${list.camperNo}" /></td>
 						<td>${list.camperNo}</td>
-						<td><span class="modalOpen" data-toggle="" data-target="" >${list.title}</span></td>
+						<td><span class="modalOpen" data-toggle="modal" data-target="adminCamperModal" >${list.title}</span></td>
 						<td>${list.area}</td>
 						<td>${list.memberId}</td>
 						<td>
