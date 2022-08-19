@@ -81,4 +81,6 @@ public interface AdvertiserService {
 
 	List<Map<String, Object>> selectChartData(Map<String, Object> param);
 
+	int exitAdvertiser(int advertiserNo, String memberId);
+
 }

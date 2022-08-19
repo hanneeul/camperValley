@@ -288,4 +288,17 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	public List<Map<String, Object>> selectChartData(Map<String, Object> param) {
 		return advertiserDao.selectChartData(param);
 	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public int exitAdvertiser(int advertiserNo, String memberId) {
+		int result = advertiserDao.updateAdvertiserDeletedAt(advertiserNo);
+
+		Map<String, Object> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("auth", "ROLE_AD");
+		result = advertiserDao.deleteAuthority(param);
+
+		return result;
+	}
 }
