@@ -16,7 +16,7 @@ public interface AdminDao {
 
 	Member selectOneMember(String memberId);
 
-	int memberUpdate(String memberId);
+	int memberUpdate(Member memberId);
 
 	List<NoticeExt> selectProductList(Map<String, Object> map, RowBounds rowBounds);
 

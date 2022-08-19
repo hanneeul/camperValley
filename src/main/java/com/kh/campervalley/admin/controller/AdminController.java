@@ -69,14 +69,14 @@ public class AdminController {
 	}
 	
 	@PostMapping("/memberUpdate")
-	public String memberUpdate(@RequestParam Member member, RedirectAttributes redirectAttr) {
+	public String memberUpdate(Member memberId, RedirectAttributes redirectAttr) {
 		try {
-			int result = adminService.memberUpdate(member.getMemberId());
+			int result = adminService.memberUpdate(memberId);
 			redirectAttr.addFlashAttribute("msg", "회원 정보가 수정되었습니다.");
 		} catch (Exception e) {
 			log.error("회원 정보 수정 오류", e);
 		}
-		return "admin/memberList";
+		return "redirect:/admin/memberList";
 	}
 	
 	

@@ -42,8 +42,7 @@
 					<tr>
 						<th class="col-md-1"><input name="checkAll" id="checkAll" type="checkbox" /></th>
 						<th class="col-md-1">No.</th>
-						<th class="col-md-4">제목</th>
-						<th>지역</th>
+						<th class="col-md-6">제목</th>
 						<th>아이디</th>
 						<th>작성일</th>
 					</tr>
@@ -51,11 +50,20 @@
 				<tbody>
 				<form action="${pageContext.request.contextPath}/admin/camperDelete" method="post" name="deleteCamperFrm">
 				<c:forEach items="${list}" var="list" varStatus="vs">
-					<tr>
+					<tr data-camper-no="${list.camperNo}" 
+					data-title="${list.title}" 
+					data-content="${list.content}"
+					data-purpose="${list.purpose}"
+					data-expected-cost="${list.expectedCost}"
+					data-chat-url="${list.chatUrl}"
+					data-departure-date="${list.departureDate}"
+					data-arrival-date="${list.arrivalDate}"
+					data-area="${list.area}"
+					data-member-count="${list.memberCount}"
+					data-status="${list.status}">
 						<td><input name="deleteList" type="checkbox" class="deleteList" value="${list.camperNo}" /></td>
 						<td>${list.camperNo}</td>
-						<td><span class="modalOpen" data-toggle="modal" data-target="adminCamperModal" >${list.title}</span></td>
-						<td>${list.area}</td>
+						<td><span class="modalOpen" data-toggle="modal" data-target="#adminCamperModal" >${list.title}</span></td>
 						<td>${list.memberId}</td>
 						<td>
 							<fmt:parseDate value="${list.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
@@ -74,60 +82,51 @@
 </div>
 
 <!-- 모 -->
+<style>
+.modal-header {
+	background-color: #fff !important;
+	color: #000 !important;
+}
+.modal-header span {
+	font-weight: 400;
+}
+</style>
 <div class="modal fade" id="adminCamperModal" tabindex="-1" role="dialog" aria-labelledby="#adminProductModalLabel" aria-hidden="true">
-		  <div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<h5 class="modal-title" id="adminCamperModalLabel">캠퍼모집</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true" style="color:#fff">&times;</span>
-				</button>
+			<div class="modal-dialog modal-dialog-centered px-5 modal-dialog-scrollable modal-lg" role="document">
+				<div class="modal-content px-3  pt-3">
+					<div class="modal-header  d-block  pb-4">
+						<h4 class="text-center mb-4 font-weight-bold" id="title">캠퍼모집 제목</h4>
+						<div class="d-flex justify-content-between font-weight-bold" >
+							<div class="align-self-bottom align-self-end">
+								<span id="departureDate"></span><span> ~ </span><span id="arrivalDate"></span>
+								<br />
+								<span id="area"></span>
+							</div>
+							<div>
+							<br />
+								<span class="text-center" id="memberCount"></span><span>명</span>
+								<br />
+								<span id="status"></span>
+							</div>
+						</div>
+					</div>
+					<div class="modal-body py-4">
+						<h6 class="font-weight-bold">상세내용</h6>
+						<p id="modal-content"></p>
+						<h6 class="font-weight-bold">이용수칙</h6>
+						<p id="purpose"></p>
+						<h6 class="font-weight-bold">예상비용</h6>
+						<p id="expectedCost"></p>
+						<h6 class="font-weight-bold">채팅 URL</h6>
+						<p id="chatUrl"></p>
+					</div>
+					<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 			  </div>
-			  <div class="modal-body pb-1">
-				 <form name="adminCamperUpdateFrm">
-					<table class="table" id="tb-modal">
-					<tr>
-						<td>제목</td>
-						<td><input type="text" class="form-control body-contents" id="title" value=""></td>
-					</tr>
-					<tr>
-						<td>모집상태</td>
-						<td>
-							<select class="modal-category ml-0">
-								<option value="">모집중</option>
-								<option value="">모집완료</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>출발일</td>
-						<td><input class="form-control"></td>
-					</tr>
-					<tr>
-						<td>도착일</td>
-						<td><input class="form-control"></td>
-					</tr>
-					<tr>
-						<td>지역</td>
-						<td><input class="form-control"></td>
-					</tr>
-					<tr>
-						<td>모집인원</td>
-						<td><input class="form-control"></td>
-					</tr>
-					<tr>
-						<td>내용</td>
-						<td><textarea name="" id="text-contents" cols="30" rows="10" class="form-control body-contents" style="height:150px;"></textarea></td>
-					</tr>
-				  </table>
 				</div>
-				  </form> 
-			  <div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-			  </div>
-			</div>
-		  </div>
+	        </div>
 		</div>
+		
 <script>
 document.querySelectorAll('.btn-search').forEach((btn) => {
 	btn.addEventListener('click', (e) => {
@@ -167,6 +166,41 @@ $(document).ready(function() {
         }
     });
 });
+
+document.querySelectorAll(".modalOpen").forEach((modal) => {
+	modal.addEventListener('click', (e) => {
+		const tr = e.target.parentElement.parentElement;
+
+		const title = tr.dataset.title;
+		const content = tr.dataset.content;
+		const purpose = tr.dataset.purpose;
+		const expectedCost = tr.dataset.expectedCost;
+		const departureDate = tr.dataset.departureDate;
+		const arrivalDate = tr.dataset.arrivalDate;
+		const area = tr.dataset.area;
+		const memberCount = tr.dataset.memberCount;
+		const chatUrl = tr.dataset.chatUrl;
+		
+		const status = tr.dataset.status;
+		
+		if(status === "I") {
+			document.querySelector("#status").innerHTML = '모집중'
+		} else{
+			document.querySelector("#status").innerHTML = '모집완료'
+		}
+		
+		document.querySelector("#title").innerHTML = title;
+		document.querySelector("#modal-content").innerHTML = content;
+		document.querySelector("#purpose").innerHTML = purpose;
+		document.querySelector("#expectedCost").innerHTML = expectedCost;
+		document.querySelector("#departureDate").innerHTML = departureDate;
+		document.querySelector("#arrivalDate").innerHTML = arrivalDate;
+		document.querySelector("#area").innerHTML = area;
+		document.querySelector("#memberCount").innerHTML = memberCount;
+		document.querySelector("#chatUrl").innerHTML = chatUrl;
+	})
+})
+
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
