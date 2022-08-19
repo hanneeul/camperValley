@@ -11,8 +11,6 @@
 
 <!-- Kakao 지도 Javascript API -->
 <spring:eval var="kakaoMapKey" expression="@customProperties['api.kakaoMap']" />
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoMapKey}"></script>
-<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoMapKey}&libraries=services,clusterer,drawing"></script>
 
 
@@ -92,7 +90,7 @@
 				</div>
 			</div>
 			<div class="row mx-3 p-3 float-right">
-				<button type="submit" id="searchThemeBtn">테마검색하기&nbsp;&gt;</button>
+				<button type="submit" id="selectThemeBtn">테마검색하기&nbsp;&gt;</button>
 			</div>
 		</div>
 	</div>
