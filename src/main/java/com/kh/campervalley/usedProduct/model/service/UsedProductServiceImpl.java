@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -205,5 +206,19 @@ public class UsedProductServiceImpl implements UsedProductService {
 	public int getSellerProdNum(int productNo) {
 		 return usedProductDao.getSellerProdNum(productNo);
 	}
+
+	/*----- JH START ----- */
+	@Override
+	public List<UsedProduct> selectProductListByMemberId(int cPage, int numPerPage, String memberId) {
+		int offset = (cPage - 1) * numPerPage;
+		RowBounds rowBounds = new RowBounds(offset, numPerPage);
+		return usedProductDao.selectProductListByMemberId(rowBounds, memberId);
+	}
+
+	@Override
+	public int selectTotalProductByMemberId(String memberId) {
+		return usedProductDao.selectTotalProductByMemberId(memberId);
+	}
+	/*----- JH END ----- */
 
 }

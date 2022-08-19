@@ -15,7 +15,6 @@ public interface CamperDao {
 
 	int insertCamper(Camper camper);
 
-	@Select("select c.*, (select nickname from member where member_id = c.member_id) nickname from camper c order by c.camper_no desc")
 	List<CamperExt> selectCamperList(RowBounds rowBounds);
 
 	List<Camper> selectMoreCamperList(RowBounds rowBounds, Map<String, Object> param);

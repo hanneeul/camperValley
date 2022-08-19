@@ -117,6 +117,7 @@ document.querySelector("#communitySearchBtn").addEventListener("click", (e) => {
 
 // 모집중 게시글만 조회 toggle 클릭 시 더보기/상세보기 비동기 요청
 document.querySelector(".chk_box").addEventListener('change', ()=> {
+	if(!$("#boardBoxSection").html()) return; // 만족하는 게시글 없을 시 요청x
 	$("#boardBoxSection").html("");
 	cPage = 1;
 	if(document.querySelector("#isChk").checked) {

@@ -106,6 +106,7 @@
 						</div> -->
 						
 					</div>
+					<div id="pagebarSection"></div>
 				</div>
 			</div>
 		</div>
@@ -118,29 +119,72 @@ $("#profileCheck")
 });
 
 /* const memberId = ${memberId}; */
+/* let cPage = 1; */
+$(document).ready(() =>{
+	renderProductList(1);
+	
+})
 const memberId = "honggd";
-let cPage = 1;
 
 $(".profile-nav li").click((e) => {
 	$(".profile-nav li").removeClass("active");
 	$(e.target).addClass("active");
 });
 
+// 판매자 정보 판매상품 목록 조회 비동기
+const renderProductList = (cPage) => {
+	$("#listSection").html("");
+	$("#pagebarSection").html("");
+	$.ajax({
+		url: "${pageContext.request.contextPath}/usedProduct/productList",
+		data: {memberId, cPage},
+		success(response) {
+			const {productList, pagebar} = response;
+			for(let i = 0; i < productList.length; i++) {
+				const $productBox = $(`<div class="productBox d-flex ml-3 mb-4" onclick='location.href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=\${productList[i].productNo}"'></div>`);
+				const $productImgBox = $('<div class="image col-md-3 px-0"></div>');
+				const $productImg = $(`<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/\${productList[i].productImg1}" />`);
+				const $productInfoBox = $('<div class="info col-md-9 px-0"></div>');
+				const $titleCreatedAt = $('<div class="d-flex justify-content-between"></div>');
+				const $title = $(`<div class="title text-15 font-weight-bold">\${productList[i].productTitle}</div>`);
+				const createdAt = productList[i].productEnrollTime;
+				const $createdAt = $(`<div class="createdAt text-13 text-secondary">\${createdAt.substr(0,4)}.\${createdAt.substr(5,2)}.\${createdAt.substr(8,2)}</div>`);
+				const $price = $(`<div class="price my-2 font-weight-bold">\${	parseInt(productList[i].productPrice).toLocaleString()}원</div>`);
+				const $content = $('<div class="content text-13"></div>');
+				const content = productList[i].productContent;
+				if(content.length <= 50) $content.html(content);
+				else $content.html(content.substr(0, 50) + '...');
+				$productImgBox.append($productImg);
+				$titleCreatedAt.append($title, $createdAt);
+				$productInfoBox.append($titleCreatedAt, $price, $content);
+				$productBox.append($productImgBox, $productInfoBox);
+				$("#listSection").append($productBox);
+			}
+			$("#pagebarSection").append(pagebar);
+			$(".pagination a").on("click", () =>{
+				return false;
+			});
+		},
+		error: console.log
+	});
+}
+
 // 판매자 정보 거래후기 목록 조회 비동기
-document.querySelector("#reviewList").addEventListener("click", (e) => {
+const renderReviewList = () => {
+	$("#listSection").html("");
+	$("#pagebarSection").html("");
 	$.ajax({
 		url: "${pageContext.request.contextPath}/tradereview/reviewList",
 		data: {memberId, cPage},
 		success(response) {
-			const {reviewList} = response;
-			console.log(reviewList, reviewList.length);
+			const {reviewList, pagebar} = response;
 			for(let i = 0; i < reviewList.length; i++) {
-				const $reviewBox = $('<div class="reviewBox d-flex ml-3 mb-5"></div>');
-				const $userImage = $('<div class="image col-md-3 px-0"></div>');
+				const $reviewBox = $('<div class="reviewBox d-flex ml-3"></div>');
+				const $userImage = $('<div class="image col-md-2 px-0"></div>');
 				const $userIcon = $('<i class="fa-solid fa-circle-user fa-5x" style="color:rgb(235,235,235);"></i>');
-				const $reviewInfo = $('<div class="info col-md-9 px-0">');
-				const $infoDiv = $('<div class="d-flex justify-content-between">');
-				const $infoStarNickname = $('<div></div>');
+				const $reviewInfo = $('<div class="info col-md-10 pl-0 pr-4 ml-4">');
+				const $infoDiv1 = $('<div class="d-flex justify-content-between">');
+				const $starNickname = $('<div></div>');
 				const $star = $('<span></span>');
 				for(let j = 0; j < 5; j++) {
 					if(j <= reviewList[i].starScore - 1)
@@ -148,73 +192,45 @@ document.querySelector("#reviewList").addEventListener("click", (e) => {
 					else
 						$star.append('<i class="fa-solid fa-star fa-xs" style="color: rgb(235, 235, 235)">')
 				}
-				$star.append(`<span class="px-2">\${reviewList[i].starScore}점</span>`);
+				$star.append(`<span class="px-2 text-13">\${reviewList[i].starScore}점</span>`);
 				const $nickname = $(`<span class="ml-2 text-14">\${reviewList[i].nickname}</span>`);
 				// 분기처리 loginMember.memberId와 memberId비교
-				if(${not empty loginMember}) {
-					if("${loginMember.memberId}" === memberId) {
+				/* if(${not empty loginMember}) {
+					if("${loginMember.memberId}" === memberId) { */
 						const $report = $('<div class="report text-13 text-secondary mt-1"></div>');
 						const $reportIcon = $('<i class="fa-regular fa-lightbulb fa-sm position-relative"></i>');
 						const $reportBtn = $('<span>신고하기</span>');
 						
 						$report.append($reportIcon, $reportBtn);
-						$infoDiv.append($report);
-					}
-				}
-				$infoStarNickname.append($star, $nickname);
-				$infoDiv.append($infoStarNickname);
-				$reviewInfo.append($infoDiv);
+						$infoDiv1.append($report);
+					/* }
+				} */
+				const $content = $(`<div class="content text-13">\${reviewList[i].content}</div>`);
+				const $createdAt = $(`<div class="text-right text-secondary text-13"/*  style="line-height: 100px;" */>\${reviewList[i].createdAt.year}.\${reviewList[i].createdAt.monthValue}.\${reviewList[i].createdAt.dayOfMonth}</div>`);
+				const $infoDiv2 = $('<div class="d-flex justify-content-between"></div>');
+				$starNickname.append($star, $nickname);
+				$infoDiv1.prepend($starNickname);
+				$infoDiv2.append($content, $createdAt);
+				$reviewInfo.append($infoDiv1, $infoDiv2);
 				$userImage.append($userIcon);
 				$reviewBox.append($userImage, $reviewInfo);
 				$("#listSection").append($reviewBox);
-				
 			}
-			<%--
-			<div class="reviewBox d-flex ml-3 mb-5">
-				<div class="image col-md-3 px-0">
-					<i class="fa-solid fa-circle-user fa-5x" style="color:rgb(235,235,235);"></i>
-				</div>
-				<div class="info col-md-9 px-0">
-					<div class="d-flex justify-content-between">
-						<div>
-							<span>
-								<i class="fa-solid fa-star fa-xs"></i>
-								<i class="fa-solid fa-star fa-xs"></i>
-								<i class="fa-solid fa-star fa-xs"></i>
-								<i class="fa-solid fa-star fa-xs"></i>
-								<i class="fa-solid fa-star fa-xs"></i>
-							</span>
-							<span class="ml-2 text-14">	캠퍼길동</span>
-						</div>
-						<div class="report text-13 text-secondary mt-1">
-							<i class="fa-regular fa-lightbulb fa-sm position-relative"></i>
-							<span>신고하기</span>
-						</div>
-					</div>
-					<div class="content text-13">
-						좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다.
-						좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다.
-					</div>
-					<div class="text-right text-secondary text-13">2022-07-20</div>
-				</div>
-			</div>
-			--%>
+			$("#pagebarSection").append(pagebar);
+			$(".pagination a").on("click", () =>{
+				return false;
+			});
 		},
 		error: console.log
 	});
+}
+
+// pagebar 비동기 요청
+document.querySelector("#reviewList").addEventListener("click", (e) => {
+	renderReviewList(1);
 });
-
-// 판매자 정보 판매상품 목록 조회 비동기
-/* document.querySelect("#productList").addEventListener("click", (e) => {
-	$.ajax({
-		url: "${pageContext.request.contextPath}/tradereview/productList",
-		data: {memberId},
-		success(response) {
-			console.log(response);
-		},
-		error: console.log(error);
-	});
-}); */
-
+document.querySelector("#productList").addEventListener("click", (e) => {
+	renderProductList(1);
+});
 </script>
 </html>

@@ -3,6 +3,7 @@ package com.kh.campervalley.tradereview.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,14 @@ public class TradereviewServiceImpl implements TradereviewService {
 	}
 
 	@Override
-	public List<TradeReviewExt> selectReviewList(int cPage, int numPerPage, String memberId) {
-		return tradereviewDao.selectReviewList(memberId);
+	public List<TradeReviewExt> selectReviewListByMemberId(int cPage, int numPerPage, String memberId) {
+		int offset = (cPage - 1) * numPerPage;
+		RowBounds rowBounds = new RowBounds(offset, numPerPage);
+		return tradereviewDao.selectReviewListByMemberId(rowBounds, memberId);
+	}
+
+	@Override
+	public int selectTotalReviewByMemberId(String memberId) {
+		return tradereviewDao.selectTotalReviewByMemberId(memberId);
 	} 
 }
