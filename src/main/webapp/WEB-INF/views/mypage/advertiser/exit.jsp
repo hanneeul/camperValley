@@ -26,7 +26,7 @@
 					<label for="bizLicenseNo">사업자등록번호</label>
 					<input type="text" name="bizLicenseNo" id="bizLicenseNo" class="form-control form-control-sm"
 						placeholder="광고주님의 사업자등록번호를 입력해주세요.">
-					<small class="form-text text-muted">사업자등록번호가 일치하지 않습니다.</small>
+					<small class="hide" id="bizLicenseNoMsg"></small>
 				</div>
 				<div class="divInputWrapper">
 					<label for="admoney">잔여애드머니</label>
@@ -49,3 +49,21 @@
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<script>
+document.querySelector('#bizLicenseNo').addEventListener('input', (e) => {
+	const inputVal = e.target.value
+	const realBizLicenseNo = "${advertiser.bizLicenseNo}";
+	if(inputVal != realBizLicenseNo){
+		// 불일치
+		const msgSmall = document.querySelector('#bizLicenseNoMsg');
+	    msgSmall.innerHTML = "사업자등록번호가 일치하지 않습니다.";
+	    msgSmall.classList.add('failMsg');
+	    msgSmall.classList.remove('SuccessMsg');
+	    msgSmall.classList.remove('hide');
+	}
+	else {
+		// 일치
+		
+	}
+});
+</script>
