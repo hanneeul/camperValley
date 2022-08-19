@@ -33,7 +33,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public int memberUpdate(String memberId) {
+	public int memberUpdate(Member memberId) {
 		// TODO Auto-generated method stub
 		return adminDao.memberUpdate(memberId);
 	}

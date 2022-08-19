@@ -78,7 +78,7 @@
 			</thead>
 			<tbody>
 			<c:forEach items="${list}" var="list" varStatus="vs">
-				<tr data-member-id="${list.memberId}" data-name="${list.name}" data-nickname="${list.nickname}" data-email="${list.email}" data-tel="${list.tel}">
+				<tr data-member-id="${list.memberId}" data-name="${list.name}" data-nickname="${list.nickname}" data-email="${list.email}" data-tel="${list.tel}" data-authorities="${list.authorities}">
 					<td>${list.authorities}</td>
 					<td>${list.memberId}</td>
 					<td>${list.name}</td>
@@ -110,35 +110,35 @@
 		  <span aria-hidden="true" style="color:#fff">&times;</span>
 		</button>
 	  </div>
-		<form:form name="adminMemberUpdateFrm" method="post">
+		<form:form name="adminMemberUpdateFrm" method="post" action="${pageContext.request.contextPath}/admin/memberUpdate">
 	  <div class="modal-body pb-1">
 			<div class="form-group mt-4">
 			  <label for="memberId" class="col-form-label">아이디</label>
-			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="memberId" value="" readonly>
+			  <input type="text" class="input-member pt-1 pb-1 pl-2" name="memberId" id="memberId" value="" readonly>
 			</div>
 			<div class="form-group">
 			  <label for="name" class="col-form-label">이름</label>
-			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="name" value=""></input>
+			  <input type="text" class="input-member pt-1 pb-1 pl-2" name="name" id="name" value=""></input>
 			</div>
 			<div class="form-group">
 			  <label for="nickname" class="col-form-label">닉네임</label>
-			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="nickname" value=""></input>
+			  <input type="text" class="input-member pt-1 pb-1 pl-2" name="nickname" id="nickname" value=""></input>
 			</div>
 			<div class="form-group">
 			  <label for="email" class="col-form-label">이메일</label>
-			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="email" value=""></input>
+			  <input type="text" class="input-member pt-1 pb-1 pl-2" name="email" id="email" value=""></input>
 			</div>
 			<div class="form-group">
-			  <label for="phone" class="col-form-label">전화번호</label>
-			  <input type="text" class="input-member pt-1 pb-1 pl-2" id="tel" value=""></input>
+			  <label for="tel" class="col-form-label">전화번호</label>
+			  <input type="text" class="input-member pt-1 pb-1 pl-2" name="tel" id="tel" value=""></input>
 			</div>
 			  <div class="form-group">
-					<label for="role" class="col-form-label">권한</label>
-						<input type="checkbox" name="authority" id="" value="ROLE_USER"/>
-						<label for="role-user-">일반</label>
+						<label for="role" class="col-form-label">권한</label>
+						<input type="checkbox" name="authorities" id="user" value=""/>
+						<label for="user">일반</label>
 						&nbsp;
-						<input type="checkbox" name="authority" id="" value="ROLE_ADMIN"/>
-						<label for="role-user-">관리자</label>
+						<input type="checkbox" name="authorities" id="admin" value=""/>
+						<label for="admin">관리자</label>
 		  </div>	
 			<div class="form-group">
 			  <p class="form-check form-check-inline mr-4 ml-6" style="margin-left: 100px;">블랙리스트</p>
@@ -156,7 +156,7 @@
 
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-		<button type="button" class="btn btn-primary btn-member-update" id="modalSubmit">수정</button>
+		<button type="submit" class="btn btn-primary btn-member-update" id="modalSubmit">수정</button>
 	  </div>
 	</div>
 		  </form:form>
@@ -170,9 +170,32 @@ $(document).ready(function(){
 	});
 
 	});
+	
+document.querySelectorAll(".btn-update").forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		console.log(e.target);
+		const tr = e.target.parentElement.parentElement;
+		console.log(tr);
+
+		const memberId = tr.dataset.memberId;
+		const name = tr.dataset.name;		
+		const nickname = tr.dataset.nickname;
+		console.log(nickname);
+		const email = tr.dataset.email;
+		const tel = tr.dataset.tel;
+		
+		const authorities = tr.dataset.authorities;
+
+		
+	        
+		document.querySelector("#memberId").value = memberId;
+		document.querySelector("#name").value = name;
+		document.querySelector("#nickname").value = nickname;
+		document.querySelector("#email").value = email;
+		document.querySelector("#tel").value = tel;
+		
+	});
+});
 </script>
 
-<script>
-
-</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
