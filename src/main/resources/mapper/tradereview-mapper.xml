@@ -35,10 +35,23 @@
 
 </delete>
 
+<select id="getProfileInfo" resultType="TradeReviewExt">
+	select distinct
+		m.nickname,
+		m.profile_img,
+		u.seller_id
+	from
+    	used_product u left join member m
+       		on(u.seller_id = m.member_id)
+	where
+		u.seller_id = #{memberId}
+</select>
+
 <select id="selectReviewListByMemberId" resultType="TradeReviewExt">
 	select 
 		t.*,
-		m.nickname
+		m.nickname,
+		m.profile_img
 	from
     	trade_review t left join used_product u
         	on(t.product_no = u.product_no)

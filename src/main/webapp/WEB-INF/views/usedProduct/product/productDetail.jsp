@@ -310,7 +310,7 @@ $(document).ready(function() {
 					<div class="prodInfo_sellerWrap2">
 						<div class="sellerInfo_Title">판매자정보</div>
 					</div>
-						<div class="seller">
+						<div class="seller" onclick="location.href='${pageContext.request.contextPath}/tradereview/profileCheck?memberId=${usedProduct.sellerId}'; return false;">
 							<a class="sellerProfileImg_Link" href="#">
 							</a>
 							<div class="sellerInfoWrap">

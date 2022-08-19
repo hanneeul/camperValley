@@ -9,5 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TradeReviewExt extends TradeReview {
 
+	private String sellerId;
+	private String buyerId;
 	private String nickname;
+	private String profileImg;
 }

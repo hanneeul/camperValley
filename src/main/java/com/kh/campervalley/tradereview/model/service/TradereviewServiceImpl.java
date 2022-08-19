@@ -33,6 +33,11 @@ public class TradereviewServiceImpl implements TradereviewService {
 	}
 
 	@Override
+	public TradeReviewExt getProfileInfo(String memberId) {
+		return tradereviewDao.getProfileInfo(memberId);
+	} 
+	
+	@Override
 	public Map<String, Object> selectCounts(String memberId) {
 		return tradereviewDao.selectCounts(memberId);
 	}
@@ -43,9 +48,10 @@ public class TradereviewServiceImpl implements TradereviewService {
 		RowBounds rowBounds = new RowBounds(offset, numPerPage);
 		return tradereviewDao.selectReviewListByMemberId(rowBounds, memberId);
 	}
-
+	
 	@Override
 	public int selectTotalReviewByMemberId(String memberId) {
 		return tradereviewDao.selectTotalReviewByMemberId(memberId);
-	} 
+	}
+
 }

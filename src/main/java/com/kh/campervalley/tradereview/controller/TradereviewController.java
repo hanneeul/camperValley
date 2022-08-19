@@ -78,13 +78,14 @@ public class TradereviewController {
 	public void reportEnroll() {}
 	
 	@GetMapping("/profileCheck")
-	public ModelAndView profileCheck(@RequestParam(defaultValue = "honggd") String memberId, ModelAndView mav) {
+	public ModelAndView profileCheck(@RequestParam String memberId, ModelAndView mav) {
 		try {
 			// 별점평균, 판매상품/거래리뷰 갯수
+			TradeReviewExt member = tradereviewService.getProfileInfo(memberId);
 			Map<String, Object> counts = tradereviewService.selectCounts(memberId);
 			
 			mav.addObject("counts", counts);
-			mav.addObject("member", memberId);
+			mav.addObject("member", member);
 			mav.setViewName("/tradereview/profileCheck");
 		} catch(Exception e) {
 			log.error("판매자 정보 조회 오류", e);
@@ -105,7 +106,7 @@ public class TradereviewController {
 			
 			// 페이지바
 			int totalContent = tradereviewService.selectTotalReviewByMemberId(memberId);
-			String pagebar = CamperValleyUtils.getPagebarAsync(cPage, numPerPage, totalContent, request.getRequestURI());
+			String pagebar = CamperValleyUtils.getPagebarAsync(cPage, numPerPage, totalContent, "Review");
 			log.debug("totalContent = {}", totalContent);
 			mav.addObject("reviewList", reviewList);
 			mav.addObject("pagebar", pagebar);

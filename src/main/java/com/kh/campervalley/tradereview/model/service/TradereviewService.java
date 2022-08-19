@@ -16,6 +16,8 @@ public interface TradereviewService {
 
 	int updateReview(TradeReview tradeReview);
 
+	TradeReviewExt getProfileInfo(String memberId);
+	
 	Map<String, Object> selectCounts(String memberId);
 
 	List<TradeReviewExt> selectReviewListByMemberId(int cPage, int numPerPage, String memberId);

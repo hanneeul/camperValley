@@ -22,6 +22,10 @@
 	border-bottom: 1px solid #d9bf77;
 }
 
+#profileImg {
+	width: 96px;
+	height: 96px;
+}
 .fa-star {
 	color: rgb(230, 185, 20);
 }
@@ -48,7 +52,10 @@
 .fa-lightbulb {
 	top: 2px;
 }
-
+.profileImg {
+	width: 80px;
+	height: 80px;
+}
 /* pagebar active btn color */
 .page-item.active .page-link {
 	background-color: #639A67;

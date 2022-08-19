@@ -32,17 +32,22 @@
 			<div class="modal-content px-5 py-2">
 				<div class="modal-header px-2 py-3">
 					<div>
-						<div><i class="fa-solid fa-circle-user fa-6x" style="color: #639A67;"></i></div>
+						<c:if test="${not empty member.profileImg}">
+							<div><img id="profileImg" src="${pageContext.request.contextPath}/resources/upload/member/${member.profileImg}" alt="" /></div>
+						</c:if>
+						<c:if test="${empty member.profileImg}">
+							<div><i class="fa-solid fa-circle-user fa-6x" style="color: #639A67;"></i></div>
+						</c:if>
 					</div>
 					<div class="ml-5">
-						<div class="text-15">${member}님</div>
+						<div class="text-15">${member.nickname}님</div>
 						<div>
 							<span class="text-13">판매상품 : ${counts.productCount}개, </span>
 							<span class="text-13">거래리뷰 : ${counts.reviewCount}개</span>
 						</div>
 						<div class="mt-4">
 							<span><i class="fa-solid fa-star"></i></span>
-							<span>&nbsp;${counts.starScoreAvg}점</span>
+							<span>&nbsp;${not empty counts.starScoreAvg ? counts.starScoreAvg : "0"}점</span>
 						</div>
 					</div>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -116,15 +121,15 @@
 $("#profileCheck")
 .modal()
 .on('hide.bs.modal', (e) => {
+	location.href = document.referrer;
 });
 
-/* const memberId = ${memberId}; */
+const memberId = "${member.sellerId}";
 /* let cPage = 1; */
 $(document).ready(() =>{
 	renderProductList(1);
 	
-})
-const memberId = "honggd";
+});
 
 $(".profile-nav li").click((e) => {
 	$(".profile-nav li").removeClass("active");
@@ -138,6 +143,7 @@ const renderProductList = (cPage) => {
 	$.ajax({
 		url: "${pageContext.request.contextPath}/usedProduct/productList",
 		data: {memberId, cPage},
+		dataType: "json",
 		success(response) {
 			const {productList, pagebar} = response;
 			for(let i = 0; i < productList.length; i++) {
@@ -170,17 +176,19 @@ const renderProductList = (cPage) => {
 }
 
 // 판매자 정보 거래후기 목록 조회 비동기
-const renderReviewList = () => {
+const renderReviewList = (cPage) => {
 	$("#listSection").html("");
 	$("#pagebarSection").html("");
 	$.ajax({
 		url: "${pageContext.request.contextPath}/tradereview/reviewList",
 		data: {memberId, cPage},
+		dataType: "json",
 		success(response) {
 			const {reviewList, pagebar} = response;
 			for(let i = 0; i < reviewList.length; i++) {
 				const $reviewBox = $('<div class="reviewBox d-flex ml-3"></div>');
 				const $userImage = $('<div class="image col-md-2 px-0"></div>');
+				const $userEnrollImg = $(`<img class="profileImg" src="${pageContext.request.contextPath}/resources/upload/member/\${reviewList[i].profileImg}"/>`)
 				const $userIcon = $('<i class="fa-solid fa-circle-user fa-5x" style="color:rgb(235,235,235);"></i>');
 				const $reviewInfo = $('<div class="info col-md-10 pl-0 pr-4 ml-4">');
 				const $infoDiv1 = $('<div class="d-flex justify-content-between">');
@@ -212,14 +220,15 @@ const renderReviewList = () => {
 				$infoDiv1.prepend($starNickname);
 				$infoDiv2.append($content, $createdAt);
 				$reviewInfo.append($infoDiv1, $infoDiv2);
-				$userImage.append($userIcon);
+				if(reviewList[i].profileImg) $userImage.append($userEnrollImg);
+				else $userImage.append($userIcon);
 				$reviewBox.append($userImage, $reviewInfo);
 				$("#listSection").append($reviewBox);
 			}
 			$("#pagebarSection").append(pagebar);
-			$(".pagination a").on("click", () =>{
+			/* $(".pagination a").on("click", () =>{
 				return false;
-			});
+			}); */
 		},
 		error: console.log
 	});

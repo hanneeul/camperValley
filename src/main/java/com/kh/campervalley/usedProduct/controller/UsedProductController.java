@@ -283,16 +283,14 @@ public class UsedProductController  {
 	public ModelAndView reviewList(
 			@RequestParam(defaultValue = "1") int cPage,
 			@RequestParam String memberId, 
-			ModelAndView mav,
-			HttpServletRequest request) {
+			ModelAndView mav) {
 		try {
 			int numPerPage = UsedProductService.NUM_PER_PAGE_MODAL;
 			List<UsedProduct> productList = usedProductService.selectProductListByMemberId(cPage, numPerPage, memberId);
 			
 			// 페이지바
 			int totalContent = usedProductService.selectTotalProductByMemberId(memberId);
-			String pagebar = CamperValleyUtils.getPagebarAsync(cPage, numPerPage, totalContent, request.getRequestURI());
-			log.debug("totalContent = {}", totalContent);
+			String pagebar = CamperValleyUtils.getPagebarAsync(cPage, numPerPage, totalContent, "Product");
 			mav.addObject("productList", productList);
 			mav.addObject("pagebar", pagebar);
 			mav.setViewName("jsonView");

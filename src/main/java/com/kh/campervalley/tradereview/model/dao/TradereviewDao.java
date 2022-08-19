@@ -18,6 +18,8 @@ public interface TradereviewDao {
 
 	int updateReview(TradeReview tradeReview);
 
+	TradeReviewExt getProfileInfo(String memberId);
+
 	Map<String, Object> selectCounts(String memberId);
 
 	List<TradeReviewExt> selectReviewListByMemberId(RowBounds rowBounds, String memberId);
