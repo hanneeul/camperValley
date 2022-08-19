@@ -25,6 +25,16 @@
 		default)
 </insert>
 
+<select id="selectCamperList" resultType="CamperExt">
+	select 
+		c.*, 
+		(select nickname from member where member_id = c.member_id) nickname 
+	from 
+		camper c 
+	order by 
+		c.camper_no desc
+</select>
+
 <select id="selectMoreCamperList" resultType="Camper">
 	select 
 		*

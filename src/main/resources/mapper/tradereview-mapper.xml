@@ -27,7 +27,15 @@
 		review_no = #{reviewNo}
 </update>
 
-<select id="selectReviewList" resultType="TradeReviewExt">
+<delete id="deleteReview">
+	delete from 
+		trade_review 
+	where 
+		review_no = #{reviewNo}
+
+</delete>
+
+<select id="selectReviewListByMemberId" resultType="TradeReviewExt">
 	select 
 		t.*,
 		m.nickname
@@ -37,7 +45,19 @@
             	left join member m
        		on(u.buyer_id = m.member_id)
 	where
-		seller_id = #{memberId}
+		u.seller_id = #{memberId}
+	order by
+		t.created_at desc
+</select>
+
+<select id="selectTotalReviewByMemberId" resultType="_int">
+	select 
+	    count(*)
+	from
+	    trade_review t left join used_product u
+	        on(t.product_no = u.product_no)
+	where
+	    u.seller_id = #{memberId}
 </select>
 
 

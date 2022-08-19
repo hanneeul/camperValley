@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdZone;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
@@ -274,4 +276,31 @@ public class UsedProductController  {
 		
 		return mav;
 	}
+	
+	/*----- JH START ----- */
+	/* 판매자 정보 - 판매자 상품정보 목록 비동기 요청 */
+	@GetMapping("/productList")
+	public ModelAndView reviewList(
+			@RequestParam(defaultValue = "1") int cPage,
+			@RequestParam String memberId, 
+			ModelAndView mav,
+			HttpServletRequest request) {
+		try {
+			int numPerPage = UsedProductService.NUM_PER_PAGE_MODAL;
+			List<UsedProduct> productList = usedProductService.selectProductListByMemberId(cPage, numPerPage, memberId);
+			
+			// 페이지바
+			int totalContent = usedProductService.selectTotalProductByMemberId(memberId);
+			String pagebar = CamperValleyUtils.getPagebarAsync(cPage, numPerPage, totalContent, request.getRequestURI());
+			log.debug("totalContent = {}", totalContent);
+			mav.addObject("productList", productList);
+			mav.addObject("pagebar", pagebar);
+			mav.setViewName("jsonView");
+		} catch(Exception e) {
+			log.error("판매자 판매상품 목록 조회 오류", e);
+			throw e;
+		}
+		return mav;
+	}
+	/*----- JH END -----*/
 }

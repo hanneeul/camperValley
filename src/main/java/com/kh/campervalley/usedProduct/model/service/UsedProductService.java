@@ -41,4 +41,11 @@ public interface UsedProductService {
 
 	public int getSellerProdNum(int productNo);
 
+	/*----- JH START ----- */
+	int NUM_PER_PAGE_MODAL = 5;
+	
+	public List<UsedProduct> selectProductListByMemberId(int cPage, int numPerPage, String memberId);
+
+	public int selectTotalProductByMemberId(String memberId);
+	/*----- JH END ----- */
 }

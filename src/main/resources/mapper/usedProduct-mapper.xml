@@ -303,4 +303,26 @@ select *
 					   join used_product u on (m.member_id = u.seller_id)
 					   where product_no = #{productNo})
 </select>
+
+<!-- JH START -->
+<select id="selectProductListByMemberId" resultType="UsedProduct">
+	select 
+		*
+	from 
+		used_product
+	where 
+		seller_id = #{memberId}
+	order by
+		product_enroll_time desc
+</select>
+
+<select id="selectTotalProductByMemberId" resultType="_int">
+	select 
+		count(*)
+	from 
+		used_product
+	where 
+		seller_id = #{memberId}
+</select>
+<!-- JH END -->
 </mapper>
