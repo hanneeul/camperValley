@@ -9,7 +9,12 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/trade/trade.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<style>
+form{
+	display:flex;
+}
 
+</style>
 <div class="container">	
 	<div class="row d-flex justify-content-between">
 		<div class="col-lg-2">
@@ -18,49 +23,114 @@
 		<div class="col-lg-10 px-5">
 		<%-- 본문시작 --%>
 		   <h3 class="mt-1 mb-5">관심상품</h3>
-		    <div >
-		    <hr />
-		        <div class="d-flex justify-content-between" class="mt-3 mb-5">
+		    <div class="list-container">
+		   <!--  <hr /> -->
+		   <c:if  test="${empty list}">
+		   		<p class="text-center mt-5 pt-5 h5">관심상품이 존재하지 않습니다.</p>
+		   </c:if>
+		   <c:forEach items="${list}" var="product" varStatus="vs">
+		        <div class="d-flex justify-content-between list mt-4 mb-4">
 		            <div class="d-flex">
-		            <a href=""><img src="/upload/member/ㅇㅇ.jpg" alt="" width="120px" class="mr-3 ml-3"></a>
+		            	<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=${product.productNo}"><img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${product.productImg1}" alt="${product.productTitle}대표 이미지" width="120px" class="mr-3 ml-3"></a>
 		                <div class="d-flex">
 		                    <ul class="list-unstyled mt-2">
 		                        <li>
-		                            <a href="" class="text-dark font-weight-bold">상품이름</a>
+		                            <a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=${product.productNo}" class="text-dark font-weight-bold">${product.productTitle}</a>
 		                        </li>
-		                        <li>100원</li>
+		                        <li><fmt:formatNumber value="${product.productPrice}" pattern="#,###"/>원</li>
 		                        <br>
-		                        <li>경기도 군포시 ~동</li>
+		                        <li>${product.productLocation}</li>
 		                    </ul>
 		                </div>
 		            </div>
-		            <button class="border-0 bg-transparent">
-						<i class="fa-solid fa-heart"></i>
-					</button>
+		            <form:form action="${pageContext.request.contextPath}/mypage/trade/wishDelete">
+			            <button class="border-0 bg-transparent remove-wish" type="submit">
+							<i class="fa-solid fa-heart"></i>
+						</button>
+							<input type="hidden" name="wishNo" value="${product.wishNo}" />
+					</form:form>
 		        </div>
 		        <hr />
-		        	<div class="d-flex justify-content-between class="mt-3 mb-5">
-		            <div class="d-flex">
-		            <img src="/Final/img/ㅇㅇ.jpg" alt="" width="120px" class="mr-3 ml-3">
-		                <div class="d-flex">
-		                    <ul class="list-unstyled mt-2">
-		                        <li>
-		                            상품이름
-		                        </li>
-		                        <li>100원</li>
-		                        <br>
-		                        <li>경기도 군포시 ~동</li>
-		                    </ul>
-		                </div>
-		            </div>
-		            <button class="border-0 bg-transparent">
-						<i class="fa-solid fa-heart"></i>
-					</button>
-		        </div>
+		        </c:forEach>	
 		    </div>
 
 		<%-- 본문끝 --%>
 		</div>
 	</div>
 </div>
+<div class="d-flex justify-content-center mt-3">
+  <div class="spinner-border d-none" role="status">
+    <span class="sr-only">Loading...</span>
+    <input type="hidden" name="addNum" value='0' />
+  </div>
+</div>
+
+<script>
+
+const io = new IntersectionObserver((entries, observer) => {
+	  entries.forEach((entry) => {
+    	$('div.spinner-border').removeClass("d-none");
+	    if (entry.isIntersecting) {//관찰대상이 교차되고 있으면
+	    	let list = null;
+	    	observer.disconnect();// 기존 관찰하던 요소는 더 이상 관찰하지 않음
+	    	 
+	        $.ajax({
+	        	url:'${pageContext.request.contextPath}/mypage/trade/moreWishProduct',
+	        	async: false,
+	        	data:{
+	        		offset: $('.list').length,
+	        		},
+	        	success(response){
+	        			const {list} = response;
+	        			$('input[name=addNum]').val(list.length) ;
+	        			list.forEach((product) =>{
+						const $prdDetailLink = '<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no='+product.productNo+'"></a>';  	        			
+						const $br = '<br>';
+						const $a = '<a></a>';
+	        				
+	        			$('.list-container').append('<div class="d-flex justify-content-between mt-4 mb-4 list"></div>');
+	        			$('.list').last().append('<div class="d-flex"></div>');
+	        			$('.list .d-flex').last().append($prdDetailLink, '<div class="d-flex"></div>');
+	        			$('.list .d-flex a').last().append('<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/' + product.productImg1 +'" alt="'+ product.productTitle +'대표 이미지" width="120px" class="mr-3 ml-3">');
+	        			$('.list .d-flex').last().append('<ul class="list-unstyled mt-2"></ul>');
+	        			$('.list ul.list-unstyled').last().append('<li></li>');
+	        			$('.list li').last().append($prdDetailLink);
+	        			$('.list a').last().prop({
+	        				innerHTML:product.productTitle,
+	        				className: 'font-weight-bold text-dark'
+	        			});
+	        			$('.list ul.list-unstyled').last().append('<li>'+ product.productPrice +'원</li>', $br, '<li>'+ product.productLocation +'</li>');
+	        			
+	        			$('.list').last().append('<form action="${pageContext.request.contextPath}/mypage/trade/wishDelete" method="post"></form>');
+	        			$('.list form').last().append('<button></button>','<input type="hidden" name="wishNo" value="'+ product.wishNo +'" />','<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>',);
+	        			$('.list button').last().prop({
+	        				innerHTML: '<i class="fa-solid fa-heart"></i>',
+	        				className: 'border-0 bg-transparent remove-wish',
+	        			});
+	        				
+	        			$('.list-container').append($('<hr>'));
+	        			} );
+	        		},
+        		error: console.log
+	        	
+	        });
+	    	$('div.spinner-border').addClass("d-none");
+	    	
+	  	    if($('input[name=addNum]').val() === '0'){
+	  	    	return;
+	 		}
+			   io.observe($('.list').get($('.list').length-1));
+	    }
+	  });
+});
+
+io.observe($('.list').get($('.list').length-1)); 
+
+
+
+
+
+
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
