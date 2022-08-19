@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.campervalley.member.model.dto.Member;
@@ -53,6 +54,10 @@ public interface UsedProductDao {
 	Member getSellerInfo(int productNo);
 
 	int getSellerProdNum(int productNo);
+	
+	/*----- EJ START ----- */
+	List<UsedProduct> selectProductList(RowBounds rowBounds);
+	/*----- EJ END ----- */
 
 	/*----- JH START ----- */
 	List<UsedProduct> selectProductListByMemberId(RowBounds rowBounds, String memberId);

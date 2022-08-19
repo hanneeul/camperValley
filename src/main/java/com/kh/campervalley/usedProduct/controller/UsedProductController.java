@@ -112,10 +112,14 @@ public class UsedProductController  {
 	/* 카테고리 검색 */
 	@PostMapping("/main/getProductList") 
 	@ResponseBody
-	public ModelAndView getProductList(@RequestParam(name = "page") int page) {
-		List<UsedProduct> list = usedProductService.getProductList(page);
-		
+	public ModelAndView getProductList(@RequestParam(name = "page") int page, @RequestParam(name = "adCount") int beforeAd) {
 		ModelAndView mav = new ModelAndView();
+		List<AdvertisementExt> feedAdList = advertiserService.getDisplayFeedAdList(beforeAd, 10, AdZone.usedProductFeed);
+		mav.addObject("feedAdList", feedAdList);
+		int adListSize = beforeAd + feedAdList.size();
+		
+		List<UsedProduct> list = usedProductService.getProductList(page, adListSize);
+		
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
 		return mav;
@@ -127,6 +131,11 @@ public class UsedProductController  {
 					@RequestParam(value = "cateNo") String cateNo,
 					@RequestParam(value = "order", required=false) String order) {
 		usedProductService.cateProductList(cateNo, Integer.parseInt(page), order, mav);
+		
+		List<AdvertisementExt> adList = advertiserService.getDisplayAdList(3, AdZone.usedProductHome);
+		log.debug("adList = {}", adList);
+		
+		mav.addObject("adList", adList);
 		
 		mav.addObject("display", "/usedProduct/main/cateDisplay.jsp");
 		mav.setViewName("usedProduct/main/mainPage");
@@ -162,6 +171,11 @@ public class UsedProductController  {
 		} else {
 			searchResult = " 의 검색 결과";
 		}
+		
+		List<AdvertisementExt> adList = advertiserService.getDisplayAdList(3, AdZone.usedProductHome);
+		log.debug("adList = {}", adList);
+		
+		model.addAttribute("adList", adList);
 		
 		model.addAttribute("searchResult", searchResult);
 		model.addAttribute("display", "/usedProduct/main/searchDisplay.jsp");

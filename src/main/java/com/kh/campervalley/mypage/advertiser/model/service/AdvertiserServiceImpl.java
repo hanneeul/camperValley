@@ -283,6 +283,17 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		log.debug("adList = {}", adList);
 		return adList;
 	}
+	
+	@Override
+	public List<AdvertisementExt> getDisplayFeedAdList(int beforeAd, int length, AdZone adZone) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("beforeAd", beforeAd);
+		param.put("topN", length);
+		param.put("adZone", adZone.toString());
+		List<AdvertisementExt> adList = selectDisplayAd(param);
+		log.debug("adList = {}", adList);
+		return adList;
+	}
 
 	@Override
 	public List<Map<String, Object>> selectChartData(Map<String, Object> param) {
