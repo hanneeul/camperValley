@@ -22,6 +22,24 @@
 			rownum between 1 and #{numPerReq}
 	</select>
 	
+	<select id="soldListByMemberId" resultType="UsedProduct">
+		select
+		    *
+		from
+		    (
+		    select *
+		    from
+		    	used_product
+		    where seller_id = #{memberId}
+		        and
+		           transaction_date is not null
+		    order by
+		    	transaction_date desc
+		    )
+		where
+			rownum between 1 and #{numPerReq}
+	</select>
+	
 	<select id="purchasedListByMemberId" resultType="UsedProduct">
 		select
 		    *
@@ -40,16 +58,70 @@
 			rownum between 1 and #{numPerReq}
 	</select>
 	
-	<select id="selectMoreSalesProduct" resultType="UsedProduct">
-		    select 
-		    	*
-		    from
-		    	used_product
-		    where seller_id = #{memberId}
-		        and
-		           transaction_date is null
-		    order by
-		    	product_enroll_time desc
+	<select id="wishListByMemberId" resultType="WishExt">
+		select 
+			*
+		from(
+			select
+				w.*, u.product_title, u.product_price, u.product_img1,u.product_location
+			from
+				wish_product w join used_product u
+				on
+				w.product_no = u.product_no
+			where
+				member_id = #{memberId}
+				and
+				transaction_date is null
+			 order by wish_no desc
+			) 
+		where
+			rownum between 1 and #{numPerReq}
 	</select>
 	
+	<select id="selectMoreSellingProduct" resultType="UsedProduct">
+		select 
+		  	*
+		from
+		  	used_product
+		where
+			seller_id = #{memberId}
+		    and
+ 	    	transaction_date is null
+		order by
+		    product_enroll_time desc
+	</select>
+	<select id="selectMoreSoldProduct" resultType="UsedProduct">
+		select 
+		  	*
+		from
+		  	used_product
+		where
+			seller_id = #{memberId}
+		    and
+ 	    	transaction_date is not null
+		order by
+		    transaction_date desc
+	</select>
+	
+	<delete id="wishDelete">
+		delete from
+			wish_product
+		where
+			wish_no = #{wishNo}
+	</delete>
+	
+	<select id="selectMoreWishProduct" resultType="WishExt">
+			select
+				w.*, u.product_title, u.product_price, u.product_img1,u.product_location
+			from
+				wish_product w join used_product u
+				on
+				w.product_no = u.product_no
+			where
+				member_id = #{memberId}
+				and
+				transaction_date is null
+			 order by wish_no desc
+	</select>
+
 </mapper>
