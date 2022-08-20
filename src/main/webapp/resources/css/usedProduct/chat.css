@@ -128,7 +128,7 @@ font-size: 0.9rem;
     align-items: center;
     -webkit-box-orient: horizontal;
 }
-#inputMessage {
+#chatContent {
     box-sizing: border-box;
     width: 680px;
     height: 29px;

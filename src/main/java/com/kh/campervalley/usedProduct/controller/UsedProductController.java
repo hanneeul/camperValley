@@ -185,12 +185,6 @@ public class UsedProductController  {
 	
 	@GetMapping("/product/productUpdate")
 	public void productUpdate() {};
-	
-	@PostMapping("/chat/chat")
-	public void chat() {};
-	
-	@PostMapping("/chat/chatList")
-	public void chatList() {};
 
 	/* 관심상품 */
 	@GetMapping("/product/findHeart")

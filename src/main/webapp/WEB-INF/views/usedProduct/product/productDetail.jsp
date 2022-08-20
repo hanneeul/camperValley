@@ -230,12 +230,11 @@ $(document).ready(function() {
 									<div class="detail-info__text-body-bItem-title">▪배송비 : </div>
 									<!-- 배송비 -->
 									<div class="detail-info__delivery" id="productDeliveryFee">
-										<c:set var="delivery" target="${usedproduct.productDeliveryFee}"/>
-											<c:if test="${delivery == 1}">
+											<c:if test="${usedProduct.productDeliveryFee == 0}">
 												<p>배송비 별도</p>
 											</c:if>
-											<c:if test="${delivery == 0}">
-												<pddd>배송비 포함</p>
+											<c:if test="${usedProduct.productDeliveryFee == 1}">
+												<p>배송비 포함</p>
 											</c:if>
 								 	</div>
 								 </div>
@@ -263,8 +262,7 @@ $(document).ready(function() {
 										   <!-- 채팅하기 -->
 										   <!-- post 날린 요청의 결과 chatRoom(윈도우 팝업창)에서 볼 수 있음 -->
 	   									   <form 
-										   		id="productDetailForm" method="post" action="/campervalley/usedProduct/chat/chat" target="chat">
-										   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />.
+										   		id="productDetailForm" method="get" action="/campervalley/chat/chat" target="chat">
 										   		<div class="detail-info__chat" >
 													<button type="submit" id="chat_btn" style="background-color: #639A67; margin-left: -12px;">
 														<i class="fa-solid fa-comment"></i>			 	
@@ -457,10 +455,6 @@ const productDelete = () => {
 
 /* 채팅하기 */ 
 $('#chat_btn').click(function() {
-	var popupWidth = 750;
-	var popupHeight = 500;
-	var popupX = Math.ceil(( window.screen.width - popupWidth )/2);
-	var popupY = Math.ceil(( window.screen.height - popupHeight )/2); 
 	window.open('', 'chat', 'width=' + popupWidth + ',height=' + popupHeight + ',left='+ popupX + ', top='+ popupY);	
 });
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.campervalley.chat.model.dao.ChatDao">
+
+<select id="getChatListByNickname" parameterType="java.util.HashMap" resultType="Chat">
+	select *
+	from chat
+	where (from_nickname = #{fromNickname} and to_nickname = #{toNickname}) or 
+			(from_nickname = #{toNickname} and to_nickname = #{FromNickname}) and chat_no > #{chatNo}
+</select>
+
+<select id="getChatListByRecent" parameterType="java.util.HashMap" resultType="Chat">
+select *
+	from chat
+	where ((from_nickname = '캠핑중독임당' and to_nickname = '차차') or 
+			(from_nickname = '차차' and to_nickname = '캠핑중독임당')) and chat_no > (select max(chat_no) - #{number} from chat) order by chat_time;
+</select>
+
+<insert id="submit" parameterType="java.util.HashMap">
+	insert into chat
+	values(seq_chat_no.nextval, #{fromNickname}, #{toNickname}, null, #{chatContent}, SYSDATE)
+</insert>
+</mapper>

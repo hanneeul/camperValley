@@ -140,5 +140,9 @@
 		  	$subNavbar.stop().slideUp('fast');
 		});
 		</script>
+		
+		<sec:authorize access="isAuthenticated()">
+		<script src="${pageContext.request.contextPath}/resources/js/chat/ws.js"></script>
+		</sec:authorize>
 	</header>
 	<section id="content" class="mx-auto">
