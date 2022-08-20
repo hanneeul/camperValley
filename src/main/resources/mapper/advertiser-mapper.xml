@@ -421,6 +421,8 @@
 	where
 		advertiser_no = #{advertiserNo}
 		and
+			deleted_at is null
+		and
 			display_at >= trunc(#{startDate})
 		and
 			display_at <= trunc(#{endDate})

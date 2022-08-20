@@ -3,6 +3,7 @@ package com.kh.campervalley.mypage.trade.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.campervalley.mypage.trade.dto.WishExt;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 
 import lombok.NonNull;
@@ -15,7 +16,17 @@ public interface TradeService {
 
 	List<UsedProduct> purchasedListByMemberId(Map<String, Object> map);
 
-	List<UsedProduct> selectMoreSalesProduct(int cPage, int numPerReq, @NonNull String memberId);
+	List<UsedProduct> selectMoreSellingProduct(int offset, int numPerReq, @NonNull String memberId);
+
+	List<WishExt> wishListByMemberId(Map<String, Object> map);
+
+	int wishDelete(int wishNo);
+
+	List<WishExt> selectMoreWishProduct(int offset, String type, int numPerReq, @NonNull String memberId);
+
+	List<UsedProduct> soldListByMemberId(Map<String, Object> map);
+
+	List<UsedProduct> selectMoreSoldProduct(int offset, int numPerReq, @NonNull String memberId);
 
 
 }

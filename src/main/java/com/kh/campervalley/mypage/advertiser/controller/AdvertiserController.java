@@ -3,6 +3,7 @@ package com.kh.campervalley.mypage.advertiser.controller;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -378,4 +379,48 @@ public class AdvertiserController {
 		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
 	}
 
+	@PostMapping("/searchChart")
+	public ResponseEntity<?> searchChartData(int advertiserNo, String date1, String date2) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			LocalDate startDate = LocalDate.parse(date1, DateTimeFormatter.ISO_DATE);
+			LocalDate endDate = LocalDate.parse(date2, DateTimeFormatter.ISO_DATE);
+			if (!startDate.isBefore(endDate)) {
+				startDate = LocalDate.parse(date2, DateTimeFormatter.ISO_DATE);
+				endDate = LocalDate.parse(date1, DateTimeFormatter.ISO_DATE);
+			}
+			Period period = Period.between(startDate, endDate);
+
+			Map<String, Object> chartParam = new HashMap<>();
+			chartParam.put("advertiserNo", advertiserNo);
+			chartParam.put("startDate", startDate);
+			chartParam.put("endDate", endDate);
+			List<Map<String, Object>> chartData = advertiserService.selectChartData(chartParam);
+
+			List<String> dateList = new ArrayList<>();
+			List<Integer> viewList = new ArrayList<>();
+			List<Integer> clickList = new ArrayList<>();
+			for (int i = 0; i < period.getDays() + 1; i++) {
+				dateList.add(endDate.minusDays(period.getDays() - i).toString());
+				viewList.add(0);
+				clickList.add(0);
+				for (int j = 0; j < chartData.size(); j++) {
+					String date = chartData.get(j).get("DISPLAY_AT").toString().substring(0, 10);
+					if (date.equals(endDate.minusDays(period.getDays() - i).toString())) {
+						viewList.set(i, Integer.parseInt(chartData.get(j).get("SUM_VIEW").toString()));
+						clickList.set(i, Integer.parseInt(chartData.get(j).get("SUM_CLICK").toString()));
+						break;
+					}
+				}
+			}
+			map.put("dateList", dateList);
+			map.put("viewList", viewList);
+			map.put("clickList", clickList);
+		} catch (Exception e) {
+			log.error("차트 기간조회 오류", e);
+			map.put("msg", "차트 기간조회 오류");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map);
+		}
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	}
 }

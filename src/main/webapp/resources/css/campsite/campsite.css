@@ -119,30 +119,37 @@ label[for=facltNm] {
 	color: #c7392b;
 }
 
-#searchThemeBtn {
+#selectThemeBtn {
 	background-color: white!important;
 	border: none!important;
 	font-weight: bold!important;
 }
 
-#searchThemeBtn:hover {
+#selectThemeBtn:hover {
 	color: #D9BF77;
 	border-bottom: .1rem dashed #D9BF77!important;
 }
 /* searhDetail/searchTheme.jsp end */
 
 /* infoView.jsp start */
-.campsite-info-table-wrap, .campsite-info-tab-wrap {
+.campsite-info-table-wrap {
 	font-size: .9rem;
 	width: 95%;
 }
 
 .campsite-info-tab-wrap button {
 	font-size: .9rem;
+	font-weight: bold;
+}
+
+.campsite-info-tab-wrap .nav-link {
+	border: 1px solid #639A67;
+	border-radius: 0;
 }
 
 .campsite-info-tab-wrap .nav-link.active {
 	background-color: #639A67;
+	border-radius: 0;
 }
 
 #infoViewTabContent h6 {
@@ -161,6 +168,16 @@ label[for=facltNm] {
 	text-align: center;
 }
 
+.basic-info-table a {
+	color: #c7392b;
+	text-decoration: none;
+}
+
+.basic-info-table a:hover {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
 .info-view-title {
 	align-self: center;
 }
@@ -175,5 +192,36 @@ label[for=facltNm] {
 
 .campsite-yellow {
 	color: #D9BF77;
+}
+
+.location-info-map {
+	width: 95%;
+    height: 33rem;
+}
+
+.swiper-container {
+	height: 300px;
+}
+
+.swiper-slide {
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.swiper-slide img {
+	width: 280px;
+	height: 250px;
+}
+
+.swiper-button-prev {
+	background-image: url("../../images/community/review/caret-left-solid.svg")!important;
+	background-size: 13px!important;
+}
+
+.swiper-button-next {
+	background-image: url("../../images/community/review/caret-right-solid.svg")!important;
+	background-size: 13px!important;
 }
 /* infoView.jsp end */

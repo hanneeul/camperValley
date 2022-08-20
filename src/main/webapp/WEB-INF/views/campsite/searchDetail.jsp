@@ -14,8 +14,6 @@ body {overflow-y: auto!important;}
 
 <!-- Kakao 지도 Javascript API -->
 <spring:eval var="kakaoMapKey" expression="@customProperties['api.kakaoMap']" />
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoMapKey}"></script>
-<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoMapKey}&libraries=services,clusterer,drawing"></script>
 
 <!-- 캠핑장목록조회(상세검색) 페이지 (작성자:SJ) -->

@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/info/edit.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 <sec:authentication property="principal" var="loginMember" scope="page"/>
 <c:set var="profileFileName" value="${empty loginMember.profileImg ? 'default-profile.svg' : loginMember.profileImg}"/>
 <div class="container">	
@@ -143,13 +145,25 @@
 			        const nicknameValid = $("#nicknameValid");
 			        let nicknameVal = $("#nickname").val(); 
 			        if(nicknameVal === "${loginMember.nickname}"){
-			            alert("현재 닉네임과 동일합니다.");
+			    		$.alert({
+			    		    title: ' ',
+			    		    content: '현재 닉네임과 동일합니다.',
+			    		    buttons: {'확인': function() {}}
+			    		});
 			            return;
 			        } else if(/^[a-z0-9가-힣]{11,}$/.test(nicknameVal)){
-			            alert("글자 수가 너무 깁니다.");
+			    		$.alert({
+			    		    title: ' ',
+			    		    content: '글자 수가 너무 깁니다.',
+			    		    buttons: {'확인': function() {}}
+			    		});
 			            return;
 			        } else if(!/^[a-z0-9가-힣]{2,}$/.test(nicknameVal)){
-			            alert("2자 이상의 영문/숫자/한글로 입력해주세요.");
+			    		$.alert({
+			    		    title: ' ',
+			    		    content: '2자 이상의 영문/숫자/한글로 입력해주세요.',
+			    		    buttons: {'확인': function() {}}
+			    		});
 			            return;
 			        }
 			            //중복검사
@@ -164,9 +178,17 @@
 			                const{value, available} = response;
 			                if(available){
 			                    nicknameValid.val(1);
-			                    alert("사용할 수 있는 닉네임입니다.");
+					    		$.alert({
+					    		    title: ' ',
+					    		    content: '사용할 수 있는 닉네임입니다.',
+					    		    buttons: {'확인': function() {}}
+					    		});
 			                } else{
-			                    alert("이미 사용중인 닉네임입니다.")
+			                    	$.alert({
+					    		    title: ' ',
+					    		    content: '이미 사용중인 닉네임입니다.',
+					    		    buttons: {'확인': function() {}}
+					    		})
 			                }
 			            },
 			            error: console.log
@@ -182,10 +204,18 @@
 			        const emailValid= $("#emailValid");
 			        let emailVal = $("#email").val(); 
 			        if(emailVal === "${loginMember.email}"){
-			            alert("현재 이메일과 동일합니다.");
+                    	$.alert({
+			    		    title: ' ',
+			    		    content: '현재 이메일과 동일합니다.',
+			    		    buttons: {'확인': function() {}}
+			    		})
 			            return;
 			        } else if(!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/i.test(emailVal)){
-			            alert("이메일 주소를 다시 확인해주세요.");
+                    	$.alert({
+			    		    title: ' ',
+			    		    content: '이메일 주소를 다시 확인해주세요.',
+			    		    buttons: {'확인': function() {}}
+			    		})
 			            return;
 			        }
 			            //중복검사
@@ -199,10 +229,18 @@
 			            success(response){
 			                const{value, available} = response;
 			                if(available){
-			                    alert("사용할 수 있는 이메일입니다.");
+		                    	$.alert({
+					    		    title: ' ',
+					    		    content: '사용할 수 있는 이메일입니다.',
+					    		    buttons: {'확인': function() {}}
+					    		})
 			                    emailValid.val(1);
 			                } else{
-			                    alert("이미 사용중인 이메일입니다.")
+			                    $.alert({
+					    		    title: ' ',
+					    		    content: '이미 사용중인 이메일입니다.',
+					    		    buttons: {'확인': function() {}}
+					    		})
 			                }
 			            },
 			            error: console.log
@@ -225,31 +263,55 @@
 			        //동일하지 않으면 nicknameValid 확인
 			            if(nicknameValid.val() === '0') {
 			        console.log(1);
-			                alert("닉네임의 '중복확인'버튼을 눌러 사용 가능 여부를 확인해 주세요.");
+		                    $.alert({
+				    		    title: ' ',
+				    		    content: '닉네임의 \'중복확인\' 버튼을 눌러 사용 가능 여부를 확인해 주세요.',
+				    		    buttons: {'확인': function() {}}
+				    		})
 			                return;
 			            }
-			        } else if(!password) {
+			        } else if($("input[name=password]").val()) {
 			        //비밀번호 값 없는지
 			            //있으면 유효성검사, 비밀번호 확인 검사
 			            if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/.test($("input[name=password]").val())){
-			                alert("비밀번호는 영문자+숫자+특수문자 조합으로 8자리 이상 입력해주세요.");
+		                    $.alert({
+				    		    title: ' ',
+				    		    content: '비밀번호는 영문자+숫자+특수문자 조합으로 8자리 이상 입력해주세요.',
+				    		    buttons: {'확인': function() {}}
+				    		})
 			                return;
 			            } else if($("input[name=password]").val() !== $("#passwordCheck").val()){
-			                alert("새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.");
+		                    $.alert({
+				    		    title: ' ',
+				    		    content: '새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.',
+				    		    buttons: {'확인': function() {}}
+				    		})
 			                return;
 			            }	
 			        
 			        } else if($("input[name=email]").val() !== "${loginMember.email}"){
 			            //동일하지 않으면 emailValid 확인
 			            if(emailValid) {
-			                alert("이메일의 '중복확인'버튼을 눌러 사용 가능 여부를 확인해 주세요.")
+		                    $.alert({
+				    		    title: ' ',
+				    		    content: '이메일의 \'중복확인\' 버튼을 눌러 사용 가능 여부를 확인해 주세요.',
+				    		    buttons: {'확인': function() {}}
+				    		})			                
 			                return;
 			            }
 			        } else if(!$("input[name=tel]").val()){
-			                alert("전화번호를 입력해주세요.");
-			            return false;
+		                    $.alert({
+				    		    title: ' ',
+				    		    content: '전화번호를 입력해주세요.',
+				    		    buttons: {'확인': function() {}}
+				    		})
+			                return false;
 			        } else if(!/^\d{9,11}$/.test($("input[name=tel]").val())){
-			                alert("전화번호를 다시 확인해주세요.\n전화번호는 숫자만 입력 가능합니다.");
+			                $.alert({
+				    		    title: ' ',
+				    		    content: '전화번호를 다시 확인해주세요.<br>전화번호는 숫자만 입력 가능합니다.',
+				    		    buttons: {'확인': function() {}}
+				    		})
 			            return false;
 			        }
 			        

@@ -3,6 +3,8 @@ package com.kh.campervalley.tradereview.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.tradereview.model.dto.TradeReview;
 import com.kh.campervalley.tradereview.model.dto.TradeReviewExt;
@@ -90,26 +93,22 @@ public class TradereviewController {
 		return mav;
 	}
 	
-//	@GetMapping("/productList")
-//	public ModelAndView productList(@RequestParam(defaultValue = "honggd") String memberId, ModelAndView mav) {
-//		try {
-//			List<UsedProduct> productList = usedProduct
-//		} catch(Exception e) {
-//			log.error("판매자 판매상품 목록 조회 오류", e);
-//			throw e;
-//		}
-//		return mav;
-//	}
-	
 	@GetMapping("/reviewList")
 	public ModelAndView reviewList(
 			@RequestParam(defaultValue = "1") int cPage,
-			@RequestParam(defaultValue = "honggd") String memberId, 
-			ModelAndView mav) {
+			@RequestParam String memberId, 
+			ModelAndView mav,
+			HttpServletRequest request) {
 		try {
 			int numPerPage = TradereviewService.NUM_PER_PAGE;
-			List<TradeReviewExt> reviewList = tradereviewService.selectReviewList(cPage, numPerPage, memberId);
+			List<TradeReviewExt> reviewList = tradereviewService.selectReviewListByMemberId(cPage, numPerPage, memberId);
+			
+			// 페이지바
+			int totalContent = tradereviewService.selectTotalReviewByMemberId(memberId);
+			String pagebar = CamperValleyUtils.getPagebarAsync(cPage, numPerPage, totalContent, request.getRequestURI());
+			log.debug("totalContent = {}", totalContent);
 			mav.addObject("reviewList", reviewList);
+			mav.addObject("pagebar", pagebar);
 			mav.setViewName("jsonView");
 		} catch(Exception e) {
 			log.error("판매자 거래리뷰 목록 조회 오류", e);

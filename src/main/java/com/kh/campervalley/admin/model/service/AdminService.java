@@ -12,8 +12,6 @@ public interface AdminService {
 
 	Member selectOneMember(String memberId);
 
-	int memberUpdate(String memberId);
-
 	List<NoticeExt> selectProductList(Map<String, Object> map);
 
 	int selectTotalProductList(Map<String, Object> map);
@@ -31,6 +29,8 @@ public interface AdminService {
 	List<NoticeExt> selectReviewList(Map<String, Object> map);
 
 	int selectTotalReviewList(Map<String, Object> map);
+
+	int memberUpdate(Member memberId);
 
 
 

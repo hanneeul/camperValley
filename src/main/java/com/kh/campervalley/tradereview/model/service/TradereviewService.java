@@ -18,6 +18,8 @@ public interface TradereviewService {
 
 	Map<String, Object> selectCounts(String memberId);
 
-	List<TradeReviewExt> selectReviewList(int cPage, int numPerPage, String memberId);
+	List<TradeReviewExt> selectReviewListByMemberId(int cPage, int numPerPage, String memberId);
+
+	int selectTotalReviewByMemberId(String memberId);
 
 }
