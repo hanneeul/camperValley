@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.member.model.dao.MemberDao;
 import com.kh.campervalley.member.model.dto.Member;
@@ -45,5 +46,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateMember(Member member) {
 		return memberDao.updateMember(member);
+	}
+
+	@Override
+	public int updatePassword(Map<String, Object> map) {
+		return memberDao.updatePassword(map);
 	}
 }

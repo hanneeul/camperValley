@@ -19,6 +19,8 @@ public interface MemberDao {
 
 	int updateMember(Member member);
 
+	int updatePassword(Map<String, Object> map);
+
 
 
 }
