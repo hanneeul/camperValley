@@ -68,23 +68,23 @@
 					<c:if test="${not empty list}">
 					<c:forEach items="${list}" var="advertiser" varStatus="vs">
 						<tr data-advertiser-no="${advertiser.advertiserNo}" data-member-id="${advertiser.memberId}">
-							<c:if test="${advertiser.bizStatus eq 'N'}">
-								<td class="waiting">승인대기</td>
+							<c:if test="${advertiser.withdrawal eq 'Y'}">
+								<td class="withdrawal">회원탈퇴</td>
 							</c:if>
-							<c:if test="${advertiser.bizStatus eq 'Y'}">
-								<c:if test="${fn:contains(advertiser.authorities, 'ROLE_AD')}">
-									<td class="permission">승인완료</td>
+							<c:if test="${advertiser.withdrawal eq 'N'}">
+								<c:if test="${advertiser.bizStatus eq 'N'}">
+									<td class="waiting">승인대기</td>
 								</c:if>
-								<c:if test="${not fn:contains(advertiser.authorities, 'ROLE_AD')}">
-									<c:if test="${empty advertiser.deletedAt}">
-										<td class="pause">권한정지</td>
-									</c:if>
+								<c:if test="${advertiser.bizStatus eq 'Y'}">
 									<c:if test="${not empty advertiser.deletedAt}">
-										<c:if test="${advertiser.withdrawal eq 'N'}">
-											<td class="withdrawal">광고주탈퇴</td>
+										<td class="withdrawal">광고주탈퇴</td>
+									</c:if>
+									<c:if test="${empty advertiser.deletedAt}">
+										<c:if test="${not fn:contains(advertiser.authorities, 'ROLE_AD')}">
+											<td class="pause">권한정지</td>
 										</c:if>
-										<c:if test="${advertiser.withdrawal eq 'Y'}">
-											<td class="withdrawal">회원탈퇴</td>
+										<c:if test="${fn:contains(advertiser.authorities, 'ROLE_AD')}">
+											<td class="permission">승인완료</td>
 										</c:if>
 									</c:if>
 								</c:if>
@@ -105,19 +105,24 @@
 								<fmt:formatDate value="${createdAt}" pattern="yy-MM-dd HH:mm"/>
 							</td>
 							<td>
-								<c:if test="${advertiser.bizStatus eq 'N'}">
-									<button class="updateBtn btn btn-sm btn-camper-color" value="${advertiser.advertiserNo}">승인</button>
+								<c:if test="${advertiser.withdrawal eq 'Y'}">
+									<button class="btn btn-sm btn-secondary" disabled>탈퇴</button>
 								</c:if>
-								<c:if test="${advertiser.bizStatus eq 'Y'}">
-									<c:if test="${fn:contains(advertiser.authorities, 'ROLE_AD')}">
-										<button class="updateBtn btn btn-sm btn-camper-red" value="${advertiser.advertiserNo}">회수</button>
+								<c:if test="${advertiser.withdrawal eq 'N'}">
+									<c:if test="${advertiser.bizStatus eq 'N'}">
+										<button class="updateBtn btn btn-sm btn-camper-color" value="${advertiser.advertiserNo}">승인</button>
 									</c:if>
-									<c:if test="${not fn:contains(advertiser.authorities, 'ROLE_AD')}">
-										<c:if test="${empty advertiser.deletedAt}">
-											<button class="updateBtn btn btn-sm btn-camper-color" value="${advertiser.advertiserNo}">승인</button>
-										</c:if>
+									<c:if test="${advertiser.bizStatus eq 'Y'}">
 										<c:if test="${not empty advertiser.deletedAt}">
 											<button class="btn btn-sm btn-secondary" disabled>탈퇴</button>
+										</c:if>
+										<c:if test="${empty advertiser.deletedAt}">
+											<c:if test="${not fn:contains(advertiser.authorities, 'ROLE_AD')}">
+												<button class="updateBtn btn btn-sm btn-camper-color" value="${advertiser.advertiserNo}">승인</button>
+											</c:if>
+											<c:if test="${fn:contains(advertiser.authorities, 'ROLE_AD')}">
+												<button class="updateBtn btn btn-sm btn-camper-red" value="${advertiser.advertiserNo}">회수</button>
+											</c:if>
 										</c:if>
 									</c:if>
 								</c:if>

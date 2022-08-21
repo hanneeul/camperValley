@@ -352,7 +352,7 @@
 				order by ad_cpc desc, random desc
 			) a1
 			<if test="topN != null and topN != ''">
-			where rownum between 1 and #{topN}
+			where rownum between nvl(#{beforeAd}, 1) and #{topN}
 			</if>
 		) rowtable
 		join ad_attach attach

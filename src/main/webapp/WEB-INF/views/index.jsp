@@ -15,9 +15,23 @@
 				<select name="sido1" id="sido1" class="input p-2 mr-2 mb-3"></select>
 				<select name="gugun1" id="gugun1" class="input p-2 mr-2 mb-3"></select>
 			</div>
-			<div id="inputTema">
+			<div id="inputTheme">
 				<div class="py-2 camper-color text-18">테마</div>
-				<input class="input p-2 mb-3" type="text" placeholder="관련 테마를 입력해주세요."/>
+				<select name="theme" class="input p-2 mb-3">
+					<option value="">관련 테마를 선택하세요.</option>
+					<option value="">일출명소</option>
+					<option value="">일몰명소</option>
+					<option value="">수상레저</option>
+					<option value="">항공레저</option>
+					<option value="">스키</option>
+					<option value="">낚시</option>
+					<option value="">액티비티</option>
+					<option value="">봄꽃여행</option>
+					<option value="">여름물놀이</option>
+					<option value="">가을단풍명소</option>
+					<option value="">겨울눈꽃명소</option>
+					<option value="">걷기길</option>
+				</select>
 			</div>
 			<div id="inputKeyword">
 				<div class="py-2 camper-color text-18">키워드</div>

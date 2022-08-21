@@ -50,6 +50,9 @@
 			<p class="test-div" style="color: #FFF; margin-bottom:-12px;">.</p>
 				
 				<ul class="faqBody" style="display: inline;">
+				<c:if test="${empty list}">
+						<div class="text-center mt-4">등록된 글이 없습니다.</div>
+					</c:if>
 				<c:forEach var="list" items="${list}">
                     <li class="article" id="a1" >
                         <p class="q"><a href="#a1">
@@ -79,7 +82,9 @@
 </sec:authorize>
 </div> 
 </div>
+<c:if test="${not empty list}">
     	<div class="mt-5" id="pageBar">${pagebar}</div>
+</c:if>
 <form action="${pageContext.request.contextPath}/cs/faqDelete" method="POST" name="deleteFaqFrm">
 <input type="hidden" name="noticeNo" id="deleteNo" />
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

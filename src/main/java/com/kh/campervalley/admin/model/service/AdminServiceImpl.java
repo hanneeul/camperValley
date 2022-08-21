@@ -1,5 +1,6 @@
 package com.kh.campervalley.admin.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +24,16 @@ public class AdminServiceImpl implements AdminService {
 	private AdminDao adminDao;
 	
 	@Override
-	public List<Member> selectMemberList() {
-		return adminDao.selectMemberList();
+	public List<Member> selectMemberList(Map<String, Object> map) {
+		int offset = (int)map.get("offset");
+		int numPerPage = (int)map.get("numPerPage");
+		RowBounds rowBounds = new RowBounds(offset, numPerPage);
+		return adminDao.selectMemberList(map, rowBounds);
+	}
+	
+	@Override
+	public int selectTotalMemberList(Map<String, Object> map) {
+		return adminDao.selectTotalMemberList(map);
 	}
 	
 	@Override
@@ -34,7 +43,6 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public int memberUpdate(Member memberId) {
-		// TODO Auto-generated method stub
 		return adminDao.memberUpdate(memberId);
 	}
 	
@@ -92,5 +100,81 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectTotalReviewList(map);
 	}
 	
+	@Override
+	public int updateMemberRole(Map<String, Object> map) {
+		
+		int result = 0;
+		//log.debug("impl.ROLE_ADMIN = {}", map.get("ROLE_ADMIN"));
+		result = adminDao.deleteMemberRole(map);
+		if(Boolean.parseBoolean(map.get("ROLE_ADMIN").toString()) == true) {
+			result = adminDao.insertAuthority(map);
+		}
+		
+		result = adminDao.deleteBlack(map);
+		if(Boolean.parseBoolean(map.get("ROLE_BLACK").toString()) == true) {
+			result = adminDao.insertBlack(map);
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public List<NoticeExt> selectNoticeList() {
+		return adminDao.selectNoticeList();
+
+	}
+	
+	@Override
+	public int todayCamper() {
+		return adminDao.todayCamper();
+	}
+	
+	@Override
+	public int todayReview() {
+		return adminDao.todayReview();
+	}
+	
+	@Override
+	public int todayProduct() {
+		return adminDao.todayProduct();
+	}
+	
+	@Override
+	public int sysdate() {
+		return adminDao.sysdate();
+	}
+	
+	@Override
+	public int minus1() {
+		return adminDao.minus1();
+	}
+	
+	@Override
+	public int minus2() {
+		return adminDao.minus2();
+	}
+	
+	@Override
+	public int minus3() {
+		return adminDao.minus3();
+	}
+	
+	@Override
+	public int minus4() {
+		return adminDao.minus4();
+	}
+	
+	@Override
+	public int minus5() {
+		return adminDao.minus5();
+	}
+	
+	@Override
+	public int minus6() {
+		return adminDao.minus6();
+	}
+	
+	
+
 
 }

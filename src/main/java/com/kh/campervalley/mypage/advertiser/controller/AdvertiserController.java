@@ -122,6 +122,17 @@ public class AdvertiserController {
 		return mav;
 	}
 	
+	@PostMapping("/exit")
+	public String submitAdvertiserExitFrm(@RequestParam int advertiserNo, @RequestParam String memberId) {
+		try {
+			int result = advertiserService.exitAdvertiser(advertiserNo, memberId);
+		} catch (Exception e) {
+			log.error("광고주 탈퇴요청 오류", e);
+			throw e;
+		}
+		return "redirect:/mypage/info/main";
+	}
+	
 	@GetMapping("/dashboard")
 	public ModelAndView advertiserDashBoard(ModelAndView mav, @AuthenticationPrincipal Member loginMember, 
 			@RequestParam(defaultValue = "1") int cPage, HttpServletRequest request) {

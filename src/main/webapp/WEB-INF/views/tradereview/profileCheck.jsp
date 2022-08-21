@@ -19,6 +19,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 	<!-- bootstrap css -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<!-- alert js -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 	<!-- 사용자작성 css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tradereview/profileCheck.css" />
@@ -32,17 +35,22 @@
 			<div class="modal-content px-5 py-2">
 				<div class="modal-header px-2 py-3">
 					<div>
-						<div><i class="fa-solid fa-circle-user fa-6x" style="color: #639A67;"></i></div>
+						<c:if test="${not empty member.profileImg}">
+							<div><img id="profileImg" src="${pageContext.request.contextPath}/resources/upload/member/${member.profileImg}" alt="" /></div>
+						</c:if>
+						<c:if test="${empty member.profileImg}">
+							<div><i class="fa-solid fa-circle-user fa-6x" style="color: #639A67;"></i></div>
+						</c:if>
 					</div>
 					<div class="ml-5">
-						<div class="text-15">${member}님</div>
+						<div class="text-15"><span class="camper-color">[${member.nickname}]</span>님</div>
 						<div>
 							<span class="text-13">판매상품 : ${counts.productCount}개, </span>
 							<span class="text-13">거래리뷰 : ${counts.reviewCount}개</span>
 						</div>
 						<div class="mt-4">
 							<span><i class="fa-solid fa-star"></i></span>
-							<span>&nbsp;${counts.starScoreAvg}점</span>
+							<span>&nbsp;${not empty counts.starScoreAvg ? counts.starScoreAvg : "0"}점</span>
 						</div>
 					</div>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -56,88 +64,37 @@
 						  	<li id="reviewList" class="nav-item">거래리뷰</li>
 						</ul>
 					</div>
-					
-					<div id="listSection">
-						<%-- product Box --%>
-						<%-- 
-						<div class="productBox d-flex ml-3 mb-4">
-							<div class="image col-md-3 px-0">
-								<img src="${pageContext.request.contextPath}/resources/images/index/caravan.jpg" />
-							</div>
-							<div class="info col-md-9 px-0">
-								<div class="d-flex justify-content-between">
-									<div class="title text-15 font-weight-bold">Title Title Title Title</div>
-									<div class="createdAt text-13 text-secondary">2022-07-20</div>
-								</div>
-								<div class="price my-2">20,000원</div>
-								<div class="content text-13">좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. ...더보기</div>
-							</div>
-						</div>
-						--%>
-						
-						<%-- review Box --%>
-						<!-- <div class="reviewBox d-flex ml-3 mb-5">
-							<div class="image col-md-3 px-0">
-								<i class="fa-solid fa-circle-user fa-5x" style="color:rgb(235,235,235);"></i>
-							</div>
-							<div class="info col-md-9 px-0">
-								<div class="d-flex justify-content-between">
-									<div>
-										<span>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-											<i class="fa-solid fa-star fa-xs"></i>
-										</span>
-										<span class="ml-2 text-14">	캠퍼길동</span>
-									</div>
-									<div class="report text-13 text-secondary mt-1">
-										<i class="fa-regular fa-lightbulb fa-sm position-relative"></i>
-										<span>신고하기</span>
-									</div>
-								</div>
-								<div class="content text-13">
-									좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다.
-									좋은 상품입니다. 좋은 상품입니다. 좋은 상품입니다.
-								</div>
-								<div class="text-right text-secondary text-13">2022-07-20</div>
-							</div>
-						</div> -->
-						
+					<div class="d-flex flex-column justify-content-between" style="height: 680px;">
+						<div id="listSection"></div>
+						<div id="pagebarSection"></div>
 					</div>
-					<div id="pagebarSection"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-</body>
+	
+	<%-- report enroll modal --%>
+	<jsp:include page="/WEB-INF/views/tradereview/reportEnroll.jsp"/>
 <script>
-$("#profileCheck")
-.modal()
-.on('hide.bs.modal', (e) => {
-});
-
-/* const memberId = ${memberId}; */
-/* let cPage = 1; */
 $(document).ready(() =>{
 	renderProductList(1);
 	
-})
-const memberId = "honggd";
+});
 
 $(".profile-nav li").click((e) => {
 	$(".profile-nav li").removeClass("active");
 	$(e.target).addClass("active");
 });
 
+const sellerId = "${member.sellerId}";
 // 판매자 정보 판매상품 목록 조회 비동기
 const renderProductList = (cPage) => {
 	$("#listSection").html("");
 	$("#pagebarSection").html("");
 	$.ajax({
 		url: "${pageContext.request.contextPath}/usedProduct/productList",
-		data: {memberId, cPage},
+		data: {sellerId, cPage},
+		dataType: "json",
 		success(response) {
 			const {productList, pagebar} = response;
 			for(let i = 0; i < productList.length; i++) {
@@ -170,17 +127,21 @@ const renderProductList = (cPage) => {
 }
 
 // 판매자 정보 거래후기 목록 조회 비동기
-const renderReviewList = () => {
+const renderReviewList = (cPage) => {
 	$("#listSection").html("");
 	$("#pagebarSection").html("");
 	$.ajax({
 		url: "${pageContext.request.contextPath}/tradereview/reviewList",
-		data: {memberId, cPage},
+		data: {sellerId, cPage},
+		dataType: "json",
 		success(response) {
 			const {reviewList, pagebar} = response;
+			console.log(reviewList);
 			for(let i = 0; i < reviewList.length; i++) {
+				console.log(reviewList[i].report);
 				const $reviewBox = $('<div class="reviewBox d-flex ml-3"></div>');
 				const $userImage = $('<div class="image col-md-2 px-0"></div>');
+				const $userEnrollImg = $(`<img class="profileImg" src="${pageContext.request.contextPath}/resources/upload/member/\${reviewList[i].profileImg}"/>`)
 				const $userIcon = $('<i class="fa-solid fa-circle-user fa-5x" style="color:rgb(235,235,235);"></i>');
 				const $reviewInfo = $('<div class="info col-md-10 pl-0 pr-4 ml-4">');
 				const $infoDiv1 = $('<div class="d-flex justify-content-between">');
@@ -195,16 +156,33 @@ const renderReviewList = () => {
 				$star.append(`<span class="px-2 text-13">\${reviewList[i].starScore}점</span>`);
 				const $nickname = $(`<span class="ml-2 text-14">\${reviewList[i].nickname}</span>`);
 				// 분기처리 loginMember.memberId와 memberId비교
-				/* if(${not empty loginMember}) {
-					if("${loginMember.memberId}" === memberId) { */
-						const $report = $('<div class="report text-13 text-secondary mt-1"></div>');
-						const $reportIcon = $('<i class="fa-regular fa-lightbulb fa-sm position-relative"></i>');
-						const $reportBtn = $('<span>신고하기</span>');
-						
-						$report.append($reportIcon, $reportBtn);
-						$infoDiv1.append($report);
-					/* }
-				} */
+				if(${not empty loginMember}) {
+					if("${loginMember.memberId}" === sellerId) {
+						if(reviewList[i].reportNo === null || reviewList[i].reportNo === "") {
+							const $report = $('<div class="report text-13 text-secondary mt-1" style="cursor:pointer"></div>');
+							const $reportIcon = $('<i class="fa-regular fa-lightbulb fa-sm position-relative"></i>');
+							const $reportBtn = $('<span>신고하기</span>');
+							
+							$report.append($reportIcon, $reportBtn);
+							// 신고하기 클릭 시 모달창
+							$report.on('click', (re) => {
+								$("#reportEnroll").modal().on('hide.bs.modal', () => {
+									$("#profileCheck").show();
+								});
+								$("#profileCheck").hide();
+								$("#reportEnroll #reviewNo").val(`\${reviewList[i].reviewNo}`)
+								$("#reportEnroll #productNo").val(`\${productNo}`);
+							});
+							$infoDiv1.append($report);
+						} 
+					}
+				}
+				if(reviewList[i].report != null && reviewList[i].report !== "") {
+					const $report = $('<div class="report text-13 text-secondary mt-1"></div>');
+					const $reportAlready = $('<span class="text-danger">판매자에 의해 신고된 리뷰입니다.</span>');
+					$report.append($reportAlready);
+					$infoDiv1.append($report);
+				}
 				const $content = $(`<div class="content text-13">\${reviewList[i].content}</div>`);
 				const $createdAt = $(`<div class="text-right text-secondary text-13"/*  style="line-height: 100px;" */>\${reviewList[i].createdAt.year}.\${reviewList[i].createdAt.monthValue}.\${reviewList[i].createdAt.dayOfMonth}</div>`);
 				const $infoDiv2 = $('<div class="d-flex justify-content-between"></div>');
@@ -212,7 +190,8 @@ const renderReviewList = () => {
 				$infoDiv1.prepend($starNickname);
 				$infoDiv2.append($content, $createdAt);
 				$reviewInfo.append($infoDiv1, $infoDiv2);
-				$userImage.append($userIcon);
+				if(reviewList[i].profileImg) $userImage.append($userEnrollImg);
+				else $userImage.append($userIcon);
 				$reviewBox.append($userImage, $reviewInfo);
 				$("#listSection").append($reviewBox);
 			}

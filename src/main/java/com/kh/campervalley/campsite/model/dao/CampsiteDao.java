@@ -6,10 +6,11 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.apache.ibatis.annotations.Select;
 
 import com.kh.campervalley.campsite.model.dto.CampsiteExt;
 import com.kh.campervalley.campsite.model.dto.CampsiteFacility;
+import com.kh.campervalley.campsite.model.dto.CampsiteImage;
 
 @Mapper
 public interface CampsiteDao {
@@ -31,13 +32,23 @@ public interface CampsiteDao {
 
 	@Delete("delete from campsite")
 	int campsiteListReset();
-
+	
+	@Select("select content_id from campsite")
+	List<CampsiteExt> selectContentIdList();
+	
+	@Insert("insert into campsite_image values (#{serialnum}, #{contentId}, #{imageUrl})")
+	int insertCampsiteImage(CampsiteImage campsiteImage);
+	
 	List<CampsiteExt> recentCampsiteList();
-
+	
 	List<CampsiteExt> searchCampsiteList(Map<String, Object> searchParam);
-
+	
 	List<CampsiteExt> searchCampsiteThemeList(Map<String, Object> searchParam);
-
+	
 	CampsiteExt selectOneCampsite(long contentId);
+
+	List<CampsiteImage> selectCampsiteImageListByContentId(long contentId);
+
+	CampsiteFacility selectOneCampsiteFacility(long contentId);
 	
 }

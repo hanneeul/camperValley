@@ -44,6 +44,9 @@
 				<th class="col-md-1">조회수</th>
 			</tr>
 		</thead>
+		<c:if test="${empty list}">
+						<td colspan="4">등록된 글이 없습니다.</td>
+					</c:if>
 		<c:forEach items="${list}" var="list" varStatus="vs">
 			<tr>
 				<td>${list.noticeNo}</td>
@@ -62,7 +65,9 @@
 	</sec:authorize>
 </div>
 </div>
-<div class="mt-5" id="pageBar">${pagebar}</div>
+<c:if test="${not empty list}">
+    	<div class="mt-5" id="pageBar">${pagebar}</div>
+</c:if>
 <script>
 document.querySelectorAll('.btn-search').forEach((btn) => {
 	btn.addEventListener('click', (e) => {

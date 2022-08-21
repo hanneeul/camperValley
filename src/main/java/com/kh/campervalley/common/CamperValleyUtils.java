@@ -154,7 +154,9 @@ public class CamperValleyUtils {
 		return pagebar.toString();
 	}
 	
-	public static String getPagebarAsync(int cPage, int numPerPage, int totalContent, String url) {
+	/* ----- JH STRAT ----- */
+	/* 페이지바 비동기 */
+	public static String getPagebarAsync(int cPage, int numPerPage, int totalContent, String type) {
 		final int pagebarSize = 5;
 		StringBuilder pagebar = new StringBuilder();
 		int totalPage = (int) Math.ceil((double) totalContent / numPerPage);
@@ -174,7 +176,7 @@ public class CamperValleyUtils {
 		}
 		else {
 			pagebar.append("<li class=\"page-item\">\r\n"
-					+ "		      <a class=\"page-link\" href=\"\" aria-label=\"Previous\">\r\n"
+					+ "		      <a class=\"page-link\" href=\"\" onclick=\"render" + type + "List(" + (pageNo-1) + "); return false;\" aria-label=\"Previous\">\r\n"
 					+ "		        <span aria-hidden=\"true\">&laquo;</span>\r\n"
 					+ "		        <span class=\"sr-only\">Previous</span>\r\n"
 					+ "		      </a>\r\n"
@@ -191,7 +193,7 @@ public class CamperValleyUtils {
 						+ "		    </li>\r\n");
 			}
 			else {
-				pagebar.append("<li class=\"page-item\"><a class=\"page-link\" href=\"\">" + pageNo + "</a></li>\r\n");
+				pagebar.append("<li class=\"page-item\"><a class=\"page-link\" href=\"\" onclick=\"render" + type + "List(" + pageNo + "); return false;\">" + pageNo + "</a></li>\r\n");
 			}
 			
 			pageNo++;
@@ -207,7 +209,7 @@ public class CamperValleyUtils {
 		}
 		else {
 			pagebar.append("<li class=\"page-item\">\r\n"
-					+ "				<a class=\"page-link\" href=\"\" aria-label=\"Next\">\r\n"
+					+ "				<a class=\"page-link\" href=\"\" onclick=\"render" + type + "List(" + pageNo + "); return false;\" aria-label=\"Next\">\r\n"
 					+ "		        	<span aria-hidden=\"true\">&raquo;</span>\r\n"
 					+ "		        	<span class=\"sr-only\">Next</span>\r\n"
 					+ "		      	</a>\r\n"
@@ -219,6 +221,7 @@ public class CamperValleyUtils {
 		
 		return pagebar.toString();
 	}
+	/* ----- JH END ----- */
 	
 	/**
 	 * 20220714_143822333_123.png

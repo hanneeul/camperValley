@@ -6,7 +6,7 @@
 .text-25{font-size: 25px;}
 
 @media (min-width: 576px) {
-	.modal-dialog {
+	#reportEnroll .modal-dialog {
 		max-width: 450px;
 	}
 }

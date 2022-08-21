@@ -56,12 +56,12 @@
 				<img class="col-md-3 mr-4 pl-5 pr-5" style="width:100" src="${pageContext.request.contextPath}/resources/images/logo.png" onclick="location.href='${pageContext.request.contextPath}'" alt="logo" />
 				<ul class="navbar-nav col-md-6 p-0 mt-4 justify-content-start">
 					<!-- 선택시 active -->
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/campsite/searchDetail">캠핑장</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/usedProduct/main/mainPage">캠핑용품거래</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/community/camper/camperList">커뮤니티</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/mypage/info/main">마이페이지</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/cs/noticeList">고객센터</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pl-3" href="${pageContext.request.contextPath}/admin/dashboard">관리자페이지</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/campsite/searchDetail">캠핑장</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/usedProduct/main/mainPage">캠핑용품거래</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/community/camper/camperList">커뮤니티</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/mypage/info/main">마이페이지</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/cs/noticeList">고객센터</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/admin/dashboard">관리자페이지</a></li>
 
 				</ul>
 				    <sec:authorize access="isAnonymous()">

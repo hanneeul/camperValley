@@ -17,8 +17,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -156,9 +158,13 @@ public class MypageCommunityController {
 			log.debug("{}",result);
 			map.put("msg", "모집상태 변경에 성공했습니다.");
 		} catch(Exception e) {
-			map.put("msg", "모집상태 변경에 실패했습니다.");
 			log.error("캠퍼모집 상태 업데이트 오류", e);
-			throw e;
+			map.put("error", e.getMessage());;
+
+			return ResponseEntity
+					.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+					.body(map);
 			
 		} 
 		
@@ -167,7 +173,29 @@ public class MypageCommunityController {
 				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.body(map);
 		
-}
+	}
+	
+	@PostMapping("/myCamper/camperUpdate") 
+	public String camperUpdate(Camper camper,
+				@RequestHeader(name = "Referer", required = false) String referer) {
+		try {
+			log.debug("camper = {}", camper);
+			log.debug("referer = {}", referer);
+			String escapeContent = camper.getContent().replaceAll("&", "&amp;")
+									   .replaceAll("<", "&lt;")
+									   .replaceAll(">", "&gt;");
+			camper.setContent(escapeContent);
+			log.debug("content = {}", camper.getContent());
+			int result = camperService.updateCamper(camper);
+			//redirectAttr.addFlashAttribute("msg", "게시글을 성공적으로 수정했습었습니다.");
+		} catch(Exception e) {
+			log.debug("캠퍼모집 수정 오류", e);
+			throw e;
+		}
+		return "redirect:/";
+	}
+	
+	
 	@PostMapping("/myReview/delete")
 	public String reviewDelete(
 			@RequestParam int reviewNo, 

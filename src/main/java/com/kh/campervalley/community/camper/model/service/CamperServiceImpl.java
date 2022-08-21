@@ -33,7 +33,7 @@ public class CamperServiceImpl implements CamperService {
 	}
 
 	@Override
-	public List<Camper> selectMoreCamperList(int cPage, int numPerPage, Map<String, Object> param) {
+	public List<CamperExt> selectMoreCamperList(int cPage, int numPerPage, Map<String, Object> param) {
 		int offset = (cPage - 1) * numPerPage;
 		int limit = numPerPage;
 		RowBounds rowBounds = new RowBounds(offset, limit);

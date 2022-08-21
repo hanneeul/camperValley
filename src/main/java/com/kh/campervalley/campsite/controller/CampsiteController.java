@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,10 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.campervalley.campsite.model.common.CampsiteApiData;
 import com.kh.campervalley.campsite.model.dto.CampsiteExt;
+import com.kh.campervalley.campsite.model.dto.CampsiteFacility;
+import com.kh.campervalley.campsite.model.dto.CampsiteImage;
 import com.kh.campervalley.campsite.model.service.CampsiteService;
-import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
-import com.kh.campervalley.community.review.model.dto.ReviewComment;
-import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -102,7 +100,11 @@ public class CampsiteController {
 	public ModelAndView infoView(ModelAndView mav, @RequestParam long contentId) throws Exception {
 		try {
 			CampsiteExt campsite = campsiteService.selectOneCampsite(contentId);
+			CampsiteFacility facility = campsiteService.selectOneCampsiteFacility(contentId);
+			List<CampsiteImage> campsiteImageList = campsiteService.selectCampsiteImageListByContentId(contentId);
 			mav.addObject("campsite", campsite);
+			mav.addObject("facility", facility);
+			mav.addObject("campsiteImageList", campsiteImageList);
 			mav.setViewName("campsite/infoView");
 		} catch (Exception e) {
 			log.error("캠핑장 상세 조회 오류", e);

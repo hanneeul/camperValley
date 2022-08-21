@@ -17,7 +17,7 @@ public interface CamperDao {
 
 	List<CamperExt> selectCamperList(RowBounds rowBounds);
 
-	List<Camper> selectMoreCamperList(RowBounds rowBounds, Map<String, Object> param);
+	List<CamperExt> selectMoreCamperList(RowBounds rowBounds, Map<String, Object> param);
 
 	CamperExt selectCamperOne(int camperNo);
 
