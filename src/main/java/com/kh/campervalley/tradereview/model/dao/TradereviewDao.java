@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
+import com.kh.campervalley.tradereview.model.dto.ReviewReport;
 import com.kh.campervalley.tradereview.model.dto.TradeReview;
 import com.kh.campervalley.tradereview.model.dto.TradeReviewExt;
 
@@ -18,10 +19,14 @@ public interface TradereviewDao {
 
 	int updateReview(TradeReview tradeReview);
 
+	TradeReviewExt getProfileInfo(String memberId);
+
 	Map<String, Object> selectCounts(String memberId);
 
 	List<TradeReviewExt> selectReviewListByMemberId(RowBounds rowBounds, String memberId);
 
 	int selectTotalReviewByMemberId(String memberId);
+
+	int insertReport(ReviewReport reviewReport);
 
 }

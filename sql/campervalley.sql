@@ -154,7 +154,8 @@ create table ad_performance (
     daily_view_cnt number default 0,
     
     constraint pk_ad_performance primary key(ad_performance_no),
-    constraint fk_ad_performance_advertisement_no foreign key(advertisement_no) references advertisement(advertisement_no) on delete cascade
+    constraint fk_ad_performance_advertisement_no foreign key(advertisement_no) references advertisement(advertisement_no) on delete cascade,
+    constraint uq_ad_performance_adno_display unique(advertisement_no, display_at)
 );
 create sequence seq_ad_performance_no;
 

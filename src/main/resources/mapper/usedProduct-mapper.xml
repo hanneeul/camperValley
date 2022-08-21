@@ -307,7 +307,12 @@ select *
 <!-- JH START -->
 <select id="selectProductListByMemberId" resultType="UsedProduct">
 	select 
-		*
+		product_no,
+		product_title,
+		product_content,
+		product_img1,
+		product_price,
+		to_char(product_enroll_time, 'yyyy-MM-dd HH24:mi:ss') product_enroll_time
 	from 
 		used_product
 	where 
@@ -325,4 +330,17 @@ select *
 		seller_id = #{memberId}
 </select>
 <!-- JH END -->
+
+<!-- EJ START -->
+<select id="selectProductList" resultType="UsedProduct">
+	select
+		*
+	from
+		used_product
+	where
+		is_delete='N' and transaction_date is null
+	order by
+		product_enroll_time desc
+</select>
+<!-- EJ END -->
 </mapper>

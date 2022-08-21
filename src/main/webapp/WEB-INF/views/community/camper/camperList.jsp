@@ -13,7 +13,7 @@
 				<div class="input-group align-items-center community-search-enroll">
 			    	<select id="searchType" class="custom-select btn-outline-success btn-outline-camper-color">
 						<option value="" disabled selected>선택</option>
-						<option value="member_id" ${param.searchType eq "member_id" ? "selected" : ""}>작성자</option>
+						<option value="nickname" ${param.searchType eq "nickname" ? "selected" : ""}>작성자</option>
 					   	<option value="title" ${param.searchType eq "title" ? "selected" : ""}>제목</option>
 					    <option value="content" ${param.searchType eq "content" ? "selected" : ""}>내용</option>
 					</select>

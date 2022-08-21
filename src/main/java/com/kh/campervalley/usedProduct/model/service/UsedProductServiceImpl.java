@@ -36,24 +36,52 @@ public class UsedProductServiceImpl implements UsedProductService {
 	}
 
 	@Override
-	public List<UsedProduct> getProductList(int page) {
-		
-		Map<String, Object> param = new HashMap<>();
-		int start;
-		int end;
-		int default_count = 10;
-		int pageSize = 10;
-		
-		if(page > 0) {
-			start = default_count + 1 + (page - 1) * pageSize;
-			end = default_count + page * pageSize;
-			param.put("start", start);
-			param.put("end", end);
-			
-			System.out.println("start = " + start);
-			System.out.println("end = " + end);
+	public List<UsedProduct> getProductList(int page, int adListSize) {
+		// EJ start
+		int adInPage = 0;
+		int prevPageAds = 0;
+		int AD_INTERVAL = 6;
+
+		int numPerPage = 10;
+		int offset = (page - 1) * numPerPage;
+		if(adListSize > 0) {
+			for(int i = 1; i <= adListSize; i++) {
+				log.debug("adList.i = {}", i);
+				
+				if(i * AD_INTERVAL <= offset)
+					prevPageAds++;
+				
+				if(i * AD_INTERVAL > offset && i * AD_INTERVAL < offset + numPerPage)
+					adInPage++;
+			}
 		}
-		return usedProductDao.getProductList(param);
+		log.debug("prevPageAds = {}", prevPageAds);
+		log.debug("adInPage = {}", adInPage);
+		offset = offset - prevPageAds;
+		int limit = numPerPage - adInPage;
+		log.debug("offset = {}", offset);
+		log.debug("limit = {}", limit);
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<UsedProduct> list = usedProductDao.selectProductList(rowBounds);
+		return list;
+		// EJ end
+		
+//		Map<String, Object> param = new HashMap<>();
+//		int start;
+//		int end;
+//		int default_count = 10;
+//		int pageSize = 10;
+//		
+//		if(page > 0) {
+//			start = default_count + 1 + (page - 1) * pageSize;
+//			end = default_count + page * pageSize;
+//			param.put("start", start);
+//			param.put("end", end);
+//			
+//			System.out.println("start = " + start);
+//			System.out.println("end = " + end);
+//		}
+//		return usedProductDao.getProductList(param);
 	}
 
 	@Override

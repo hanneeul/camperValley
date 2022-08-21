@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.campervalley.mypage.trade.dto.WishExt;
 import com.kh.campervalley.mypage.trade.model.dao.TradeDao;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
+import com.kh.campervalley.usedProduct.model.dto.UsedProductExt;
 
 import lombok.NonNull;
 
@@ -25,12 +26,12 @@ public class TradeServiceImpl implements TradeService {
 	public List<UsedProduct> sellingListByMemberId(Map<String, Object> map) {
 		return tradeDao.sellingListByMemberId(map);
 	}
-
+	/* --JH-- */
 	@Override
-	public List<UsedProduct> purchasedListByMemberId(Map<String, Object> map) {
+	public List<UsedProductExt> purchasedListByMemberId(Map<String, Object> map) {
 		return tradeDao.purchasedListByMemberId(map);
 	}
-
+	/* --JH-- */
 	@Override
 	public List<UsedProduct> selectMoreSellingProduct(int offset, int numPerReq, @NonNull String memberId) {
 		RowBounds rowBounds = new RowBounds(offset, numPerReq);

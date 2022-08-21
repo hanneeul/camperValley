@@ -29,6 +29,8 @@ import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdZone;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
 import com.kh.campervalley.mypage.advertiser.model.service.AdvertiserService;
+import com.kh.campervalley.tradereview.model.dto.TradeReviewExt;
+import com.kh.campervalley.tradereview.model.service.TradereviewService;
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.dto.WishProduct;
@@ -46,6 +48,8 @@ public class UsedProductController  {
 	
 	@Autowired
 	private UsedProductService usedProductService;
+	@Autowired
+	private TradereviewService tradereviewService;
 	
 	@Autowired
 	private AdvertiserService advertiserService;
@@ -112,10 +116,14 @@ public class UsedProductController  {
 	/* 카테고리 검색 */
 	@PostMapping("/main/getProductList") 
 	@ResponseBody
-	public ModelAndView getProductList(@RequestParam(name = "page") int page) {
-		List<UsedProduct> list = usedProductService.getProductList(page);
-		
+	public ModelAndView getProductList(@RequestParam(name = "page") int page, @RequestParam(name = "adCount") int beforeAd) {
 		ModelAndView mav = new ModelAndView();
+		List<AdvertisementExt> feedAdList = advertiserService.getDisplayFeedAdList(beforeAd, 10, AdZone.usedProductFeed);
+		mav.addObject("feedAdList", feedAdList);
+		int adListSize = beforeAd + feedAdList.size();
+		
+		List<UsedProduct> list = usedProductService.getProductList(page, adListSize);
+		
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
 		return mav;
@@ -127,6 +135,11 @@ public class UsedProductController  {
 					@RequestParam(value = "cateNo") String cateNo,
 					@RequestParam(value = "order", required=false) String order) {
 		usedProductService.cateProductList(cateNo, Integer.parseInt(page), order, mav);
+		
+		List<AdvertisementExt> adList = advertiserService.getDisplayAdList(3, AdZone.usedProductHome);
+		log.debug("adList = {}", adList);
+		
+		mav.addObject("adList", adList);
 		
 		mav.addObject("display", "/usedProduct/main/cateDisplay.jsp");
 		mav.setViewName("usedProduct/main/mainPage");
@@ -163,6 +176,11 @@ public class UsedProductController  {
 			searchResult = " 의 검색 결과";
 		}
 		
+		List<AdvertisementExt> adList = advertiserService.getDisplayAdList(3, AdZone.usedProductHome);
+		log.debug("adList = {}", adList);
+		
+		model.addAttribute("adList", adList);
+		
 		model.addAttribute("searchResult", searchResult);
 		model.addAttribute("display", "/usedProduct/main/searchDisplay.jsp");
 		
@@ -176,6 +194,14 @@ public class UsedProductController  {
 	public String productDetail(@RequestParam String no, Model model) {
 
 		usedProductService.viewUpdate(no); //조회수 증가
+		/*----- JH start -----*/
+		// 별점평균, 판매상품/거래리뷰 갯수
+		TradeReviewExt member = tradereviewService.getProfileInfo(no);
+		Map<String, Object> counts = tradereviewService.selectCounts(no);
+		
+		model.addAttribute("counts", counts);
+		model.addAttribute("member", member);
+		/*----- JH end -----*/
 		
 		// 상품 정보 받아옴
 		UsedProduct usedProduct = usedProductService.productDetail(no);
@@ -187,12 +213,6 @@ public class UsedProductController  {
 	
 	@GetMapping("/product/productUpdate")
 	public void productUpdate() {};
-	
-	@PostMapping("/chat/chat")
-	public void chat() {};
-	
-	@PostMapping("/chat/chatList")
-	public void chatList() {};
 
 	/* 관심상품 */
 	@GetMapping("/product/findHeart")
@@ -267,6 +287,7 @@ public class UsedProductController  {
 		log.debug("member = {}", member);
 		// 물건 총 개수
 		int sellerProdNum = usedProductService.getSellerProdNum(Integer.parseInt(productNo));
+		System.out.println(member.getProfileImg());
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("profileImg", member.getProfileImg());
@@ -282,17 +303,15 @@ public class UsedProductController  {
 	@GetMapping("/productList")
 	public ModelAndView reviewList(
 			@RequestParam(defaultValue = "1") int cPage,
-			@RequestParam String memberId, 
-			ModelAndView mav,
-			HttpServletRequest request) {
+			@RequestParam String sellerId, 
+			ModelAndView mav) {
 		try {
 			int numPerPage = UsedProductService.NUM_PER_PAGE_MODAL;
-			List<UsedProduct> productList = usedProductService.selectProductListByMemberId(cPage, numPerPage, memberId);
+			List<UsedProduct> productList = usedProductService.selectProductListByMemberId(cPage, numPerPage, sellerId);
 			
 			// 페이지바
-			int totalContent = usedProductService.selectTotalProductByMemberId(memberId);
-			String pagebar = CamperValleyUtils.getPagebarAsync(cPage, numPerPage, totalContent, request.getRequestURI());
-			log.debug("totalContent = {}", totalContent);
+			int totalContent = usedProductService.selectTotalProductByMemberId(sellerId);
+			String pagebar = CamperValleyUtils.getPagebarAsync(cPage, numPerPage, totalContent, "Product");
 			mav.addObject("productList", productList);
 			mav.addObject("pagebar", pagebar);
 			mav.setViewName("jsonView");

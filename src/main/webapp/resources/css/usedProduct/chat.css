@@ -76,11 +76,12 @@ h5 {
 	border-radius: 50%;
 }
 .member-info_text-body {
-    position: relative;
+	position: relative;
     left: 48px;
     font-size: 0.9rem;
     top: -31px;
     line-height: 0.3rem;
+    width: 100px;
 }
 .product-info_container {
 font-size: 0.9rem;
@@ -89,7 +90,7 @@ font-size: 0.9rem;
     margin-right: 5px;
     line-height: 1.05rem;
 }
-.transaction_btn {
+#transaction_btn {
     font-size: 0.8rem;
     float: right;
     margin-top: -9px;
@@ -98,6 +99,9 @@ font-size: 0.9rem;
     background-color: #D9BF77;
     height: 30px;
     width: 70px;
+}
+#transaction_btn:hover {
+	cursor: pointer;
 }
 .product-info_text-price {
 	position: relative;
@@ -124,7 +128,7 @@ font-size: 0.9rem;
     align-items: center;
     -webkit-box-orient: horizontal;
 }
-#inputMessage {
+#chatContent {
     box-sizing: border-box;
     width: 680px;
     height: 29px;

@@ -20,6 +20,9 @@ public class MypageCommunityServiceImpl implements MypageCommunityService{
 	@Autowired
 	MypageCommunityDao mypageCommunityDao;
 	
+	// --------------------- EJ start
+	// --------------------- EJ end
+	
 	@Override
 	public List<Camper> selectMyCamperList(int cPage, int numPerPage, String memberId) {
 		int offset = (cPage - 1) * numPerPage;

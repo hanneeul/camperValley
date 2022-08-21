@@ -43,6 +43,6 @@ public class CampsiteFacility {
 	private int extshrCo;			// 소화기개수
 	private int frprvtWrppCo;		// 방화수개수
 	private int frprvtSandCo;		// 방화사개수
-	private String eqpmnLendCl;		// 캠핑장비대
+	private String eqpmnLendCl;		// 캠핑장비대여
 	private String animalCmgCl;		// 애완동물출입
 }

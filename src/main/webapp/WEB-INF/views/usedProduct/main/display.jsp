@@ -46,11 +46,11 @@
 </div>
 
 <div id="display-list" class="row" style="width: 1200px;">
-	<c:forEach items="${list}" var="list">
+	<c:forEach items="${list}" var="list" varStatus="vs">
 		<div class="item col-3" onclick="productDetailNo(${item.productNo})">
 			<div class="item">
 				<div id="itemSolid">
-					<img src="${list.productImg1} class="rounded float-start" alt="상품이미지">
+					<img src="${list.productImg1}" class="rounded float-start" alt="상품이미지">
 					<h5 id="displayTitle">${list.productTitle}</h5>
 					<div class="price-time">
 						<p class="displayPrice">${list.productPrice}</p>
@@ -58,7 +58,7 @@
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</c:forEach>	
 </div>
 <div id="moreShow">
@@ -75,7 +75,9 @@ $(document).ajaxSend(function(e, xhr, options) {
     xhr.setRequestHeader(header, token);
 });
 
-var page = 0;
+var page = 1;
+let adCount = 0;
+let totalItemCount = 0;
 
 $(document).ready(function() {
 	getProductList(page);
@@ -91,16 +93,22 @@ function getProductList(page) {
 		url : '${pageContext.request.contextPath}/usedProduct/main/getProductList',
 		dataType : 'json',
 		data : {
-			page : page
+			page : page,
+			adCount
 		},
 		success : function(data) {
 			
 			if(data.list.length == 0) {
 				$('#more').hide();
 			} else {
-				$.each(data.list, function() {
+				let adCountInPage = 0;
+				for(let i = 0; i < 10; i++) {
+					const item = data.list[i - adCountInPage];
+					
 					var html = "";
-					var time = Number(this.productEnrollTime);
+					const now = new Date().getTime();
+					var time = Date.parse(item.productEnrollTime);
+					time = Math.round((now - time) / 1000 / 60);
 					var time_before = "분 전";
 					
 					if(time > (60 * 24)) {
@@ -109,26 +117,53 @@ function getProductList(page) {
 					} else if (time > 60) {
 						time = Math.round(time / 60);
 						time_before = "시간 전";
-					} 
-				
-					html = '<div class="item col-3"' + 'onclick="productDetailNo('
-						+ this.productNo + ');"'
-						   + 'style="cursor: pointer;">'
-						   + '<div class ="item">' + '<div id="itemSolid">'
-						   + '<div class="img-box">'
-						   + '<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/' + this.productImg1
-						   + '" class="rounded float-start" alt="'
-						   + this.productTitle + '">' + '</div>'
-						   + '<div class="text-box">'
-						   + '<div class="displayName">'
-						   + this.productTitle + '</div>'
-						   + '<div class="price-time">'
-						   + '<div class="displayPrice">' + this.productPrice
-						   + '</div>' + '<div class="displayTime"><span>'
-						   + time + time_before + '<span></div>' + '</div>'
-						   + '</div>' + '</div>' + '</div>' + '</div>'
-					$('#display-list').append(html)
-				})
+					}
+
+					if((totalItemCount + 1) % 6 != 0 || data.feedAdList[adCount] == null) {
+						html = '<div class="item col-3"' + 'onclick="productDetailNo('
+							+ item.productNo + ');"'
+							   + 'style="cursor: pointer;">'
+							   + '<div class ="item">' + '<div id="itemSolid">'
+							   + '<div class="img-box">'
+							   + '<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/' + item.productImg1
+							   + '" class="rounded float-start" alt="'
+							   + item.productTitle + '">' + '</div>'
+							   + '<div class="text-box">'
+							   + '<div class="displayName">'
+							   + item.productTitle + '</div>'
+							   + '<div class="price-time">'
+							   + '<div class="displayPrice">' + item.productPrice
+							   + '</div>' + '<div class="displayTime"><span>'
+							   + time + time_before + '<span></div>' + '</div>'
+							   + '</div>' + '</div>' + '</div>' + '</div>';
+					}
+					
+					// 피드 광고출력
+					if((totalItemCount + 1) % 6 == 0 && data.feedAdList[adCount] != null) {
+						adCountInPage++;
+						const advertisementNo = data.feedAdList[adCount].advertisementNo;
+						const adLink = data.feedAdList[adCount].adLink;
+						const filename = data.feedAdList[adCount++].adAttach.renamedFilename;
+						
+						html = '<div class="item col-3" style="cursor: pointer;">'
+								+ '<div class ="item">'
+								+ '<div id="itemSolid">'
+								+ '<div class="img-box" onclick="clickUpAndMove(' + advertisementNo + ', \'' + adLink + '\');">'
+								+ '	<img src="${pageContext.request.contextPath}/resources/upload/mypage/advertiser/advertisement/' + filename
+								+ 	'" class="rounded float-start" alt="광고이미지">'
+								+ '</div>'
+								+ '<div class="text-box">'
+								+ '<div class="displayName"></div>'
+								+ '<div class="price-time">'
+								+ '	<div class="displayPrice"></div>'
+								+ '	<div class="displayTime"></div>'
+								+ '</div>'
+								+ '</div></div></div>'
+					}
+					
+					$('#display-list').append(html);
+					totalItemCount++;
+				};
 			}
 		},
 		error : function(err) {
@@ -143,11 +178,14 @@ function productDetailNo(no) {
 <%-- EJ start --%>
 <script>
 window.addEventListener('load', (e) => {
-	// 첫번째 광고 조회수 증가처리
+	// 첫번째 배너 광고 조회수 증가처리
 	viewUpFirstAd();
 });
 const viewUpFirstAd = () => {
 	const active = document.querySelector(".carousel-inner .active");
+	if(active == null)
+		return;
+
 	const advertisementNo = active.dataset.advertisementNo;
 	viewUpAd(advertisementNo);
 };

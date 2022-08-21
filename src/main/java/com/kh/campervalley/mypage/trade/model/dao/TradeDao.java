@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.kh.campervalley.mypage.trade.dto.WishExt;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
+import com.kh.campervalley.usedProduct.model.dto.UsedProductExt;
 
 import lombok.NonNull;
 
@@ -15,9 +16,9 @@ import lombok.NonNull;
 public interface TradeDao {
 
 	List<UsedProduct> sellingListByMemberId(Map<String, Object> map);
-
-	List<UsedProduct> purchasedListByMemberId(Map<String, Object> map);
-
+	/* --JH-- */
+	List<UsedProductExt> purchasedListByMemberId(Map<String, Object> map);
+	/* --JH-- */
 	List<UsedProduct> selectMoreSellingProduct(String memberId, RowBounds rowBounds);
 
 	List<WishExt> wishListByMemberId(Map<String, Object> map);

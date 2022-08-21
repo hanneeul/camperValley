@@ -155,14 +155,6 @@
 
 <script>
 
-$('#enrollForm').ready(function() {
-	 $('#div-image').hide();
-	 $('#div-subject').hide();
-	 $('#div-category').hide();
-	 $('#div-price').hide();
-	 $('#div-location').hide();
-});
-
 /* 이미지 등록 (미리보기) */
 $('#upFiles').on('change', readImage); // 파일 올릴떄마다 readImage함수 호출
 const fileBuffer = []; // 파일 저장 변수
@@ -325,13 +317,6 @@ $('.productPrice').on('keyup', function(e) {
    }
 });
 
-function confirm() {
-	 if(!fileBuffer.length) { $('#div-image').show(); $('#productImg').focus(); return true;}
-	 else if($('#productTitle').val()=='') {$('#div-subject').show(); $('#productTitle').focus(); return true;}
-	 else if(cate_no == null) { $('#div-category').show(); $('#categories').focus(); return true;}
-	 if($('#productLocation').val()=='') { $('#div-location').show(); $('#productLocation').focus(); return true;}
-	 if($('#productPrice').val()=='') { $('#productPrice').show(); $('#productPrice').focus(); return true;}
- }
 
 //ajax 통신을 위한 csrf 설정
 var token = $("meta[name='_csrf']").attr("content");
@@ -341,8 +326,26 @@ $(document).ajaxSend(function(e, xhr, options) {
 });
 
 $('#enrollBtn').click(function(){
+	$('#enrollForm').ready(function() {
+		 $('#div-image').hide();
+		 $('#div-subject').hide();
+		 $('#div-category').hide();
+		 $('#div-price').hide();
+		 $('#div-location').hide();
+	});
+	
+	if(confirm()) return false;
 	
 	registAction.call(this);
+
+	function confirm() {
+		 if(!fileBuffer.length) { $('#div-image').show(); $('#productImg').focus(); return true;}
+		 else if($('#productTitle').val()=='') {$('#div-subject').show(); $('#productTitle').focus(); return true;}
+		 else if(cate_no == null) { $('#div-category').show(); $('#categories').focus(); return true;}
+		 if($('#productLocation').val()=='') { $('#div-location').show(); $('#productLocation').focus(); return true;}
+		 if($('#productPrice').val()=='') { $('#productPrice').show(); $('#productPrice').focus(); return true;}
+ 	}
+
 	
 	//submit
 	function registAction() {
@@ -363,6 +366,11 @@ $('#enrollBtn').click(function(){
 						value : e
 					}
 					data.push(imgObj);
+					
+					const deliveryFeeObj = {
+						name : 'productDeliveryFee',
+						value : $('#freeDeliveryFee').prop('checked') ? 1 : 0
+					}
 				});
 			},
 			success: function(data) {
@@ -370,7 +378,6 @@ $('#enrollBtn').click(function(){
 				alert('상품이 등록되었습니다.');
 			},
 			error: function(error) {
-				alert('error : ', error);
 			}
 			
 		});

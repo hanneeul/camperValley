@@ -56,12 +56,12 @@
 				<img class="col-md-3 mr-4 pl-5 pr-5" style="width:100" src="${pageContext.request.contextPath}/resources/images/logo.png" onclick="location.href='${pageContext.request.contextPath}'" alt="logo" />
 				<ul class="navbar-nav col-md-6 p-0 mt-4 justify-content-start">
 					<!-- 선택시 active -->
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/campsite/searchDetail">캠핑장</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/usedProduct/main/mainPage">캠핑용품거래</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/community/camper/camperList">커뮤니티</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/mypage/info/main">마이페이지</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pr-4 pl-3" href="${pageContext.request.contextPath}/cs/noticeList">고객센터</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark pl-3" href="${pageContext.request.contextPath}/admin/dashboard">관리자페이지</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/campsite/searchDetail">캠핑장</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/usedProduct/main/mainPage">캠핑용품거래</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/community/camper/camperList">커뮤니티</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/mypage/info/main">마이페이지</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/cs/noticeList">고객센터</a></li>
+					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/admin/dashboard">관리자페이지</a></li>
 
 				</ul>
 				    <sec:authorize access="isAnonymous()">
@@ -140,5 +140,15 @@
 		  	$subNavbar.stop().slideUp('fast');
 		});
 		</script>
+		
+		<sec:authorize access="isAuthenticated()">
+			<script>
+			const memberId = '<sec:authentication property="principal.username"/>';
+			</script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<script src="${pageContext.request.contextPath}/resources/js/chat/ws.js"></script>
+		</sec:authorize>
+		
 	</header>
 	<section id="content" class="mx-auto">
