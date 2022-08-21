@@ -213,12 +213,6 @@ public class UsedProductController  {
 	
 	@GetMapping("/product/productUpdate")
 	public void productUpdate() {};
-	
-	@PostMapping("/chat/chat")
-	public void chat() {};
-	
-	@PostMapping("/chat/chatList")
-	public void chatList() {};
 
 	/* 관심상품 */
 	@GetMapping("/product/findHeart")
@@ -293,6 +287,7 @@ public class UsedProductController  {
 		log.debug("member = {}", member);
 		// 물건 총 개수
 		int sellerProdNum = usedProductService.getSellerProdNum(Integer.parseInt(productNo));
+		System.out.println(member.getProfileImg());
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("profileImg", member.getProfileImg());
