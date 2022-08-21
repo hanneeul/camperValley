@@ -59,8 +59,8 @@
 <jsp:include page="/WEB-INF/views/tradereview/reviewEnroll.jsp" />
 <jsp:include page="/WEB-INF/views/tradereview/reviewUpdate.jsp" />
 <script>
-document.querySelectorAll(".review-enroll").forEach((btn) => {
-	btn.addEventListener('click', (e) => {
+	
+	$(document).on('click','.review-enroll', (e) => {
 		e.preventDefault();
 		const productNo = e.target.dataset.productno;
 		$("#reviewEnroll").modal().on('hide.bs.modal');
@@ -69,10 +69,9 @@ document.querySelectorAll(".review-enroll").forEach((btn) => {
 		$("#reviewEnroll #starScore").val("5");
 		$("#reviewEnroll #productNo").val(productNo);
 	});
-});
 
-document.querySelectorAll(".review-update").forEach((btn) => {
-	btn.addEventListener('click', (e) => {
+
+	$(document).on('click','.review-update', (e) => {
 		e.preventDefault();
 		const reviewNo = e.target.dataset.reviewno;
 		const index = e.target.dataset.starscore - 1;
@@ -87,7 +86,7 @@ document.querySelectorAll(".review-update").forEach((btn) => {
 		$("#reviewUpdate #wordCount").html($("#reviewUpdate #ctent").val().length);
 		$("#reviewUpdate .reviewNo").val(reviewNo);
 	});
-});
+
 
 
 </script>
@@ -108,6 +107,7 @@ const io = new IntersectionObserver((entries, observer) => {
 	        		},
 	        	success(response){
 	        			const {list} = response;
+	        			console.log(list.length)
 	        			$('input[name=addNum]').val(list.length) ;
 	        			list.forEach((product) =>{
 							const $prdDetailLink = '<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no='+product.productNo+'"></a>';  	        			
@@ -127,16 +127,22 @@ const io = new IntersectionObserver((entries, observer) => {
 		        			});
 		        			$('.list ul.list-unstyled').last().append('<li>'+ product.productPrice +'원</li>', $br, '<li>'+ product.productLocation +'</li>');
 		        			
-		        			$('.list').last().innrtHTML('<div></div>');
-		        			$('.list div').last().append($a);
+		        			$('.list').last().append($a);
 		        			
-		        			console.log('거래후기등록하는 경우',product.reviewNo, typeof(product.reviewNO));
-		        			$('.list a').last().prop({
-		        				innerHTML: '게시글 수정',
-		        				className: 'btn btn-camper-color btn-sm align-self-center mr-3 d-block',
-		        				
-		        			});
-	
+		        			//console.log('거래후기등록하는 경우',product.reviewNo, typeof(product.reviewNo));
+		        			if(product.reviewNo == 0){
+			        			$('.list a').last().prop({
+			        				innerHTML: '거래후기 등록',
+			        				className: 'review-enroll btn btn-camper-color btn-sm align-self-center mr-3',
+			        			}).attr('data-productno',product.productNo);
+		        			} else {
+			        			$('.list a').last().prop({
+			        				innerHTML: '거래후기 수정',
+			        				className: 'review-update btn btn-danger btn-sm align-self-center mr-3',
+			        			}).attr('data-reviewno',product.reviewNo)
+			        				.attr('data-starscore',product.starScore)
+			        				.attr('product.content',product.reviewNo);
+		        			}
 		        				
 		        			$('.list-container').append($('<hr>'));		
 	        			
@@ -146,10 +152,9 @@ const io = new IntersectionObserver((entries, observer) => {
 	        	
 	        });
 	    	$('div.spinner-border').addClass("d-none");
-	  	    if($('input[name=addNum]').val() === '0'){
-				   io.observe($('.list').get($('.list').length-1));
-		  	    	return;
-		 	}
+	  	    if($('input[name=addNum]').val() === '0')
+		  		return;
+			  io.observe($('.list').get($('.list').length-1));
 	    }
 	  });
 });

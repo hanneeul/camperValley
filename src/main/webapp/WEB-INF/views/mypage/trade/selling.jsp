@@ -125,11 +125,11 @@
   	        		error: console.log
 	  	        	
 	  	        });
-	  	    	$('div.spinner-border').addClass("d-none");
-		  	    if($('input[name=addNum]').val() === '0'){
-					   io.observe($('.list').get($('.list').length-1));
-			  	    	return;
-			 	}
+		    	$('div.spinner-border').addClass("d-none");
+		  	    if($('input[name=addNum]').val() !== '0')
+				  	return;
+				io.observe($('.list').get($('.list').length-1));
+			 	
 	  	    }
 	  	  });
       });
