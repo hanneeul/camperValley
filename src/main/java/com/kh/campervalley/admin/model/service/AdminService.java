@@ -8,7 +8,7 @@ import com.kh.campervalley.member.model.dto.Member;
 
 public interface AdminService {
 
-	List<Member> selectMemberList();
+	List<Member> selectMemberList(Map<String, Object> map);
 
 	Member selectOneMember(String memberId);
 
@@ -31,6 +31,35 @@ public interface AdminService {
 	int selectTotalReviewList(Map<String, Object> map);
 
 	int memberUpdate(Member memberId);
+
+	int updateMemberRole(Map<String, Object> map);
+
+	int selectTotalMemberList(Map<String, Object> map);
+
+	int todayCamper();
+
+	int todayReview();
+
+	int todayProduct();
+
+	int sysdate();
+
+	int minus1();
+
+	int minus2();
+
+	int minus3();
+
+	int minus4();
+
+	int minus5();
+
+	int minus6();
+
+	List<NoticeExt> selectNoticeList();
+
+
+
 
 
 

@@ -79,7 +79,10 @@
 			<tbody>
 			<c:forEach items="${list}" var="list" varStatus="vs">
 				<tr data-member-id="${list.memberId}" data-name="${list.name}" data-nickname="${list.nickname}" data-email="${list.email}" data-tel="${list.tel}" data-authorities="${list.authorities}">
-					<td>${list.authorities}</td>
+					<td>
+						 <c:if test = "${fn:contains(list.authorities, 'ROLE_ADMIN')}">관리자</c:if>
+					     <c:if test="${!fn:contains(list.authorities, 'ROLE_ADMIN')}">사용자</c:if>
+					</td>
 					<td>${list.memberId}</td>
 					<td>${list.name}</td>
 					<td>${list.nickname}</td>
@@ -88,7 +91,10 @@
 						<fmt:parseDate value="${list.enrollDate}" pattern="yyyy-MM-dd'T'HH:mm" var="enrollDate"/>
 						<fmt:formatDate value="${enrollDate}" pattern="yyyy-MM-dd"/>
 					</td>
-					<td>블랙</td>
+					<td>
+						<c:if test = "${fn:contains(list.authorities, 'ROLE_BLACK')}">블랙</c:if>
+				     	<c:if test="${!fn:contains(list.authorities, 'ROLE_BLACK')}">일반</c:if>
+					</td>
 					<td style="padding: 6px;">
 						<button type="button" class="btn btn-outline-camper-color btn-sm btn-update" name="btn-update" data-toggle="modal" data-target="#adminMemberModal" value="">
 							수정</button>
@@ -97,9 +103,9 @@
 				</c:forEach>
 			</tbody>
 		</table>
+<div class="mt-5" id="pageBar">${pagebar}</div>
 	</div>
 </div>
-
 <!-- 모달창 -->
 <div class="modal fade" id="adminMemberModal" tabindex="-1" role="dialog" aria-labelledby="#adminMemberModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -110,7 +116,7 @@
 		  <span aria-hidden="true" style="color:#fff">&times;</span>
 		</button>
 	  </div>
-		<form:form name="adminMemberUpdateFrm" method="post" action="${pageContext.request.contextPath}/admin/memberUpdate">
+		<form:form name="adminMemberUpdateFrm" method="post" action="${pageContext.request.contextPath}/admin/memberUpdate" >
 	  <div class="modal-body pb-1">
 			<div class="form-group mt-4">
 			  <label for="memberId" class="col-form-label">아이디</label>
@@ -134,10 +140,10 @@
 			</div>
 			  <div class="form-group">
 						<label for="role" class="col-form-label">권한</label>
-						<input type="checkbox" name="authorities" id="user" value=""/>
-						<label for="user">일반</label>
+						<input type="checkbox" name="ROLE_USER" id="user"/>
+						<label for="user">사용자</label>
 						&nbsp;
-						<input type="checkbox" name="authorities" id="admin" value=""/>
+						<input type="checkbox" name="ROLE_ADMIN" id="admin"/>
 						<label for="admin">관리자</label>
 		  </div>	
 			<div class="form-group">
@@ -145,8 +151,8 @@
 			  
 			  <div class="form-check form-check-inline" style="top: -15px;">
 					   <div class="custom-control custom-switch">
-					    <input type="checkbox" class="custom-control-input" id="switch1">
-					    <label class="custom-control-label" for="switch1"></label>
+					    <input type="checkbox" class="custom-control-input" id="black" name="ROLE_BLACK">
+					    <label class="custom-control-label" for="black"></label>
 					  </div>
 				</div> 
 			</div>
@@ -180,14 +186,30 @@ document.querySelectorAll(".btn-update").forEach((btn) => {
 		const memberId = tr.dataset.memberId;
 		const name = tr.dataset.name;		
 		const nickname = tr.dataset.nickname;
-		console.log(nickname);
 		const email = tr.dataset.email;
 		const tel = tr.dataset.tel;
 		
 		const authorities = tr.dataset.authorities;
 
-		
-	        
+		if(authorities.includes('ROLE_USER')) {
+			document.getElementById("user").checked = true;
+			console.log(document.getElementById("user").checked);
+		} else {
+			document.getElementById("user").checked = false;
+		}
+		 if(authorities.includes('ROLE_ADMIN')) {
+			document.getElementById("admin").checked = true;
+			console.log(document.getElementById("admin").checked);
+		} else {
+			document.getElementById("admin").checked = false;
+		}
+		 if(authorities.includes('ROLE_BLACK')) {
+			document.getElementById("black").checked = true;
+			console.log(document.getElementById("black").checked);
+		} else {
+			document.getElementById("black").checked = false;
+		}
+		 
 		document.querySelector("#memberId").value = memberId;
 		document.querySelector("#name").value = name;
 		document.querySelector("#nickname").value = nickname;

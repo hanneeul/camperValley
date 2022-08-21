@@ -51,13 +51,13 @@
 					class="noticeDetail_read"><i class="fa-solid fa-eye"></i> ${notice.readCount}</span>
 			</div>
 
-			<div class="noticeDetail_view">
+			<div class="noticeDetail_view text-center">
 			<c:if test="${not empty notice.attachments}">
 				<c:forEach items="${notice.attachments}" var="attach" varStatus="vs">
 			<img src="${pageContext.request.contextPath}/resources/upload/cs/${attach.renamedFilename}" alt="" class="mt-3" style="max-width:100%"/>
 			</c:forEach>
 		</c:if>
-			<p class="mt-3">${notice.content}</p>
+			<p class="mt-3 text-center">${notice.content}</p>
 			
 			</div>
 	<c:choose>	
