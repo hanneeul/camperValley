@@ -330,4 +330,17 @@ select *
 		seller_id = #{memberId}
 </select>
 <!-- JH END -->
+
+<!-- EJ START -->
+<select id="selectProductList" resultType="UsedProduct">
+	select
+		*
+	from
+		used_product
+	where
+		is_delete='N' and transaction_date is null
+	order by
+		product_enroll_time desc
+</select>
+<!-- EJ END -->
 </mapper>

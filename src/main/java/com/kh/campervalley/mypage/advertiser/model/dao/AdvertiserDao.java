@@ -126,4 +126,7 @@ public interface AdvertiserDao {
 
 	List<Map<String, Object>> selectChartData(Map<String, Object> param);
 
+	@Update("update advertiser set deleted_at = sysdate where advertiser_no = #{advertiserNo}")
+	int updateAdvertiserDeletedAt(int advertiserNo);
+
 }

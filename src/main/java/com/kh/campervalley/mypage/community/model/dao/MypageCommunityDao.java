@@ -17,6 +17,8 @@ import lombok.NonNull;
 @Mapper
 public interface MypageCommunityDao {
 
+	// --------------------- EJ start
+	// --------------------- EJ end
 	
 	@Select("select count(*) from camper where member_id = #{memberId}")
 	int selectTotalMyCamper(@NonNull String memberId);

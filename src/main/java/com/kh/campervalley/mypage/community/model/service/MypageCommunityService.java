@@ -12,6 +12,8 @@ import lombok.NonNull;
 public interface MypageCommunityService {
 	public static final int MY_CAMPER_NUM_PER_PAGE = 10;
 	public static final int MY_REVIEW_NUM_PER_PAGE = 10;
+	// --------------------- EJ start
+	// --------------------- EJ end
 	public List<Camper> selectMyCamperList(int cPage, int limit, String memberId);
 	public int selectTotalMyCamper(@NonNull String memberId);
 	public List<CampsiteReviewExt> selectMyReviewList(int cPage, int numPerPage, @NonNull String memberId);
