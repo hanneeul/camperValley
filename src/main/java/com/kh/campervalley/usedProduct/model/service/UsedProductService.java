@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.campervalley.chat.model.dto.Chat;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
