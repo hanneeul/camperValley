@@ -109,6 +109,17 @@
 							</c:if>
 									</h2>
 									<p class="write-content">${list.content}</p>
+									
+									
+									<c:choose>
+									        <c:when test="${fn:length(list.content) gt 26}">
+									        <c:out value="${fn:substring(list.content, 0, 25)}">...
+									        </c:out></c:when>
+									        <c:otherwise>
+									        <c:out value="${list.content}">
+									        </c:out></c:otherwise>
+									</c:choose>
+
 								</li>
 								</c:forEach>
 								<!-- <li>
