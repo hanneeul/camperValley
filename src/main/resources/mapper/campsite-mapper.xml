@@ -81,4 +81,82 @@ where
 	content_id = #{contentId}
 </select>
 
+<select id="selectCampsiteImageListByContentId" resultType="campsiteImage">
+select
+	*
+from
+	campsite_image
+where
+	content_id = #{contentId}
+</select>
+
+<select id="selectOneCampsiteFacility" resultType="campsiteFacility">
+select
+	*
+from
+	campsite_facility
+where
+	content_id = #{contentId}
+</select>
+
+<!-- <resultMap type="campsiteExt" id="campsiteCollectionMap">
+	<id column="content_id" property="contentId"/>
+	<result column="faclt_nm" property="facltNm"/>
+	<result column="line_intro" property="lineIntro"/>
+	<result column="intro" property="intro"/>
+	<result column="faclt_div_nm" property="facltDivNm"/>
+	<result column="induty" property="induty"/>
+	<result column="lct_cl" property="lctCl"/>
+	<result column="addr1" property="addr1"/>
+	<result column="addr2" property="addr2"/>
+	<result column="map_x" property="mapX"/>
+	<result column="map_y" property="mapY"/>
+	<result column="tel" property="tel"/>
+	<result column="homepage" property="homepage"/>
+	<result column="resve_cl" property="resveCl"/>
+	<result column="oper_pd_cl" property="operPdCl"/>
+	<result column="oper_de_cl" property="operDeCl"/>
+	<result column="posbl_fclty_cl" property="posblFcltyCl"/>
+	<result column="thema_envrn_cl" property="themaEnvrnCl"/>
+	<result column="first_image_url" property="firstImageUrl"/>
+	
+	<collection property="facilities" javaType="arrayList" ofType="campsiteFacility">
+  		<id column="content_id" property="contentId"/>
+  		<result column="gnrl_site_co" property="gnrlSiteCo"/>
+  		<result column="auto_site_co" property="autoSiteCo"/>
+  		<result column="glamp_site_co" property="glampSiteCo"/>
+  		<result column="carav_site_co" property="caravSiteCo"/>
+  		<result column="indvdl_carav_site_co" property="indvdlCaravSiteCo"/>
+  		<result column="site_mg1_width" property="siteMg1Width"/>
+  		<result column="site_mg2_width" property="siteMg2Width"/>
+  		<result column="site_mg3_width" property="siteMg3Width"/>
+  		<result column="site_mg1_vrticl" property="siteMg1Vrticl"/>
+  		<result column="site_mg2_vrticl" property="siteMg2Vrticl"/>
+  		<result column="site_mg3_vrticl" property="siteMg3Vrticl"/>
+  		<result column="site_mg1_co" property="siteMg1Co"/>
+  		<result column="site_mg2_co" property="siteMg2Co"/>
+  		<result column="site_mg3_co" property="siteMg3Co"/>
+  		<result column="site_bottom_cl1" property="siteBottomCl1"/>
+  		<result column="site_bottom_cl2" property="siteBottomCl2"/>
+  		<result column="site_bottom_cl3" property="siteBottomCl3"/>
+  		<result column="site_bottom_cl4" property="siteBottomCl4"/>
+  		<result column="site_bottom_cl5" property="siteBottomCl5"/>
+  		<result column="glamp_inner_fclty" property="glampInnerFclty"/>
+  		<result column="carav_inner_fclty" property="caravInnerFclty"/>
+  		<result column="trler_acmpny_at" property="trlerAcmpnyAt"/>
+  		<result column="carav_acmpny_at" property="caravAcmpnyAt"/>
+  		<result column="toilet_co" property="toiletCo"/>
+  		<result column="swrm_co" property="swrmCo"/>
+  		<result column="wtrpl_co" property="wtrplCo"/>
+  		<result column="brazier_cl" property="brazierCl"/>
+  		<result column="sbrs_cl" property="sbrsCl"/>
+  		<result column="sbrs_etc" property="sbrsEtc"/>
+  		<result column="extshr_co" property="extshrCo"/>
+  		<result column="frprvt_wrpp_co" property="frprvtWrppCo"/>
+  		<result column="frprvt_sand_co" property="frprvtSandCo"/>
+  		<result column="eqpmn_lend_cl" property="eqpmnLendCl"/>
+  		<result column="animal_cmg_cl" property="animalCmgCl"/>
+  	</collection>	
+</resultMap> -->
+
 </mapper>
