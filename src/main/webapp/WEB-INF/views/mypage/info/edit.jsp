@@ -195,9 +195,7 @@
 			        });
 
 			    });	
-			    // 이름
-			    
-			    // 비밀번호 변경 - alert 창
+
 			    
 			    // 이메일
 			        $("#duplicateEmailChk").click((e) => {
@@ -315,11 +313,8 @@
 			            return false;
 			        }
 			        
-			        
 			        $("#submitFrmBtn").click();
 			    }); 
-			
-			
 			
 			</script>
 		<%-- 본문끝 --%>

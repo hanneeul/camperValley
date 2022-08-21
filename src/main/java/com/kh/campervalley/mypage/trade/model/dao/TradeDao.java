@@ -31,4 +31,6 @@ public interface TradeDao {
 
 	List<UsedProduct> selectMoreSoldProduct(@NonNull String memberId, RowBounds rowBounds);
 	
+	List<UsedProductExt> selectMorePuschasedProduct(@NonNull String memberId, RowBounds rowBounds);
+	
 }

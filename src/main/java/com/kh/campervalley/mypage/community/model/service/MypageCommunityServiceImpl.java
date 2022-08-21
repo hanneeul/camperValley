@@ -79,7 +79,4 @@ public class MypageCommunityServiceImpl implements MypageCommunityService{
 	}
 
 
-
-
-
 }

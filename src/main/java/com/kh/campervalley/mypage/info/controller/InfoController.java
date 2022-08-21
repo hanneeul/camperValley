@@ -51,15 +51,12 @@ public class InfoController {
 								@AuthenticationPrincipal Member loginMember,
 								@RequestParam("profileImgFile") MultipartFile upFile,
 								@RequestParam("changeImg") String changeImg,
-								RedirectAttributes redirectAttr) {
+								RedirectAttributes redirectAttr) throws Exception {
 		
-		log.debug("a");
 		Map<String, Object> map = new HashMap<>();
 		try {
-			log.debug("b");
 			System.out.println(updateMember.getPassword()==null + "");
 			System.out.println(updateMember.getPassword().equals(""));
-			log.debug("c");
 			
 			//파일 처리
 			String saveDirectory = application.getRealPath("/resources/upload/member");
@@ -93,7 +90,6 @@ public class InfoController {
 			log.debug("updateMember = {}", updateMember);
 			log.debug("loginMember = {}", loginMember);
 			int result = memberService.updateMember(updateMember);
-			log.debug("121");
 			log.debug(result+"");
 			loginMember.setNickname(updateMember.getNickname());
 			loginMember.setPassword(updateMember.getPassword());
@@ -105,11 +101,12 @@ public class InfoController {
 			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
 					loginMember, loginMember.getPassword());
 					
-log.debug("success{}",loginMember.getProfileImg());
+			log.debug("success{}",loginMember.getProfileImg());
 			
-			//msg저장
+			redirectAttr.addFlashAttribute("msg", "회원정보가 성공적으로 수정되었습니다.");
 		} catch (Exception e) {
-			// TODO: handle exception
+			log.error("회원정보 수정 오류", e);
+			throw e; 
 		}
 		return "redirect:/mypage/info/edit";
 	}

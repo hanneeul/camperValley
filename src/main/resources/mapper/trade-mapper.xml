@@ -111,18 +111,32 @@
 			wish_no = #{wishNo}
 	</delete>
 	
-	<select id="selectMoreWishProduct" resultType="WishExt">
-			select
-				w.*, u.product_title, u.product_price, u.product_img1,u.product_location
-			from
-				wish_product w join used_product u
-				on
-				w.product_no = u.product_no
-			where
-				member_id = #{memberId}
-				and
-				transaction_date is null
-			 order by wish_no desc
+	<select id="selectMorePuschasedProduct" resultType="UsedProductExt">
+		select
+			w.*, u.product_title, u.product_price, u.product_img1,u.product_location
+		from
+			wish_product w join used_product u
+			on
+			w.product_no = u.product_no
+		where
+			member_id = #{memberId}
+			and
+			transaction_date is null
+		order by
+		wish_no desc
+	</select>
+	
+	<select id="">
+		    select *
+	    from
+	    	used_product u left join trade_review t
+	    		on(u.product_no = t.product_no)
+	    where
+	    	buyer_id = #{memberId}
+	        and
+	        transaction_date is not null
+	    order by
+	    	transaction_date desc
 	</select>
 
 </mapper>

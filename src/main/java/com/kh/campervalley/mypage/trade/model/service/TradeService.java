@@ -28,6 +28,8 @@ public interface TradeService {
 	List<UsedProduct> soldListByMemberId(Map<String, Object> map);
 
 	List<UsedProduct> selectMoreSoldProduct(int offset, int numPerReq, @NonNull String memberId);
+	
+	List<UsedProductExt> selectMorePuschasedProduct(int offset, int numPerReq, @NonNull String memberId);
 
 
 }

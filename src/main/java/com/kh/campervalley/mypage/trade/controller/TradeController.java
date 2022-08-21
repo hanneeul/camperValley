@@ -114,7 +114,7 @@ public class TradeController {
 			List<UsedProduct> list = tradeService.selectMoreSoldProduct(
 					offset, numPerReq, member.getMemberId());
 			map.put("list", list);
-			log.debug("{}", list);
+			log.debug("list = {}", list);
 		} catch(Exception e) {
 			log.error("판매상품 목록 추가 조회 오류", e);
 			map.put("error", e.getMessage());
@@ -191,6 +191,31 @@ public class TradeController {
 			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
 			.body(map);
 		}
+	
+	@GetMapping("/morePuschasedProduct")
+	public ResponseEntity<?> addPuschasedProduct(
+			int offset, @AuthenticationPrincipal Member member) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			List<UsedProductExt> list = tradeService.selectMorePuschasedProduct(
+					offset,numPerReq, member.getMemberId());
+			map.put("list", list);
+			log.debug("list = {}",list);
+			
+		} catch(Exception e) {
+			log.error("구매상품 추가 조회 오류", e);
+			map.put("error", e.getMessage());
+			
+			return ResponseEntity
+					.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+					.body(map);
+		}
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.body(map);
+	}
 	
 	/* 상품 삭제 */
 	@PostMapping("/productDelete")
