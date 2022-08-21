@@ -6,6 +6,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.member.model.dto.Member;
 
+import lombok.NonNull;
+
 public interface MemberService{
 	public static final String ROLE_USER = "ROLE_USER";
 	public static final String ROLE_BLACK = "ROLE_BLACK";
@@ -15,4 +17,5 @@ public interface MemberService{
 	String selectIDByNameAndEmail(String name, String email);
 	int updateMember(Member member);
 	int updatePassword(Map<String, Object> map);
+	int withdrawal(@NonNull String memberId);
 }

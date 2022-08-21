@@ -11,6 +11,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -118,5 +119,20 @@ public class InfoController {
 	
 	@GetMapping("/withdrawal")
 	public void withdrawal() {}
+	
+	@PostMapping("/withdrawal")
+	public String withdrawal(RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member) {
+		try {
+			int result = memberService.withdrawal(member.getMemberId());
+			SecurityContextHolder.clearContext();
+			redirectAttr.addFlashAttribute("msg", "탈퇴 되었습니다.");
+		} catch (Exception e) {
+			log.error("회원탈퇴오류", e);
+			throw e; 
+		}
+		
+		
+		return "redirect:/";
+	}
 
 }

@@ -72,4 +72,15 @@
 		where
 			email = #{email}
 	</update>
+	
+	<update id="updateMemberWithdrawal">
+		update
+			member
+		set
+			enabled = 0, withdrawal = 'Y', email = null
+		where
+			member_id = #{memberId}
+	</update>
+	
+	
 </mapper>
