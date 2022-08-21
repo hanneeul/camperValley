@@ -11,13 +11,15 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/searchInfo.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member/memberCommon.css" />
 <style>
-div.jconfirm-buttons{
+div.jconfirm-box div.jconfirm-buttons{
 	width: 100%;
 	display: flex;
+	justify-content: center;
 }
-div.jconfirm-buttons > button{
+div.jconfirm-box div.jconfirm-buttons > button{
 	width: 40%;
 }
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
@@ -30,10 +32,10 @@ div.jconfirm-buttons > button{
 			<div class="mt-4 pt-4 input-group-lg">
 				<input 
 					type="text" class="form-control mb-3" name="name"
-					placeholder="이름" autocomplete="off" required value="홍길동">
+					placeholder="이름" autocomplete="off" required value="">
 				<input
 					type="email" class="form-control my-3 input-lg" name="email"
-					placeholder="이메일" autocomplete="off" required value="honggd@gmail.com">
+					placeholder="이메일" autocomplete="off" required value="">
 			</div>
 		    <button class="btn btn-camper-color btn-block btn-lg font-weight-bold" type="button">확인</button>
 			<p class="pt-4">&nbsp;-&nbsp;&nbsp;&nbsp;가입시 등록한 이름과 이메일을 입력해주세요.</p>					
@@ -56,11 +58,17 @@ div.jconfirm-buttons > button{
 				},
 				success(response){
 					if(response.memberId === null){
-						alert("입력하신 정보와 일치하는 회원이 없습니다.");
+	                    $.alert({
+	                    	columnClass: 'col-md-9',
+			    		    title: '<h4 class="pb-3">아이디 찾기</h4>',
+			    		    content: '입력하신 정보와 일치하는 회원이 없습니다.',
+			    		    buttons: {
+			    		    	'확인': function() {}
+			    		    	}
+			    		})		
 					}else{
-						
                             $.confirm({
-                            columnClass: 'col-md-12',
+                            columnClass: 'col-md-9',
                             closeIcon: true,
                             title: '<h4 class="pb-3">아이디 찾기</h4>',
                             content: '입력하신 정보로 조회된 아이디는 <strong>'+ response.memberId +'</strong> 입니다.<br><br>',
