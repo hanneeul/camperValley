@@ -264,7 +264,7 @@ $(document).ready(function() {
 										   <!-- post 날린 요청의 결과 chatRoom(윈도우 팝업창)에서 볼 수 있음 -->
 	   									   <form 
 										   		id="productDetailForm" method="post" action="/campervalley/usedProduct/chat/chat" target="chat">
-										   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />.
+										   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 										   		<div class="detail-info__chat" >
 													<button type="submit" id="chat_btn" style="background-color: #639A67">
 														<i class="fa-solid fa-comment"></i>			 	
@@ -310,13 +310,12 @@ $(document).ready(function() {
 					<div class="prodInfo_sellerWrap2">
 						<div class="sellerInfo_Title">판매자정보</div>
 					</div>
-						<div class="seller" onclick="location.href='${pageContext.request.contextPath}/tradereview/profileCheck?memberId=${usedProduct.sellerId}'; return false;">
-							<a class="sellerProfileImg_Link" href="#">
-							</a>
+						<div class="seller" style="cursor:pointer">
+							<span class="sellerProfileImg_Link"></span>
 							<div class="sellerInfoWrap">
-								<a class="sellerInfo_name" href="#"><!-- productDetail.js --></a>
+								<span class="sellerInfo_name"><!-- productDetail.js --></span>
 								<div class="sellerInfo_productNum">
-									<a class="productNumLink" href="#"><!-- productDetail.js --></a>
+									<span class="productNumLink"><!-- productDetail.js --></span>
 								</div>
 							</div>
 						</div><!-- //store -->
@@ -335,11 +334,17 @@ $(document).ready(function() {
 		</div>
 	 	<!-- nav -->
 		<div id="nav">
-			 <jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 		 </div>
 	 </div>
-
 <script>
+/*---- JH -----*/
+// modal 연결
+document.querySelector(".seller").addEventListener("click", (e) => {
+	$("#profileCheck").modal().on('hide.bs.modal');
+	return false;
+});
+/*---- JH -----*/
+
 //ajax 통신을 위한 csrf 설정
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
@@ -367,7 +372,7 @@ $(document).ready(function() {
 	   		}
 	   	}, 
 	   	error : function() {
-	   		alter('하트조회오류');
+	   		alert('하트조회오류');
 	   	}
 	});
 });
@@ -465,4 +470,7 @@ $('#chat_btn').click(function() {
 });
 
 </script>
+<jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
+<%-- profile modal --%>
+<jsp:include page="/WEB-INF/views/tradereview/profileCheck.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

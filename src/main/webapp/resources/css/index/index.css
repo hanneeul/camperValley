@@ -38,6 +38,11 @@ form[name=searchFrm] .input {
 	cursor: pointer;
 	color: rgb(105, 105, 105);
 }
+#inputTheme .input {
+	cursor: pointer;
+	color: rgb(105, 105, 105);
+}
+
 #searchCampsite {
 	cursor: pointer;
 }

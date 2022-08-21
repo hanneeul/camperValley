@@ -112,10 +112,12 @@
 					<button type="submit" class="btn btn-outline-camper-color px-5 m-4">등록</button>
 					<button type="button" class="btn btn-outline-danger px-5 my-4" onclick="cancle();">취소</button>
 				</div>
+				<input type="hidden" name="memberId" value="${loginMember.memberId}"/>
 			</form:form>
 		</div>
 	</div>
 <script>
+console.log("${loginMember}");
 $(document).ready(() => {
 	$(review).removeClass("active");
 	$(camper).addClass("active");

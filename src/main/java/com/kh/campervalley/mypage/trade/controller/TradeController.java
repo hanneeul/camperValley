@@ -24,6 +24,7 @@ import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.mypage.trade.dto.WishExt;
 import com.kh.campervalley.mypage.trade.model.service.TradeService;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
+import com.kh.campervalley.usedProduct.model.dto.UsedProductExt;
 import com.kh.campervalley.usedProduct.model.service.UsedProductService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -50,10 +51,10 @@ public class TradeController {
 			Map<String, Object> map = new HashMap<>();
 			map.put("memberId", member.getMemberId());
 			map.put("numPerReq", TradeService.TRADE_NUM_PER_REQUEST);
-			
-			List<UsedProduct> list = tradeService.purchasedListByMemberId(map);
+			/* --JH-- */
+			List<UsedProductExt> list = tradeService.purchasedListByMemberId(map);
+			/* --JH-- */
 			log.debug("list={}",list);
-			
 			mav.addObject("list", list);
 		} catch (Exception e) {
 			e.printStackTrace();

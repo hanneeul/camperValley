@@ -1,5 +1,7 @@
 package com.kh.campervalley.tradereview.model.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,11 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TradeReviewExt extends TradeReview {
+public class ReviewReport {
 
-	private String sellerId;
-	private String buyerId;
-	private String nickname;
-	private String profileImg;
 	private int reportNo;
+	private int reviewNo;
+	private String category;
+	private String content;
+	private LocalDateTime createdAt;
+	private ReportStatus statusYn;
 }

@@ -8,9 +8,12 @@
 .text-25{font-size: 25px;}
 
 @media (min-width: 576px) {
-	.modal-dialog {
+	#profileCheck .modal-dialog {
 		max-width: 800px;
 	}
+}
+#profileCheck .modal-content{
+	height: 927px;
 }
 .profile-nav li {
 	color: black;
@@ -45,9 +48,6 @@
 /* reviewBox */
 .reviewBox {
 	height: 100px;
-}
-.report {
-	cursor: pointer;
 }
 .fa-lightbulb {
 	top: 2px;

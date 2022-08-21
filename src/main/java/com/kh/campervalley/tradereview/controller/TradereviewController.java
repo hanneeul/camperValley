@@ -15,11 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.common.CamperValleyUtils;
-import com.kh.campervalley.member.model.dto.Member;
+import com.kh.campervalley.tradereview.model.dto.ReviewReport;
 import com.kh.campervalley.tradereview.model.dto.TradeReview;
 import com.kh.campervalley.tradereview.model.dto.TradeReviewExt;
 import com.kh.campervalley.tradereview.model.service.TradereviewService;
-import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,9 +29,6 @@ public class TradereviewController {
 
 	@Autowired
 	private TradereviewService tradereviewService;
-	
-	@GetMapping("/reviewEnroll")
-	public void reviewEnroll() {}
 	
 	@PostMapping("/reviewEnroll")
 	public String reviewEnroll(TradeReview tradeReview, RedirectAttributes redirectAttr) {
@@ -45,9 +41,6 @@ public class TradereviewController {
 		}
 		return "redirect:/mypage/trade/purchased";
 	}
-	
-	@GetMapping("/reviewUpdate")
-	public void reviewUpdate() {}
 	
 	@PostMapping("/reviewUpdate")
 	public String reviewUpdate(TradeReview tradeReview, RedirectAttributes redirectAttr) {
@@ -74,38 +67,31 @@ public class TradereviewController {
 	}
 	
 	
-	@GetMapping("/reportEnroll")
-	public void reportEnroll() {}
-	
-	@GetMapping("/profileCheck")
-	public ModelAndView profileCheck(@RequestParam String memberId, ModelAndView mav) {
+	@PostMapping("/reportEnroll")
+	public String reportEnroll(@RequestParam String productNo, ReviewReport reviewReport, RedirectAttributes redirectAttr) {
 		try {
-			// 별점평균, 판매상품/거래리뷰 갯수
-			TradeReviewExt member = tradereviewService.getProfileInfo(memberId);
-			Map<String, Object> counts = tradereviewService.selectCounts(memberId);
-			
-			mav.addObject("counts", counts);
-			mav.addObject("member", member);
-			mav.setViewName("/tradereview/profileCheck");
+			log.debug("reviewReport = {}", reviewReport);
+			int result = tradereviewService.insertReport(reviewReport);
+			redirectAttr.addFlashAttribute("msg", "신고가 접수되었습니다.");
 		} catch(Exception e) {
-			log.error("판매자 정보 조회 오류", e);
+			log.error("거래후기신고 등록 오류", e);
 			throw e;
 		}
-		return mav;
+		return "redirect:/usedProduct/product/productDetail?no=" + productNo;
 	}
 	
 	@GetMapping("/reviewList")
 	public ModelAndView reviewList(
 			@RequestParam(defaultValue = "1") int cPage,
-			@RequestParam String memberId, 
+			@RequestParam String sellerId, 
 			ModelAndView mav,
 			HttpServletRequest request) {
 		try {
 			int numPerPage = TradereviewService.NUM_PER_PAGE;
-			List<TradeReviewExt> reviewList = tradereviewService.selectReviewListByMemberId(cPage, numPerPage, memberId);
+			List<TradeReviewExt> reviewList = tradereviewService.selectReviewListByMemberId(cPage, numPerPage, sellerId);
 			
 			// 페이지바
-			int totalContent = tradereviewService.selectTotalReviewByMemberId(memberId);
+			int totalContent = tradereviewService.selectTotalReviewByMemberId(sellerId);
 			String pagebar = CamperValleyUtils.getPagebarAsync(cPage, numPerPage, totalContent, "Review");
 			log.debug("totalContent = {}", totalContent);
 			mav.addObject("reviewList", reviewList);

@@ -29,6 +29,8 @@ import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdZone;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
 import com.kh.campervalley.mypage.advertiser.model.service.AdvertiserService;
+import com.kh.campervalley.tradereview.model.dto.TradeReviewExt;
+import com.kh.campervalley.tradereview.model.service.TradereviewService;
 import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.dto.WishProduct;
@@ -46,6 +48,8 @@ public class UsedProductController  {
 	
 	@Autowired
 	private UsedProductService usedProductService;
+	@Autowired
+	private TradereviewService tradereviewService;
 	
 	@Autowired
 	private AdvertiserService advertiserService;
@@ -176,6 +180,14 @@ public class UsedProductController  {
 	public String productDetail(@RequestParam String no, Model model) {
 
 		usedProductService.viewUpdate(no); //조회수 증가
+		/*----- JH start -----*/
+		// 별점평균, 판매상품/거래리뷰 갯수
+		TradeReviewExt member = tradereviewService.getProfileInfo(no);
+		Map<String, Object> counts = tradereviewService.selectCounts(no);
+		
+		model.addAttribute("counts", counts);
+		model.addAttribute("member", member);
+		/*----- JH end -----*/
 		
 		// 상품 정보 받아옴
 		UsedProduct usedProduct = usedProductService.productDetail(no);
@@ -282,14 +294,14 @@ public class UsedProductController  {
 	@GetMapping("/productList")
 	public ModelAndView reviewList(
 			@RequestParam(defaultValue = "1") int cPage,
-			@RequestParam String memberId, 
+			@RequestParam String sellerId, 
 			ModelAndView mav) {
 		try {
 			int numPerPage = UsedProductService.NUM_PER_PAGE_MODAL;
-			List<UsedProduct> productList = usedProductService.selectProductListByMemberId(cPage, numPerPage, memberId);
+			List<UsedProduct> productList = usedProductService.selectProductListByMemberId(cPage, numPerPage, sellerId);
 			
 			// 페이지바
-			int totalContent = usedProductService.selectTotalProductByMemberId(memberId);
+			int totalContent = usedProductService.selectTotalProductByMemberId(sellerId);
 			String pagebar = CamperValleyUtils.getPagebarAsync(cPage, numPerPage, totalContent, "Product");
 			mav.addObject("productList", productList);
 			mav.addObject("pagebar", pagebar);

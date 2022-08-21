@@ -7,28 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>trade review update</title>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-	<!-- bootstrap js -->
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
-	<!-- bootstrap css -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-	<!-- 사용자작성 css -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tradereview/reviewUpdate.css" />
-	<!-- font awesome -->
-	<spring:eval var="fontawesomeKey" expression="@customProperties['api.fontawesome']" />
-	<script src="https://kit.fontawesome.com/${fontawesomeKey}.js" crossorigin="anonymous"></script>
-</head>
-<body>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tradereview/reviewUpdate.css" />
 <div class="modal fade" id="reviewUpdate">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content px-5 py-2">
@@ -73,24 +52,20 @@
 					</div>
                     <div class="modal-footer justify-content-center">
 						<div>
-							<button type="submit" class="btn btn-outline-camper-color px-4 m-2">수정</button>
-							<button id="deleteBtn" type="button" class="btn btn-outline-danger px-4 my-2">삭제</button>
+							<button type="submit" class="btn btn-outline-camper-color px-4 py-0 m-2">수정</button>
+							<button id="deleteBtn" type="button" class="btn btn-outline-danger py-0 px-4 my-2">삭제</button>
 						</div>
 	                </div>
-	                <input id="reviewNo" name="reviewNo" type="hidden" />
+	                <input class="reviewNo" name="reviewNo" type="hidden" />
 				</form:form>
-				<form:form name="reviewDeleteFrm" method="post">
+				<form:form name="reviewDeleteFrm" action="${pageContext.request.contextPath}/tradereview/reviewDelete" method="post">
+	                <input class="reviewNo" name="reviewNo" type="hidden" />
 				</form:form>
 			</div>
 		</div>
 	</div>
 </body>
 <script>
-$("#reviewUpdate")
-.modal()
-.on('hide.bs.modal', (e) => {
-});
-
 document.querySelectorAll("#reviewUpdate .fa-star").forEach((star) => {
 	star.addEventListener("click", (e) => {
 		$("#reviewUpdate .fa-star").css("color", "rgb(235, 235, 235)");
@@ -119,7 +94,7 @@ updateFrm.addEventListener("submit", (e) => {
 		e.preventDefault();
 	}
 });
-const deleteFrm = document.reviewDeleteFrm; // 버튼 클릭시 deleteFrm productNo 활용하여 action 동적으로 처리
+const deleteFrm = document.reviewDeleteFrm;
 
 document.querySelector("#reviewUpdate #deleteBtn").addEventListener("click", () => {
 	$.alert({

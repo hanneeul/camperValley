@@ -39,15 +39,16 @@
 		where
 			rownum between 1 and #{numPerReq}
 	</select>
-	
-	<select id="purchasedListByMemberId" resultType="UsedProduct">
+	<!-- JH -->	
+	<select id="purchasedListByMemberId" resultType="UsedProductExt">
 		select
 		    *
 		from
 		    (
 		    select *
 		    from
-		    	used_product
+		    	used_product u left join trade_review t
+		    		on(u.product_no = t.product_no)
 		    where buyer_id = #{memberId}
 		        and
 		           transaction_date is not null
@@ -57,7 +58,7 @@
 		where
 			rownum between 1 and #{numPerReq}
 	</select>
-	
+	<!-- JH -->	
 	<select id="wishListByMemberId" resultType="WishExt">
 		select 
 			*
