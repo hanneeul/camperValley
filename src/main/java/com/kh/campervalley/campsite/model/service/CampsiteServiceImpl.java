@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.campervalley.campsite.model.dao.CampsiteDao;
 import com.kh.campervalley.campsite.model.dto.CampsiteExt;
 import com.kh.campervalley.campsite.model.dto.CampsiteFacility;
+import com.kh.campervalley.campsite.model.dto.CampsiteImage;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,6 +38,16 @@ public class CampsiteServiceImpl implements CampsiteService {
 	}
 	
 	@Override
+	public List<CampsiteExt> selectContentIdList() {
+		return campsiteDao.selectContentIdList();
+	}
+	
+	@Override
+	public int insertCampsiteImage(CampsiteImage campImage) {
+		return campsiteDao.insertCampsiteImage(campImage);
+	}
+	
+	@Override
 	public List<CampsiteExt> recentCampsiteList() {
 		return campsiteDao.recentCampsiteList();
 	}
@@ -54,6 +65,16 @@ public class CampsiteServiceImpl implements CampsiteService {
 	@Override
 	public CampsiteExt selectOneCampsite(long contentId) {
 		return campsiteDao.selectOneCampsite(contentId);
+	}
+	
+	@Override
+	public List<CampsiteImage> selectCampsiteImageListByContentId(long contentId) {
+		return campsiteDao.selectCampsiteImageListByContentId(contentId);
+	}
+	
+	@Override
+	public CampsiteFacility selectOneCampsiteFacility(long contentId) {
+		return campsiteDao.selectOneCampsiteFacility(contentId);
 	}
 	
 }

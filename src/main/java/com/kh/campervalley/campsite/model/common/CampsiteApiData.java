@@ -1,6 +1,8 @@
 package com.kh.campervalley.campsite.model.common;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,17 +12,18 @@ import javax.annotation.PostConstruct;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.kh.campervalley.campsite.model.dao.CampsiteDao;
 import com.kh.campervalley.campsite.model.dto.CampsiteExt;
 import com.kh.campervalley.campsite.model.dto.CampsiteFacility;
+import com.kh.campervalley.campsite.model.dto.CampsiteImage;
 import com.kh.campervalley.campsite.model.service.CampsiteService;
-import com.kh.campervalley.mypage.advertiser.model.common.AdvertiserSchedule;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,21 +35,19 @@ public class CampsiteApiData {
 	@Autowired
 	private CampsiteService campsiteService;
 	
-//	@PostConstruct
-//	public void campsiteApiServiceInit() {
-//		log.debug("[캠핑장 정보 매달 1회 실행]");
-//		getCampsiteApiData();
-//	}
-	
+	@PostConstruct
+	public void campsiteApiServiceInit() {
+		log.debug("[캠핑장 정보 갱신 : 매달 1일 오전 2시 실행]");
+		log.debug("[캠핑장 이미지 정보 갱신 : 매달 1일 오전 4시 실행]");
+	}
+
 	@Value("${api.goCamping}")
 	String SERVICE_KEY;
 	
 	final static String basedListURL = "https://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList";
-	// final String RES_PARAM = "&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=TestApp&_type=json";
 	final static String imageListURL = "https://api.visitkorea.or.kr/openapi/service/rest/GoCamping/imageList";
-	// final String RES_PARAM = &MobileOS=ETC&MobileApp=AppTest&contentId=3429
 	
-	@Scheduled(cron = "0 0 0 18 * ?", zone = "Asia/Seoul")
+	@Scheduled(cron = "0 0 2 1 * ?")
 	public void getCampsiteApiData() {
 		ArrayList<HashMap<String, Object>> list = null;
 		List<CampsiteExt> campsiteList = new ArrayList<>();
@@ -97,8 +98,8 @@ public class CampsiteApiData {
 			JSONObject items = CampsiteUtils.jsonStringToJson(body.get("items"));
 			list = CampsiteUtils.jsonArray(items.get("item"));
 			
-//			if(list.size() == totalCount) {
-//				int api = campsiteService.campsiteListReset();
+			if(list.size() == totalCount) {
+				int api = campsiteService.campsiteListReset();
 	            
 				for(int i = 0; i < list.size(); i++) {
 					HashMap<String, Object> item = list.get(i);
@@ -177,13 +178,127 @@ public class CampsiteApiData {
 									toiletCo, swrmCo, wtrplCo, brazierCl, sbrsCl, sbrsEtc, extshrCo, 
 									frprvtWrppCo, frprvtSandCo, eqpmnLendCl, animalCmgCl);
 					campsite.setCampsiteFacility(campsiteFacility);
+					campsite.addCampsiteFacility(campsiteFacility);
 					campsiteList.add(campsite);
 				}
 				int result = campsiteService.insertCampsiteList(campsiteList);
-//			}
+			}
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+//	@Scheduled(cron = "0 0 4 1 * ?")
+//	public void getCampsiteImageApiData() {
+//		List<CampsiteExt> contentIdList = campsiteService.selectContentIdList();
+//		for(int i = 0; i < contentIdList.size(); i++) {
+//			long contentId = contentIdList.get(i).getContentId();
+//			List<CampsiteImage> campsiteImageList;
+//			try {
+//				campsiteImageList = campsiteImageParsingData(contentId);
+//				for(CampsiteImage campsiteImage : campsiteImageList) {
+//					int result = campsiteService.insertCampsiteImage(campsiteImage);
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+		
+	public List<CampsiteImage> campsiteImageParsingData(long contentId) throws Exception {
+		List <CampsiteImage> campsiteImageList = new ArrayList<>();
+        
+        JSONParser jsonParser = new JSONParser();
+        org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) jsonParser.parse(readUrl(contentId));
+        org.json.simple.JSONObject response = (org.json.simple.JSONObject) jsonObject.get("response"); 
+        org.json.simple.JSONObject body = (org.json.simple.JSONObject) response.get("body");
+        org.json.simple.JSONObject items = (org.json.simple.JSONObject) body.get("items");
+        JSONArray item = (JSONArray) items.get("item");
+        org.json.simple.JSONObject campsite;
+        
+        for(int i = 0 ; i < item.size(); i++) {
+        	campsite = (org.json.simple.JSONObject) item.get(i);
+        	CampsiteImage campsiteImage = new CampsiteImage();
+        	campsiteImage.setSerialnum(Long.parseLong((String) campsite.get("serialnum")));
+        	campsiteImage.setContentId(Long.parseLong((String) campsite.get("contentId")));
+        	campsiteImage.setImageUrl((String) campsite.get("imageUrl"));
+        	campsiteImageList.add(campsiteImage);
+        }
+        return campsiteImageList;
+	}
+	
+	public String readUrl(long contentId) throws Exception {
+		BufferedInputStream reader = null;
+        
+		try {
+			StringBuilder imgUrlBuilder = new StringBuilder(imageListURL);
+			
+			imgUrlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + SERVICE_KEY);
+			imgUrlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8")+ "=" + URLEncoder.encode("ETC", "UTF-8"));
+			imgUrlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("campervalley", "UTF-8"));
+			imgUrlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+			imgUrlBuilder.append("&" + URLEncoder.encode("contentId","UTF-8") + "=" + contentId);
+			
+			String addr = imgUrlBuilder.toString();
+            URL url = new URL(addr);
+            
+            reader = new BufferedInputStream(url.openStream());
+            StringBuffer buffer = new StringBuffer();
+            int i;
+            byte[] b = new byte[4096];
+            while((i = reader.read(b)) != -1) {
+            	buffer.append(new String(b, 0, i));
+            }
+            return buffer.toString();
+		} finally {
+			if(reader != null)
+				reader.close();
+		}
+	}
+
+//	public List<CampsiteImage> getCampsiteImageApiData(long contentId) {
+//		ArrayList<HashMap<String, Object>> list = null;
+//		List<CampsiteImage> campsiteImageList = new ArrayList<>();
+//		
+//		try {
+//			StringBuilder imgUrlBuilder = new StringBuilder(imageListURL);
+//			
+//			imgUrlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + SERVICE_KEY);
+//			imgUrlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8")+ "=" + URLEncoder.encode("ETC", "UTF-8"));
+//			imgUrlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("campervalley", "UTF-8"));
+//			imgUrlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+//			imgUrlBuilder.append("&" + URLEncoder.encode("contentId","UTF-8") + "=" + contentId);
+//			
+//			String url = imgUrlBuilder.toString();
+//			ArrayList<String> urls = new ArrayList<>();
+//			urls.add(url);
+//			
+//			HashMap<String, String> headers = new HashMap<String, String>();
+//			headers.put("Content-type", "application/json");
+//			
+//			String jsonApi = CampsiteUtils.sendSeverMsg(urls, headers, "get");
+//			JSONObject jsonObject = CampsiteUtils.jsonStringToJson(jsonApi);
+//			JSONObject response = CampsiteUtils.jsonStringToJson(jsonObject.get("response"));
+//			JSONObject body = CampsiteUtils.jsonStringToJson(response.get("body"));
+//			JSONObject items = CampsiteUtils.jsonStringToJson(body.get("items"));
+//			list = CampsiteUtils.jsonArray(items.get("item"));
+//			
+//			for(int i = 0; i < list.size(); i++) {
+//				HashMap<String, Object> item = list.get(i);
+//				
+//				long serialnum = Long.parseLong(String.valueOf(item.get("serialnum")));
+//				contentId = Long.parseLong(String.valueOf(item.get("contentId")));
+//				String imageUrl = (String) item.get("imageUrl");
+//				
+//				CampsiteImage campsiteImage = new CampsiteImage(serialnum, contentId, imageUrl);					
+//				campsiteImageList.add(campsiteImage);
+//			}
+//			
+//		} catch (JSONException | IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return campsiteImageList;
+//	}
 	
 }
