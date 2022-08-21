@@ -154,11 +154,16 @@
 </div>
 
 <script>
-
+$('#enrollForm').ready(function() {
+	 $('#div-image').hide();
+	 $('#div-subject').hide();
+	 $('#div-category').hide();
+	 $('#div-price').hide();
+	 $('#div-location').hide();
+});
 /* 이미지 등록 (미리보기) */
 $('#upFiles').on('change', readImage); // 파일 올릴떄마다 readImage함수 호출
 const fileBuffer = []; // 파일 저장 변수
-
 function readImage() {
 	const limitSize = 10 * 1024 * 1024; // 이미지 사이즈 설정
 	const input = this;
@@ -210,7 +215,6 @@ function readImage() {
 			
 			// 삭제 버튼 클릭
 			$button.attr('type', 'button').addClass('image_delete_btn').click(deleteImage);
-
 			// 한번에 이미지 여러개 첨부
 			if(index < input.files.length - 1) {
 				reader.readAsDataURL(input.files[++index]);
@@ -220,7 +224,6 @@ function readImage() {
 		reader.readAsDataURL(input.files[index]);
 	}
 }
-
 // 이미지 삭제 
 function deleteImage() {
 	// 배열에 있는 파일 제거
@@ -235,8 +238,6 @@ function deleteImage() {
 	// 요소제거
 	$(this).closest('li').remove();
 }
-
-
 /* 배송비 */
 if(document.getElementById("freeDelivery").checked) {
 	    document.getElementById("input_check_hidden").disabled = true;
@@ -261,14 +262,12 @@ $('.category >.cate_btn').on("click", function(){
 	
 	$('#cateNoInput').val(cateNo);
 });
-
 /* 거래지역 */
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
        mapOption = {
            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
            level: 5 // 지도의 확대 레벨
        };
-
    //지도를 미리 생성
    var map = new daum.maps.Map(mapContainer, mapOption);
    //주소-좌표 변환 객체를 생성
@@ -278,22 +277,17 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
        position: new daum.maps.LatLng(37.537187, 127.005476),
        map: map
    });
-
-
 $('#search_address').click(function() {
         new daum.Postcode({
             oncomplete: function(data) {
                 var addr = data.address; // 최종 주소 변수
-
                 // 주소 정보를 해당 필드에 넣는다.
                 document.getElementById("productLocation").value = addr;
                 // 주소로 상세 정보를 검색
                 geocoder.addressSearch(data.address, function(results, status) {
                     // 정상적으로 검색이 완료됐으면
                     if (status === daum.maps.services.Status.OK) {
-
                         var result = results[0]; //첫번째 결과의 값을 활용
-
                         // 해당 주소에 대한 좌표를 받아서
                         var coords = new daum.maps.LatLng(result.y, result.x);
                         // 지도를 보여준다.
@@ -308,7 +302,6 @@ $('#search_address').click(function() {
             }
         }).open();
 });
-
 /* 가격 */
 $('.productPrice').on('keyup', function(e) {
    const val = $(this).val();
@@ -316,36 +309,22 @@ $('.productPrice').on('keyup', function(e) {
       $(this).val(val.replace(/[^0-9]/g, '')); // 숫자 제외한 문자 공백으로 대체
    }
 });
-
-
+function confirm() {
+	 if(!fileBuffer.length) { $('#div-image').show(); $('#productImg').focus(); return true;}
+	 else if($('#productTitle').val()=='') {$('#div-subject').show(); $('#productTitle').focus(); return true;}
+	 else if(cate_no == null) { $('#div-category').show(); $('#categories').focus(); return true;}
+	 if($('#productLocation').val()=='') { $('#div-location').show(); $('#productLocation').focus(); return true;}
+	 if($('#productPrice').val()=='') { $('#productPrice').show(); $('#productPrice').focus(); return true;}
+ }
 //ajax 통신을 위한 csrf 설정
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 $(document).ajaxSend(function(e, xhr, options) {
     xhr.setRequestHeader(header, token);
 });
-
 $('#enrollBtn').click(function(){
-	$('#enrollForm').ready(function() {
-		 $('#div-image').hide();
-		 $('#div-subject').hide();
-		 $('#div-category').hide();
-		 $('#div-price').hide();
-		 $('#div-location').hide();
-	});
-	
-	if(confirm()) return false;
 	
 	registAction.call(this);
-
-	function confirm() {
-		 if(!fileBuffer.length) { $('#div-image').show(); $('#productImg').focus(); return true;}
-		 else if($('#productTitle').val()=='') {$('#div-subject').show(); $('#productTitle').focus(); return true;}
-		 else if(cate_no == null) { $('#div-category').show(); $('#categories').focus(); return true;}
-		 if($('#productLocation').val()=='') { $('#div-location').show(); $('#productLocation').focus(); return true;}
-		 if($('#productPrice').val()=='') { $('#productPrice').show(); $('#productPrice').focus(); return true;}
- 	}
-
 	
 	//submit
 	function registAction() {
@@ -366,11 +345,6 @@ $('#enrollBtn').click(function(){
 						value : e
 					}
 					data.push(imgObj);
-					
-					const deliveryFeeObj = {
-						name : 'productDeliveryFee',
-						value : $('#freeDeliveryFee').prop('checked') ? 1 : 0
-					}
 				});
 			},
 			success: function(data) {
@@ -378,6 +352,7 @@ $('#enrollBtn').click(function(){
 				alert('상품이 등록되었습니다.');
 			},
 			error: function(error) {
+				alert('error : ', error);
 			}
 			
 		});
