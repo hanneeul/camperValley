@@ -307,7 +307,12 @@ select *
 <!-- JH START -->
 <select id="selectProductListByMemberId" resultType="UsedProduct">
 	select 
-		*
+		product_no,
+		product_title,
+		product_content,
+		product_img1,
+		product_price,
+		to_char(product_enroll_time, 'yyyy-MM-dd HH24:mi:ss') product_enroll_time
 	from 
 		used_product
 	where 

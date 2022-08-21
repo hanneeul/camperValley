@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.campervalley.tradereview.model.dao.TradereviewDao;
+import com.kh.campervalley.tradereview.model.dto.ReviewReport;
 import com.kh.campervalley.tradereview.model.dto.TradeReview;
 import com.kh.campervalley.tradereview.model.dto.TradeReviewExt;
 
@@ -33,8 +34,13 @@ public class TradereviewServiceImpl implements TradereviewService {
 	}
 
 	@Override
-	public Map<String, Object> selectCounts(String memberId) {
-		return tradereviewDao.selectCounts(memberId);
+	public TradeReviewExt getProfileInfo(String no) {
+		return tradereviewDao.getProfileInfo(no);
+	} 
+	
+	@Override
+	public Map<String, Object> selectCounts(String no) {
+		return tradereviewDao.selectCounts(no);
 	}
 
 	@Override
@@ -43,9 +49,15 @@ public class TradereviewServiceImpl implements TradereviewService {
 		RowBounds rowBounds = new RowBounds(offset, numPerPage);
 		return tradereviewDao.selectReviewListByMemberId(rowBounds, memberId);
 	}
-
+	
 	@Override
 	public int selectTotalReviewByMemberId(String memberId) {
 		return tradereviewDao.selectTotalReviewByMemberId(memberId);
-	} 
+	}
+
+	@Override
+	public int insertReport(ReviewReport reviewReport) {
+		return tradereviewDao.insertReport(reviewReport);
+	}
+
 }

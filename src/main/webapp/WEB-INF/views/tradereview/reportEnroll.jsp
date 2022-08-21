@@ -7,26 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>review report enroll</title>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-	<!-- bootstrap js -->
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
-	<!-- bootstrap css -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-	<!-- 사용자작성 css -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tradereview/reportEnroll.css" />
-	<!-- font awesome -->
-	<spring:eval var="fontawesomeKey" expression="@customProperties['api.fontawesome']" />
-	<script src="https://kit.fontawesome.com/${fontawesomeKey}.js" crossorigin="anonymous"></script>
-</head>
-<body>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tradereview/reportEnroll.css" />
 <div class="modal fade" id="reportEnroll">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content px-5 py-2">
@@ -41,42 +22,42 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form action="" name="reportEnrollFrm" method="POST">
+				<form:form id="reportEnrollFrm" action="${pageContext.request.contextPath}/tradereview/reportEnroll" name="reportEnrollFrm" method="POST">
 					<div class="modal-body px-0 my-3">
 						<div class="gubun gubun-first px-3 py-2">
 							<div class="d-flex justify-content-between">
 								<div class="py-1 text-15">언어 폭력(욕설 및 성희롱)</div>
-							 	<div class="sliding"><i id="language" class="fa-solid fa-angle-down pt-2"></i></div>
+							 	<div class="sliding"><i class="fa-solid fa-angle-down pt-2"></i></div>
 							</div>
 							<div>
-								<textarea class="p-2" cols="45" rows="5" placeholder="신고내용을 적어주세요."></textarea>
+								<textarea id="language" class="p-2" cols="45" rows="5" placeholder="신고내용을 적어주세요." spellcheck="false"></textarea>
 							</div>
 						</div>
 						<div class="gubun px-3 py-2">
 							<div class="d-flex justify-content-between">
 								<div class="py-1 text-15">광고</div>
-							 	<div class="sliding"><i id="advertisement" class="fa-solid fa-angle-down pt-2"></i></div>
+							 	<div class="sliding"><i class="fa-solid fa-angle-down pt-2"></i></div>
 							</div>
 							<div>
-								<textarea class="p-2" cols="45" rows="5" placeholder="신고내용을 적어주세요."></textarea>
+								<textarea id="ad" class="p-2" cols="45" rows="5" placeholder="신고내용을 적어주세요." spellcheck="false"></textarea>
 							</div>
 						</div>
 						<div class="gubun px-3 py-2">
 							<div class="d-flex justify-content-between">
 								<div class="py-1 text-15">게시글과 무관</div>
-							 	<div class="sliding"><i id="relation" class="fa-solid fa-angle-down pt-2"></i></div>
+							 	<div class="sliding"><i class="fa-solid fa-angle-down pt-2"></i></div>
 							</div>
 							<div>
-								<textarea class="p-2" cols="45" rows="5" placeholder="신고내용을 적어주세요."></textarea>
+								<textarea id="relation" class="p-2" cols="45" rows="5" placeholder="신고내용을 적어주세요." spellcheck="false"></textarea>
 							</div>
 						</div>
 						<div class="gubun px-3 py-2">
 							<div class="d-flex justify-content-between">
 								<div class="py-1 text-15">기타</div>
-							 	<div class="sliding"><i id="etc" class="fa-solid fa-angle-down pt-2"></i></div>
+							 	<div class="sliding"><i class="fa-solid fa-angle-down pt-2"></i></div>
 							</div>
 							<div>
-								<textarea class="p-2" cols="45" rows="5" placeholder="신고내용을 적어주세요."></textarea>
+								<textarea id="etc" class="p-2" cols="45" rows="5" placeholder="신고내용을 적어주세요." spellcheck="false"></textarea>
 							</div>
 						</div>
 					
@@ -84,25 +65,24 @@
                     <div class="modal-footer justify-content-center">
 						<div>
 							<button type="submit" class="btn btn-outline-camper-color px-5 m-2">등록</button>
-							<button type="button" class="btn btn-outline-camper-color px-5 m-2">취소</button>
+							<button type="button" class="btn btn-outline-danger px-5 m-2" data-dismiss="modal" onclick="cancle();">취소</button>
 						</div>
 	                </div>
-				</form>
+	                <input id="category" name="category" type="hidden" />
+	                <input id="reviewNo" name="reviewNo" type="hidden" />
+	                <input id="productNo" name="productNo" type="hidden" />
+				</form:form>
 			</div>
 		</div>
 	</div>
 </body>
 <script>
-$("#reportEnroll")
-.modal()
-.on('hide.bs.modal', (e) => {
-});
-
 $(document).ready(() => {
 	$("textarea").hide();
 });
 document.querySelectorAll(".sliding i").forEach((i) => {
 	i.addEventListener("click", (e) => {
+		$("#reportEnrollFrm textarea").val("");
 		const iTag = e.target;
 		const category = $(iTag).attr('id');
 		
@@ -122,5 +102,58 @@ document.querySelectorAll(".sliding i").forEach((i) => {
 		}
 	});
 });
+
+const frm = document.reportEnrollFrm;
+frm.addEventListener("submit", (e) => {
+	$("textarea").removeAttr('name');
+	e.preventDefault();
+	if(!$("#language").val() && !$("#ad").val() && !$("#relation").val() && !$("#etc").val()) {
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '신고내용을 입력해주세요.',
+		    buttons: {'확인': function() {}}
+		});
+		e.preventDefault();
+		return;
+	}
+	if($("#language").val()) {
+		$("#category").val("language");
+		$("#language").attr('name', 'content');
+	}
+	if($("#ad").val()) {
+		$("#category").val("ad");
+		$("#ad").attr('name', 'content');
+	}
+	if($("#relation").val()) {
+		$("#category").val("relation");
+		$("#relation").attr('name', 'content');
+	}
+	if($("#etc").val()) {
+		$("#category").val("etc");
+		$("#etc").attr('name', 'content');
+	}
+	$.alert({
+	    title: ' ',
+	    content: '신고하시겠습니까?',
+	    buttons: {
+	    	'확인': function() {
+	    		frm.submit();
+	    	},
+	    	'취소' : function() {}
+	    }
+	});
+});
+
+const cancle = () => {
+	$.alert({
+	    title: ' ',
+	    content: '등록이 취소되었습니다.',
+	    buttons: {
+	    	'확인': function() {}
+	    }
+	});
+}
+
 </script>
 </html>

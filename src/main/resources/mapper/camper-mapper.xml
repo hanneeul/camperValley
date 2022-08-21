@@ -39,7 +39,8 @@
 	select 
 		*
 	from
-		camper
+		camper c left join member m
+			on(c.member_id = m.member_id)
 	<where>
 	<if test="isChk == null or isChk == ''">
 		status = 'I'

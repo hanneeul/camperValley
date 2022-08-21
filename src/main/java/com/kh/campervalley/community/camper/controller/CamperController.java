@@ -54,7 +54,7 @@ public class CamperController {
 			param.put("searchType", searchType);
 			param.put("searchKeyword", searchKeyword);
 			int numPerPage = CamperService.CAMPER_NUM_PER_PAGE;
-			List<Camper> camperList = camperService.selectMoreCamperList(cPage, numPerPage, param);
+			List<CamperExt> camperList = camperService.selectMoreCamperList(cPage, numPerPage, param);
 			mav.addObject("camperList", camperList);
 			mav.addObject("param", param);
 			mav.setViewName("jsonView");
@@ -71,7 +71,6 @@ public class CamperController {
 	@PostMapping("/camperEnroll")
 	public String camperEnroll(Camper camper, RedirectAttributes redirectAttr) {
 		try {
-			camper.setMemberId("honggd");
 			int result = camperService.insertCamper(camper);
 			redirectAttr.addFlashAttribute("msg", "게시글을 성공적으로 등록했습니다.");
 		} catch(Exception e) {
