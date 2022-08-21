@@ -2,6 +2,7 @@ package com.kh.campervalley.admin.controller;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,16 +52,35 @@ public class AdminController {
 	@Autowired
 	ResourceLoader resourceLoader;
 
-	@GetMapping("/dashboard")
-	public void dashboard() {}
-
 	@GetMapping("/memberList")
-	public ModelAndView memberList(ModelAndView mav) {
+	public ModelAndView memberList(ModelAndView mav,
+			@RequestParam(defaultValue = "") String searchType,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "1") int cPage,
+			HttpServletRequest request) {
 		try {
-			List<Member> list = adminService.selectMemberList();
+			
+			int numPerPage = 10;
+			int offset = (cPage - 1) * numPerPage;
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("searchType", searchType);
+			map.put("searchKeyword", searchKeyword);
+			map.put("numPerPage", numPerPage);
+			map.put("offset", offset);
+			
+			List<Member> list = adminService.selectMemberList(map);
+			int totalContent = adminService.selectTotalMemberList(map);
 			log.debug("list = {}", list);
-		
+			
+			String url = request.getRequestURI();
+			String pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalContent, url);
+			log.debug("map = {}" + map);
+			
 			mav.addObject("list", list);
+			mav.addObject("map", map);
+			mav.addObject("pagebar", pagebar);
+			
 			mav.setViewName("admin/memberList");
 		} catch (Exception e) {
 			log.error("회원 관리 오류", e);
@@ -69,9 +90,19 @@ public class AdminController {
 	}
 	
 	@PostMapping("/memberUpdate")
-	public String memberUpdate(Member memberId, RedirectAttributes redirectAttr) {
+	public String memberUpdate(Member member, RedirectAttributes redirectAttr, 
+			@RequestParam(required = false) boolean ROLE_ADMIN, 
+			@RequestParam(required = false) boolean ROLE_BLACK) {
 		try {
-			int result = adminService.memberUpdate(memberId);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("ROLE_ADMIN", ROLE_ADMIN);
+			map.put("ROLE_BLACK", ROLE_BLACK);
+			map.put("memberId", member.getMemberId());
+			
+			adminService.updateMemberRole(map);
+			
+			int result = adminService.memberUpdate(member);
 			redirectAttr.addFlashAttribute("msg", "회원 정보가 수정되었습니다.");
 		} catch (Exception e) {
 			log.error("회원 정보 수정 오류", e);
@@ -302,5 +333,25 @@ public class AdminController {
 
 	@GetMapping("/reportManagement")
 	public void reportManagement() {}
+	
+	@GetMapping("/dashboard")
+	public ModelAndView dashboard(ModelAndView mav) {
+		List<NoticeExt> list = adminService.selectNoticeList();
+		
+		mav.addObject("list", list);
+		
+		mav.addObject("camper", adminService.todayCamper());
+		mav.addObject("review", adminService.todayReview());
+		mav.addObject("product", adminService.todayProduct());
+		
+		mav.addObject("sysdate", adminService.sysdate());
+		mav.addObject("minus1", adminService.minus1());
+		mav.addObject("minus2", adminService.minus2());
+		mav.addObject("minus3", adminService.minus3());
+		mav.addObject("minus4", adminService.minus4());
+		mav.addObject("minus5", adminService.minus5());
+		mav.addObject("minus6", adminService.minus6());
+		return mav;
+	}
 
 }

@@ -10,8 +10,25 @@
 	from
 	    member m join authority a
 	        on m.member_id = a.member_id
+    <where>
+		<if test="searchType == 'member_id'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+	</where>
 	order by
 	    enroll_date desc
+</select>
+
+<select id="selectTotalMemberList" resultType="_int">
+	select
+		count(*)
+	from
+		member
+	<where>
+		<if test="searchType == 'member_id'">
+			${searchType} like '%' || #{searchKeyword} || '%'
+		</if>
+	</where>
 </select>
 
 <update id="memberUpdate">
@@ -148,9 +165,38 @@
 		review_no = #{reviewNo}
 </delete>
 
+<delete id="deleteMemberRole">
+	delete from
+		authority
+	where
+		member_id = #{memberId} and auth = 'ROLE_ADMIN'
+</delete>
 
+<insert id="insertAuthority">
+	insert into
+	  	authority
+	values
+	    (
+	        'ROLE_ADMIN', #{memberId}
+	    )
+</insert>
 
+<delete id="deleteBlack">
+	delete from
+			authority
+	where
+		member_id = #{memberId} and auth = 'ROLE_BLACK'
+</delete>
 
+<insert id="insertBlack">
+	insert into
+	  	authority
+	values
+	    (
+	        'ROLE_BLACK', #{memberId}
+	    )
+</insert>
+	
 <resultMap type="member" id="memberMap">
 		<id column="member_id" property="memberId"/>
 		<result column="name" property="name"/>
