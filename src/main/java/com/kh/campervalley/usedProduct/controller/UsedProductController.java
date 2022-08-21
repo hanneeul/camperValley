@@ -102,7 +102,7 @@ public class UsedProductController  {
 			// 로그인한 회원의 아이디
 			usedProduct.setSellerId(loginMember.getMemberId()); 
 			
-			log.debug("usedProduct = {}", usedProduct);
+			log.debug("usedProduct1234 = {}", usedProduct);
 			
 			// DB 
 			int result = usedProductService.productInsert(usedProduct);
