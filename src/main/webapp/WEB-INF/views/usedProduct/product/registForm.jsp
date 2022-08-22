@@ -165,7 +165,7 @@ $('#enrollForm').ready(function() {
 $('#upFiles').on('change', readImage); // 파일 올릴떄마다 readImage함수 호출
 const fileBuffer = []; // 파일 저장 변수
 function readImage() {
-	const limitSize = 10 * 1024 * 1024; // 이미지 사이즈 설정
+	const limitSize = 30 * 1024 * 1024; // 이미지 사이즈 설정
 	const input = this;
 	
 	if(input.files && input.files[0]) { // 첫번째 선택파일이 있을 경우

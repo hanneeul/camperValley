@@ -37,7 +37,7 @@ public class StompController {
 	@SendTo("/app/chat/{chatroomId}")
 	public Map<String, Object> chat(Map<String, Object> payload, @DestinationVariable String chatroomId) {
 		log.debug("payload = {}", payload);
-		int result = chatService.insertChatLog(payload);
+//		int result = chatService.insertChatLog(payload);
 		return payload;
 	}
 }

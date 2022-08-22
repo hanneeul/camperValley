@@ -13,15 +13,17 @@ import com.kh.campervalley.chat.model.dto.ChatMember;
 @Mapper
 public interface ChatDao {
 
-	@Insert("insert into chat_member (chatroom_id, member_id) values (#{chatroomId}, #{memberId})")
-	int insertChatMember(ChatMember chatMember);
-
-	@Select("select * from chat_member where member_id = #{memberId}")
-	ChatMember findChatMemberByMemberId(String buyerId);
-
-	@Insert("insert into chat_log values (seq_chat_log_no.nextval, #{chatroomId}, #{memberId}, #{msg}, #{time})")
-	int insertChatLog(Map<String, Object> payload);
-
-	@Select("select * from chat_log where chatroom_id = #{chatroomId} order by time")
-	List<ChatLog> findChatLogByChatroomId(String chatroomId);
+//	@Insert("insert into chat_member (chatroom_id, member_id) values (#{chatroomId}, #{memberId})")
+//	int insertChatMember(ChatMember chatMember);
+//
+//	@Select("select * from chat_member where member_id = #{memberId}")
+//	List<ChatMember> findChatMemberByMemberId(String buyerId);
+//
+//	@Insert("insert into chat_log values (seq_chat_log_no.nextval, #{chatroomId}, #{memberId}, #{msg}, #{time})")
+//	int insertChatLog(Map<String, Object> payload);
+//
+//	@Select("select * from chat_log where chatroom_id = #{chatroomId} order by time")
+//	List<ChatLog> findChatLogByChatroomId(String chatroomId);
+//
+//	List<ChatLog> findRecentChatLogList(String memberId);
 }
