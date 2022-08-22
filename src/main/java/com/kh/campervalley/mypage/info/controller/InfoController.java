@@ -2,6 +2,7 @@ package com.kh.campervalley.mypage.info.controller;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -19,11 +20,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.common.CamperValleyUtils;
+import com.kh.campervalley.community.camper.model.dto.Camper;
+import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.member.model.service.MemberService;
+import com.kh.campervalley.mypage.community.model.service.MypageCommunityService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +38,9 @@ import lombok.extern.slf4j.Slf4j;
 public class InfoController {
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	private MypageCommunityService mypageCommunityService;
 	
 	@Autowired
 	BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -113,8 +121,24 @@ public class InfoController {
 	}
 	
 	@GetMapping("/main")
-	public void mypage(@AuthenticationPrincipal Member member) {
+	public ModelAndView mypageMain(@AuthenticationPrincipal Member member) {
 		log.debug("member = {}", member);
+		ModelAndView mav = new ModelAndView();
+		
+		try {
+			//관심캠핑장
+			List<CampsiteReviewExt> reviewList = mypageCommunityService.selectMyReviewList(0,3,member.getMemberId());
+			List<Camper> camperList = mypageCommunityService.selectMyCamperList(0,3,member.getMemberId());
+			
+			//관심캠핑장 추가
+			mav.addObject("reviewList", reviewList);
+			mav.addObject("camperList", camperList);
+		} catch (Exception e) {
+			log.error("마이페이지-메인 조회 오류", e);
+			throw e; 
+		}
+		
+		return mav;
 	}
 	
 	@GetMapping("/withdrawal")
