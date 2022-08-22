@@ -453,3 +453,13 @@ create sequence seq_campsite_bookmark_no;
 
 select * from campsite_review;
 select * from review_photo;
+
+create table todo (
+    todo_no number,
+    todo varchar2(4000),
+    created_at date default sysdate, 
+    completed_at date,
+    constraint pk_todo_no primary key(todo_no)
+);
+
+create sequence seq_todo_no;

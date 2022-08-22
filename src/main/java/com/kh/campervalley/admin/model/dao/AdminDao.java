@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.RowBounds;
 
+import com.kh.campervalley.admin.model.dto.Todo;
 import com.kh.campervalley.cs.model.dto.NoticeExt;
 import com.kh.campervalley.member.model.dto.Member;
 
@@ -77,10 +78,34 @@ public interface AdminDao {
 	@Select("select count(*) from member where to_date(enroll_date, 'yyyy-mm-dd') between to_date(LOCALTIMESTAMP -6, 'yyyy-mm-dd') and to_date(LOCALTIMESTAMP -6, 'yyyy-mm-dd')")
 	int minus6();
 
-	@Select("select * from (select * from notice order by created_at desc) where rownum <= 3")
+	@Select("select * from (select * from notice order by created_at desc) where rownum <= 4")
 	List<NoticeExt> selectNoticeList();
+
+	@Select("select nvl(sum(paid_amount), 0) from pay where to_char(to_date('19700101090000', 'YYYYMMDDHH24MISS') +(paid_at/86400),'yyyy-mm-dd') between to_char(sysdate, 'yyyy-mm-dd') and to_char(sysdate, 'yyyy-mm-dd') and status = 'paid'")
+	int adSysdate();
 	
+	@Select("select nvl(sum(paid_amount), 0) from pay where to_char(to_date('19700101090000', 'YYYYMMDDHH24MISS') +(paid_at/86400),'yyyy-mm-dd') between to_char(sysdate -1, 'yyyy-mm-dd') and to_char(sysdate -1, 'yyyy-mm-dd') and status = 'paid'")
+	int adMinus1();
 	
+	@Select("select nvl(sum(paid_amount), 0) from pay where to_char(to_date('19700101090000', 'YYYYMMDDHH24MISS') +(paid_at/86400),'yyyy-mm-dd') between to_char(sysdate -2, 'yyyy-mm-dd') and to_char(sysdate -2, 'yyyy-mm-dd') and status = 'paid'")
+	int adMinus2();
+
+	@Select("select nvl(sum(paid_amount), 0) from pay where to_char(to_date('19700101090000', 'YYYYMMDDHH24MISS') +(paid_at/86400),'yyyy-mm-dd') between to_char(sysdate -3, 'yyyy-mm-dd') and to_char(sysdate -3, 'yyyy-mm-dd') and status = 'paid'")
+	int adMinus3();
+
+	@Select("select nvl(sum(paid_amount), 0) from pay where to_char(to_date('19700101090000', 'YYYYMMDDHH24MISS') +(paid_at/86400),'yyyy-mm-dd') between to_char(sysdate -4, 'yyyy-mm-dd') and to_char(sysdate -4, 'yyyy-mm-dd') and status = 'paid'")
+	int adMinus4();
+
+	@Select("select nvl(sum(paid_amount), 0) from pay where to_char(to_date('19700101090000', 'YYYYMMDDHH24MISS') +(paid_at/86400),'yyyy-mm-dd') between to_char(sysdate -5, 'yyyy-mm-dd') and to_char(sysdate -5, 'yyyy-mm-dd') and status = 'paid'")
+	int adMinus5();
+
+	int insertTodo(Todo todo);
+
+	List<Todo> selectTodoList();
+
+	int updateTodo(Map<String, Object> param);
+
+	int deleteTodo(int todoNo);
 
 
 }

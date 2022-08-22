@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.campervalley.admin.model.dao.AdminDao;
+import com.kh.campervalley.admin.model.dto.Todo;
 import com.kh.campervalley.cs.model.dto.NoticeExt;
 import com.kh.campervalley.member.model.dto.Member;
 
@@ -174,7 +175,54 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.minus6();
 	}
 	
+	@Override
+	public int adSysdate() {
+		return adminDao.adSysdate();
+	}
 	
+	@Override
+	public int adMinus1() {
+		return adminDao.adMinus1();
+	}
+	
+	@Override
+	public int adMinus2() {
+		return adminDao.adMinus2();
+	}
+	
+	@Override
+	public int adMinus3() {
+		return adminDao.adMinus3();
+	}
+	
+	@Override
+	public int adMinus4() {
+		return adminDao.adMinus4();
+	}
+	
+	@Override
+	public int adMinus5() {
+		return adminDao.adMinus5();
+	}
+	
+	@Override
+	public int insertTodo(Todo todo) {
+		return adminDao.insertTodo(todo);
+	}
+	
+	@Override
+	public List<Todo> selectTodoList() {
+		return adminDao.selectTodoList();
+	}
+	
+	@Override
+	public int updateTodo(Map<String, Object> param) {
+		return adminDao.updateTodo(param);
+	}
 
+	@Override
+	public int deleteTodo(int todoNo) {
+		return adminDao.deleteTodo(todoNo);
+	}
 
 }
