@@ -312,4 +312,9 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 
 		return result;
 	}
+	
+	@Override
+	public boolean isPauseAdvertiser(String memberId) {
+		return advertiserDao.isPauseAdvertiser(memberId); // 권한정지면 true
+	}
 }

@@ -24,7 +24,7 @@
 						<div class="row bookmarkWrapper py-4">
 							<div class="imgWrapper d-flex justify-content-center align-items-center">
 								<c:if test="${bookmark.campsite.firstImageUrl ne null}">
-									<img class="campsiteImg" src="${bookmark.campsite.firstImageUrl}" alt="대표사진" />
+									<img class="campsiteImg" src="${bookmark.campsite.firstImageUrl}" alt="${bookmark.campsite.facltNm} 대표 이미지" />
 								</c:if>
 								<c:if test="${bookmark.campsite.firstImageUrl eq null}">
 									<div class="d-flex flex-column align-items-center">

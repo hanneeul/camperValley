@@ -85,4 +85,6 @@ public interface AdvertiserService {
 
 	int exitAdvertiser(int advertiserNo, String memberId);
 
+	boolean isPauseAdvertiser(String memberId);
+
 }

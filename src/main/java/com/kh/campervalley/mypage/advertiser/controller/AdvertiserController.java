@@ -73,7 +73,6 @@ public class AdvertiserController {
 	final String IMP_TOKEN_URL = "https://api.iamport.kr/users/getToken";
 	final String IMP_CANCEL_URL = "https://api.iamport.kr/payments/cancel";
 	
-	
 	@GetMapping("/register")
 	public void registerAdvertiser() { }
 
@@ -434,4 +433,5 @@ public class AdvertiserController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
 	}
+
 }
