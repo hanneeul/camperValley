@@ -9,33 +9,33 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index/index.css"/>
 	<!-- 검색 -->
 	<div id="searchWeatherBox" style="background-image:url('${pageContext.request.contextPath}/resources/images/index/top.jpg')">
-		<form name="searchFrm" class="shadow-custom width-1000 mx-auto p-4 bg-white d-flex justify-content-between">
+		<form id="searchFrm" name="searchFrm" action="${pageContext.request.contextPath}/campsite/searchCampsiteIndex" class="shadow-custom width-1000 mx-auto p-4 bg-white d-flex justify-content-between">
 			<div id="inputArea">
 				<div class="py-2 camper-color text-18">지역</div>
-				<select name="sido1" id="sido1" class="input p-2 mr-2 mb-3"></select>
-				<select name="gugun1" id="gugun1" class="input p-2 mr-2 mb-3"></select>
+				<select name="sido" id="sido1" class="input p-2 mr-2 mb-3"></select>
+				<select name="gugun" id="gugun1" class="input p-2 mr-2 mb-3"></select>
 			</div>
 			<div id="inputTheme">
 				<div class="py-2 camper-color text-18">테마</div>
-				<select name="theme" class="input p-2 mb-3">
+				<select name="themaEnvrnCl" class="input p-2 mb-3">
 					<option value="">관련 테마를 선택하세요.</option>
-					<option value="">일출명소</option>
-					<option value="">일몰명소</option>
-					<option value="">수상레저</option>
-					<option value="">항공레저</option>
-					<option value="">스키</option>
-					<option value="">낚시</option>
-					<option value="">액티비티</option>
-					<option value="">봄꽃여행</option>
-					<option value="">여름물놀이</option>
-					<option value="">가을단풍명소</option>
-					<option value="">겨울눈꽃명소</option>
-					<option value="">걷기길</option>
+					<option value="일출명소">일출명소</option>
+					<option value="일몰명소">일몰명소</option>
+					<option value="수상레저">수상레저</option>
+					<option value="항공레저">항공레저</option>
+					<option value="스키">스키</option>
+					<option value="낚시">낚시</option>
+					<option value="액티비티">액티비티</option>
+					<option value="봄꽃여행">봄꽃여행</option>
+					<option value="여름물놀이">여름물놀이</option>
+					<option value="가을단풍명소">가을단풍명소</option>
+					<option value="겨울눈꽃명소">겨울눈꽃명소</option>
+					<option value="걷기길">걷기길</option>
 				</select>
 			</div>
-			<div id="inputKeyword">
-				<div class="py-2 camper-color text-18">키워드</div>
-				<input class="input p-2 mb-3" type="text" placeholder="관련 키워드를 입력해주세요."/>
+			<div id="inputFacltNm">
+				<div class="py-2 camper-color text-18">캠핑장명</div>
+				<input name="facltNm" class="input p-2 mb-3" type="text" placeholder="캠핑장명을 입력해주세요."/>
 			</div>
 			<div class="d-flex flex-column justify-content-center">
 				<div id="searchCampsite" class="font-weight-bold p-2 camper-color text-35">&gt;</div>
@@ -153,23 +153,26 @@
 		</c:if>
 	</div>
 	<%-- EJ end --%>
-	<div id="gubunBox" style="background-image:url('${pageContext.request.contextPath}/resources/images/index/bottom.jpg')">
-		<div id="campsiteGubun" class="width-1000 mx-auto">
-			<div class="font-weight-bold text-22">Favorite Camping</div>
-			<div class="d-flex justify-content-between">
-				<div>
-					<div class="text-22">Glamping</div>
-					<div id="glamping" class="campsite shadow-custom" style="background-image: url('${pageContext.request.contextPath}/resources/images/index/glamping.jpg')">
+	<form action="">
+		<div id="gubunBox" style="background-image:url('${pageContext.request.contextPath}/resources/images/index/bottom.jpg')">
+			<div id="campsiteGubun" class="width-1000 mx-auto">
+				<div class="font-weight-bold text-22">Favorite Camping</div>
+				<div class="d-flex justify-content-between">
+					<div>
+						<div class="text-22">Glamping</div>
+						<div id="glamping" class="campsite shadow-custom" style="background-image: url('${pageContext.request.contextPath}/resources/images/index/glamping.jpg')">
+						</div>
 					</div>
-				</div>
-				<div>
-					<div class="text-22">Caravan</div>
-					<div id="caravan" class="campsite shadow-custom" style="background-image: url('${pageContext.request.contextPath}/resources/images/index/caravan.jpg')">
+					<div>
+						<div class="text-22">Caravan</div>
+						<div id="caravan" class="campsite shadow-custom" style="background-image: url('${pageContext.request.contextPath}/resources/images/index/caravan.jpg')">
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+		<input type="hidden" name="induty" />
+	</form>
 	<script>
 	// ----- 캠핑장검색 -----
 	$('document').ready(function() {
@@ -213,6 +216,23 @@
 				});
 			}
 		});
+	});
+	
+	document.querySelector("#searchFrm #searchCampsite").addEventListener("click", (e) => {
+		const frm = document.searchFrm;
+		if(frm.sido.value == "시/도" && frm.themaEnvrnCl.value == "" && frm.facltNm.value == "") {
+			$.alert({
+				icon: 'fa fa-warning',
+			    title: '',
+			    content: '검색조건을 입력하세요.',
+			    buttons: {
+			    	'확인': function() {}
+			    }
+			});
+			e.preventDefault();
+			return;
+		}
+		frm.submit();
 	});
 	
 	
@@ -306,7 +326,6 @@
     $("#weather-btn span").mouseover((e) => {
     });
     
-    // 카라반, 글램핑 캠핑장 조회
     const prevMonth = () => {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();

@@ -113,4 +113,31 @@ public class CampsiteController {
 		return mav;
 	}
 	
+	/*----- JH -----*/
+	@GetMapping("/searchCampsiteIndex")
+	public ModelAndView searchDetailTheme(
+			ModelAndView mav, 
+			@RequestParam(required = false) String sido,
+			@RequestParam(required = false) String gugun,
+			@RequestParam(required = false) String themaEnvrnCl,
+			@RequestParam(required = false) String facltNm,
+			@RequestParam(required = false) String induty) {
+		
+		try {
+			Map<String, Object> searchParam = new HashMap<>();
+			searchParam.put("sido", sido);
+			searchParam.put("gugun", gugun);
+			searchParam.put("themaEnvrnCl", themaEnvrnCl);
+			searchParam.put("facltNm", facltNm);
+			searchParam.put("induty", induty);
+			List<CampsiteExt> list = campsiteService.searchCampsiteList(searchParam);
+			mav.addObject("list", list);
+			mav.setViewName("campsite/searchDetail");
+		} catch(Exception e) {
+			log.error("메인페이지 캠핑장 검색 오류", e);
+			throw e;
+		}
+		return mav;
+	}
+	/*----- JH -----*/
 }

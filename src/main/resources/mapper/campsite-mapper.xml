@@ -44,6 +44,9 @@ from
             #{lctCl}
         </foreach>
 	</if>
+	<if test="themaEnvrnCl != null and themaEnvrnCl != ''">
+		thema_envrn_cl = #{themaEnvrnCl}
+	</if>
 	<if test="induty != null and induty !=''">
     	and induty in
         <foreach item="induty" index="index" collection="induty.split(',')"  open="(" separator="," close=")">
