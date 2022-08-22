@@ -2,6 +2,7 @@ package com.kh.campervalley.mypage.info.controller;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -11,6 +12,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +20,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.common.CamperValleyUtils;
+import com.kh.campervalley.community.camper.model.dto.Camper;
+import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.member.model.service.MemberService;
+import com.kh.campervalley.mypage.community.model.service.MypageCommunityService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +38,9 @@ import lombok.extern.slf4j.Slf4j;
 public class InfoController {
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	private MypageCommunityService mypageCommunityService;
 	
 	@Autowired
 	BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -51,15 +60,12 @@ public class InfoController {
 								@AuthenticationPrincipal Member loginMember,
 								@RequestParam("profileImgFile") MultipartFile upFile,
 								@RequestParam("changeImg") String changeImg,
-								RedirectAttributes redirectAttr) {
+								RedirectAttributes redirectAttr) throws Exception {
 		
-		log.debug("a");
 		Map<String, Object> map = new HashMap<>();
 		try {
-			log.debug("b");
 			System.out.println(updateMember.getPassword()==null + "");
 			System.out.println(updateMember.getPassword().equals(""));
-			log.debug("c");
 			
 			//파일 처리
 			String saveDirectory = application.getRealPath("/resources/upload/member");
@@ -93,7 +99,6 @@ public class InfoController {
 			log.debug("updateMember = {}", updateMember);
 			log.debug("loginMember = {}", loginMember);
 			int result = memberService.updateMember(updateMember);
-			log.debug("121");
 			log.debug(result+"");
 			loginMember.setNickname(updateMember.getNickname());
 			loginMember.setPassword(updateMember.getPassword());
@@ -105,21 +110,60 @@ public class InfoController {
 			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
 					loginMember, loginMember.getPassword());
 					
-log.debug("success{}",loginMember.getProfileImg());
+			log.debug("success{}",loginMember.getProfileImg());
 			
-			//msg저장
+			redirectAttr.addFlashAttribute("msg", "회원정보가 성공적으로 수정되었습니다.");
 		} catch (Exception e) {
-			// TODO: handle exception
+			log.error("회원정보 수정 오류", e);
+			throw e; 
 		}
 		return "redirect:/mypage/info/edit";
 	}
 	
 	@GetMapping("/main")
-	public void mypage(@AuthenticationPrincipal Member member) {
+	public ModelAndView mypageMain(@AuthenticationPrincipal Member member) {
 		log.debug("member = {}", member);
+		ModelAndView mav = new ModelAndView();
+		
+		try {
+			//관심캠핑장
+			List<CampsiteReviewExt> reviewList = mypageCommunityService.selectMyReviewList(0,3,member.getMemberId());
+			List<Camper> camperList = mypageCommunityService.selectMyCamperList(0,3,member.getMemberId());
+			
+			//관심캠핑장 추가
+			mav.addObject("reviewList", reviewList);
+			mav.addObject("camperList", camperList);
+		} catch (Exception e) {
+			log.error("마이페이지-메인 조회 오류", e);
+			throw e; 
+		}
+		
+		return mav;
 	}
 	
 	@GetMapping("/withdrawal")
 	public void withdrawal() {}
+	
+	@PostMapping("/withdrawal")
+	public String withdrawal(RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member) {
+		String delDirectory = application.getRealPath("/resources/upload/member");
+		try {
+			if(member.getProfileImg()!= null) {
+				File delFile = new File(delDirectory, member.getProfileImg());
+				if(delFile.exists()) {
+					delFile.delete();
+				}
+			}
+			int result = memberService.withdrawal(member.getMemberId());
+			SecurityContextHolder.clearContext();
+			redirectAttr.addFlashAttribute("msg", "탈퇴 되었습니다.");
+		} catch (Exception e) {
+			log.error("회원탈퇴오류", e);
+			throw e; 
+		}
+		
+		
+		return "redirect:/";
+	}
 
 }

@@ -11,6 +11,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.campervalley.member.model.dao.MemberDao;
 import com.kh.campervalley.member.model.dto.Member;
 
+import lombok.NonNull;
+
 @Service
 public class MemberServiceImpl implements MemberService {
 	@Autowired
@@ -51,5 +53,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updatePassword(Map<String, Object> map) {
 		return memberDao.updatePassword(map);
+	}
+
+	@Override
+	public int withdrawal(@NonNull String memberId) {
+		return memberDao.updateMemberWithdrawal(memberId);
 	}
 }

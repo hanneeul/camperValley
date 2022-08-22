@@ -1,6 +1,5 @@
 package com.kh.campervalley.mypage.trade.model.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +63,12 @@ public class TradeServiceImpl implements TradeService {
 	@Override
 	public List<UsedProduct> soldListByMemberId(Map<String, Object> map) {
 		return tradeDao.soldListByMemberId(map);
+	}
+	
+	@Override
+	public List<UsedProductExt> selectMorePuschasedProduct(int offset, int numPerReq, @NonNull String memberId) {
+		RowBounds rowBounds = new RowBounds(offset, numPerReq);
+		return tradeDao.selectMorePuschasedProduct(memberId, rowBounds);
 	}
 	
 

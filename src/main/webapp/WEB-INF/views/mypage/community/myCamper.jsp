@@ -128,7 +128,7 @@
 	
 		<div class="modal fade" id="camper-detail" tabindex="-1" role="dialog"
 		aria-labelledby="camper-detail-label" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered pl-5 pr-2 modal-dialog-scrollable modal-lg" role="document">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
 				<div class="modal-content px-3 pt-3">
 					<div class="modal-header d-block pb-3">
 						<h4 class="text-center mb-4 font-weight-bold" id="detailTitle">캠퍼모집 제목</h4>
@@ -158,17 +158,18 @@
 						<p id="expectedCost"></p>
 					</div>
 					<div class="modal-footer px-0 pt-4">
-						<a class="btn btn-outline-camper-color btn-lg border-2 shadow-sm">수정</a>
+						<button type="button" id="update" class="btn btn-outline-camper-color btn-lg border-2 shadow-sm">수정</button>
 						<button class="btn btn-camper-color btn-lg shadow-sm" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
 	        </div>
 		</div>
-	
-	
-	
+	<jsp:include page="/WEB-INF/views/community/camper/camperUpdate.jsp"/>
+
 	
 <script>
+$("form[name=camperEnrollFrm]").attr("action","${pageContext.request.contextPath}/mypage/community/myCamper/camperUpdate");
+
 $('#searchOptionItem li > a').on('click', function() {
     // 버튼에 선택된 항목 텍스트 넣기 
     $('#searchOption').text($(this).text());
@@ -222,6 +223,40 @@ $("span.title").click((e)=>{
 			$("p#content").html(camper.content);
 			$("p#purpose").html(camper.purpose);
 			$("p#expectedCost").html(camper.expectedCost);
+			
+		
+			$("#update").click((e) => {
+				const areas = camper.area.split(" ");
+				document.querySelectorAll("#sido1 option").forEach((option) => {
+					if(areas[0] === $(option).val()) {
+						$(option).prop("selected", true);
+						document.querySelectorAll("#gugun1 option").forEach((option) => {
+						$(option).prop("selected", true);
+							console.log(option);
+						});
+					}
+				});
+
+				
+				
+			//	$("#camperUpdate input[name=departureDate]").val(departureDate.year + "-" + departureDate.monthValue + "-" + departureDate.dayOfMonth);
+			//	$("#camperUpdate input[name=arrivalDate]").val(arrivalDate.year + "-" + arrivalDate.monthValue + "-" + arrivalDate.dayOfMonth);
+				$("#camperUpdate #memberCount").val(camper.memberCount);
+				$("#camperUpdate #title").val(camper.title);
+				$("#camperUpdate #content").val(camper.content);
+				$("#camperUpdate #purpose").val(camper.purpose);
+				$("#camperUpdate #expectedCost").val(camper.expectedCost);
+				$("#camperUpdate #chatUrl").val(camper.chatUrl);
+				$("#camperUpdate #camperNo").val(camper.camperNo);
+				
+				$("#camper-detail").modal('hide');
+				
+				$("#camperUpdate")
+				.modal()
+				.on('hide.bs.modal');
+				
+				});
+			
 		},
 		error: console.log
 	});			
@@ -239,6 +274,9 @@ $("#search").click(e=>{
 	
 	
 });
+
+//
+
 
 
 

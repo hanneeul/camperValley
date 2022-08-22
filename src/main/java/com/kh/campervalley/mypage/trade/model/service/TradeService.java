@@ -17,17 +17,19 @@ public interface TradeService {
 	/* --JH-- */
 	List<UsedProductExt> purchasedListByMemberId(Map<String, Object> map);
 	/* --JH-- */
-	List<UsedProduct> selectMoreSellingProduct(int offset, int numPerReq, @NonNull String memberId);
+	List<UsedProduct> selectMoreSellingProduct(int offset, int numPerReq, String memberId);
 
 	List<WishExt> wishListByMemberId(Map<String, Object> map);
 
 	int wishDelete(int wishNo);
 
-	List<WishExt> selectMoreWishProduct(int offset, String type, int numPerReq, @NonNull String memberId);
+	List<WishExt> selectMoreWishProduct(int offset, String type, int numPerReq, String memberId);
 
 	List<UsedProduct> soldListByMemberId(Map<String, Object> map);
 
-	List<UsedProduct> selectMoreSoldProduct(int offset, int numPerReq, @NonNull String memberId);
+	List<UsedProduct> selectMoreSoldProduct(int offset, int numPerReq, String memberId);
+	
+	List<UsedProductExt> selectMorePuschasedProduct(int offset, int numPerReq, @NonNull String memberId);
 
 
 }

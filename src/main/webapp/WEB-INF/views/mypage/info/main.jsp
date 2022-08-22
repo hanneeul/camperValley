@@ -8,7 +8,9 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/info/main.css" />
+
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<c:set var="profileFileName" value="${empty loginMember.profileImg ? 'default-profile.svg' : loginMember.profileImg}"/>
 
 <div class="container">	
 	<div class="row d-flex justify-content-between">
@@ -21,9 +23,9 @@
 		  <div class="row justify-content-between" >
                 <div class="col-md-6 align-self-center border-right pl-4 font-weight-bold">
                     <div class="rounded-circle" id="profileImg-wrp">
-                    	<img alt="누구님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/kj.png" id="profileImg" class="" />
+                    	<img alt="${loginMember.nickname}님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/${profileFileName}" id="profileImg"/>
                     </div >
-                    	<span id="nickname" class="d-block">홍길동</span>
+                    	<span id="nickname" class="d-block">${loginMember.nickname}</span>
                     <a href="${pageContext.request.contextPath}/mypage/info/edit"  class="shadow-sm btn btn-camper d-block mt-3 ml-2 mb-2">
                         회원정보 수정
                     </a>
@@ -140,22 +142,19 @@
                         <thead>
                             <tr>
                                 <th>
-                                    No.
-                                </th>
-                                <th>
                                     제목
                                 </th>
                                 <th>
-                                    작성자
+                                    야영장명
                                 </th>
                                 <th>
                                     평점
                                 </th>
                                 <th>
-                                    추천수
+                                    조회수
                                 </th>
                                 <th>
-                                    조회수
+                                    추천수
                                 </th>
                                 <th>
                                     작성일
@@ -163,77 +162,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    <a href="">제목제목</a>
-                                </td>
-                                <td>
-                                    닉네임
-                                </td>
-                                <td>
-                                    4
-                                </td>
-                                <td>
-                                    10
-                                </td>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    01/04/2012
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    제목제목
-                                </td>
-                                <td>
-                                    닉네임
-                                </td>
-                                <td>
-                                    4
-                                </td>
-                                <td>
-                                    10
-                                </td>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    01/04/2012
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    제목제목
-                                </td>
-                                <td>
-                                    닉네임
-                                </td>
-                                <td>
-                                    4
-                                </td>
-                                <td>
-                                    10
-                                </td>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    01/04/2012
-                                </td>
-                            </tr>
+	                        <c:if test="${empty reviewList}">
+			                    <tr>
+			                		<td colspan="6" class="text-center">작성하신 글이 존재하지 않습니다.</td>
+			                	</tr>
+	                        </c:if>
+	                        <c:forEach items="${reviewList}" var="review" varStatus="vs">
+	                            <tr data-no="${board.no}">
+	                                <td class="text-left">
+	                                    <a href="${pageContext.request.contextPath}/community/review/reviewDetail?reviewNo=${review.reviewNo}">
+	                                    	${review.title}[${review.commentCount}]
+	                                    </a>
+	                                </td>
+			                        <td class="text-left">
+			                          ${review.facltNm}
+			                        </td>
+			                        <td>
+			                          ${review.reviewGrade}
+			                        </td>
+			                        <td>
+			                          ${review.readCount}
+			                        </td>
+			                        <td>
+			                          ${review.recommendCount}
+			                        </td>
+			                        <td>
+										<fmt:parseDate value="${review.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+										<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
+			                        </td>
+	                            </tr>
+	                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -244,7 +202,7 @@
                         <h4 class="mb-4">
                             캠퍼모집
                         </h4> 
-                        <a type="button" class="btn btn-link">
+                        <a type="button" class="btn btn-link" href="${pageContext.request.contextPath}/mypage/community/myCamper">
                             >> 더보기
                         </a>
                     </div>
@@ -258,9 +216,6 @@
                           제목
                          </th>
                          <th>
-                            작성자
-                    	 </th>
-                         <th>
                             캠핑기간
                         </th>
                         <th>
@@ -272,75 +227,41 @@
                     </tr>
                 </thead>
                 <tbody>
+                <c:if test="${empty camperList}">
+			    	<tr>
+			        	<td colspan="5" class="text-center">작성하신 글이 존재하지 않습니다.</td>
+			        </tr>
+	            </c:if>
+	            <c:forEach items="${camperList}" var="camper" varStatus="vs">
                     <tr>
                         <td>
-                           	<select class="recruitment-status">
-								<option value="">모집중</option>
-								<option value="">모집완료</option>
-							</select>
+							<c:if test="${camper.status eq 'I'}">
+								모집중
+							</c:if>
+							<c:if test="${camper.status eq 'C'}">
+								모집완료
+							</c:if>
                         </td>
                         <td class="text-left">
-                            <span class="title" data-toggle="modal" data-target="#camper-detail">제천 캠핑장 놀러가실분들...</span>
+                            <span class="title" data-toggle="modal" data-target="#camper-detail">
+                            	${fn:substring(camper.title,0,20)}
+                            	<c:if test="${fn:length(camper.title) > 20}">
+                            	..
+                            	</c:if>	
+                            </span>
                         </td>
                         <td>
-                            최강길동
+                            ${camper.departureDate} ~ ${camper.arrivalDate}
                         </td>
                         <td>
-                            2022-07-19 ~ 2022-07-20
+                            ${camper.area}
                         </td>
-                        <td>
-                            충청북도 제천시
-                        </td>
-                        <td>
-                            4명
+                        <td class="align-middle">
+                            ${camper.memberCount}명
                         </td>
 	                    </tr>
-                        <tr>
-                        <td>
-                           	<select class="recruitment-status">
-								<option value="">모집중</option>
-								<option value="">모집완료</option>
-							</select>
-                        </td>
-                        <td class="text-left">
-                            <span class="title" data-toggle="modal" data-target="#camper-detail">제천 캠핑장 놀러가실분들...</span>
-                        </td>
-                        <td>
-                            최강길동
-                        </td>
-                        <td>
-                            2022-07-19 ~ 2022-07-20
-                        </td>
-                        <td>
-                            충청북도 제천시
-                        </td>
-                        <td>
-                            4명
-                        </td>
-	                    </tr>
-	                    <tr>
-                        <td>
-                           	<select class="recruitment-status">
-								<option value="">모집중</option>
-								<option value="">모집완료</option>
-							</select>
-                        </td>
-                        <td class="text-left">
-                            <span class="title" data-toggle="modal" data-target="#camper-detail">제천 캠핑장 놀러가실분들...</span>
-                        </td>
-                        <td>
-                            최강길동
-                        </td>
-                        <td>
-                            2022-07-19 ~ 2022-07-20
-                        </td>
-                        <td>
-                            충청북도 제천시
-                        </td>
-                        <td>
-                            4명
-                        </td>
-	                    </tr>
+					</c:forEach>
+	                    
                   </tbody>
               </table>          
 		</div>
