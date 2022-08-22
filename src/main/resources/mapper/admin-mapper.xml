@@ -196,7 +196,58 @@
 	        'ROLE_BLACK', #{memberId}
 	    )
 </insert>
-	
+
+<insert id="insertTodo">
+	insert into 
+		todo 
+	values(
+		seq_todo_no.nextval, 
+		#{todo}, 
+		default, 
+		default)
+</insert>
+
+<select id="selectTodoList" resultType="todo">
+	select 
+		* 
+	from
+		(select
+		   todo_no, todo, created_at, completed_at
+		from
+		    todo
+		where
+		    completed_at is null order by todo_no)
+	union all 
+	select * from
+		(select
+		    todo_no, todo, created_at, completed_at
+		from
+		    todo
+		where
+		    completed_at is not null
+		order by completed_at desc)
+</select>
+
+<update id="updateTodo">
+		update
+			todo
+		set
+			<if test="isCompleted">
+				completed_at = sysdate
+			</if>
+			<if test="!isCompleted">
+				completed_at = null
+			</if>
+		where
+			todo_no = #{todoNo}
+</update>
+
+<delete id="deleteTodo">
+ 	delete from
+		todo
+	where
+		todo_no = #{todoNo}
+</delete>
 <resultMap type="member" id="memberMap">
 		<id column="member_id" property="memberId"/>
 		<result column="name" property="name"/>

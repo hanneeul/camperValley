@@ -6,6 +6,8 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- chartJs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <link rel="stylesheet"
@@ -39,7 +41,7 @@
 					<div class="col-md-6">
 						<div class="row">
 							<div class="col-md-12 se-box">
-								<h2 class="a-title">광고 등록 현황</h2>
+								<h2 class="a-title">애드머니 결제 현황</h2>
 								<div>
 									<canvas id="money-graph"></canvas>
 								</div>
@@ -47,45 +49,28 @@
 							<div class="col-md-12 se-box">
 								<h2 class="a-title">To Do List</h2>
 								<div class="to-do">
+								
+								<div class="todolist">
+								<form action="${pageContext.request.contextPath}/admin/insertTodo" class="form-inline mb-1" method="post">
+								 <input type="text" class="form-control ml-2 todo-input" name="todo" placeholder="할 일을 입력하세요." style="width: 375px; font-size: 15px;" required/>
+        							<button class="btn-hover color-5 btn btn-outline-success" type="submit" ><i class="fa-solid fa-plus"></i></button> 
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+								</form>
+								</div>
 
 									<table class="table tb-todo" style="color: #777;">
+										<c:forEach items="${todo}" var="todo" varStatus="vs">
+										<tr>
+											<th class="col-md-1"><input type="checkbox" value="${todo.todoNo}" class="isCompleted" ${not empty todo.completedAt ? 'checked' : ''}></th>
+											<td>${todo.todo}</td>
+											<td class="col-md-1">
+											<button class="x-icon btn-delete" data-todo-no="${todo.todoNo}">
+													<i class="fa-solid fa-xmark"></i>
+												</button></td>
+										</tr>
+										</c:forEach>
 
-										<tr>
-											<th><input type="checkbox" name="" id=""></th>
-											<td>Lorem ipsum dolor sit amet consectetur</td>
-											<td><button class="x-icon">
-													<i class="fa-solid fa-xmark"></i>
-												</button></td>
-										</tr>
-
-										<tr>
-											<th><input type="checkbox" name="" id=""></th>
-											<td>Lorem ipsum dolor sit amet consectetur</td>
-											<td><button class="x-icon">
-													<i class="fa-solid fa-xmark"></i>
-												</button></td>
-										</tr>
-										<tr>
-											<th><input type="checkbox" name="" id=""></th>
-											<td>Lorem ipsum dolor sit amet consectetur</td>
-											<td><button class="x-icon">
-													<i class="fa-solid fa-xmark"></i>
-												</button></td>
-										</tr>
-										<tr>
-											<th><input type="checkbox" name="" id=""></th>
-											<td>Lorem ipsum dolor sit amet consectetur</td>
-											<td><button class="x-icon">
-													<i class="fa-solid fa-xmark"></i>
-												</button></td>
-										</tr>
-										<tr>
-											<th><input type="checkbox" name="" id=""></th>
-											<td>Lorem ipsum dolor sit amet consectetur</td>
-											<td><button class="x-icon">
-													<i class="fa-solid fa-xmark"></i>
-												</button></td>
-										</tr>
+										
 
 									</table>
 								</div>
@@ -108,40 +93,21 @@
 										<a href="${pageContext.request.contextPath}/cs/faq">${list.title}</a>
 							</c:if>
 									</h2>
-									<p class="write-content">${list.content}</p>
+									<%-- <p class="write-content">${list.content}</p> --%>
 									
 									
+									<p class="write-content">
 									<c:choose>
-									        <c:when test="${fn:length(list.content) gt 26}">
-									        <c:out value="${fn:substring(list.content, 0, 25)}">...
-									        </c:out></c:when>
+									        <c:when test="${fn:length(list.content) > 140}">
+									        ${fn:substring(list.content, 0, 139)}...
+									        </c:when>
 									        <c:otherwise>
-									        <c:out value="${list.content}">
-									        </c:out></c:otherwise>
+									        ${list.content}
+									        </c:otherwise>
 									</c:choose>
-
+										</p>
 								</li>
 								</c:forEach>
-								<!-- <li>
-									<h2 class="sub-title">
-										<span class="timeline"></span><a href="#">Lorem ipsum
-											dolor sit amet consectetur</a>
-									</h2>
-									<p class="write-content">Loriores quae explicabo fugiat earum
-										totam.</p>
-								</li>
-								<li>
-									<h2 class="sub-title">
-										<span class="timeline"></span><a href="#">Lorem ipsum
-											dolor sit amet consectetur</a>
-									</h2>
-									<p class="write-content">Lorem ipsum dolor sit amet
-										consectetur, adipisicing elit. Adipisci repellendus impedit
-										natus aliquid voluptate dolore aspernatur eos, aut velit, iure
-										saepe. Alias quam eos, asperiores quae explicabo fugiat earum
-										totam.</p>
-								</li> -->
-
 							</ul>
 						</div>
 					</div>
@@ -150,7 +116,33 @@
 		</div>
 	</div>
 </div>
+<form action="${pageContext.request.contextPath}/admin/updateTodo" name="todoUpdateFrm" method="post">
+	<input type="hidden" name="todoNo" />
+	<input type="hidden" name="isCompleted" />
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form>
+<form action="${pageContext.request.contextPath}/admin/deleteTodo" name="todoDeleteFrm" method="post">
+<input type="hidden" name="todoNo" />
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form>
 <script>
+document.querySelectorAll('.btn-delete').forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		document.todoDeleteFrm.todoNo.value = e.target.dataset.todoNo;
+		document.todoDeleteFrm.submit();
+	})
+});
+
+document.querySelectorAll(".isCompleted").forEach((checkbox) => {
+	checkbox.addEventListener('change', (e) => {
+		const {value, checked} = e.target;
+		const frm = document.todoUpdateFrm;
+		frm.todoNo.value = value;
+		frm.isCompleted.value = checked;
+		frm.submit();
+	});
+});
+
 
 var now = new Date();
 var sysdate = now.getDate();
@@ -207,11 +199,11 @@ var moneyGraph = new Chart(context, {
 	type : 'line', 
 	data : { 
 		labels : [
-		'1', '2', '3', '4', '5', '6', '7' ],
+		'5일전', '4일전', '3일전', '2일전', '1일전', '오늘' ],
 		datasets : [ { 
-			label : '회원가입 수',
+			label : '총 결제금액',
 			fill : true, 
-			data : [ 21, 19, 25, 20, 23, 26, 25 
+			data : [ ${adMinus5}, ${adMinus4}, ${adMinus3}, ${adMinus2}, ${adMinus1}, ${adSysdate} 
 			],
 			backgroundColor : [
 			'rgba(32, 158, 145, 0.5);', 'rgba(54, 162, 235, 0.2)' ],
@@ -220,7 +212,6 @@ var moneyGraph = new Chart(context, {
 			borderWidth : 1
 		} ]
 	},
-	events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
 	options : {
 		legend : {
 			display : false
