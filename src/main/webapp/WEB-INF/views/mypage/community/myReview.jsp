@@ -72,7 +72,7 @@
                 <tbody>
 					<c:if  test="${empty list}">
 	                	<tr>
-	                		<td><td colspan="6" class="text-center">작성하신 글이 존재하지 않습니다.</td></td>
+	                		<td colspan="6" class="text-center">작성하신 글이 존재하지 않습니다.</td>
 	                	</tr>
 	                </c:if>
                 <c:forEach items="${list}" var="review" varStatus="vs">

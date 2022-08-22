@@ -1,20 +1,24 @@
 @charset "UTF-8";
 
-.btn{
+div.container .btn{
     height: 2rem;
     width: 7rem;
 }
-a.btn-dark, a.btn-outline-dark{
+div.container a.btn-dark, div.container a.btn-outline-dark{
 	border-radius: 0;
 	border-color: #2B380C;
 	width: 6rem;
 	height: 2.3rem;
 }
-a.btn-dark{
+div.container a.btn-dark{
 	background-color: #2B380C;
 }
-.fa-heart:before{
+div.container .fa-heart:before{
 	color: #e5c619;
 	font-size: 40px
 }
+div.container img{
+	border-radius: 7px;
+}
+
 

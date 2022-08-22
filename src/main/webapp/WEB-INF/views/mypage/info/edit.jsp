@@ -151,46 +151,46 @@
 			    		    buttons: {'확인': function() {}}
 			    		});
 			            return;
-			        } else if(/^[a-zA-Z0-9가-힣]{11,}$/.test(nicknameVal)){
+			    } else if(/^[a-zA-Z0-9가-힣]{11,}$/.test(nicknameVal)){
 			    		$.alert({
 			    		    title: ' ',
 			    		    content: '글자 수가 너무 깁니다.',
 			    		    buttons: {'확인': function() {}}
 			    		});
 			            return;
-			        } else if(!/^[a-zA-Z0-9가-힣]{2,}$/.test(nicknameVal)){
+			    } else if(!/^[a-zA-Z0-9가-힣]{2,}$/.test(nicknameVal)){
 			    		$.alert({
 			    		    title: ' ',
 			    		    content: '2자 이상의 영문/숫자/한글로 입력해주세요.',
 			    		    buttons: {'확인': function() {}}
 			    		});
 			            return;
-			        }
+			    }
 			            //중복검사
-			        $.ajax({
+			    $.ajax({
 			            url:'${pageContext.request.contextPath}/member/checkDuplicate',
 			            data : {
 			                value : nicknameVal,
 			                attribute : "nickname"
-			            },
-			            async:false,
-			            success(response){
-			                const{value, available} = response;
-			                if(available){
-			                    nicknameValid.val(1);
-					    		$.alert({
-					    		    title: ' ',
-					    		    content: '사용할 수 있는 닉네임입니다.',
-					    		    buttons: {'확인': function() {}}
-					    		});
-			                } else{
-			                    	$.alert({
-					    		    title: ' ',
-					    		    content: '이미 사용중인 닉네임입니다.',
-					    		    buttons: {'확인': function() {}}
-					    		})
-			                }
-			            },
+			    },
+			        async:false,
+			        success(response){
+			        const{value, available} = response;
+			        if(available){
+			        	nicknameValid.val(1);
+					    $.alert({
+					    title: ' ',
+					    content: '사용할 수 있는 닉네임입니다.',
+					    buttons: {'확인': function() {}}
+					    });
+			        } else{
+			        	$.alert({
+						    title: ' ',
+					    	content: '이미 사용중인 닉네임입니다.',
+					    	buttons: {'확인': function() {}}
+					    	})
+			            }
+			        },
 			            error: console.log
 			        });
 
