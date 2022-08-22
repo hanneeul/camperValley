@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.campervalley.member.model.dto.Member;
 
+import lombok.NonNull;
+
 @Mapper
 public interface MemberDao {
 
@@ -20,6 +22,8 @@ public interface MemberDao {
 	int updateMember(Member member);
 
 	int updatePassword(Map<String, Object> map);
+
+	int updateMemberWithdrawal(@NonNull String memberId);
 
 
 

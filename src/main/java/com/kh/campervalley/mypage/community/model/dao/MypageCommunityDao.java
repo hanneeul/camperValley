@@ -11,6 +11,7 @@ import org.apache.ibatis.session.RowBounds;
 import com.kh.campervalley.community.camper.model.dto.Camper;
 import com.kh.campervalley.community.camper.model.dto.Status;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
+import com.kh.campervalley.mypage.community.model.dto.CampsiteBookmarkExt;
 
 import lombok.NonNull;
 
@@ -18,6 +19,7 @@ import lombok.NonNull;
 public interface MypageCommunityDao {
 
 	// --------------------- EJ start
+	List<CampsiteBookmarkExt> selectCampsiteBookmark(String memberId, RowBounds rowBounds);
 	// --------------------- EJ end
 	
 	@Select("select count(*) from camper where member_id = #{memberId}")

@@ -6,13 +6,16 @@ import java.util.Map;
 import com.kh.campervalley.community.camper.model.dto.Camper;
 import com.kh.campervalley.community.camper.model.dto.Status;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
+import com.kh.campervalley.mypage.community.model.dto.CampsiteBookmarkExt;
 
 import lombok.NonNull;
 
 public interface MypageCommunityService {
 	public static final int MY_CAMPER_NUM_PER_PAGE = 10;
 	public static final int MY_REVIEW_NUM_PER_PAGE = 10;
+	public static final int MY_BOOKMARK_NUM_PER_PAGE = 10;
 	// --------------------- EJ start
+	public List<CampsiteBookmarkExt> selectCampsiteBookmark(String memberId, int cPage, int numPerPage);
 	// --------------------- EJ end
 	public List<Camper> selectMyCamperList(int cPage, int limit, String memberId);
 	public int selectTotalMyCamper(@NonNull String memberId);

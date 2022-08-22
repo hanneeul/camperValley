@@ -12,6 +12,7 @@ import com.kh.campervalley.community.camper.model.dto.Camper;
 import com.kh.campervalley.community.camper.model.dto.Status;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
 import com.kh.campervalley.mypage.community.model.dao.MypageCommunityDao;
+import com.kh.campervalley.mypage.community.model.dto.CampsiteBookmarkExt;
 
 import lombok.NonNull;
 
@@ -21,6 +22,13 @@ public class MypageCommunityServiceImpl implements MypageCommunityService{
 	MypageCommunityDao mypageCommunityDao;
 	
 	// --------------------- EJ start
+	@Override
+	public List<CampsiteBookmarkExt> selectCampsiteBookmark(String memberId, int cPage, int numPerPage) {
+		int offset = (cPage - 1) * numPerPage;
+		int limit = numPerPage;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return mypageCommunityDao.selectCampsiteBookmark(memberId, rowBounds);
+	}
 	// --------------------- EJ end
 	
 	@Override
@@ -77,9 +85,6 @@ public class MypageCommunityServiceImpl implements MypageCommunityService{
 	public int searchTotalMyReview(Map<String, Object> map) {
 		return mypageCommunityDao.searchTotalMyReview(map);
 	}
-
-
-
 
 
 }

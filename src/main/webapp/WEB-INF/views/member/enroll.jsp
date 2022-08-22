@@ -877,10 +877,10 @@ function validateNickname(nickname){
 	if(nickname == ""){
 		addClassDBlock(guideNicknameEmpty);
 		return false;
-	}  else if(/^[a-z0-9가-힣]{11,}$/.test(nickname)){
+	}  else if(/^[a-zA-Z0-9가-힣]{11,}$/.test(nickname)){
 		addClassDBlock(guideNicknameInvalidation2);
 		return false;
-	} else if(!/^[a-z0-9가-힣]{2,}$/.test(nickname)){
+	} else if(!/^[a-zA-Z0-9가-힣]{2,}$/.test(nickname)){
 		addClassDBlock(guideNicknameInvalidation1);
 		return false;
 	}

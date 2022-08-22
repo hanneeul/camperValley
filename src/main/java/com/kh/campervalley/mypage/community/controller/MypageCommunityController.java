@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,6 +30,7 @@ import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
 import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
 import com.kh.campervalley.community.review.model.service.ReviewService;
 import com.kh.campervalley.member.model.dto.Member;
+import com.kh.campervalley.mypage.community.model.dto.CampsiteBookmarkExt;
 import com.kh.campervalley.mypage.community.model.service.MypageCommunityService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +54,23 @@ public class MypageCommunityController {
 	
 	// --------------------- EJ start
 	@GetMapping("/bookmark")
-	public void bookmarkList() {}
+	public ModelAndView bookmarkList(ModelAndView mav, @AuthenticationPrincipal Member loginMember, 
+			@RequestParam(defaultValue = "1") int cPage, HttpServletRequest request) {
+		try {
+			int numPerPage = MypageCommunityService.MY_BOOKMARK_NUM_PER_PAGE;
+			String url = request.getRequestURI();
+			
+			String memberId = loginMember.getMemberId();
+			List<CampsiteBookmarkExt> bookmarkList =  mypageCommunityService.selectCampsiteBookmark(memberId, cPage, numPerPage);
+			log.debug("bookmarkList = {}", bookmarkList);
+
+			mav.addObject("bookmarkList", bookmarkList);
+		} catch (Exception e) {
+			log.error("관심캠핑장 조회 오류", e);
+			throw e;
+		}
+		return mav;
+	}
 	// --------------------- EJ end
 	// --------------------- JE start
 	@GetMapping("/myReview")

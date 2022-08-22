@@ -3,6 +3,7 @@ package com.kh.campervalley.admin.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.campervalley.admin.model.dto.Todo;
 import com.kh.campervalley.cs.model.dto.NoticeExt;
 import com.kh.campervalley.member.model.dto.Member;
 
@@ -57,6 +58,28 @@ public interface AdminService {
 	int minus6();
 
 	List<NoticeExt> selectNoticeList();
+
+	int adSysdate();
+
+	int adMinus1();
+
+	int adMinus2();
+
+	int adMinus3();
+
+	int adMinus4();
+
+	int adMinus5();
+
+	int insertTodo(Todo todo);
+
+	List<Todo> selectTodoList();
+
+	int updateTodo(Map<String, Object> param);
+
+	int deleteTodo(int todoNo);
+
+
 
 
 

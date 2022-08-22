@@ -2,7 +2,6 @@ package com.kh.campervalley.admin.controller;
 
 import java.io.File;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +16,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.campervalley.admin.model.dto.Todo;
 import com.kh.campervalley.admin.model.service.AdminService;
 import com.kh.campervalley.common.CamperValleyUtils;
 import com.kh.campervalley.cs.model.dto.NoticeExt;
@@ -336,22 +334,78 @@ public class AdminController {
 	
 	@GetMapping("/dashboard")
 	public ModelAndView dashboard(ModelAndView mav) {
-		List<NoticeExt> list = adminService.selectNoticeList();
-		
-		mav.addObject("list", list);
-		
-		mav.addObject("camper", adminService.todayCamper());
-		mav.addObject("review", adminService.todayReview());
-		mav.addObject("product", adminService.todayProduct());
-		
-		mav.addObject("sysdate", adminService.sysdate());
-		mav.addObject("minus1", adminService.minus1());
-		mav.addObject("minus2", adminService.minus2());
-		mav.addObject("minus3", adminService.minus3());
-		mav.addObject("minus4", adminService.minus4());
-		mav.addObject("minus5", adminService.minus5());
-		mav.addObject("minus6", adminService.minus6());
+		try {
+			List<NoticeExt> list = adminService.selectNoticeList();
+			
+			List<Todo> todo = adminService.selectTodoList();
+			
+			mav.addObject("list", list);
+			mav.addObject("todo", todo);
+			
+			mav.addObject("camper", adminService.todayCamper());
+			mav.addObject("review", adminService.todayReview());
+			mav.addObject("product", adminService.todayProduct());
+			
+			mav.addObject("sysdate", adminService.sysdate());
+			mav.addObject("minus1", adminService.minus1());
+			mav.addObject("minus2", adminService.minus2());
+			mav.addObject("minus3", adminService.minus3());
+			mav.addObject("minus4", adminService.minus4());
+			mav.addObject("minus5", adminService.minus5());
+			mav.addObject("minus6", adminService.minus6());
+			
+			mav.addObject("adSysdate", adminService.adSysdate());
+			mav.addObject("adMinus1", adminService.adMinus1());
+			mav.addObject("adMinus2", adminService.adMinus2());
+			mav.addObject("adMinus3", adminService.adMinus3());
+			mav.addObject("adMinus4", adminService.adMinus4());
+			mav.addObject("adMinus5", adminService.adMinus5());
+		} catch (Exception e) {
+			log.error("관리자 대시보드 조회 오류", e);
+		}
 		return mav;
+	}
+	
+	@PostMapping("/insertTodo")
+	public String insertTodo(Todo todo) {
+		try {
+			// 업무로직
+			int result = adminService.insertTodo(todo);
+			
+		} catch (Exception e) {
+			log.error("todoList 등록 오류", e);
+			throw e;
+		}
+		return "redirect:/admin/dashboard";
+	}
+	
+	@PostMapping("/updateTodo")
+	public String updateTodo(@RequestParam int todoNo, @RequestParam boolean isCompleted) {
+		try {
+			Map<String, Object> param = new HashMap<>();
+			param.put("todoNo", todoNo);
+			param.put("isCompleted", isCompleted);
+			
+			int result = adminService.updateTodo(param); 
+			
+		} catch (Exception e) {
+			log.error("todoList 수정 오류", e);
+			throw e;
+		}
+		
+		return "redirect:/admin/dashboard";
+	}
+	
+	@PostMapping("/deleteTodo")
+	public String deleteTodo(@RequestParam int todoNo) {
+		
+		try {
+			int result = adminService.deleteTodo(todoNo);
+		} catch (Exception e) {
+			log.error("todoList 삭제 오류", e);
+		}
+		
+		return "redirect:/admin/dashboard";
 	}
 
 }

@@ -15,32 +15,37 @@ import com.kh.campervalley.chat.model.dto.ChatMember;
 @Service
 public class ChatServiceImpl implements ChatService {
 
-	@Autowired
-	ChatDao chatDao;
-
-	@Override
-	public int createChatroom(List<ChatMember> chatMemberList) {
-		int result = 0;
-		
-		for(ChatMember chatMember : chatMemberList) {
-			result = chatDao.insertChatMember(chatMember);
-		}
-		return result;
-	}
-
-	@Override
-	public ChatMember findChatMemberByMemberId(String buyerId) {
-		return chatDao.findChatMemberByMemberId(buyerId);
-	}
-
-	@Override
-	public int insertChatLog(Map<String, Object> payload) {
-		return chatDao.insertChatLog(payload);
-	}
-
-	@Override
-	public List<ChatLog> findChatLogByChatroomId(String chatroomId) {
-		return chatDao.findChatLogByChatroomId(chatroomId);
-	}
+//	@Autowired
+//	ChatDao chatDao;
+//
+//	@Override
+//	public int createChatroom(List<ChatMember> chatMemberList) {
+//		int result = 0;
+//		
+//		for(ChatMember chatMember : chatMemberList) {
+//			result = chatDao.insertChatMember(chatMember);
+//		}
+//		return result;
+//	}
+//
+//	@Override
+//	public List<ChatMember> findChatMemberByMemberId(String buyerId) {
+//		return chatDao.findChatMemberByMemberId(buyerId);
+//	}
+//
+//	@Override
+//	public int insertChatLog(Map<String, Object> payload) {
+//		return chatDao.insertChatLog(payload);
+//	}
+//
+//	@Override
+//	public List<ChatLog> findChatLogByChatroomId(String chatroomId) {
+//		return chatDao.findChatLogByChatroomId(chatroomId);
+//	}
+//
+//	@Override
+//	public List<ChatLog> findRecentChatLogList(String memberId) {
+//		return chatDao.findRecentChatLogList(memberId);
+//	}
 
 }
