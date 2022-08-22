@@ -3,6 +3,35 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.campervalley.mypage.community.model.dao.MypageCommunityDao">
+
+<!-- EJ Start -->
+<select id="selectCampsiteBookmark" resultMap="CampsiteBookmarkCollectionMap">
+	select
+		*
+	from
+		campsite_bookmark cb join campsite cs
+			on cb.content_id = cs.content_id
+	where member_Id = #{memberId}
+	order by camp_bm_no desc
+</select>
+
+<resultMap type="CampsiteBookmarkExt" id="CampsiteBookmarkCollectionMap">
+	<id column="camp_bm_no" property="campBmNo"/>
+	<result column="member_id" property="memberId"/>
+	<result column="content_id" property="contentId"/>
+	
+	<association property="campsite" javaType="campsite">
+		<id column="content_id" property="contentId"/>
+		<result column="faclt_nm" property="facltNm"/>
+		<result column="line_intro" property="lineIntro"/>
+		<result column="addr1" property="addr1"/>
+		<result column="addr2" property="addr2"/>
+		<result column="tel" property="tel"/>
+		<result column="homepage" property="homepage"/>
+		<result column="first_image_url" property="firstImageUrl"/>
+	</association>
+</resultMap>
+<!-- EJ End -->
 	
 <!-- 	<select id="selectMyCamperListByMemberId" resultType="Camper">
 	select
