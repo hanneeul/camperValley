@@ -77,7 +77,7 @@
 		update
 			member
 		set
-			enabled = 0, withdrawal = 'Y', email = null
+			enabled = 0, withdrawal = 'Y', email = null, profileImg = null
 		where
 			member_id = #{memberId}
 	</update>
