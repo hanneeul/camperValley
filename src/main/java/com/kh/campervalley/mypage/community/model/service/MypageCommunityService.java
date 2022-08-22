@@ -16,6 +16,7 @@ public interface MypageCommunityService {
 	public static final int MY_BOOKMARK_NUM_PER_PAGE = 10;
 	// --------------------- EJ start
 	public List<CampsiteBookmarkExt> selectCampsiteBookmark(String memberId, int cPage, int numPerPage);
+	public int getTotalCampsiteBookmark(String memberId);
 	// --------------------- EJ end
 	public List<Camper> selectMyCamperList(int cPage, int limit, String memberId);
 	public int selectTotalMyCamper(@NonNull String memberId);

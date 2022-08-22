@@ -29,6 +29,11 @@ public class MypageCommunityServiceImpl implements MypageCommunityService{
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return mypageCommunityDao.selectCampsiteBookmark(memberId, rowBounds);
 	}
+	
+	@Override
+	public int getTotalCampsiteBookmark(String memberId) {
+		return mypageCommunityDao.getTotalCampsiteBookmark(memberId);
+	}
 	// --------------------- EJ end
 	
 	@Override

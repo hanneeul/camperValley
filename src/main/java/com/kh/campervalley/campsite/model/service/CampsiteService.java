@@ -29,4 +29,11 @@ public interface CampsiteService {
 
 	CampsiteFacility selectOneCampsiteFacility(long contentId);
 
+	// --------------------- EJ start
+	int insertBookmark(Map<String, Object> param);
+
+	int deleteBookmark(Map<String, Object> param);
+	
+	Boolean isBookmark(Map<String, Object> param);
+	// --------------------- EJ end
 }

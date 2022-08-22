@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/community/bookmark.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/advertiser.css" />
 
 <div class="container">
 	<div class="row d-flex justify-content-between">
@@ -25,7 +26,11 @@
 								<img class="campsiteImg" src="${bookmark.campsite.firstImageUrl}" alt="대표사진" />
 							</div>
 							<div class="col campsiteInfo">
-								<h5 class="mb-3 campsiteName">${bookmark.campsite.facltNm}</h5>
+								<h5 class="mb-3 campsiteName">
+									<a href="${pageContext.request.contextPath}/campsite/infoView?contentId=${bookmark.contentId}">
+										${bookmark.campsite.facltNm}
+									</a>
+								</h5>
 								<h6 class="pt-2 campsiteIntro">${bookmark.campsite.lineIntro}</h6>
 								<div class="d-flex detailInfo mt-4">
 									<div>
@@ -40,17 +45,43 @@
 							</div>
 							<div class="col-2 btnWrapper d-flex justify-content-center align-items-center">
 								<button type="button" class="bmStatusBtn">
-									<i class="fa-solid fa-heart"></i><!-- fa-regular -->
+									<i class="fa-solid fa-heart" data-content-id="${bookmark.contentId}"></i><!-- fa-regular -->
 								</button>
 							</div>
 						</div>
 					</c:forEach>
 				</div>
-				<div class="mt-5">
-					<jsp:include page="/WEB-INF/views/common/pagebar.jsp" />
-				</div>
+				<c:if test="${not empty bookmarkList}">
+					<div class="mt-5 pagebar">${pagebar}</div>
+				</c:if>
 			</div>
 		</div>
 	</div>
 </div>
+<sec:authentication property="principal" var="loginMember" scope="page"/>
+<script>
+const headers = {
+	"${_csrf.headerName}" : "${_csrf.token}"
+};
+	
+document.querySelectorAll('.bmStatusBtn i').forEach((icon) => {
+	icon.addEventListener('click', (e) => {
+		const contentId = e.target.dataset.contentId;
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/campsite/deleteBookmark',
+			type : 'POST',
+			headers,
+			data : {
+				contentId,
+				memberId : '${loginMember.memberId}'
+			},
+			success(response) {
+				location.reload();
+			},
+			error: console.log
+		});
+	});
+})
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

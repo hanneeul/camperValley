@@ -50,5 +50,16 @@ public interface CampsiteDao {
 	List<CampsiteImage> selectCampsiteImageListByContentId(long contentId);
 
 	CampsiteFacility selectOneCampsiteFacility(long contentId);
+
+	// --------------------- EJ start
+	@Insert("insert into campsite_bookmark values (seq_campsite_bookmark_no.nextval, #{memberId}, #{contentId})")
+	int insertBookmark(Map<String, Object> param);
+	
+	@Delete("delete from campsite_bookmark where member_id = #{memberId} and content_id = #{contentId}")
+	int deleteBookmark(Map<String, Object> param);
+	
+	@Select("select count(*) from campsite_bookmark where member_id = #{memberId} and content_id = #{contentId}")
+	Boolean isBookmark(Map<String, Object> param);
+	// --------------------- EJ end
 	
 }

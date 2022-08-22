@@ -20,6 +20,9 @@ public interface MypageCommunityDao {
 
 	// --------------------- EJ start
 	List<CampsiteBookmarkExt> selectCampsiteBookmark(String memberId, RowBounds rowBounds);
+	
+	@Select("select count(*) from campsite_bookmark where member_id = #{memberId}")
+	int getTotalCampsiteBookmark(String memberId);
 	// --------------------- EJ end
 	
 	@Select("select count(*) from camper where member_id = #{memberId}")
