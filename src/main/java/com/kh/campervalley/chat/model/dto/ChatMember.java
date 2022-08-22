@@ -18,6 +18,7 @@ public class ChatMember {
 	private String chatroomId;
 	@NonNull
 	private String memberId;
+	private String memberImg;
 	private int lastCheck;
 	private int productNo;
 	private LocalDateTime createdAt;
