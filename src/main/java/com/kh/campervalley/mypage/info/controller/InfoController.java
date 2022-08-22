@@ -122,7 +122,14 @@ public class InfoController {
 	
 	@PostMapping("/withdrawal")
 	public String withdrawal(RedirectAttributes redirectAttr, @AuthenticationPrincipal Member member) {
+		String delDirectory = application.getRealPath("/resources/upload/member");
 		try {
+			if(member.getProfileImg()!= null) {
+				File delFile = new File(delDirectory, member.getProfileImg());
+				if(delFile.exists()) {
+					delFile.delete();
+				}
+			}
 			int result = memberService.withdrawal(member.getMemberId());
 			SecurityContextHolder.clearContext();
 			redirectAttr.addFlashAttribute("msg", "탈퇴 되었습니다.");
