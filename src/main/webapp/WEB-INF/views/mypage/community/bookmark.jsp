@@ -22,11 +22,19 @@
 				<div class="listWrapper px-5 py-2">
 					<c:forEach items="${bookmarkList}" var="bookmark">
 						<div class="row bookmarkWrapper py-4">
-							<div class="imgWrapper">
-								<img class="campsiteImg" src="${bookmark.campsite.firstImageUrl}" alt="대표사진" />
+							<div class="imgWrapper d-flex justify-content-center align-items-center">
+								<c:if test="${bookmark.campsite.firstImageUrl ne null}">
+									<img class="campsiteImg" src="${bookmark.campsite.firstImageUrl}" alt="대표사진" />
+								</c:if>
+								<c:if test="${bookmark.campsite.firstImageUrl eq null}">
+									<div class="d-flex flex-column align-items-center">
+										<i class="fa-regular fa-face-sad-tear mt-2"></i>
+										<p class="my-1 text-center">이미지를<br/>찾을 수 없어요</p>
+									</div>
+								</c:if>
 							</div>
 							<div class="col campsiteInfo">
-								<h5 class="mb-3 campsiteName">
+								<h5 class="mt-2 mb-3 campsiteName">
 									<a href="${pageContext.request.contextPath}/campsite/infoView?contentId=${bookmark.contentId}">
 										${bookmark.campsite.facltNm}
 									</a>
@@ -38,8 +46,10 @@
 										<span class="campsiteAddr">${bookmark.campsite.addr1}</span>
 									</div>
 									<div>
-										<i class="fa-solid fa-phone"></i>
-										<span class="campsiteTel">${bookmark.campsite.tel}</span>
+										<c:if test="${bookmark.campsite.tel ne null}">
+											<i class="fa-solid fa-phone"></i>
+											<span class="campsiteTel">${bookmark.campsite.tel}</span>
+										</c:if>
 									</div>
 								</div>
 							</div>
