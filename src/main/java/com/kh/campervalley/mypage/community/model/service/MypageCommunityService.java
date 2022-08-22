@@ -13,7 +13,7 @@ import lombok.NonNull;
 public interface MypageCommunityService {
 	public static final int MY_CAMPER_NUM_PER_PAGE = 10;
 	public static final int MY_REVIEW_NUM_PER_PAGE = 10;
-	public static final int MY_BOOKMARK_NUM_PER_PAGE = 10;
+	public static final int MY_BOOKMARK_NUM_PER_PAGE = 5;
 	// --------------------- EJ start
 	public List<CampsiteBookmarkExt> selectCampsiteBookmark(String memberId, int cPage, int numPerPage);
 	public int getTotalCampsiteBookmark(String memberId);
