@@ -76,13 +76,16 @@
                 <div class="col-md-12">
                     <div class="col-md-12 d-flex justify-content-between p-0 pt-5 mt-5 mb-3">
                         <h4 class="mb-3 pt-2 ">
-                            즐겨찾기한 캠핑장
+                            관심캠핑장
                         </h4> 
                         <a type="button" class="btn btn-link" href="${pageContext.request.contextPath}/mypage/community/bookmark">
                             >> 더보기
                         </a>
                     </div>
                     <div class="listWrapper px-3 py-2">
+						<c:if test="${empty bookmarkList}">
+						<div class="text-center">등록하신 관심 캠핑장이 존재하지 않습니다.</div>
+			            </c:if>
                     <c:forEach items="${bookmarkList}" var="bookmark">
 					<div class="row bookmarkWrapper py-4">
 						<div class="col-2 pl-3 d-flex align-items-center" id="imgWrapper">
@@ -156,9 +159,9 @@
 	                        <c:forEach items="${reviewList}" var="review" varStatus="vs">
 	                            <tr data-no="${board.no}">
 	                                <td class="text-left">
-	                                    <a href="${pageContext.request.contextPath}/community/review/reviewDetail?reviewNo=${review.reviewNo}">
+	                                    <%-- <a href="${pageContext.request.contextPath}/community/review/reviewDetail?reviewNo=${review.reviewNo}"> --%>
 	                                    	${review.title}[${review.commentCount}]
-	                                    </a>
+	                                    <!-- </a> -->
 	                                </td>
 			                        <td class="text-left">
 			                          ${review.facltNm}
