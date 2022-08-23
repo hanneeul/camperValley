@@ -20,6 +20,17 @@
 			<div class="bookmartPageWrapper mx-auto">
 				<h2>관심캠핑장</h2>
 				<div class="listWrapper px-5 py-2">
+					<c:if test="${empty bookmarkList}">
+						<div class="mx-auto my-5 d-flex flex-column align-items-center justify-content-center emptyBookmark">
+							<i class="fa-regular fa-face-sad-tear my-2"></i>
+							<p class="my-2 text-center">관심캠핑장이<br/>없어요</p>
+						</div>
+						<div class="mx-auto d-flex flex-column align-items-center justify-content-center gotoFindCampsite">
+							<a href="${pageContext.request.contextPath}/campsite/searchDetail" class="d-flex align-items-center">
+								<i class="fa-solid fa-angles-right mx-2" ></i>캠핑장 둘러보기
+							</a>
+						</div>
+					</c:if>
 					<c:forEach items="${bookmarkList}" var="bookmark">
 						<div class="row bookmarkWrapper py-4">
 							<div class="imgWrapper d-flex justify-content-center align-items-center">

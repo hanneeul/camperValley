@@ -125,33 +125,35 @@
 	</div>
 	<!-- 광고 -->
 	<%-- EJ start --%>
-	<div id="carouselExampleIndicators" class="carousel slide mx-auto" data-ride="carousel">
-		<ol class="carousel-indicators">
-			<c:forEach items="${adList}" var="advertisement" varStatus="vs">
-				<li data-target="#carouselExampleIndicators" data-slide-to="${vs.count - 1}" ${vs.count eq 1 ? 'active' : ''}></li>
-			</c:forEach>
-		</ol>
-		<div class="carousel-inner">
-			<c:forEach items="${adList}" var="advertisement" varStatus="vs">
-	    		<div class="carousel-item ${vs.count eq 1 ? 'active' : ''}"
-	    			data-advertisement-no="${advertisement.advertisementNo}"
-	    			onclick="clickUpAndMove(${advertisement.advertisementNo}, '${advertisement.adLink}');">
-	    			<img src="${pageContext.request.contextPath}/resources/upload/mypage/advertiser/advertisement/${advertisement.adAttach.renamedFilename}"
-	    				alt="메인홈 광고이미지${vs.count}" style="cursor: pointer;"/>
-				</div>
-			</c:forEach>
+	<c:if test="${not empty adList}">
+		<div id="carouselExampleIndicators" class="carousel slide mx-auto" data-ride="carousel">
+			<ol class="carousel-indicators">
+				<c:forEach items="${adList}" var="advertisement" varStatus="vs">
+					<li data-target="#carouselExampleIndicators" data-slide-to="${vs.count - 1}" ${vs.count eq 1 ? 'active' : ''}></li>
+				</c:forEach>
+			</ol>
+			<div class="carousel-inner">
+				<c:forEach items="${adList}" var="advertisement" varStatus="vs">
+		    		<div class="carousel-item ${vs.count eq 1 ? 'active' : ''}"
+		    			data-advertisement-no="${advertisement.advertisementNo}"
+		    			onclick="clickUpAndMove(${advertisement.advertisementNo}, '${advertisement.adLink}');">
+		    			<img src="${pageContext.request.contextPath}/resources/upload/mypage/advertiser/advertisement/${advertisement.adAttach.renamedFilename}"
+		    				alt="메인홈 광고이미지${vs.count}" style="cursor: pointer;"/>
+					</div>
+				</c:forEach>
+			</div>
+			<c:if test="${fn:length(adList) > 1}">
+				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</c:if>
 		</div>
-		<c:if test="${fn:length(adList) > 1}">
-			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="sr-only">Previous</span>
-			</a>
-			<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="sr-only">Next</span>
-			</a>
-		</c:if>
-	</div>
+	</c:if>
 	<%-- EJ end --%>
 	<form id="searchFrmBottom" name="searchFrmBottom" action="${pageContext.request.contextPath}/campsite/searchCampsiteIndex">
 		<div id="gubunBox" style="background-image:url('${pageContext.request.contextPath}/resources/images/index/bottom.jpg')">
@@ -409,6 +411,7 @@ $("#searchFrmBottom #caravan").on("click", () => {
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 <%-- EJ start --%>
+<c:if test="${not empty adList}">
 <script>
 window.addEventListener('load', (e) => {
 	// 첫번째 광고 조회수 증가처리
@@ -460,4 +463,5 @@ const clickUpAndMove = (advertisementNo, adLink) => {
 	});
 };
 </script>
+</c:if>
 <%-- EJ end --%>

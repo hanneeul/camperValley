@@ -1,3 +1,24 @@
+.emptyBookmark {
+	background-color: #f5f5f5;
+	border-radius: 1rem;
+	height: 15rem;
+	width: 20rem;
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+.emptyBookmark i {
+	color: #639A67;
+	font-size: 3.4rem;
+}
+.gotoFindCampsite a {
+	color: #212529;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 1.1rem;
+}
+.gotoFindCampsite a:hover {
+	color: #639A67;
+}
 .bookmarkWrapper:not(:last-of-type) {
 	border-bottom: 1px solid #ddd;
 }
