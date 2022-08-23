@@ -224,5 +224,33 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteTodo(int todoNo) {
 		return adminDao.deleteTodo(todoNo);
 	}
+	
+	@Override
+	public List<Member> selectReportList(Map<String, Object> map) {
+		int offset = (int)map.get("offset");
+		int numPerPage = (int)map.get("numPerPage");
+		RowBounds rowBounds = new RowBounds(offset, numPerPage);
+		return adminDao.selectReportList(map, rowBounds);
+	}
+	
+	@Override
+	public int selectTotalReportList(Map<String, Object> map) {
+		return adminDao.selectTotalReportList(map);
+	}
+	
+	@Override
+	public int updateBuyerBlack(Map<String, Object> map) {
+		int result = 0;
+		result = adminDao.deleteBuyerBlack(map);
+		if(Boolean.parseBoolean(map.get("ROLE_BLACK").toString()) == true) {
+			result = adminDao.insertBuyerBlack(map);
+		}
+		return result;
+	}
+	
+	@Override
+	public int updateReport(int reportNo) {
+		return adminDao.updateReport(reportNo);
+	}
 
 }
