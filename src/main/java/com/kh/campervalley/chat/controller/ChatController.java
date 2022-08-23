@@ -1,7 +1,8 @@
 package com.kh.campervalley.chat.controller;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,93 +27,107 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("/chat")
 public class ChatController {
-//
-//	@Autowired
-//	ChatService chatService;
-//	
-//	@Autowired
-//	UsedProductService usedProductService;
-//	
+
+	@Autowired
+	ChatService chatService;
+	
+	@Autowired
+	UsedProductService usedProductService;
+	
 	@GetMapping("/chat")
-//	public void chat(@AuthenticationPrincipal Member member, @RequestParam String no, Model model) {
-	public void chat() {
-//		// seller 정보 가져오기
-//		Member seller = usedProductService.getSellerInfo(Integer.parseInt(no));
-//		String sellerId= seller.getMemberId();
-//		String buyerId = member.getMemberId();
-//		
-//		log.debug("memberId = {}", member.getMemberId());
-//		
-//		List<ChatMember> chatMember = chatService.findChatMemberByMemberId(buyerId);
-//		log.debug("chatMember = {}", chatMember);
-//		
-//		String chatroomId = null;
-//		if(chatMember != null) {
-//			// 채팅방이 존재하는 경우
-//			for(ChatMember cm : chatMember) {
-//				
-//				chatroomId = cm.getChatroomId();
-//				
-//				log.debug("chatroomId = {}", chatroomId);
-//				
-//				// 채팅내역 가져오기
-//				List<ChatLog> chatLogList = chatService.findChatLogByChatroomId(chatroomId);
-//				log.debug("chatLogList = {}", chatLogList);
-//				model.addAttribute("chatLogList", chatLogList);
-//			}
-//			
-//		} else {
-//			// 채팅방에 처음 입장한 경우
-//			// chatroomId생성
-//			chatroomId = getChatroomId();
-//			log.debug("chatroomId = {}", chatroomId);
-//			
-//			// 채팅방멤버 생성 (member, admin)
-//			List<ChatMember> chatMemberList = Arrays.asList(
-//					new ChatMember(chatroomId, sellerId),
-//					new ChatMember(chatroomId, buyerId));
-//			
-//			int result = chatService.createChatroom(chatMemberList);
-//		}
-//		log.debug("chatroomId = {}", chatroomId);
-//		model.addAttribute("chatroomId", chatroomId);
-//		model.addAttribute("no", no);
-//	
+	public void chat(@AuthenticationPrincipal Member member, @RequestParam("no") String no, ModelAndView mav, Model model) {
+		// seller, buyer 정보
+		Member seller = usedProductService.getSellerInfo(Integer.parseInt(no));
+		String sellerId = seller.getMemberId();
+		String buyerId = member.getMemberId();
+		String buyerImg = member.getProfileImg();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("sellerId", sellerId);
+		map.put("buyerId", buyerId);
+		map.put("buyerImg", buyerImg);
+		
+		ChatMember chatMember = chatService.findChatMemberByMemberId(map);
+		
+		log.debug("chatMember = {}", chatMember);
+		
+		String chatroomId = null;
+		if(chatMember != null) {
+			// 채팅방이 존재하는 경우
+				
+				chatroomId = chatMember.getChatroomId();
+				
+				log.debug("chatroomId = {}", chatroomId);
+				
+				// 채팅내역 가져오기
+				List<ChatLog> chatLogList = chatService.findChatLogByChatroomId(chatroomId);
+				log.debug("chatLogList = {}", chatLogList);
+				model.addAttribute("chatLogList", chatLogList);
+			
+		} else {		
+				if(!sellerId.equals(buyerId)) {				
+					// 채팅방에 처음 입장한 경우
+					// chatroomId생성
+					chatroomId = getChatroomId();
+					log.debug("chatroomId = {}", chatroomId);
+					
+					// 채팅방멤버 생성 (member, admin)
+					ChatMember chatMemberList = new ChatMember();
+					
+					map.put("chatroomId", chatroomId);
+					
+					
+					int result = chatService.createChatroom(map);
+					
+					log.debug("result = {}", result);		
+				}
+		}
+		
+		log.debug("chatroomId = {}", chatroomId);
+		model.addAttribute("chatroomId", chatroomId);
+		model.addAttribute("no", no);
+	
 	}
-//
-//	private String getChatroomId() {
-//		final int LEN = 8;
-//		Random rnd = new Random();
-//		StringBuffer sb = new StringBuffer();
-//		for(int i = 0; i < LEN; i++) {
-//			if(rnd.nextBoolean()) {
-//				if(rnd.nextBoolean()) 
-//					sb.append((char)(rnd.nextInt(26) + 'A'));
-//				else 
-//					sb.append((char)(rnd.nextInt(26) + 'a'));
-//			} else {
-//				sb.append(rnd.nextInt(10));
-//			}
-//		}
-//		return sb.toString();
-//	}
-//	
-//	// 채팅목록
-//	@GetMapping("/chatList")
-//	@ResponseBody
-//	public ModelAndView chatList(ModelAndView mav, @AuthenticationPrincipal Member member, 
-//													@RequestParam String no, @AuthenticationPrincipal Member loginMember) {
-//		Member seller = usedProductService.getSellerInfo(Integer.parseInt(no));
-//		String sellerId = seller.getMemberId();
-//		String login = loginMember.getMemberId();
-//		
-//			List<ChatLog> list = chatService.findRecentChatLogList(sellerId);
-//			
-//			log.debug("Recentlist = {}", list);
-//			System.out.println("list1234 = " + list);
-//			
-//			mav.addObject("list", list);	
-//			mav.setViewName("jsonView");
-//		return mav;			
-//	}
+
+	private String getChatroomId() {
+		final int LEN = 8;
+		Random rnd = new Random();
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < LEN; i++) {
+			if(rnd.nextBoolean()) {
+				if(rnd.nextBoolean()) 
+					sb.append((char)(rnd.nextInt(26) + 'A'));
+				else 
+					sb.append((char)(rnd.nextInt(26) + 'a'));
+			} else {
+				sb.append(rnd.nextInt(10));
+			}
+		}
+		return sb.toString();
+	}
+	
+	// 채팅목록
+	@GetMapping("/chatList")
+	@ResponseBody
+	public ModelAndView chatList(ModelAndView mav, @RequestParam String no, @AuthenticationPrincipal Member loginMember) {
+		Member seller = usedProductService.getSellerInfo(Integer.parseInt(no));
+		String sellerId = seller.getMemberId();
+		String buyerId = loginMember.getMemberId();
+		String buyerImg = loginMember.getProfileImg();
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("sellerId", sellerId);
+		map.put("buyerId", buyerId);
+		map.put("buyerImg", buyerImg);
+		
+		List<ChatLog> list = chatService.findRecentChatLogList(map);
+		
+		log.debug("Recentlist = {}", list);
+		System.out.println("list1234 = " + list);
+		
+		mav.addObject("list", list);	
+		mav.setViewName("jsonView");
+		return mav;			
+	}
+	
 }

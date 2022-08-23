@@ -19,25 +19,24 @@
 </sec:authorize>
 
 
-	<div class="input-group mb-3">
-	   <input type="hidden" name="no" id="no" value="${no}"/>
-	   <input type="text" id="msg" class="form-control" placeholder="유저에게 보내는 Message">
-	   <div class="input-group-append" style="padding: 0px;">
-	     <button id="sendBtn" class="btn btn-outline-secondary" type="button">Send</button>
-	   </div>
-	</div>
+<div class="input-group mb-3">
+ 	 <input type="hidden" name="no" id="no" value="${no}"/>
+<%--	 <input type="text" id="msg" class="form-control" placeholder="유저에게 보내는 Message">
+	 <div class="input-group-append" style="padding: 0px;">
+	 	<button id="sendBtn" class="btn btn-outline-secondary" type="button">Send</button>
+	  </div> 
 	
 	<div class="group">
-	<ul class="list-group list-group-flush" id="msg-container"></ul>
-	<c:forEach items="${chatLogList}" var="chatLog">
-		<li class="list-group-item">${chatLog.memberId} : ${chatLog.msg}</li>
-	</c:forEach>
+		<ul class="list-group list-group-flush" id="msg-container"></ul>
+		<c:forEach items="${chatLogList}" var="chatLog">
+			<li class="list-group-item">${chatLog.memberId} : ${chatLog.msg}</li>
+		</c:forEach>
 	</div>	
 	<br />
 	<br />
-	<br />
-<table class="table text-center">
-</table>
+	<br /> --%>
+	
+	<table class="table text-center"></table>
 </div>
 
 <script>
@@ -86,7 +85,7 @@ var seller = "";
 
       });
 
-     $.ajax({
+   $.ajax({
         type : 'GET',
         url : '/campervalley/usedProduct/product/getSellerInfo',
         data : {
@@ -96,18 +95,19 @@ var seller = "";
         async : false,
         success : function(data) {
         	var sellerId = data.member.memberId;
-/*             seller = '<input type="hidden" name="sellerId" id="sellerId" value="' + data.member.memberId + '"/>';
-            $(".group").append(seller); */
             	console.log(sellerId);
-            	coznsole.log(memberId);
+            	console.log(memberId);
             
             if(sellerId == memberId) {
-            	
             	var trans = '<input type="submit" id="transaction_btn" value="거래완료"/>'
             	$(".input-group").append(trans);
+            	
+            	
             } else {
             	var trans = '<input type="hidden" id="transaction_btn" value=""/>'
                 	$(".input-group").append(trans);
+            
+            
             }
         }, error : function() {
            alert('에러!');

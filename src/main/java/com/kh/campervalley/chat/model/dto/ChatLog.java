@@ -11,7 +11,7 @@ public class ChatLog {
 
 	private int no;
 	private String chatroomId;
-	private String memberNickname;
+	private String memberId;
 	private String memberImg;
 	private String msg;
 	private long time;
