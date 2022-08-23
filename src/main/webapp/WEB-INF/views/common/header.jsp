@@ -102,7 +102,7 @@
 				case "커뮤니티" : renderSubMenu(0, "캠퍼모집", "캠핑장후기"); break;
 				case "마이페이지" : renderSubMenu(0.9, "회원정보", "중고거래", "나의채팅방", "커뮤니티", "광고주"); break;
 				case "고객센터" : renderSubMenu(1.9, "공지사항", "FAQ"); break;
-				case "관리자페이지" : renderSubMenu(3.1, "회원관리", "게시판관리", "신고내역관리"); break;
+				case "관리자페이지" : renderSubMenu(2.8, "회원관리", "게시판관리", "신고내역관리", "1:1문의관리"); break;
 				default : $subNavbar.stop().slideUp('fast');
 		  	}
 		});
@@ -135,6 +135,7 @@
 					case "회원관리" 	: aTag.href = "${pageContext.request.contextPath}/admin/memberList"; break;
 					case "게시판관리" 	: aTag.href = "${pageContext.request.contextPath}/admin/camperManagement"; break;
 					case "신고내역관리"	: aTag.href = "${pageContext.request.contextPath}/admin/reportManagement"; break;
+					case "1:1문의관리" : aTag.href = "https://desk.channel.io/#/channels/101441/user_chats/630499697ab1cf221c2b"; break;
 				}
 				
 				$subNavbar.append(aTag);
