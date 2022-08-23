@@ -56,13 +56,13 @@
 				<c:forEach var="list" items="${list}">
                     <li class="article" id="a1" >
                         <p class="q"><a href="#a1">
-                        <span class="icon_q ml-2" style="padding: 1px; padding-left: 2px;">Q</span>
+                        <span class="icon_q ml-2" style="padding: 1px; padding-left: 2px;">Q.</span>
                         <span style="margin-left : 20px; font-size: 0.9rem;">${fn:replace(list.title, replaceChar, "</br>")}</span>
                         <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width: 15px;" alt="" class="mt-1 mr-2"></span>
                         </a></p>
 
                         <div class="a">
-                        <span class="icon_a ml-2" style="padding: 1px; padding-left: 2px; font-weight: bold;">A</span>
+                        <span class="icon_a ml-2" style="padding: 1px; padding-left: 2px; font-weight: bold;">A.</span>
                         <div style="margin-left: 67px; margin-top: -26px; font-size: 0.9rem; margin-bottom:10px;">${fn:replace(list.content, replaceChar, "</br>")}</div>
                          <sec:authorize access="hasRole('ADMIN')">
                         <div class="faq-btn mt-3 mb-2" style="text-align: center;">
