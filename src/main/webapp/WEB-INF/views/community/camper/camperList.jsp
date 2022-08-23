@@ -239,6 +239,7 @@ const renderBoardBoxMore = (isChk) => {
 		success(response) {
 			const {camperList} = response;
 			for(let i = 0; i < camperList.length; i++) {
+				console.log(camperList[i]);
 				const $boardBox = $('<div class="boardBox my-4 p-4" onclick="renderBoardBoxDetail(this);"></div>');
 				// 현재 로그인된 아이디와 동일할 때
 				if (${not empty loginMember}) {
@@ -256,12 +257,16 @@ const renderBoardBoxMore = (isChk) => {
 							const areas = camperList[i].area.split(" ");
 							document.querySelectorAll("#sido1 option").forEach((option) => {
 								if(areas[0] === $(option).val()) {
-									$(option).prop("selected", true);
-									document.querySelectorAll("#gugun1 option").forEach((option) => {
-										console.log(option);
-									});
+									$(option).prop("selected", true).change();
 								}
 							});
+							document.querySelectorAll("#gugun1 option").forEach((option) => {
+								if(areas[1] === $(option).val()) {
+									$(option).prop("selected", true);
+								}
+							});
+							$("#camperUpdate #departureDate").val(`\${camperList[i].departureDate.year}-\${f(camperList[i].departureDate.monthValue)}-\${f(camperList[i].departureDate.dayOfMonth)}`);
+							$("#camperUpdate #arrivalDate").val(`\${camperList[i].arrivalDate.year}-\${f(camperList[i].arrivalDate.monthValue)}-\${f(camperList[i].arrivalDate.dayOfMonth)}`);
 							$("#camperUpdate #memberCount").val(camperList[i].memberCount);
 							$("#camperUpdate #title").val(camperList[i].title);
 							$("#camperUpdate #content").val(camperList[i].content);
