@@ -77,4 +77,20 @@ public class CampsiteServiceImpl implements CampsiteService {
 		return campsiteDao.selectOneCampsiteFacility(contentId);
 	}
 	
+	// --------------------- EJ start
+	@Override
+	public int insertBookmark(Map<String, Object> param) {
+		return campsiteDao.insertBookmark(param);
+	}
+	
+	@Override
+	public int deleteBookmark(Map<String, Object> param) {
+		return campsiteDao.deleteBookmark(param);
+	}
+	
+	@Override
+	public Boolean isBookmark(Map<String, Object> param) {
+		return campsiteDao.isBookmark(param);
+	}
+	// --------------------- EJ end
 }

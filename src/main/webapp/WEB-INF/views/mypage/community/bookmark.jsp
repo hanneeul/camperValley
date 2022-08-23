@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mypage.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/community/bookmark.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/advertiser.css" />
 
 <div class="container">
 	<div class="row d-flex justify-content-between">
@@ -21,11 +22,23 @@
 				<div class="listWrapper px-5 py-2">
 					<c:forEach items="${bookmarkList}" var="bookmark">
 						<div class="row bookmarkWrapper py-4">
-							<div class="imgWrapper">
-								<img class="campsiteImg" src="${bookmark.campsite.firstImageUrl}" alt="대표사진" />
+							<div class="imgWrapper d-flex justify-content-center align-items-center">
+								<c:if test="${bookmark.campsite.firstImageUrl ne null}">
+									<img class="campsiteImg" src="${bookmark.campsite.firstImageUrl}" alt="${bookmark.campsite.facltNm} 대표 이미지" />
+								</c:if>
+								<c:if test="${bookmark.campsite.firstImageUrl eq null}">
+									<div class="d-flex flex-column align-items-center">
+										<i class="fa-regular fa-face-sad-tear mt-2"></i>
+										<p class="my-1 text-center">이미지를<br/>찾을 수 없어요</p>
+									</div>
+								</c:if>
 							</div>
 							<div class="col campsiteInfo">
-								<h5 class="mb-3 campsiteName">${bookmark.campsite.facltNm}</h5>
+								<h5 class="mt-2 mb-3 campsiteName">
+									<a href="${pageContext.request.contextPath}/campsite/infoView?contentId=${bookmark.contentId}">
+										${bookmark.campsite.facltNm}
+									</a>
+								</h5>
 								<h6 class="pt-2 campsiteIntro">${bookmark.campsite.lineIntro}</h6>
 								<div class="d-flex detailInfo mt-4">
 									<div>
@@ -33,24 +46,52 @@
 										<span class="campsiteAddr">${bookmark.campsite.addr1}</span>
 									</div>
 									<div>
-										<i class="fa-solid fa-phone"></i>
-										<span class="campsiteTel">${bookmark.campsite.tel}</span>
+										<c:if test="${bookmark.campsite.tel ne null}">
+											<i class="fa-solid fa-phone"></i>
+											<span class="campsiteTel">${bookmark.campsite.tel}</span>
+										</c:if>
 									</div>
 								</div>
 							</div>
 							<div class="col-2 btnWrapper d-flex justify-content-center align-items-center">
 								<button type="button" class="bmStatusBtn">
-									<i class="fa-solid fa-heart"></i><!-- fa-regular -->
+									<i class="fa-solid fa-heart" data-content-id="${bookmark.contentId}"></i><!-- fa-regular -->
 								</button>
 							</div>
 						</div>
 					</c:forEach>
 				</div>
-				<div class="mt-5">
-					<jsp:include page="/WEB-INF/views/common/pagebar.jsp" />
-				</div>
+				<c:if test="${not empty bookmarkList}">
+					<div class="mt-5 pagebar">${pagebar}</div>
+				</c:if>
 			</div>
 		</div>
 	</div>
 </div>
+<sec:authentication property="principal" var="loginMember" scope="page"/>
+<script>
+const headers = {
+	"${_csrf.headerName}" : "${_csrf.token}"
+};
+	
+document.querySelectorAll('.bmStatusBtn i').forEach((icon) => {
+	icon.addEventListener('click', (e) => {
+		const contentId = e.target.dataset.contentId;
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/campsite/deleteBookmark',
+			type : 'POST',
+			headers,
+			data : {
+				contentId,
+				memberId : '${loginMember.memberId}'
+			},
+			success(response) {
+				location.reload();
+			},
+			error: console.log
+		});
+	});
+})
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

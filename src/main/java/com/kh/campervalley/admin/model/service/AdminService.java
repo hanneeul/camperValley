@@ -79,6 +79,14 @@ public interface AdminService {
 
 	int deleteTodo(int todoNo);
 
+	List<Member> selectReportList(Map<String, Object> map);
+
+	int updateBuyerBlack(Map<String, Object> map);
+
+	int updateReport(int reportNo);
+
+	int selectTotalReportList(Map<String, Object> map);
+
 
 
 

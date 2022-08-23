@@ -182,11 +182,19 @@ label[for=facltNm] {
 	align-self: center;
 }
 
-#bookmarkBtn {
+#bookmarkBtn, #bookmarkCancelBtn {
 	width: 9rem;
 }
 
-#bookmarkBtn i {
+#bookmarkCancelBtn {
+	color: #fff;
+}
+#bookmarkCancelBtn:hover {
+	background-color: #fff;
+	color: #639A67;
+}
+
+#bookmarkBtn i, #bookmarkCancelBtn i {
 	color: #f7c63a;
 }
 

@@ -8,6 +8,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/review/review.css" />
+<%
+	pageContext.setAttribute("newLine", "\n"); 
+	pageContext.setAttribute("br", "<br/>");
+%>
 
 <!-- 캠핑장후기목록조회 페이지 (작성자:SJ) -->
 <div class="container-md campsite-review-list-wrap pt-2">
@@ -69,7 +73,21 @@
 				      		<td>
 				      			<a 
 				      				class="font-weight-bold text-decoration-none review-title"
-				      				href="${pageContext.request.contextPath}/community/review/reviewDetail?reviewNo=${review.reviewNo}">${review.title} (${review.commentCount})
+				      				href="${pageContext.request.contextPath}/community/review/reviewDetail?reviewNo=${review.reviewNo}">
+				      				<c:choose>
+										<c:when test="${fn:contains(review.title, '<')}">
+									     	${fn:replace(review.title, '<', '&lt;')}
+										</c:when>
+										<c:when test="${fn:contains(review.title, '>')}">
+											${fn:replace(review.title, '>', '&gt;')}
+										</c:when>
+										<c:when test="${fn:contains(review.title, newLine)}">
+											${fn:replace(review.title, newLine, br)}
+										</c:when>
+										<c:otherwise>
+											${review.title}
+										</c:otherwise>
+									</c:choose> (${review.commentCount})
 				      			</a>
 				      		</td>
 				     		<td>${review.member.nickname}</td>

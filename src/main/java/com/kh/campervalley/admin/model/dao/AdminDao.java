@@ -47,6 +47,24 @@ public interface AdminDao {
 	int insertBlack(Map<String, Object> map);
 
 	int selectTotalMemberList(Map<String, Object> map);
+	
+	int insertTodo(Todo todo);
+
+	List<Todo> selectTodoList();
+
+	int updateTodo(Map<String, Object> param);
+
+	int deleteTodo(int todoNo);
+
+	List<Member> selectReportList(Map<String, Object> map, RowBounds rowBounds);
+
+	int deleteBuyerBlack(Map<String, Object> map);
+
+	int insertBuyerBlack(Map<String, Object> map);
+
+	int updateReport(int reportNo);
+
+	int selectTotalReportList(Map<String, Object> map);
 
 	@Select("select count(*) from camper where created_at >= TO_CHAR(sysdate -7, 'yyyy-mm-dd')")
 	int todayCamper();
@@ -98,14 +116,5 @@ public interface AdminDao {
 
 	@Select("select nvl(sum(paid_amount), 0) from pay where to_char(to_date('19700101090000', 'YYYYMMDDHH24MISS') +(paid_at/86400),'yyyy-mm-dd') between to_char(sysdate -5, 'yyyy-mm-dd') and to_char(sysdate -5, 'yyyy-mm-dd') and status = 'paid'")
 	int adMinus5();
-
-	int insertTodo(Todo todo);
-
-	List<Todo> selectTodoList();
-
-	int updateTodo(Map<String, Object> param);
-
-	int deleteTodo(int todoNo);
-
 
 }

@@ -433,4 +433,20 @@
 ]]>
 </select>
 
+<select id="isPauseAdvertiser" resultType="_boolean">
+select
+	count(*)
+from
+	advertiser ader left join (select * from authority where auth = 'ROLE_AD')auth
+		on ader.member_id = auth.member_id
+	join member m
+		on ader.member_id = m.member_id
+where
+	ader.member_id = #{memberId}
+	and withdrawal = 'N'
+	and deleted_at is null
+	and biz_status = 'Y'
+	and auth is null
+</select>
+
 </mapper>

@@ -7,8 +7,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +24,7 @@ import com.kh.campervalley.campsite.model.dto.CampsiteExt;
 import com.kh.campervalley.campsite.model.dto.CampsiteFacility;
 import com.kh.campervalley.campsite.model.dto.CampsiteImage;
 import com.kh.campervalley.campsite.model.service.CampsiteService;
+import com.kh.campervalley.member.model.dto.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -96,15 +103,54 @@ public class CampsiteController {
 		return mav;
 	}
 	
+	// --------------------- EJ start
+	@PostMapping("/addBookmark")
+	public ResponseEntity<?> insertBookmark(long contentId, String memberId) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			Map<String, Object> param = new HashMap<>();
+			param.put("contentId", contentId);
+			param.put("memberId", memberId);
+			
+			int result = campsiteService.insertBookmark(param);
+		} catch (Exception e) {
+			
+		}
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	}
+	
+	@PostMapping("/deleteBookmark")
+	public ResponseEntity<?> deleteBookmark(long contentId, String memberId) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			Map<String, Object> param = new HashMap<>();
+			param.put("contentId", contentId);
+			param.put("memberId", memberId);
+			
+			int result = campsiteService.deleteBookmark(param);
+		} catch (Exception e) {
+			
+		}
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	}
+	// --------------------- EJ end
+	
 	@GetMapping("/infoView")
-	public ModelAndView infoView(ModelAndView mav, @RequestParam long contentId) throws Exception {
+	public ModelAndView infoView(ModelAndView mav, @RequestParam long contentId, @AuthenticationPrincipal Member loginMember) throws Exception {
 		try {
 			CampsiteExt campsite = campsiteService.selectOneCampsite(contentId);
 			CampsiteFacility facility = campsiteService.selectOneCampsiteFacility(contentId);
 			List<CampsiteImage> campsiteImageList = campsiteService.selectCampsiteImageListByContentId(contentId);
+
+			Map<String, Object> param = new HashMap<>();
+			param.put("contentId", contentId);
+			param.put("memberId", loginMember.getMemberId());
+			Boolean isBookmark = campsiteService.isBookmark(param);
+			
 			mav.addObject("campsite", campsite);
 			mav.addObject("facility", facility);
 			mav.addObject("campsiteImageList", campsiteImageList);
+			mav.addObject("isBookmark", isBookmark);
 			mav.setViewName("campsite/infoView");
 		} catch (Exception e) {
 			log.error("캠핑장 상세 조회 오류", e);
@@ -113,4 +159,31 @@ public class CampsiteController {
 		return mav;
 	}
 	
+	/*----- JH -----*/
+	@GetMapping("/searchCampsiteIndex")
+	public ModelAndView searchDetailTheme(
+			ModelAndView mav, 
+			@RequestParam(required = false) String sido,
+			@RequestParam(required = false) String gugun,
+			@RequestParam(required = false) String themaEnvrnCl,
+			@RequestParam(required = false) String facltNm,
+			@RequestParam(required = false) String induty) {
+		
+		try {
+			Map<String, Object> searchParam = new HashMap<>();
+			searchParam.put("sido", sido);
+			searchParam.put("gugun", gugun);
+			searchParam.put("themaEnvrnCl", themaEnvrnCl);
+			searchParam.put("facltNm", facltNm);
+			searchParam.put("induty", induty);
+			List<CampsiteExt> list = campsiteService.searchCampsiteList(searchParam);
+			mav.addObject("list", list);
+			mav.setViewName("campsite/searchDetail");
+		} catch(Exception e) {
+			log.error("메인페이지 캠핑장 검색 오류", e);
+			throw e;
+		}
+		return mav;
+	}
+	/*----- JH -----*/
 }

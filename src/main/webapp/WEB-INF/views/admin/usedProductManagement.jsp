@@ -26,8 +26,6 @@
 						<option value="product_title" ${map.searchType eq 'product_title' ? 'selected' : ''}>제목</option>
 						<option value="product_content" ${map.searchType eq 'product_content' ? 'selected' : ''}>내용</option>
 					</select>
-						<input type="hidden" name="searchType" value="product_title">
-						<input type="hidden" name="searchType" value="product_content">
 						<input class="input-search" type="text" placeholder="검색어 입력" name="searchKeyword" id="searchKeyword">
 						<button class="btn-search" type="button">
 							<i class="fa fa-search"></i>

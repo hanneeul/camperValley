@@ -28,8 +28,6 @@
 							<option value="title" ${map.searchType eq 'title' ? 'selected' : ''}>제목</option>
 							<option value="content" ${map.searchType eq 'content' ? 'selected' : ''}>내용</option>
 						</select>
-						<input type="hidden" name="searchType" value="title">
-						<input type="hidden" name="searchType" value="content">
 						<input class="input-search" type="text" name="searchType" placeholder="검색어 입력" name="searchKeyword" id="searchKeyword">
 						<button class="btn-search" type="button">
 							<i class="fa fa-search"></i>

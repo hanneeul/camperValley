@@ -18,13 +18,12 @@
 		0 2px 4px 2px rgb(0 0 0 / 10%),
 		0 8px 16px rgb(0 0 0 / 10%);
 }
-form[name=searchFrm] .input {
+#searchFrmTop .input {
 	height: 30px;
 	width: 280px;
 	font-size: 12px;
 	outline: 1px solid rgba(0, 50, 0, 0.5);
 	border-style: none;
-	
 }
 #inputArea option {
 	cursor: pointer;

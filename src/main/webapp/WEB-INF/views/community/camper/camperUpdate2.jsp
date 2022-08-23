@@ -6,11 +6,11 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/camper/camperUpdate.css">
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->  
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/camper/camperUpdate.css" / >
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/datepicker.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/jquery-ui.css" />
-<link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<div class="modal fade" id="camperUpdate">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content px-5 py-2">
@@ -43,13 +43,13 @@
 									</td>
 									<td class=" px-0 form-row align-items-center mx-0">
 										<div class="form-group mb-0">
-											<input id="departureDate" type="text" class="input form-control form-control-sm input-daterange" style="margin: 10px 5px 10px 20px; width:95%;" name="departureDate" autocomplete="off" placeholder="0000-00-00" readonly />
+											<input type="text" class="input form-control form-control-sm input-daterange" style="margin: 10px 5px 10px 20px; width:95%;"name="departureDate" autocomplete="off" placeholder="0000-00-00" readonly />
 										</div>
 										<div>
 											<span class="ml-3">-</span>
 										</div>
 										<div class="form-group mb-0">
-											<input id="arrivalDate" type="text" class="input form-control form-control-sm input-daterange" style="margin: 10px 5px 10px 3px; width:104%;" name="arrivalDate" autocomplete="off" placeholder="0000-00-00" readonly />
+											<input type="text" class="input form-control form-control-sm input-daterange" style="margin: 10px 5px 10px 3px; width:104%;"name="arrivalDate" autocomplete="off" placeholder="0000-00-00" readonly />
 										</div>
 										<!-- <input type="text" name="dates" class="input" style="width:40%" placeholder="0000년 00월 00일 ~ 0000년 00월 00일"/> -->
 									</td>
@@ -117,20 +117,6 @@
 		</div>
 	</div>
 <script>
-$(function(){
-   $('.input-daterange').datepicker({
-		dateFormat: 'yy-mm-dd',
-		monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-		dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-		dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-	    yearSuffix: '년',
-		todayHighlight: true,
-		showMonthAfterYear: true,
-		startDate: '0d',
-   });
-});
 $('document').ready(function() {
 	const area0  = ["시/도","서울특별시","인천광역시","대전광역시","광주광역시","대구광역시","울산광역시","부산광역시","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","제주도"];
 	const area1  = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"];
@@ -175,21 +161,34 @@ $('document').ready(function() {
 	});
 });
 
-const frm = document.camperEnrollFrm;
-frm.addEventListener("submit", (e) => {
-	frm.area.value = frm.sido1.value + " " + frm.gugun1.value;
-	
-	if(!frm.area.value || !frm.memberCount.value || !frm.title.value || !frm.content.value || !frm.chatUrl.value) {
-		$.alert({
-			icon: 'fa fa-warning',
-		    title: '',
-		    content: '필수항목을 모두 입력해주세요.',
-		    buttons: {'확인': function() {}}
-		});
-		e.preventDefault();
-		return;
-	}
+/* <td class="label col-md-2 px-0 pt-2">
+<label for="dates">캠핑기간<span class="text-danger">*</span></label>
+</td>
+<td class=" px-0 form-row align-items-center mx-0">
+<div class="form-group mb-0">
+	<input type="text" class="input form-control form-control-sm input-daterange" style="margin: 10px 5px 10px 20px; width:95%;"name="departureDate" autocomplete="off" placeholder="0000-00-00" readonly />
+</div>
+<div>
+	<span class="ml-3">-</span>
+</div>
+<div class="form-group mb-0">
+	<input type="text" class="input form-control form-control-sm input-daterange" style="margin: 10px 5px 10px 3px; width:104%;"name="arrivalDate" autocomplete="off" placeholder="0000-00-00" readonly />
+</div>
+<!-- <input type="text" name="dates" class="input" style="width:40%" placeholder="0000년 00월 00일 ~ 0000년 00월 00일"/> -->
+</td> */
+window.addEventListener('load', (e) => {
+	$('.input-daterange').datepicker({
+		dateFormat: 'yy-mm-dd',
+		monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+		dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+		dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	    yearSuffix: '년',
+		todayHighlight: true,
+		showMonthAfterYear: true,
+		startDate: '0d'
+	});
 });
-
 </script>
 </html>

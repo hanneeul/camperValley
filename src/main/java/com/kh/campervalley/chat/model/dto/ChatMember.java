@@ -17,8 +17,10 @@ public class ChatMember {
 	@NonNull
 	private String chatroomId;
 	@NonNull
-	private String memberId;
-	private String memberImg;
+	private String sellerId;
+	@NonNull
+	private String buyerId;
+	private String buyerImg;
 	private int lastCheck;
 	private int productNo;
 	private LocalDateTime createdAt;

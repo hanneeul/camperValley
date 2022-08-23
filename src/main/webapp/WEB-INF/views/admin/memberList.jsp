@@ -58,7 +58,7 @@
 	<div class="admin-content" style="width: 80%;">
 		<h5 class="admin-hd">회원 관리</h5>
 		<div class="search-box" style="display: flex;">
-			<input class="ad-input-search" type="text" placeholder="전체 사용자 검색">
+			<input class="ad-input-search" type="text" placeholder="전체 사용자 검색" name="searchKeyword" id="searchKeyword">
 			<button class="ad-btn-search" type="button">
 				<i class="fa fa-search"></i>
 			</button>
@@ -124,22 +124,22 @@
 			</div>
 			<div class="form-group">
 			  <label for="name" class="col-form-label">이름</label>
-			  <input type="text" class="input-member pt-1 pb-1 pl-2" name="name" id="name" value=""></input>
+			  <input type="text" class="input-member pt-1 pb-1 pl-2" name="name" id="name" value="" readonly></input>
 			</div>
 			<div class="form-group">
-			  <label for="nickname" class="col-form-label">닉네임</label>
+			  <label for="nickname" class="col-form-label">닉네임&nbsp;<span style="color:red;">*</span></label>
 			  <input type="text" class="input-member pt-1 pb-1 pl-2" name="nickname" id="nickname" value=""></input>
 			</div>
 			<div class="form-group">
-			  <label for="email" class="col-form-label">이메일</label>
+			  <label for="email" class="col-form-label">이메일&nbsp;<span style="color:red;">*</span></label>
 			  <input type="text" class="input-member pt-1 pb-1 pl-2" name="email" id="email" value=""></input>
 			</div>
 			<div class="form-group">
-			  <label for="tel" class="col-form-label">전화번호</label>
+			  <label for="tel" class="col-form-label">전화번호&nbsp;<span style="color:red;">*</span></label>
 			  <input type="text" class="input-member pt-1 pb-1 pl-2" name="tel" id="tel" value=""></input>
 			</div>
 			  <div class="form-group">
-						<label for="role" class="col-form-label">권한</label>
+						<label for="role" class="col-form-label">권한&nbsp;<span style="color:red;">*</span></label>
 						<input type="checkbox" name="ROLE_USER" id="user"/>
 						<label for="user">사용자</label>
 						&nbsp;
@@ -147,10 +147,10 @@
 						<label for="admin">관리자</label>
 		  </div>	
 			<div class="form-group">
-			  <p class="form-check form-check-inline mr-4 ml-6" style="margin-left: 100px;">블랙리스트</p>
+			  <p class="form-check form-check-inline mr-4 ml-6" style="margin-left: 100px;">블랙리스트&nbsp;<span style="color:red;">*</span></p>
 			  
 			  <div class="form-check form-check-inline" style="top: -15px;">
-					   <div class="custom-control custom-switch">
+					   <div class="custom-control custom-switch" style="margin-left: -15px;">
 					    <input type="checkbox" class="custom-control-input" id="black" name="ROLE_BLACK">
 					    <label class="custom-control-label" for="black"></label>
 					  </div>
@@ -169,6 +169,18 @@
   </div>
 </div>
 <script>
+document.querySelectorAll('.ad-btn-search').forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		let keyword = document.getElementById('searchKeyword').value;
+
+		let url = "${pageContext.request.contextPath}/admin/memberList";
+		url = url + "?searchKeyword=" + keyword;
+		location.href = url;
+		console.log(url);
+		
+	})
+})
+
 $(document).ready(function(){
 
 	$('.toggle-btn').click(function() {
@@ -193,13 +205,13 @@ document.querySelectorAll(".btn-update").forEach((btn) => {
 
 		if(authorities.includes('ROLE_USER')) {
 			document.getElementById("user").checked = true;
-			console.log(document.getElementById("user").checked);
+			//console.log(document.getElementById("user").checked);
 		} else {
 			document.getElementById("user").checked = false;
 		}
 		 if(authorities.includes('ROLE_ADMIN')) {
 			document.getElementById("admin").checked = true;
-			console.log(document.getElementById("admin").checked);
+			//console.log(document.getElementById("admin").checked);
 		} else {
 			document.getElementById("admin").checked = false;
 		}

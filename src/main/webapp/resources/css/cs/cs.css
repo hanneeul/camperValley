@@ -195,8 +195,7 @@ tr:last-child {
 	display: inline-block;
 	width: 32px;
 	height: 32px;
-	background: #000000;
-	color: #FFF;
+	color: #777;
 	line-height: 30px;
 	font-size: 16px;
 	border-radius: 50%;
@@ -208,9 +207,7 @@ tr:last-child {
 	font-weight: bold;
 	width: 32px;
 	height: 32px;
-	background: #fff;
-	border: 1px solid #777;
-	color: #777;
+	color: #639A67;
 	line-height: 30px;
 	font-size: 16px;
 	border-radius: 50%;
@@ -227,7 +224,7 @@ tr:last-child {
 
 .a {
 	border-top: 1px solid #dbdbdb;
-	background-color: #f8f9fa;
+	background-color: #fafafa;;
 	padding: 10px;
 	margin: 0px;
 }

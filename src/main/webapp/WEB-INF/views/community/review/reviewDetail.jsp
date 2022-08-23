@@ -242,8 +242,12 @@ const recommend = () => {
 			reviewNo, memberId
 		},
 		success : function(response) {
-			alert("후기 추천이 업데이트되었습니다.");
-			location.reload();
+			$.alert({
+			    content: '후기 추천이 업데이트되었습니다.',
+			    buttons: {'확인': function() {
+					location.reload();
+			    }}
+			});
 		},
 		error : console.log
 	});
@@ -253,15 +257,25 @@ const recommend = () => {
  * 캠핑장 후기 삭제
  */
 const reviewDelete = () => {
-	const bool = confirm('정말 삭제하시겠습니까?');
-	
-	if(!bool) {
-		alert('삭제를 취소했습니다.');
-	}
-	else {
-		const frm = document.reviewDeleteFrm;
-		frm.submit();
-	}
+	const bool = $.confirm({
+		title: '',
+	    content: '정말 삭제하시겠습니까?',
+	    buttons: {
+	        '확인': function () {
+	        	const frm = document.reviewDeleteFrm;
+	    		frm.submit();
+	        },
+	        '취소': function () {
+	        	$.alert({
+				    title: '',
+				    content: '삭제를 취소했습니다.',
+				    buttons: {'확인': function() {
+						return;
+				    }}
+				});
+	        }
+	    }
+	});
 };
 
 /**

@@ -16,5 +16,5 @@ public class ReviewReport {
 	private String category;
 	private String content;
 	private LocalDateTime createdAt;
-	private ReportStatus statusYn;
+	private ReportStatus stateYn;
 }

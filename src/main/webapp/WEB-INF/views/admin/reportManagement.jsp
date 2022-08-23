@@ -21,38 +21,17 @@
 	<div class="admin-content" style="width: 80%;">
 			<h5 class="admin-hd">신고 내역 관리</h5>
 
-				<div class="report-hd" style="margin-top:40px;">
+				<div class="report-hd" style="margin-top:75px;">
 
-					<div class="select-box float-left" style="font-size: 0.87rem;">
-						
-						<label for="report-category">신고유형</label>
-						<select class="report-category">
-							<option>전체</option>
-							<option>Ketchup</option>
-							<option>Relish</option>
-						</select>
-						
-						<label for="report-state" style="margin-left:20px;">상태</label>
-						<select class="report-state" >
-							<option>전체</option>
-							<option>미처리</option>
-							<option>처리</option>
-						</select>
-					</div>
-					<div class="search-group float-right mb-2">
-						<input class="input-search" type="text" placeholder="사용자 검색">
-						<button class="btn-search" type="button">
-							<i class="fa fa-search"></i>
-						</button>
-					</div>
+					
 				</div> <!--report-hd-->
 					
 			<table class="table table-hover text-center" id="tb-admin">
 				<thead style="border-top: 2px solid #dee2e6;">
 					<tr>
 						<th class="col-md-1">No.</th>
-						<th>회원ID</th>
-						<th>신고자ID</th>
+						<th>신고자</th>
+						<th>리뷰작성자</th>
 						<th class="col-md-2">신고유형</th>
 						<th class="col-md-3">신고일</th>
 						<th>상태</th>
@@ -60,73 +39,29 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>48</td>
-						<td>honggd</td>
-						<td>sinsa</td>
-						<td>언어 폭력(~~~)</td>
-						<td>2022-08-04 10:00:12</td>
-						<td>미처리</td>
+				<c:forEach items="${list}" var="list" varStatus="vs">
+					<tr data-report-no="${list.reportNo}" data-seller-id="${list.sellerId}" data-member-id="${list.memberId}" data-category="${list.category}" data-created-at="${list.createdAt}" data-state-yn="${list.stateYn}" data-content="${list.content}" data-authorities="${list.authorities}" data-product-no="${list.productNo}" data-review="${list.review}">
+						<td>${list.reportNo}</td>
+						<td>${list.sellerId}</td>
+						<td>${list.memberId}</td>
+						<td>${list.category}</td>
 						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminReportModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
+							<fmt:parseDate value="${list.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+							<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
+						</td>
+						<td>
+						<c:if test = "${fn:contains(list.stateYn, 'Y')}">처리</c:if>
+				     	<c:if test="${fn:contains(list.stateYn, 'N')}">미처리</c:if>
+						</td>
+						<td style="padding: 6px;">
+							<button type="button" class="btn btn-outline-camper-color btn-sm btn-update" data-toggle="modal" data-target="#adminReportModal">
+							처리</button>
 						</td>
 					</tr>
-					<tr>
-						<td>48</td>
-						<td>honggd</td>
-						<td>sinsa</td>
-						<td>언어 폭력(~~~)</td>
-						<td>2022-08-04 10:00:12</td>
-						<td>미처리</td>
-						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminReportModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>48</td>
-						<td>honggd</td>
-						<td>sinsa</td>
-						<td>언어 폭력(~~~)</td>
-						<td>2022-08-04 10:00:12</td>
-						<td>미처리</td>
-						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminReportModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>48</td>
-						<td>honggd</td>
-						<td>sinsa</td>
-						<td>언어 폭력(~~~)</td>
-						<td>2022-08-04 10:00:12</td>
-						<td>미처리</td>
-						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminReportModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<td>48</td>
-						<td>honggd</td>
-						<td>sinsa</td>
-						<td>언어 폭력(~~~)</td>
-						<td>2022-08-04 10:00:12</td>
-						<td>미처리</td>
-						<td>
-							<button type="button" class="btn-update" data-toggle="modal" data-target="#adminReportModal">
-								<i class="fa-solid fa-ellipsis"></i>
-							</button>
-						</td>
-					</tr>
+				</c:forEach>
 				</tbody>
 			</table>
+			<div class="mt-5" id="pageBar">${pagebar}</div>
 	</div>
 </div>
 
@@ -140,49 +75,99 @@
 		  <span aria-hidden="true" style="color:#fff">&times;</span>
 		</button>
 	  </div>
+	  <form:form name="buyerRoleUpdateFrm" method="POST" action="${pageContext.request.contextPath}/admin/updateBuyerBlack" >
 	  <div class="modal-body pb-1">
-		<form name="adminMemberUpdateFrm">
+	  <div class="float-right"><a href="" id="productView" data-value="" style="color:#777;">판매글 상세보기</a></div>
 			<div class="form-group mt-4">
-			  <label for="memberId" class="col-form-label">회원ID</label>
-			  <input type="text" class="input-report pt-1 pb-1 pl-2" id="" value="honggd" readonly>
+			  <label for="name" class="col-form-label">리뷰작성자</label>
+			  <input type="text" class="input-report pt-1 pb-1 pl-2" id="memberId" name="memberId" value="" readonly></input>
 			</div>
 			<div class="form-group">
-			  <label for="name" class="col-form-label">신고자ID</label>
-			  <input type="text" class="input-report pt-1 pb-1 pl-2" id="" value="sinsa" readonly></input>
+				<label for="message-text" class="col-form-label float-left mr-1">리뷰내용</label>
+				<textarea class="input-report pt-1 pb-1 pl-2" id="review" style="display: inline; height: 50px;" readonly></textarea>
+			  </div>
+
+			<div class="form-group">
+			  <label for="memberId" class="col-form-label">신고자</label>
+			  <input type="text" class="input-report pt-1 pb-1 pl-2" id="sellerId" value="" readonly>
 			</div>
 			<div class="form-group">
 			  <label for="nickname" class="col-form-label">신고유형</label>
-			  <input type="text" class="input-report pt-1 pb-1 pl-2" id="" value="언어폭력(~~~)" readonly></input>
+			  <input type="text" class="input-report pt-1 pb-1 pl-2" id="category" value="" readonly></input>
 			</div>
 
 			<div class="form-group">
 				<label for="message-text" class="col-form-label float-left mr-1">신고내용</label>
-				<textarea class="input-report pt-1 pb-1 pl-2" id="" style="display: inline; height: 100px;" readonly>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint provident voluptates veritatis nobis fuga optio modi cum minima explicabo est maxime magni doloremque dicta nihil temporibus esse ipsum numquam aliquam?</textarea>
+				<textarea class="input-report pt-1 pb-1 pl-2" id="contentre" style="display: inline; height: 100px;" readonly></textarea>
 			  </div>
 
-			<div class="form-group">
-			  <label for="phone" class="col-form-label">신고일</label>
-			  <input type="text" class="input-report pt-1 pb-1 pl-2" id="" value="2022-08-04 10:00:12" readonly></input>
-			</div>
+			
 			<div class="form-group mb-0">
-			  <p class="form-check form-check-inline mr-4 ml-6" style="margin-left: 70px;">블랙리스트&nbsp;<span style="color:red;">*</span></p>
-			  <div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-				  <label class="form-check-label" for="inlineRadio1">일반</label>
-				</div>
-				<div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-				  <label class="form-check-label" for="inlineRadio2">블랙</label>
-				</div>
+			   <p class="form-check form-check-inline mr-4 ml-6" style="margin-left: 70px;">블랙리스트&nbsp;<span style="color:red;">*</span></p>
+			  
+			  <div class="form-check form-check-inline" style="top: -15px;">
+					   <div class="custom-control custom-switch" style="margin-left: -15px;">
+					    <input type="checkbox" class="custom-control-input" id="black" name="ROLE_BLACK">
+					    <label class="custom-control-label" for="black"></label>
+					  </div>
+				</div> 
 			</div>
-
-		  </form>
 		</div>
 	  <div class="modal-footer">
+		<input type="hidden" name="reportNo" id="reportNo" value="" />
 		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-		<button type="button" class="btn btn-primary" id="btn-report-update">처리</button>
+		<button type="submit" class="btn btn-primary" id="btn-report-update">처리</button>
 	  </div>
 	</div>
+	</form:form>
   </div>
 </div>
+<div class="result" id="menuType-result"></div>
+<script>
+
+
+$(document).ready(function(){
+	$('.toggle-btn').click(function() {
+	$(this).toggleClass('active').siblings().removeClass('active');
+	});
+});
+	
+document.querySelectorAll(".btn-update").forEach((btn) => {
+	btn.addEventListener('click', (e) => {
+		console.log(e.target);
+		const tr = e.target.parentElement.parentElement;
+		console.log(tr);
+
+		const reportNo = tr.dataset.reportNo;		
+		const sellerId = tr.dataset.sellerId;
+		const memberId = tr.dataset.memberId;
+		const category = tr.dataset.category;
+		const content = tr.dataset.content;
+		const productNo = tr.dataset.productNo;
+		const review = tr.dataset.review;
+		
+		document.getElementById("productView").setAttribute('href', "${pageContext.request.contextPath}/usedProduct/product/productDetail?no="+productNo);
+		
+		const authorities = tr.dataset.authorities;
+		console.log(authorities);
+		
+		 if(authorities.includes('ROLE_BLACK')) {
+			document.getElementById("black").checked = true;
+			
+			console.log(document.getElementById("black").checked);
+			
+		} else {
+			document.getElementById("black").checked = false;
+		}
+		 
+		document.querySelector("#sellerId").value = sellerId;
+		document.querySelector("#memberId").value = memberId;
+		document.querySelector("#category").value = category;
+		document.querySelector("#contentre").value = content;
+		document.querySelector("#review").value = review;
+		document.querySelector("#reportNo").value = reportNo;
+		
+	});
+});
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -38,7 +38,7 @@
   		<div class="card-header font-weight-bold m-0">
     		<i class="fa-solid fa-comments camper-color"></i>&nbsp;comments (${review.commentCount})
   		</div>
-		<form:form name="commentEnrollFrm">
+		<form:form name="commentEnrollFrm" action="${pageContext.request.contextPath}/community/review/commentEnroll" method="POST">
 	  		<div class="card-body">
 	  			<ul class="list-group list-group-flush">
 					<li class="list-group-item">
@@ -47,12 +47,12 @@
 				    			<i class="fa-solid fa-compass"></i>&nbsp;${loginMember.getNickname()}
 				    		</p>
 						</div>
-						<textarea class="form-control" name="commentContent" cols="60" rows="3" placeholder="권리침해, 욕설 및 특정 대상을 비하하는 내용을 게시할 경우 이용약관 및 관련 법률에 의해 제재될 수 있습니다." required></textarea>
+						<textarea class="form-control" name="commentContent" cols="60" rows="3" placeholder="권리침해, 욕설 및 특정 대상을 비하하는 내용을 게시할 경우 이용약관 및 관련 법률에 의해 제재될 수 있습니다."></textarea>
 						<input type="hidden" name="reviewNo" value="${review.reviewNo}" />
 						<input type="hidden" name="memberId" value="${not empty loginMember ? loginMember.getMemberId() : ''}"/>
 						<input type="hidden" name="commentLevel" value="1" />
 						<input type="hidden" name="commentRef" value="0" />
-						<button type="button" class="btn btn-success btn-camper-color mt-3 float-right" id="commentEnrollBtn">등록</button>
+						<button type="submit" class="btn btn-success btn-camper-color mt-3 float-right" id="commentEnrollBtn">등록</button>
 				    </li>
 				</ul>
 	  		</div>
@@ -239,8 +239,13 @@ $('#commentUpdateBtn').click(function() {
 		headers,
 		data : commentData,
 		success(response) {
-			alert('댓글 수정이 완료되었습니다.');
-			location.reload();
+			$.alert({
+			    title: '',
+			    content: '${msg}',
+			    buttons: {'확인': function() {
+					location.reload();
+			    }}
+			});
 		},
 		error : console.log
 	});
@@ -251,38 +256,52 @@ $('#commentUpdateBtn').click(function() {
  */
 document.querySelectorAll('.btn-delete').forEach((btn) => {
 	btn.addEventListener('click', (e) => {
-		const bool = confirm("댓글을 삭제하시겠습니까?");
-		
-		if(!bool) {
-			alert("댓글 삭제를 취소합니다.");
-			return;
-		}
-		else {
-			const headers = {
-				"${_csrf.headerName}" : "${_csrf.token}"
-			};
-			
-			const reviewCommentNo = e.target.value;
-			const inputReviewCommentNo = document.querySelector("input[name=reviewCommentNo]");
-			inputReviewCommentNo.value = reviewCommentNo;
-			
-			const inputReviewNo = document.querySelector("input[name=reviewNo]");
-			const reviewNo = inputReviewNo.value;
-						
-			$.ajax({
-				url : '${pageContext.request.contextPath}/community/review/commentDelete',
-				method : "POST",
-				headers,
-				data : {
-					reviewCommentNo, reviewNo
-				},
-				success(response) {
-					alert('댓글 삭제가 완료되었습니다.');
-					location.reload();
-				},
-				error : console.log
-			});
-		}
+		const bool = $.confirm({
+			title: '',
+		    content: '댓글을 삭제하시겠습니까?',
+		    buttons: {
+		        '확인': function () {
+		        	const headers = {
+	    				"${_csrf.headerName}" : "${_csrf.token}"
+	    			};
+	    			
+	    			const reviewCommentNo = e.target.value;
+	    			const inputReviewCommentNo = document.querySelector("input[name=reviewCommentNo]");
+	    			inputReviewCommentNo.value = reviewCommentNo;
+	    			
+	    			const inputReviewNo = document.querySelector("input[name=reviewNo]");
+	    			const reviewNo = inputReviewNo.value;
+	    						
+	    			$.ajax({
+	    				url : '${pageContext.request.contextPath}/community/review/commentDelete',
+	    				method : "POST",
+	    				headers,
+	    				data : {
+	    					reviewCommentNo, reviewNo
+	    				},
+	    				success(response) {
+	    					$.alert({
+	    					    title: '',
+	    					    content: '댓글 삭제가 완료되었습니다.',
+	    					    buttons: {'확인': function() {
+			    					location.reload();
+	    					    }}
+	    					});
+	    				},
+	    				error : console.log
+	    			});
+		        },
+		        '취소': function () {
+		        	$.alert({
+					    title: '',
+					    content: '댓글 삭제를 취소합니다.',
+					    buttons: {'확인': function() {
+							return;
+					    }}
+					});
+		        }
+		    }
+		});
 	});
 });
 
@@ -292,7 +311,7 @@ document.querySelectorAll('.btn-delete').forEach((btn) => {
 document.querySelectorAll('.btn-reply').forEach((btn) => {
 	btn.onclick = (e) => {
 		if(${empty loginMember}) {
-			alert('로그인 후 이용할 수 있습니다.');
+			loginAlert();
 			return;
 		}
 		
@@ -300,9 +319,10 @@ document.querySelectorAll('.btn-reply').forEach((btn) => {
 		console.log(commentRef);
 		
 		const frm = document.createElement("form");
-        frm.name = "commentReplyFrm";
+        frm.name = "commentEnrollFrm";
         frm.action = "${pageContext.request.contextPath}/community/review/commentEnroll";
         frm.method = "POST";
+        frm.onsubmit = commentEnrollHandler;
 		
         const outerDiv = document.createElement("div");
         outerDiv.className = "card-body";
@@ -377,17 +397,70 @@ document.querySelectorAll('.btn-reply').forEach((btn) => {
 });
 
 /**
- * 답글 등록
- */
-$('#commentReplyBtn').click(function() {
-	const commentData = $('[name=commentReplyFrm]').serialize();
-	commentEnroll(commentData);
-});
-
-/**
  * 댓글 등록
  */
-$('#commentEnrollBtn').click(function() {
+const commentContent = document.querySelector("textarea[name=commentContent]");
+commentContent.onfocus = (e) => {
+	if(${empty loginMember}) {
+		commentContent.blur();
+		loginAlert();
+	}
+};
+
+const commentEnrollHandler = (e) => {
+	if(${empty loginMember}) {
+		loginAlert();
+		return false;
+	}
+	
+	const commentContentVal = e.target.commentContent.value.trim();
+	if(!/^(.|\n)+$/.test(commentContentVal)) {
+		$.alert({
+		    title: '',
+		    content: '댓글 내용을 작성해주세요.',
+		    buttons: {'확인': function() {}}
+		});
+		return false;
+	}
+};
+
+document.commentEnrollFrm.onsubmit = commentEnrollHandler;
+
+const loginAlert = (e) => {
+	$.alert({
+	    title: '',
+	    content: '로그인 후 이용해주세요.',
+	    buttons: {'확인': function() {}}
+	});
+};
+
+/* $('#commentReplyBtn').click(function() {
+const commentData = $('[name=commentReplyFrm]').serialize();
+commentEnroll(commentData);
+});
+
+$('#commentEnrollBtn').click(function(e) {
+	if(${empty loginMember}) {
+		$.alert({
+		    title: '',
+		    content: '로그인 후 이용할 수 있습니다.',
+		    buttons: {'확인': function() {}}
+		});
+		return;
+	}
+	
+	const commentContent = document.querySelector('textarea[name=commentContent]');
+	const commentContentVal = commentContent.value.trim();
+	if(!/^(.|\n)+$/.test(commentContentVal)) {
+		$.alert({
+		    title: '',
+		    content: '댓글 내용을 작성해주세요.',
+		    buttons: {'확인': function() {}}
+		});
+	   	commentContent.focus();
+		return false;
+	}
+	
 	const commentData = $('[name=commentEnrollFrm]').serialize();
 	commentEnroll(commentData);
 });
@@ -403,11 +476,16 @@ function commentEnroll(commentData) {
 		headers,
 		data : commentData,
 		success(response) {
-			alert('댓글 등록이 완료되었습니다.');
-			$('[name=commentContent]').val('');
-			location.reload();
+			$.alert({
+			    title: '',
+			    content: '댓글 등록이 완료되었습니다.',
+			    buttons: {'확인': function() {
+					$('[name=commentContent]').val('');
+					location.reload();
+			    }}
+			});
 		},
 		error : console.log
 	});
-};
+}; */
 </script>

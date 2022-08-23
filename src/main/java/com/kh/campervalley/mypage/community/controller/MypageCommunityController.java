@@ -62,8 +62,12 @@ public class MypageCommunityController {
 			
 			String memberId = loginMember.getMemberId();
 			List<CampsiteBookmarkExt> bookmarkList =  mypageCommunityService.selectCampsiteBookmark(memberId, cPage, numPerPage);
-			log.debug("bookmarkList = {}", bookmarkList);
+			// log.debug("bookmarkList = {}", bookmarkList);
+			
+			int totalBookmark = mypageCommunityService.getTotalCampsiteBookmark(memberId);
+			String pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalBookmark, url);
 
+			mav.addObject("pagebar", pagebar);
 			mav.addObject("bookmarkList", bookmarkList);
 		} catch (Exception e) {
 			log.error("관심캠핑장 조회 오류", e);

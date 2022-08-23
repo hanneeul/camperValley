@@ -138,7 +138,6 @@ const renderReviewList = (cPage) => {
 			const {reviewList, pagebar} = response;
 			console.log(reviewList);
 			for(let i = 0; i < reviewList.length; i++) {
-				console.log(reviewList[i].report);
 				const $reviewBox = $('<div class="reviewBox d-flex ml-3"></div>');
 				const $userImage = $('<div class="image col-md-2 px-0"></div>');
 				const $userEnrollImg = $(`<img class="profileImg" src="${pageContext.request.contextPath}/resources/upload/member/\${reviewList[i].profileImg}"/>`)
@@ -158,7 +157,7 @@ const renderReviewList = (cPage) => {
 				// 분기처리 loginMember.memberId와 memberId비교
 				if(${not empty loginMember}) {
 					if("${loginMember.memberId}" === sellerId) {
-						if(reviewList[i].reportNo === null || reviewList[i].reportNo === "") {
+						if(reviewList[i].reportNo == null || reviewList[i].reportNo == "") {
 							const $report = $('<div class="report text-13 text-secondary mt-1" style="cursor:pointer"></div>');
 							const $reportIcon = $('<i class="fa-regular fa-lightbulb fa-sm position-relative"></i>');
 							const $reportBtn = $('<span>신고하기</span>');
@@ -177,7 +176,7 @@ const renderReviewList = (cPage) => {
 						} 
 					}
 				}
-				if(reviewList[i].report != null && reviewList[i].report !== "") {
+				if(reviewList[i].reportNo != null && reviewList[i].reportNo != "") {
 					const $report = $('<div class="report text-13 text-secondary mt-1"></div>');
 					const $reportAlready = $('<span class="text-danger">판매자에 의해 신고된 리뷰입니다.</span>');
 					$report.append($reportAlready);
