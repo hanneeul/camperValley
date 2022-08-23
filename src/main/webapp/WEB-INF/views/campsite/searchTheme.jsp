@@ -8,11 +8,17 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/campsite/campsite.css" />
+<style>
+.map-facltNm {position: relative; bottom: 35px; border-radius: 5px; float: left;}
+.map-facltNm:nth-of-type(n) {border: 0; box-shadow: 0px 1px 2px #888;}
+.map-facltNm a {display: block; text-decoration: none; color: black; text-align: center; border-radius: 5px; font-size: .8rem; font-weight: bold; overflow: hidden; background: #639A67 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 7px center / .4rem;}
+.map-facltNm span {text-align: center; background: white; margin-right: 20px; padding: 5px 10px;}
+#map img[alt='마커이미지'] {filter: invert(54%) sepia(9%) saturate(1510%) hue-rotate(74deg) brightness(100%) contrast(88%);}
+</style>
 
 <!-- Kakao 지도 Javascript API -->
 <spring:eval var="kakaoMapKey" expression="@customProperties['api.kakaoMap']" />
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoMapKey}&libraries=services,clusterer,drawing"></script>
-
 
 <!-- 캠핑장목록조회(테마검색) 페이지 (작성자:SJ) -->
 <form:form name="searchThemeFrm" action="${pageContext.request.contextPath}/campsite/searchTheme" method="GET">
@@ -159,7 +165,66 @@ document.querySelector("#searchDetailBtn").addEventListener('click', (e) => {
 		</c:if>
 	</div>
 	<div class="p-2 flex-fill m-auto bg-light result-map" id="map"></div>
-	<script src="${pageContext.request.contextPath}/resources/js/campsite/kakaoMap.js"></script>
 </div>
+<script>
+/**
+ * 카카오 지도
+ */
+const mapContainer = document.getElementById('map'),
+	mapOption = {
+		<c:if test="${not empty list}">
+			center: new kakao.maps.LatLng(${list[0].mapY}, ${list[0].mapX}),
+		</c:if>
+		<c:if test="${empty list}">
+			center: new kakao.maps.LatLng(37.500786, 127.036886),
+		</c:if>
+		level: 11
+	};
+
+const map = new kakao.maps.Map(mapContainer, mapOption);
+
+const mapTypeControl = new kakao.maps.MapTypeControl();
+map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+const zoomControl = new kakao.maps.ZoomControl();
+map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+let positions = [];
+<c:forEach items="${list}" var="camp">
+	positions.push(
+		{
+			content: '<div class="map-facltNm"><a href="${pageContext.request.contextPath}/campsite/infoView?contentId=${camp.contentId}"><span>${camp.facltNm}</span></a></div>',
+			latlng: new kakao.maps.LatLng(${camp.mapY}, ${camp.mapX})
+		}
+	);
+</c:forEach>
+
+for(let i = 0; i < positions.length; i ++) {	
+	const markerImage = new kakao.maps.MarkerImage(
+	    '${pageContext.request.contextPath}/resources/images/campsite/location-dot-solid.svg',
+	    new kakao.maps.Size(20, 30),
+	    {
+	        alt: "마커이미지"
+	    }
+	);
+	    
+	const marker = new kakao.maps.Marker({
+        map: map,
+        position: positions[i].latlng,
+        image : markerImage,
+        clickable: true
+    });
+	
+	const position = positions[i].latlng;
+	const content = positions[i].content;
+	
+	const customOverlay = new kakao.maps.CustomOverlay({
+	    map: map,
+	    position: position,
+	    content: content,
+	    yAnchor: 1
+	});
+}
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

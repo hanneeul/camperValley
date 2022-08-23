@@ -58,6 +58,12 @@ form[name=reviewEnrollFrm] {
 	color: #f7c63a;
 }
 
+.review-grade {
+	opacity: 0!important;
+	width: 0!important;
+	float: left!important;
+}
+
 .display-contents {
 	display: contents;
 }

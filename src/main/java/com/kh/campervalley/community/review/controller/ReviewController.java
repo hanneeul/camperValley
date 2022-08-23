@@ -248,7 +248,8 @@ public class ReviewController {
 			@RequestParam int commentLevel, 
 			@RequestParam String commentRef, 
 			@RequestParam String commentContent, 
-			Model model) throws Exception {
+			Model model, 
+			RedirectAttributes redirectAttr) throws Exception {
 		
 		try {
 			comment.setReviewNo(reviewNo);
@@ -258,6 +259,7 @@ public class ReviewController {
 			int result = reviewService.insertReviewComment(comment);
 			review.addReviewComment(comment);
 			model.addAttribute("comment", comment);
+			redirectAttr.addFlashAttribute("msg", "댓글 등록이 완료되었습니다.");
 		} catch (Exception e) {
 			log.error("댓글 등록 오류", e);
 			throw e;
@@ -282,13 +284,15 @@ public class ReviewController {
 			ReviewComment comment, 
 			@RequestParam int reviewNo, 
 			@RequestParam int reviewCommentNo, 
-			@RequestParam String commentContent) throws Exception {
+			@RequestParam String commentContent, 
+			RedirectAttributes redirectAttr) throws Exception {
 		
 		try {
 			comment.setCommentContent(commentContent);
 			int result = reviewService.updateReviewComment(comment);
+			redirectAttr.addFlashAttribute("msg", "댓글 수정이 완료되었습니다.");
 		} catch (Exception e) {
-			log.error("댓글 삭제 오류", e);
+			log.error("댓글 수정 오류", e);
 			throw e;
 		}
 		return "redirect:/community/review/reviewDetail?reviewNo=" + reviewNo;
