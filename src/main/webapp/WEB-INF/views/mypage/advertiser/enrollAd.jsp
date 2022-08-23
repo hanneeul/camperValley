@@ -45,7 +45,7 @@
 							</div>
 							<div class="col-4 optionWrapper">
 								<div class="imgWrapper" id="imgWrapper2">
-									<img src="${pageContext.request.contextPath}/resources/images/mypage/advertiser/enrollAd_example_mainhome.png" alt="중고거래 홈 슬라이드 배너 영역" />
+									<img src="${pageContext.request.contextPath}/resources/images/mypage/advertiser/enrollAd_example_usedProductHome.png" alt="중고거래 홈 슬라이드 배너 영역" />
 								</div>								
 								<input type="checkbox" name="adZone" id="adZone2" value="usedProductHome" class="hide"/>
 								<p class="my-1">중고거래 홈</p>
@@ -53,7 +53,7 @@
 							</div>
 							<div class="col-4 optionWrapper">
 								<div class="imgWrapper" id="imgWrapper3">
-									<img src="${pageContext.request.contextPath}/resources/images/mypage/advertiser/enrollAd_example_mainhome.png" alt="중고거래 게시글 피드 영역" />
+									<img src="${pageContext.request.contextPath}/resources/images/mypage/advertiser/enrollAd_example_usedProductFeed.png" alt="중고거래 게시글 피드 영역" />
 								</div>								
 								<input type="checkbox" name="adZone" id="adZone3" value="usedProductFeed" class="hide"/>
 								<p class="my-1">중고거래 피드</p>

@@ -129,4 +129,6 @@ public interface AdvertiserDao {
 	@Update("update advertiser set deleted_at = sysdate where advertiser_no = #{advertiserNo}")
 	int updateAdvertiserDeletedAt(int advertiserNo);
 
+	boolean isPauseAdvertiser(String memberId);
+
 }
