@@ -142,15 +142,17 @@ public class CampsiteController {
 			CampsiteFacility facility = campsiteService.selectOneCampsiteFacility(contentId);
 			List<CampsiteImage> campsiteImageList = campsiteService.selectCampsiteImageListByContentId(contentId);
 
-			Map<String, Object> param = new HashMap<>();
-			param.put("contentId", contentId);
-			param.put("memberId", loginMember.getMemberId());
-			Boolean isBookmark = campsiteService.isBookmark(param);
+			if(loginMember != null) {
+				Map<String, Object> param = new HashMap<>();
+				param.put("contentId", contentId);
+				param.put("memberId", loginMember.getMemberId());
+				Boolean isBookmark = campsiteService.isBookmark(param);
+				mav.addObject("isBookmark", isBookmark);				
+			}
 			
 			mav.addObject("campsite", campsite);
 			mav.addObject("facility", facility);
 			mav.addObject("campsiteImageList", campsiteImageList);
-			mav.addObject("isBookmark", isBookmark);
 			mav.setViewName("campsite/infoView");
 		} catch (Exception e) {
 			log.error("캠핑장 상세 조회 오류", e);

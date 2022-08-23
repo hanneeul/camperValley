@@ -83,6 +83,14 @@
 			</div>
 		</nav>
 		<nav class="navbar navbar-light p-2 justify-content-center bg-camper-color" id="navbarSub"></nav>
+		
+		<sec:authorize access="!hasRole('AD') && ${isPauseAdvertiser eq false}">
+			<c:set var="moveToAderEnroll" value="true" />
+		</sec:authorize>
+		<sec:authorize access="hasRole('AD') || ${isPauseAdvertiser eq true}">
+			<c:set var="moveToAderEnroll" value="false" />
+		</sec:authorize>
+		
 		<script>
 		const $subNavbar = $(navbarSub);
 		$(document).ready(() => $subNavbar.hide());
@@ -115,7 +123,13 @@
 					case "중고거래" 	: aTag.href = "${pageContext.request.contextPath}/mypage/trade/purchased"; break;
 					case "나의채팅방" 	: aTag.href = "${pageContext.request.contextPath}/mypage/trade/purchased"; break;
 					case "커뮤니티" 	: aTag.href = "${pageContext.request.contextPath}/mypage/community/myCamper"; break;
-					case "광고주" 	: aTag.href = "${pageContext.request.contextPath}/mypage/advertiser/register"; break;
+					case "광고주" 	:
+						if("${moveToAderEnroll}" == "true") {
+							aTag.href = "${pageContext.request.contextPath}/mypage/advertiser/register";
+						} else if ("${moveToAderEnroll}" == "false") {
+							aTag.href = "${pageContext.request.contextPath}/mypage/advertiser/dashboard";							
+						}
+						break;
 					case "공지사항" 	: aTag.href = "${pageContext.request.contextPath}/cs/noticeList"; break;
 					case "FAQ" 		: aTag.href = "${pageContext.request.contextPath}/cs/faq"; break;
 					case "회원관리" 	: aTag.href = "${pageContext.request.contextPath}/admin/memberList"; break;

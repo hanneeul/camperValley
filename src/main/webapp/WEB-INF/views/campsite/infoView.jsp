@@ -184,16 +184,18 @@
 			    		<!-- 캠핑장 즐겨찾기 -->
 			    		<td scope="col" colspan="2" class="pb-0">
 			    			<%-- EJ start --%>
-			    			<c:if test="${isBookmark eq false}">
-				    			<button type="button" id="bookmarkBtn" class="btn btn-outline-success btn-outline-camper-color font-weight-bold">
-				    				<i class="fa-solid fa-star"></i>&nbsp;관심캠핑장
-				    			</button>
-			    			</c:if>
-			    			<c:if test="${isBookmark eq true}">
-			    				<button type="button" id="bookmarkCancelBtn" class="btn bg-camper-color btn-outline-success btn-outline-camper-color font-weight-bold">
-				    				<i class="fa-solid fa-star"></i>&nbsp;관심캠핑장
-				    			</button>
-			    			</c:if>
+			    			<sec:authorize access="isAuthenticated()">
+				    			<c:if test="${isBookmark eq false}">
+					    			<button type="button" id="bookmarkBtn" class="btn btn-outline-success btn-outline-camper-color font-weight-bold">
+					    				<i class="fa-solid fa-star"></i>&nbsp;관심캠핑장
+					    			</button>
+				    			</c:if>
+				    			<c:if test="${isBookmark eq true}">
+				    				<button type="button" id="bookmarkCancelBtn" class="btn bg-camper-color btn-outline-success btn-outline-camper-color font-weight-bold">
+					    				<i class="fa-solid fa-star"></i>&nbsp;관심캠핑장
+					    			</button>
+				    			</c:if>
+			    			</sec:authorize>
 			    			<%-- EJ end --%>
 			    		</td>
 			    	</tr>
@@ -484,11 +486,14 @@
 	</div>
 </div>
 <sec:authentication property="principal" var="loginMember" scope="page"/>
+
+<sec:authorize access="isAuthenticated()">
 <script>
 //--------------------- EJ start
 const headers = {
 	"${_csrf.headerName}" : "${_csrf.token}"
 };
+
 
 /**
  * 캠핑장 즐겨찾기
@@ -501,7 +506,7 @@ if(document.querySelector('#bookmarkBtn') != null) {
 			headers,
 			data : {
 				contentId : ${param.contentId},
-				memberId : '${loginMember.memberId}'
+				memberId : "${loginMember.memberId}"
 			},
 			success(response) {
 				location.reload();
@@ -530,6 +535,10 @@ if(document.querySelector('#bookmarkCancelBtn') != null) {
 }
 
 //--------------------- EJ end
+</script>
+</sec:authorize>
+<script>
+
 
 /**
  * 이미지 클릭시 모달창 실행
