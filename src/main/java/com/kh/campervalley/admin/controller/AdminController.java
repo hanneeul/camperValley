@@ -49,10 +49,41 @@ public class AdminController {
 
 	@Autowired
 	ResourceLoader resourceLoader;
+	
+	@GetMapping("/reportManagement")
+	public ModelAndView reportManagement(ModelAndView mav,
+			@RequestParam(defaultValue = "1") int cPage,
+			HttpServletRequest request) {
+		try {
+			int numPerPage = 10;
+			int offset = (cPage - 1) * numPerPage;
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("numPerPage", numPerPage);
+			map.put("offset", offset);
+			
+			List<Member> list = adminService.selectReportList(map);
+			int totalContent = adminService.selectTotalReportList(map);
+			log.debug("list = {}", list);
+			
+			String url = request.getRequestURI();
+			String pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalContent, url);
+			
+			mav.addObject("list", list);
+			mav.addObject("map", map);
+			mav.addObject("pagebar", pagebar);
+			
+			mav.setViewName("admin/reportManagement");
+		} catch (Exception e) {
+			log.error("신고 관리 오류", e);
+			throw e;
+		}
+		
+		return mav;
+	}
 
 	@GetMapping("/memberList")
 	public ModelAndView memberList(ModelAndView mav,
-			@RequestParam(defaultValue = "") String searchType,
 			@RequestParam(defaultValue = "") String searchKeyword,
 			@RequestParam(defaultValue = "1") int cPage,
 			HttpServletRequest request) {
@@ -62,7 +93,6 @@ public class AdminController {
 			int offset = (cPage - 1) * numPerPage;
 			
 			Map<String, Object> map = new HashMap<>();
-			map.put("searchType", searchType);
 			map.put("searchKeyword", searchKeyword);
 			map.put("numPerPage", numPerPage);
 			map.put("offset", offset);
@@ -106,6 +136,27 @@ public class AdminController {
 			log.error("회원 정보 수정 오류", e);
 		}
 		return "redirect:/admin/memberList";
+	}
+	
+	@PostMapping("/updateBuyerBlack")
+	public String insertBuyerBlack(Member member,
+			RedirectAttributes redirectAttr, 
+			@RequestParam(required = false) boolean ROLE_BLACK, @RequestParam int reportNo) {
+		
+		try {
+			Map<String, Object> map = new HashMap<>();
+			map.put("ROLE_BLACK", ROLE_BLACK);
+			map.put("memberId", member.getMemberId());
+			
+			adminService.updateBuyerBlack(map);
+			
+			int result = adminService.updateReport(reportNo);
+			redirectAttr.addFlashAttribute("msg", "신고가 처리되었습니다.");
+		} catch (Exception e) {
+			log.error("신고 처리 오류", e);
+		}
+
+		return "redirect:/admin/reportManagement";
 	}
 	
 	
@@ -225,6 +276,7 @@ public class AdminController {
 		}
 		return mav;
 	}
+	
 
 	@GetMapping("/camperManagement")
 	public ModelAndView camperManagement(ModelAndView mav, 
@@ -329,8 +381,6 @@ public class AdminController {
 		return "redirect:/admin/reviewManagement";
 	}
 
-	@GetMapping("/reportManagement")
-	public void reportManagement() {}
 	
 	@GetMapping("/dashboard")
 	public ModelAndView dashboard(ModelAndView mav) {

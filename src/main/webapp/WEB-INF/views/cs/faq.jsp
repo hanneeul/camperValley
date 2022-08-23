@@ -56,14 +56,14 @@
 				<c:forEach var="list" items="${list}">
                     <li class="article" id="a1" >
                         <p class="q"><a href="#a1">
-                        <span class="icon_q ml-2">Q</span>
-                        <span style="margin-left : 20px;">${fn:replace(list.title, replaceChar, "</br>")}</span>
+                        <span class="icon_q ml-2" style="padding: 1px; padding-left: 2px;">Q</span>
+                        <span style="margin-left : 20px; font-size: 0.9rem;">${fn:replace(list.title, replaceChar, "</br>")}</span>
                         <span class="q_img"><img src="${pageContext.request.contextPath}/resources/images/cs/arrow.png" style="width: 15px;" alt="" class="mt-1 mr-2"></span>
                         </a></p>
 
                         <div class="a">
-                        <span class="icon_a ml-2" >A</span>
-                        <div style="margin-left: 65px; margin-top: -28px;">${fn:replace(list.content, replaceChar, "</br>")}</div>
+                        <span class="icon_a ml-2" style="padding: 1px; padding-left: 2px; font-weight: bold;">A</span>
+                        <div style="margin-left: 67px; margin-top: -26px; font-size: 0.9rem; margin-bottom:10px;">${fn:replace(list.content, replaceChar, "</br>")}</div>
                          <sec:authorize access="hasRole('ADMIN')">
                         <div class="faq-btn mt-3 mb-2" style="text-align: center;">
 								<button class="btn-update btn btn-outline-primary btn-sm" value="${list.noticeNo}">수정</button>
@@ -129,12 +129,12 @@ document.querySelectorAll('.btn-search').forEach((btn) => {
             var myArticle = $(this).parents('.article:first');
             if(myArticle.hasClass('hide')){
                 article.addClass('hide').removeClass('show');
-                article.find('.a').slideUp(100);
+                article.find('.a').slideUp(260);
                 myArticle.removeClass('hide').addClass('show');
-                myArticle.find('.a').slideDown(100);
+                myArticle.find('.a').slideDown(260);
             } else {
                 myArticle.removeClass('show').addClass('hide');
-                myArticle.find('.a').slideUp(100);
+                myArticle.find('.a').slideUp(260);
             }
             return false;
         });
@@ -142,10 +142,10 @@ document.querySelectorAll('.btn-search').forEach((btn) => {
             var hidden = $('.faq>.faqBody>.article.hide').length;
             if(hidden > 0){
                 article.removeClass('hide').addClass('show');
-                article.find('.a').slideDown(100);
+                article.find('.a').slideDown(260);
             } else {
                 article.removeClass('show').addClass('hide');
-                article.find('.a').slideUp(100);
+                article.find('.a').slideUp(260);
             }
         });
     });
