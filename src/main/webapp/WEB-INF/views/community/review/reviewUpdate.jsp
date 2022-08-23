@@ -73,7 +73,7 @@ body {overflow-y: auto!important;}
 		        		<span class="fa fa-star-o" data-rating="3"></span>
 		        		<span class="fa fa-star-o" data-rating="4"></span>
 		        		<span class="fa fa-star-o" data-rating="5"></span>
-		        		<input type="hidden" class="review-grade" id="reviewGrade" name="reviewGrade" value="${review.reviewGrade}">
+		        		<input type="text" class="review-grade" id="reviewGrade" name="reviewGrade" value="${review.reviewGrade}" required>
 		      		</div>
 				</div>
 			</div>
@@ -173,9 +173,9 @@ body {overflow-y: auto!important;}
 			    		class="form-control" 
 			    		id="title" 
 			    		name="title" 
+			    		placeholder="제목을 입력해주세요." 
 			    		value="${review.title}" 
-			    		placeholder="제목을 입력해주세요."
-			    		required/>
+			    		required>
 			  	</div>
 			</div>
 			<div class="form-group row">
@@ -337,6 +337,5 @@ $reviewGradeList.on('click', function() {
 
 setReviewGrade();
 </script>
-<script src="${pageContext.request.contextPath}/resources/js/community/review/reviewValidation.js"></script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
