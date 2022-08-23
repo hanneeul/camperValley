@@ -79,9 +79,9 @@
 		purpose = #{purpose},
 		expected_cost = #{expectedCost},
 		chat_url = #{chatUrl},
-		<!-- departure_date = #{departureDate},
+		departure_date = #{departureDate},
 		arrival_date = #{arrivalDate},
-		area = #{area}, -->
+		area = #{area},
 		member_count = #{memberCount},
 		updated_at = sysdate
 	where

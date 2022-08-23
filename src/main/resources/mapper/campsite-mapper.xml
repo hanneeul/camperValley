@@ -45,7 +45,7 @@ from
         </foreach>
 	</if>
 	<if test="themaEnvrnCl != null and themaEnvrnCl != ''">
-		thema_envrn_cl = #{themaEnvrnCl}
+		and thema_envrn_cl = #{themaEnvrnCl}
 	</if>
 	<if test="induty != null and induty !=''">
     	and induty in
