@@ -742,7 +742,7 @@
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-
+<script src="${pageContext.request.contextPath}/resources/js/member/validation.js"></script>
 <script>
 // 제출이벤트
 $('form[name=enrollMemberFrm]').submit((e) =>{
@@ -821,7 +821,7 @@ function validateId(memberId){
 	if(memberId == ""){
 		addClassDBlock(guideIdEmpty);
 		return false;
-	} else if(!/^\w{5,15}$/.test(memberId)){
+	} else if(!isValidateMemberID(memberId)){
 		addClassDBlock(guideIdInvalidation);
 		return false;
 	} 
@@ -855,7 +855,7 @@ function validateName(name){
 	if(name == ""){
 		addClassDBlock(guideNameEmpty);
 		return false;
-	} else if(!/^[가-힣]{2,10}$/.test(name)){
+	} else if(!isValidateName(name)){
 		addClassDBlock(guideNameInvalidation);
 		return false;
 	}
@@ -880,7 +880,7 @@ function validateNickname(nickname){
 	}  else if(/^[a-zA-Z0-9가-힣]{11,}$/.test(nickname)){
 		addClassDBlock(guideNicknameInvalidation2);
 		return false;
-	} else if(!/^[a-zA-Z0-9가-힣]{2,}$/.test(nickname)){
+	} else if(!isValidateNickname(nickname)){
 		addClassDBlock(guideNicknameInvalidation1);
 		return false;
 	}
@@ -916,7 +916,7 @@ function validatePw(password){
 	if(password == ""){
 		addClassDBlock(guidePwEmpty);
 		return false;
-	} else if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/.test(password)){
+	} else if(!isValidatePassword(password)){
 		addClassDBlock(guidePwInvalidation);
 		return false;
 	} else{
@@ -956,7 +956,7 @@ function validateEmail(email){
 	if(email == ""){
 		addClassDBlock(guideEmailEmpty);
 		return false;
-	} else if(!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/i.test(email)){
+	} else if(!isValidateEmail(email)){
 		addClassDBlock(guideEmailInvalidation);
 		return false;
 	}
@@ -991,7 +991,7 @@ function validateTel(tel){
 	if(tel == ""){
 		addClassDBlock(guideTelEmpty);
 		return false;
-	} else if(!/^\d{9,11}$/.test(tel)){
+	} else if(!isValidateTel(tel)){
 		addClassDBlock(guideTelInvalidation);
 		return false;
 	}

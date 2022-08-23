@@ -112,9 +112,10 @@
 			</div>
 			<div style="text-align: center;">
 				<button type="button" class="btn btn-success shadow-sm" id="submitBtnClickBtn">
-					회원정보 수정하기
+					회원정보 수정
 				</button>
 			</div>
+			<script src="${pageContext.request.contextPath}/resources/js/member/validation.js"></script>
 			<script>
 			
 			   $("#profileImg").click(()=>{
@@ -151,17 +152,10 @@
 			    		    buttons: {'확인': function() {}}
 			    		});
 			            return;
-			    } else if(/^[a-zA-Z0-9가-힣]{11,}$/.test(nicknameVal)){
+			    } else if(!isValidateNickname(nicknameVal)){
 			    		$.alert({
 			    		    title: ' ',
-			    		    content: '글자 수가 너무 깁니다.',
-			    		    buttons: {'확인': function() {}}
-			    		});
-			            return;
-			    } else if(!/^[a-zA-Z0-9가-힣]{2,}$/.test(nicknameVal)){
-			    		$.alert({
-			    		    title: ' ',
-			    		    content: '2자 이상의 영문/숫자/한글로 입력해주세요.',
+			    		    content: '2 -11자 의 영문/숫자/한글로 입력해주세요.',
 			    		    buttons: {'확인': function() {}}
 			    		});
 			            return;
@@ -208,7 +202,7 @@
 			    		    buttons: {'확인': function() {}}
 			    		})
 			            return;
-			        } else if(!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/i.test(emailVal)){
+			        } else if(!isValidateEmail(emailVal)){
                     	$.alert({
 			    		    title: ' ',
 			    		    content: '이메일 주소를 다시 확인해주세요.',
@@ -268,10 +262,10 @@
 				    		})
 			                return;
 			            }
-			        } else if($("input[name=password]").val()) {
-			        //비밀번호 값 없는지
-			            //있으면 유효성검사, 비밀번호 확인 검사
-			            if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/.test($("input[name=password]").val())){
+			        } 
+			        if($("input[name=password]").val()!=='') {
+			        	
+			            if(!isValidatePassword($("input[name=password]").val())){
 		                    $.alert({
 				    		    title: ' ',
 				    		    content: '비밀번호는 영문자+숫자+특수문자 조합으로 8자리 이상 입력해주세요.',
@@ -304,7 +298,7 @@
 				    		    buttons: {'확인': function() {}}
 				    		})
 			                return false;
-			        } else if(!/^\d{9,11}$/.test($("input[name=tel]").val())){
+			        } else if(!isValidateTel($("input[name=tel]").val())){
 			                $.alert({
 				    		    title: ' ',
 				    		    content: '전화번호를 다시 확인해주세요.<br>전화번호는 숫자만 입력 가능합니다.',
