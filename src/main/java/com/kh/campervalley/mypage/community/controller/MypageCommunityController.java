@@ -208,7 +208,7 @@ public class MypageCommunityController {
 			log.debug("캠퍼모집 수정 오류", e);
 			throw e;
 		}
-		return "redirect:/";
+		return "redirect:/mypage/community/myCamper";
 	}
 	
 	
