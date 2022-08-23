@@ -33,7 +33,7 @@
 	//유효성
 	$('form button').click((e)=>{
 		
-		   if(!/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,}$/.test($("input[name=password]").val())){
+		   if(!isValidatePassword($("input[name=password]").val())){
 			         $.alert({
 			        	 columnClass: 'col-md-8',
 			    title: ' ',

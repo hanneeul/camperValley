@@ -51,7 +51,7 @@
 <div class="d-flex justify-content-center mt-3">
   <div class="spinner-border d-none" role="status">
     <span class="sr-only">Loading...</span>
-    <input type="hidden" name="addNum" />
+    <input type="hidden" name="addNum" value="0"/>
   </div>
 </div>
 
@@ -99,11 +99,10 @@
 	        	
 	        });
 	    	$('div.spinner-border').addClass("d-none");
-	  	    
-	  	    if($('input[name=addNum]').val() === '0'){
-			   io.observe($('.list').get($('.list').length-1));
-	  	    	return;
-	 		}
+	  	    if($('input[name=addNum]').val() !== '0'){
+			  io.observe($('.list').get($('.list').length-1));
+		 	}
+		  	return;
 	  	    
 	    }
 	  });

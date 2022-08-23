@@ -208,7 +208,7 @@ public class MemberController {
 		  String hostSMTPid = NAVER_ID;
 		  String hostSMTPpwd = NAVER_PASSWORD;
 	  
-	  //보내는 사람 이메일, 제목, 내용 
+	
 		  String fromEmail = "campervalley@naver.com";
 		  String fromName = "campervalley";
 		  String subject = "테스트";
@@ -217,7 +217,7 @@ public class MemberController {
 		  try { 
 			  HtmlEmail htmlEmail = new HtmlEmail(); htmlEmail.setCharset(charSet);
 			  htmlEmail.setHostName(hostSMTP); htmlEmail.setSSLOnConnect(true);
-			  htmlEmail.setSmtpPort(465); // SMTP 포트 번호 입력
+			  htmlEmail.setSmtpPort(465);
 		  
 			  htmlEmail.setAuthentication(hostSMTPid, hostSMTPpwd); htmlEmail.addTo(emailTo,nameTo ,charSet); // 받는사람 정보 
 			  htmlEmail.setFrom(fromEmail, fromName, charSet);
@@ -248,15 +248,14 @@ public class MemberController {
 			  		+ "</body>\r\n"
 			  		+ "</html>"
 					  
-			  		); // 본문 내용 
-			  htmlEmail.send(); // 전송 
+			  		);  
+			  htmlEmail.send(); 
 			  log.debug("이메일 전송{}",token);
 	  
 
 	  
 	  } catch (Exception e) { log.error("비밀번호 찾기 오류",e); }
 	  
-	  //이메일 테스트 끝
 	  
 	  }
 

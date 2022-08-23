@@ -76,55 +76,44 @@
                 <div class="col-md-12">
                     <div class="col-md-12 d-flex justify-content-between p-0 pt-5 mt-5 mb-3">
                         <h4 class="mb-3 pt-2 ">
-                            즐겨찾기한 캠핑장
+                            관심캠핑장
                         </h4> 
-                        <a type="button" class="btn btn-link ">
+                        <a type="button" class="btn btn-link" href="${pageContext.request.contextPath}/mypage/community/bookmark">
                             >> 더보기
                         </a>
                     </div>
                     <div class="listWrapper px-3 py-2">
+						<c:if test="${empty bookmarkList}">
+						<div class="text-center">등록하신 관심 캠핑장이 존재하지 않습니다.</div>
+			            </c:if>
+                    <c:forEach items="${bookmarkList}" var="bookmark">
 					<div class="row bookmarkWrapper py-4">
 						<div class="col-2 pl-3 d-flex align-items-center" id="imgWrapper">
-							<div class="imgWrapper">
-								<img class="campsiteImg" src="${pageContext.request.contextPath}/resources/images/mypage/advertiser/file.png" alt="메인 홈 슬라이드 배너 영역" />
+							<div class="imgWrapper border" style="cursor: pointer;">
+								<a href="http://localhost:9090/campervalley/campsite/infoView?contentId=${bookmark.contentId}">
+									<img class="campsiteImg" src="${bookmark.campsite.firstImageUrl}" 
+										<c:if test="${empty bookmark.campsite.firstImageUrl}"> style="visibility: hidden;" </c:if>
+										 alt="${bookmark.campsite.facltNm}대표사진" />
+								</a>
 							</div>
 						</div>
 						<div class="col campsiteInfo p-0 pl-3 pt-2">
-							<h5 class="mb-3 campsiteName">[ㅁㅁ도 ㅇㅇ시]블라블라숲 캠핑장</h5>
-							<h6 class="pt-2 campsiteIntro">낭만 가득한 프라이빗 캠핑장</h6>
+							<a href="http://localhost:9090/campervalley/campsite/infoView?contentId=${bookmark.contentId}"><h5 class="mb-3 campsiteName">${bookmark.campsite.facltNm}</h5></a>
+							<h6 class="pt-2 campsiteIntro">${bookmark.campsite.lineIntro}</h6>
 							<div class="d-flex detailInfo mt-4">
 								<div>
 									<i class="fa-solid fa-location-dot"></i>
-									<span class="campsiteAddr">어쩔도 저쩔시 웅앵동 123</span>
+									&nbsp;<span class="campsiteAddr">${bookmark.campsite.addr1}</span>
 								</div>
 								<div>
 									<i class="fa-solid fa-phone"></i>
-									<span class="campsiteTel">070-0000-0000</span>
+									<span class="campsiteTel">
+										&nbsp;${empty bookmark.campsite.tel ? '전화번호가 등록되어 있지 않습니다.' : bookmark.campsite.tel}</span>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="row bookmarkWrapper py-4">
-						<div class="col-2 pr-3 d-flex align-items-center" id="imgWrapper">
-							<div class="imgWrapper">
-								<img class="campsiteImg" src="${pageContext.request.contextPath}/resources/images/mypage/advertiser/file.png" alt="메인 홈 슬라이드 배너 영역" />
-							</div>
-						</div>
-						<div class="col campsiteInfo  p-0 pl-3 pt-2">
-							<h5 class="mb-3 campsiteName">[ㅁㅁ도 ㅇㅇ시]블라블라숲 캠핑장</h5>
-							<h6 class="pt-2 campsiteIntro">낭만 가득한 프라이빗 캠핑장</h6>
-							<div class="d-flex detailInfo mt-4">
-								<div>
-									<i class="fa-solid fa-location-dot"></i>
-									<span class="campsiteAddr">어쩔도 저쩔시 웅앵동 123</span>
-								</div>
-								<div>
-									<i class="fa-solid fa-phone"></i>
-									<span class="campsiteTel">070-0000-0000</span>
-								</div>
-							</div>
-						</div>
-					</div>
+					</c:forEach>
 				</div>
             <div class="row">
                 <div class="col-md-12 mt-5">
@@ -170,9 +159,9 @@
 	                        <c:forEach items="${reviewList}" var="review" varStatus="vs">
 	                            <tr data-no="${board.no}">
 	                                <td class="text-left">
-	                                    <a href="${pageContext.request.contextPath}/community/review/reviewDetail?reviewNo=${review.reviewNo}">
+	                                    <%-- <a href="${pageContext.request.contextPath}/community/review/reviewDetail?reviewNo=${review.reviewNo}"> --%>
 	                                    	${review.title}[${review.commentCount}]
-	                                    </a>
+	                                    <!-- </a> -->
 	                                </td>
 			                        <td class="text-left">
 			                          ${review.facltNm}

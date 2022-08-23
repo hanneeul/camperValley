@@ -47,9 +47,10 @@
 }
 #mypage-main-container .imgWrapper {
 	width: 9rem;
-	height: 9rem;
+	height: 8rem;
 	overflow: hidden;
 	background-color: #f0f0f0;
+	border-radius: 3px;
 }
 #mypage-main-container .campsiteImg {
 	width: 100%;
@@ -97,7 +98,7 @@ select.recruitment-status{
 	width: 120px;
 	height: 120px;
 	overflow: hidden;
- 	left: 1.4rem; 
+ 	left: 1.1rem; 
 }
 #profileImg{
       height:105%;

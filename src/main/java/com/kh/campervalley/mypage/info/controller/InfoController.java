@@ -28,6 +28,7 @@ import com.kh.campervalley.community.camper.model.dto.Camper;
 import com.kh.campervalley.community.review.model.dto.CampsiteReviewExt;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.member.model.service.MemberService;
+import com.kh.campervalley.mypage.community.model.dto.CampsiteBookmarkExt;
 import com.kh.campervalley.mypage.community.model.service.MypageCommunityService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -126,11 +127,12 @@ public class InfoController {
 		ModelAndView mav = new ModelAndView();
 		
 		try {
-			//관심캠핑장
+			List<CampsiteBookmarkExt> bookmarkList =  mypageCommunityService
+													.selectCampsiteBookmark(member.getMemberId(), 0, 2);
 			List<CampsiteReviewExt> reviewList = mypageCommunityService.selectMyReviewList(0,3,member.getMemberId());
 			List<Camper> camperList = mypageCommunityService.selectMyCamperList(0,3,member.getMemberId());
 			
-			//관심캠핑장 추가
+			mav.addObject("bookmarkList", bookmarkList);
 			mav.addObject("reviewList", reviewList);
 			mav.addObject("camperList", camperList);
 		} catch (Exception e) {
