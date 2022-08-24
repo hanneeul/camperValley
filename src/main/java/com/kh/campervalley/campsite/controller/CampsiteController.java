@@ -103,6 +103,32 @@ public class CampsiteController {
 		return mav;
 	}
 	
+	@GetMapping("/infoView")
+	public ModelAndView infoView(ModelAndView mav, @RequestParam long contentId, @AuthenticationPrincipal Member loginMember) throws Exception {
+		try {
+			CampsiteExt campsite = campsiteService.selectOneCampsite(contentId);
+			CampsiteFacility facility = campsiteService.selectOneCampsiteFacility(contentId);
+			List<CampsiteImage> campsiteImageList = campsiteService.selectCampsiteImageListByContentId(contentId);
+			
+			if(loginMember != null) {
+				Map<String, Object> param = new HashMap<>();
+				param.put("contentId", contentId);
+				param.put("memberId", loginMember.getMemberId());
+				Boolean isBookmark = campsiteService.isBookmark(param);
+				mav.addObject("isBookmark", isBookmark);
+			}
+			
+			mav.addObject("campsite", campsite);
+			mav.addObject("facility", facility);
+			mav.addObject("campsiteImageList", campsiteImageList);
+			mav.setViewName("campsite/infoView");
+		} catch (Exception e) {
+			log.error("캠핑장 상세 조회 오류", e);
+			throw e;
+		}
+		return mav;
+	}
+	
 	// --------------------- EJ start
 	@PostMapping("/addBookmark")
 	public ResponseEntity<?> insertBookmark(long contentId, String memberId) {
@@ -135,31 +161,7 @@ public class CampsiteController {
 	}
 	// --------------------- EJ end
 	
-	@GetMapping("/infoView")
-	public ModelAndView infoView(ModelAndView mav, @RequestParam long contentId, @AuthenticationPrincipal Member loginMember) throws Exception {
-		try {
-			CampsiteExt campsite = campsiteService.selectOneCampsite(contentId);
-			CampsiteFacility facility = campsiteService.selectOneCampsiteFacility(contentId);
-			List<CampsiteImage> campsiteImageList = campsiteService.selectCampsiteImageListByContentId(contentId);
-
-			Map<String, Object> param = new HashMap<>();
-			param.put("contentId", contentId);
-			param.put("memberId", loginMember.getMemberId());
-			Boolean isBookmark = campsiteService.isBookmark(param);
-			
-			mav.addObject("campsite", campsite);
-			mav.addObject("facility", facility);
-			mav.addObject("campsiteImageList", campsiteImageList);
-			mav.addObject("isBookmark", isBookmark);
-			mav.setViewName("campsite/infoView");
-		} catch (Exception e) {
-			log.error("캠핑장 상세 조회 오류", e);
-			throw e;
-		}
-		return mav;
-	}
-	
-	/*----- JH -----*/
+	// --------------------- JH start
 	@GetMapping("/searchCampsiteIndex")
 	public ModelAndView searchDetailTheme(
 			ModelAndView mav, 
@@ -185,5 +187,5 @@ public class CampsiteController {
 		}
 		return mav;
 	}
-	/*----- JH -----*/
+	// --------------------- JH end
 }

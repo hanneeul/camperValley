@@ -10,11 +10,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/campsite/campsite.css" />
 <style>
 body {overflow-y: auto!important;}
-.map-facltNm {position: relative; bottom: 35px; border-radius: 5px; float: left;}
-.map-facltNm:nth-of-type(n) {border: 0; box-shadow: 0px 1px 2px #888;}
-.map-facltNm a {display: block; text-decoration: none; color: black; text-align: center; border-radius: 5px; font-size: .8rem; font-weight: bold; overflow: hidden; background: #639A67 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 7px center / .4rem;}
-.map-facltNm span {text-align: center; background: white; margin-right: 20px; padding: 5px 10px;}
-#map img[alt='마커이미지'] {filter: invert(54%) sepia(9%) saturate(1510%) hue-rotate(74deg) brightness(100%) contrast(88%);}
 </style>
 
 <!-- Kakao 지도 Javascript API -->

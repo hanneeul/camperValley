@@ -15,62 +15,14 @@
 %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/campsite/campsite.css" />
 <style>
-#campsiteImg {
-	border-radius: 5px;
-	cursor: pointer;
-	transition: 0.3s;
-}
-#campsiteImg:hover {
-	opacity: 0.7;
-}
-.campsite-img-modal {
-	display: none;
-	position: fixed;
-	z-index: 2000;
-	padding-top: 100px;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgb(0,0,0);
-	background-color: rgba(0,0,0,0.9);
-}
-.modal-content {
-	margin: auto;
-	display: block;
-	width: 80%;
-	max-width: fit-content;
-	animation-name: zoom;
-	animation-duration: 0.6s;
-}
-@keyframes zoom {
-	from {
-		transform: scale(0)
-	}
-	to {
-		transform: scale(1)
-	}
-}
-.modal-close {
-	position: absolute;
-	top: 15px;
-	right: 35px;
-	color: #f1f1f1;
-	font-size: 40px;
-	font-weight: bold;
-	transition: 0.3s;
-}
-.modal-close:hover, .modal-close:focus {
-	color: #bbb;
-	text-decoration: none;
-	cursor: pointer;
-}
-@media only screen and (max-width: 700px) {
-	.modal-content {
-		width: 100%;
-	}
-}
+.campsite-img {border-radius: 5px; cursor: pointer; transition: 0.3s;}
+.campsite-img:hover {opacity: 0.7;}
+.campsite-img-modal {display: none;	position: fixed; z-index: 2000;	padding-top: 100px;	left: 0; top: 0; width: 100%; height: 100%;	overflow: auto;	background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.9);}
+.modal-content {margin: auto; display: block; width: 80%; max-width: fit-content; animation-name: zoom;	animation-duration: 0.6s;}
+@keyframes zoom { from {transform: scale(0)} to {transform: scale(1)} }
+.modal-close {position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s;}
+.modal-close:hover, .modal-close:focus {color: #bbb; text-decoration: none;	cursor: pointer;}
+@media only screen and (max-width: 700px) { .modal-content {width: 100%;} }
 </style>
 
 <!-- Swiper -->
@@ -184,17 +136,19 @@
 			    		<!-- 캠핑장 즐겨찾기 -->
 			    		<td scope="col" colspan="2" class="pb-0">
 			    			<%-- EJ start --%>
-			    			<c:if test="${isBookmark eq false}">
-				    			<button type="button" id="bookmarkBtn" class="btn btn-outline-success btn-outline-camper-color font-weight-bold">
-				    				<i class="fa-solid fa-star"></i>&nbsp;관심캠핑장
-				    			</button>
-			    			</c:if>
-			    			<c:if test="${isBookmark eq true}">
-			    				<button type="button" id="bookmarkCancelBtn" class="btn bg-camper-color btn-outline-success btn-outline-camper-color font-weight-bold">
-				    				<i class="fa-solid fa-star"></i>&nbsp;관심캠핑장
-				    			</button>
-			    			</c:if>
-			    			<%-- EJ end --%>
+                            <sec:authorize access="isAuthenticated()">
+                                <c:if test="${isBookmark eq false}">
+                                    <button type="button" id="bookmarkBtn" class="btn btn-outline-success btn-outline-camper-color font-weight-bold">
+                                        <i class="fa-solid fa-star"></i>&nbsp;관심캠핑장
+                                    </button>
+                                </c:if>
+                                <c:if test="${isBookmark eq true}">
+                                    <button type="button" id="bookmarkCancelBtn" class="btn bg-camper-color btn-outline-success btn-outline-camper-color font-weight-bold">
+                                        <i class="fa-solid fa-star"></i>&nbsp;관심캠핑장
+                                    </button>
+                                </c:if>
+                            </sec:authorize>
+                            <%-- EJ end --%>
 			    		</td>
 			    	</tr>
 			    </table>
@@ -483,54 +437,54 @@
 	  	</div>
 	</div>
 </div>
+<%-- EJ start --%>
 <sec:authentication property="principal" var="loginMember" scope="page"/>
 <script>
-//--------------------- EJ start
-const headers = {
-	"${_csrf.headerName}" : "${_csrf.token}"
-};
-
-/**
- * 캠핑장 즐겨찾기
- */
-if(document.querySelector('#bookmarkBtn') != null) {
-	document.querySelector('#bookmarkBtn').addEventListener('click', (e) => {
-		$.ajax({
-			url : '${pageContext.request.contextPath}/campsite/addBookmark',
-			type : 'POST',
-			headers,
-			data : {
-				contentId : ${param.contentId},
-				memberId : '${loginMember.memberId}'
-			},
-			success(response) {
-				location.reload();
-			},
-			error : console.log
+<sec:authorize access="isAuthenticated()">
+	const headers = {
+		"${_csrf.headerName}" : "${_csrf.token}"
+	};
+	
+	if(document.querySelector('#bookmarkBtn') != null) {
+		document.querySelector('#bookmarkBtn').addEventListener('click', (e) => {
+			$.ajax({
+				url : '${pageContext.request.contextPath}/campsite/addBookmark',
+				type : 'POST',
+				headers,
+				data : {
+					contentId : ${param.contentId},
+					memberId : '${loginMember.memberId}'
+				},
+				success(response) {
+					location.reload();
+				},
+				error : console.log
+			});
 		});
-	});
-}
-if(document.querySelector('#bookmarkCancelBtn') != null) {
-	document.querySelector('#bookmarkCancelBtn').addEventListener('click', (e) => {
-		console.log(e.target);
-		$.ajax({
-			url : '${pageContext.request.contextPath}/campsite/deleteBookmark',
-			type : 'POST',
-			headers,
-			data : {
-				contentId : ${param.contentId},
-				memberId : '${loginMember.memberId}'
-			},
-			success(response) {
-				location.reload();
-			},
-			error : console.log
+	}
+	
+	if(document.querySelector('#bookmarkCancelBtn') != null) {
+		document.querySelector('#bookmarkCancelBtn').addEventListener('click', (e) => {
+			console.log(e.target);
+			$.ajax({
+				url : '${pageContext.request.contextPath}/campsite/deleteBookmark',
+				type : 'POST',
+				headers,
+				data : {
+					contentId : ${param.contentId},
+					memberId : '${loginMember.memberId}'
+				},
+				success(response) {
+					location.reload();
+				},
+				error : console.log
+			});
 		});
-	});
-}
-
-//--------------------- EJ end
-
+	}
+</sec:authorize>
+</script>
+<%-- EJ end --%>
+<script>
 /**
  * 이미지 클릭시 모달창 실행
  */
@@ -591,9 +545,13 @@ map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 const zoomControl = new kakao.maps.ZoomControl();
 map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-const imageSrc = "https://upload.wikimedia.org/wikipedia/commons/f/fb/Map_pin_icon_green.svg";
-const imageSize = new kakao.maps.Size(24, 35);
-const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+const markerImage = new kakao.maps.MarkerImage(
+    '${pageContext.request.contextPath}/resources/images/campsite/location-dot-solid.svg',
+    new kakao.maps.Size(30, 40),
+    {
+        alt: "마커이미지"
+    }
+);
 
 const ps = new kakao.maps.services.Places(); 
 ps.keywordSearch(facltNm, placesSearchCB);

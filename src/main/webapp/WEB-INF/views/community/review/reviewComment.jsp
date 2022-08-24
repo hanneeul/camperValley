@@ -88,7 +88,7 @@
 										 			</c:if>
 											 	</div>
 											</div>
-											<div class="row mx-3">
+											<div class="col-md-12">
 												<c:choose>
 													<c:when test="${fn:contains(comment.commentContent, '<')}">
 												     	${fn:replace(comment.commentContent, '<', '&lt;')}
@@ -118,7 +118,7 @@
 									</c:if>
 									<div class="media-body">
 										<div class="row">
-											<div class="col-md d-flex my-2">
+											<div class="col-md-8 d-flex my-2">
 										    	<span class="font-weight-bold">${not empty comment.member.nickname ? comment.member.nickname : '(탈퇴회원)'}</span>&nbsp;
 										    	<span>
 										    		<fmt:parseDate value="${comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
@@ -133,22 +133,22 @@
 											 		</c:if>
 											 	</div>
 											</div>
-										</div>
-										<div class="row mx-1">
-											<c:choose>
-												<c:when test="${fn:contains(comment.commentContent, '<')}">
-											     	${fn:replace(comment.commentContent, '<', '&lt;')}
-												</c:when>
-												<c:when test="${fn:contains(comment.commentContent, '>')}">
-													${fn:replace(comment.commentContent, '>', '&gt;')}
-												</c:when>
-												<c:when test="${fn:contains(comment.commentContent, newLine)}">
-													${fn:replace(comment.commentContent, newLine, br)}
-												</c:when>
-												<c:otherwise>
-													${comment.commentContent}
-												</c:otherwise>
-											</c:choose>
+											<div class="col-md-12">
+												<c:choose>
+													<c:when test="${fn:contains(comment.commentContent, '<')}">
+												     	${fn:replace(comment.commentContent, '<', '&lt;')}
+													</c:when>
+													<c:when test="${fn:contains(comment.commentContent, '>')}">
+														${fn:replace(comment.commentContent, '>', '&gt;')}
+													</c:when>
+													<c:when test="${fn:contains(comment.commentContent, newLine)}">
+														${fn:replace(comment.commentContent, newLine, br)}
+													</c:when>
+													<c:otherwise>
+														${comment.commentContent}
+													</c:otherwise>
+												</c:choose>
+											</div>
 										</div>
 									</div>
 								</div>
