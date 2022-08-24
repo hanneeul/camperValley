@@ -20,6 +20,8 @@ public interface ChatService {
 
 	List<ChatLog> findRecentChatLogList(Map<String, Object> map);
 
+	int updateLastCheck(Map<String, Object> payload);
+
 	
 
 }

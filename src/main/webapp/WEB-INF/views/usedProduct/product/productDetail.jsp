@@ -48,7 +48,7 @@ $(document).ready(function() {
 }
 });
 //이미지 끝까지 가면 버튼 사라지기
-//첫 이미지로 돌아오기=
+//첫 이미지로 돌아오기
 </script>
 <script>
 

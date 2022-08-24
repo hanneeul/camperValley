@@ -107,6 +107,7 @@ $(function() {
 					<div class="chat-box"><div class="chat"><input type="hidden"></div></div>
 					<div class="my-chat-box"><div class="chat my-chat"><input type="hidden"></div></div>
 				</div>
+				
 				<!-- 하단 (입력창) -->
 				<div id="bottom_container" style="margin-top: 10.4px;">
 					<!-- 메세지 입력창 -->
