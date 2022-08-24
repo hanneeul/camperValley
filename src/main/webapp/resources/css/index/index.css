@@ -4,6 +4,7 @@
 .text-18 {font-size: 18px;}
 .text-22 {font-size: 22px;}
 .text-35 {font-size: 35px;}
+.text-50 {font-size: 50px;}
 .width-1000 {width: 1000px;}
 
 /* ----- 캠핑장 검색 ----- */
@@ -81,6 +82,8 @@ form[name=weatherFrm] .input {
 	font-size: 13px;
 	outline: 1px solid rgba(0, 50, 0, 0.5);
 	border-style: none;
+}
+#selectWeather i {
 }
 #selectArea select, #selectArea option {
 	cursor: pointer;
