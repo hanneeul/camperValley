@@ -65,6 +65,14 @@ $.ajax({
 		<input type="hidden" name="no" id="no" value="${no}"/>
 		<div class="chat_container">
 			<div id="chatroom_container">
+			<c:if test="${sellerId eq loginMember.memberId}">
+				<input type="submit" id="transaction_btn" value="거래완료"/>
+			</c:if>
+			<c:if test="${sellerId ne loginMember.memberId}">
+				<input type="hidden" id="transaction_btn" value=""/>
+			</c:if>
+			
+        
 			<div class="info_container">
 			<c:if test="${sellerId ne loginMember.memberId}">
 					<!-- 상단(닉네임, 아이디, 프로필) -->
