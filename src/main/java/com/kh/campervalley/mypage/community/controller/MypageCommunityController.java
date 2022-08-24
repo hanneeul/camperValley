@@ -52,6 +52,8 @@ public class MypageCommunityController {
 	@Autowired
 	ServletContext application;
 	
+
+	
 	// --------------------- EJ start
 	@GetMapping("/bookmark")
 	public ModelAndView bookmarkList(ModelAndView mav, @AuthenticationPrincipal Member loginMember, 
@@ -196,25 +198,22 @@ public class MypageCommunityController {
 	}
 	
 	@PostMapping("/myCamper/camperUpdate") 
-	public String camperUpdate(Camper camper,
+	public String camperUpdate(Camper camper, RedirectAttributes redirectAttr,
 				@RequestHeader(name = "Referer", required = false) String referer) {
 		try {
 			log.debug("camper = {}", camper);
 			log.debug("referer = {}", referer);
-			String escapeContent = camper.getContent().replaceAll("&", "&amp;")
-									   .replaceAll("<", "&lt;")
-									   .replaceAll(">", "&gt;");
-			camper.setContent(escapeContent);
 			log.debug("content = {}", camper.getContent());
 			int result = camperService.updateCamper(camper);
-			//redirectAttr.addFlashAttribute("msg", "게시글을 성공적으로 수정했습었습니다.");
+			redirectAttr.addFlashAttribute("msg", "게시글을 성공적으로 수정했습었습니다.");
 		} catch(Exception e) {
 			log.debug("캠퍼모집 수정 오류", e);
 			throw e;
 		}
-		return "redirect:/";
+		return "redirect:/mypage/community/myCamper";
 	}
 	
+
 	
 	@PostMapping("/myReview/delete")
 	public String reviewDelete(
