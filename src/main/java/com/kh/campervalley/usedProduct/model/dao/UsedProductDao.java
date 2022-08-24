@@ -57,6 +57,8 @@ public interface UsedProductDao {
 	
 	/*----- EJ START ----- */
 	List<UsedProduct> selectProductList(RowBounds rowBounds);
+	
+	int updateIsDelete(int productNo);	
 	/*----- EJ END ----- */
 
 	/*----- JH START ----- */

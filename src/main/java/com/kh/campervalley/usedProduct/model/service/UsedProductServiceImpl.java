@@ -179,7 +179,7 @@ public class UsedProductServiceImpl implements UsedProductService {
 
 	@Override
 	public int productDelete(int productNo) throws Exception {
-		return usedProductDao.productDelete(productNo);
+		return usedProductDao.updateIsDelete(productNo);
 	}
 
 	@Override
