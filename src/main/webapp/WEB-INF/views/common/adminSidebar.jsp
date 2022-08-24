@@ -25,5 +25,6 @@
 					<li><a href="${pageContext.request.contextPath}/admin/usedProductManagement">캠핑용품거래</a></li>
 				</ul></li>
 			<li><a href="${pageContext.request.contextPath}/admin/reportManagement">신고 관리</a></li>
+			<li><a href="https://desk.channel.io/#/channels/101441/user_chats/630499697ab1cf221c2b">1:1문의 관리</a></li>
 		</ul>
 	</nav>
