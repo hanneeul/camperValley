@@ -347,7 +347,7 @@ select *
 	update
 		used_product
 	set
-		is_delete = sysdate
+		is_delete = 'Y'
 	where
 		product_no = #{productNo}
 </update>
