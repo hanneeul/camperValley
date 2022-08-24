@@ -31,7 +31,8 @@
 	        where chatroom_id = cl.chatroom_id and buyer_id != #{buyerId}
 	    ) member_id,
 	    msg,
-	    time
+	    time,
+	    (select count(*) from chat_log where chatroom_id = cl.chatroom_id and time > (select last_check from chat_member where chatroom_id = cl.chatroom_id and seller_id = #{buyerId})) unread_count
 	from
 	    ( select
 	        cl.*, 

@@ -3,10 +3,10 @@ package com.kh.campervalley.ws;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.kh.campervalley.chat.model.service.ChatService;
 
@@ -34,12 +34,19 @@ public class StompController {
 	}
 	
 	@MessageMapping("/chat/{chatroomId}")
-	@SendTo("/app/chat/{chatroomId}")
-	public Map<String, Object> chat(Map<String, Object> payload, @DestinationVariable String chatroomId) {
+	@SendTo({"/app/chat/{chatroomId}", "/app/chat/chatList"})
+	public Map<String, Object> chat(Map<String, Object> payload) {
 		log.debug("payload = {}", payload);
 		int result = chatService.insertChatLog(payload);
-		log.debug("result = {}" + result);
-		
 		return payload;
 	}
+	
+	@MessageMapping("/chat/lastCheck")
+	@SendTo("/app/chat/lastCheck")
+	public Map<String, Object> lastCheck(@RequestBody Map<String, Object> payload) {
+		log.debug("payload = {}", payload);
+		int result = chatService.updateLastCheck(payload);
+		return payload;
+	}
+	
 }

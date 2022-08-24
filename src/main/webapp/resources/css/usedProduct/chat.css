@@ -55,9 +55,8 @@ h5 {
 #chatroom_container {
     width: 67%;
     float: right;
-    height: 500px;
+    height: 600px;
     overflow-x: hidden;
-    margin-right: 37px;
 }
 .chatRoom_content {
 	 margin-left: 14px;
@@ -111,14 +110,14 @@ font-size: 0.9rem;
 
 #chat_container {
     vertical-align: bottom;
-    padding: 9px 0px;
     width: 100%;
-    min-height: 79%;
-    max-height: 79%;
-    overflow: scroll;
-    overflow-x: hidden;
+    min-height: 82%;
+    max-height: 82%;
     display: inline-block;
     background-color: #f4f4f4;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-bottom: 5px;
 }
 
 /* 하단 */
@@ -143,14 +142,14 @@ font-size: 0.9rem;
 	border-width: 2px;
 }
 #sendBtn {
-	background-color: lightgray;
+	background-color: #639A67;
     border: none;
     border-radius: 7px;
     font-size: 0.7rem;
     font-weight: 600;
     width: 37px;
-    height: 24px;
-    color: gray;
+    color: white;
+    padding: 8px;
 }
 .extra-menu {
     display: flex;
@@ -240,7 +239,6 @@ font-size: 0.9rem;
     background: rgb(255, 255, 255);
     color: rgb(94, 92, 107);
     border: none;
-    width: 29.8%;
     overflow: scroll;
     overflow-x: hidden;
     min-height: 435px;
@@ -288,7 +286,7 @@ font-size: 0.9rem;
     border-radius: 40px;
     top: 4.6px;
 }
-.unread-count {
+/* .unread-count {
     display: flex;
     font-size: 0.45rem;
     justify-content: center;
@@ -299,7 +297,7 @@ font-size: 0.9rem;
     height: 13px;
     border-radius: 59px;
     background-color: #E80000;
-}
+} */
 .titleText {
     padding-top: -5px;
     font-size: 0.9rem;
