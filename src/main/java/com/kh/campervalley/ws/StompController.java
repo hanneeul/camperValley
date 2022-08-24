@@ -45,7 +45,7 @@ public class StompController {
 	@SendTo("/app/chat/lastCheck")
 	public Map<String, Object> lastCheck(@RequestBody Map<String, Object> payload) {
 		log.debug("payload = {}", payload);
-		int result = chatService.updateLastCheck(payload);
+//		int result = chatService.updateLastCheck(payload);
 		return payload;
 	}
 	

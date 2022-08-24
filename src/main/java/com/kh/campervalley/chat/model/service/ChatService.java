@@ -22,6 +22,10 @@ public interface ChatService {
 
 	int updateLastCheck(Map<String, Object> payload);
 
+	List<ChatMember> findChatMember(String memberId);
+
+	Map<String, Integer> getTotalUnreadCnt(List<ChatMember> chatMemberList, String memberId);
+
 	
 
 }

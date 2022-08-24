@@ -86,10 +86,11 @@ $.ajax({
 			</div>
 			<div id="chat_container">
 				<div class="msg_history">
-					<c:forEach items="${chatLogList}" var="chatLog">
-						<li class="list-group-item">${chatLog.memberId} : ${chatLog.msg}</li>
-					</c:forEach>
-					<ul class="list-group list-group-flush" id="msg-container"></ul>	
+					<ul class="list-group list-group-flush" id="msg-container">
+						<c:forEach items="${chatLogList}" var="chatLog">
+							<li class="list-group-item">${chatLog.memberId} : ${chatLog.msg}</li>
+						</c:forEach>	
+					</ul>	
 				</div>
 			</div>	
 		<div class="input-group mb-3">
@@ -127,10 +128,12 @@ $.ajax({
 <script>
 const chatroomId = '${chatroomId}';
 </script>
+<script src="${pageContext.request.contextPath}/resources/js/chat/chat.js"></script>
 
 <script>
-/* const wss = new SockJS(`http://${location.host}/campervalley/stomp`);
-const stompClients = Stomp.over(wss); */
+/* const ws = new SockJS(`http://${location.host}/campervalley/stomp`);
+const stompClient = Stomp.over(ws); */
+
 stompClient.connect({}, (frame) => {
 	console.log('connect : ', frame);
 	
@@ -144,7 +147,7 @@ stompClient.connect({}, (frame) => {
 			type : "LAST_CHECK"
 		};
 		
-		 stompClient.send("/app/chat/lastCheck", {}, JSON.stringify(payload)); 
+		 /* stompClient.send("/app/chat/lastCheck", {}, JSON.stringify(payload));  */
 	}
 	
 	lastCheck();
@@ -152,6 +155,24 @@ stompClient.connect({}, (frame) => {
 	setTimeout(() => {
 		const container = document.querySelector('#msg-container');
 		
+		stompClient.subscribe(`/app/chat/${chatroomId}`, (message) => {
+			console.log("여기!!!!");
+			console.log(`/app/chat/${chatroomId} : `, message);
+			
+	        const {'content-type' : contentType} = message.headers;
+	        console.log('contentType : ', contentType);
+	        if(!contentType) return;
+	        
+	        const {memberId, msg, time} = JSON.parse(message.body);
+	        console.log("memberId = ", memberId);
+	        console.log("msg = ", msg);
+	        const html = `<li class="list-group-item">\${memberId} : \${msg}</li>`;
+	        console.log("html = ", html);
+	        container.insertAdjacentHTML('beforeend', html);
+			
+		});
+		
+		// 채팅리스트
 		stompClient.subscribe("/app/chat/chatList", (message) => {
 			console.log('/app/chat/chatList : ', message);
 			const {chatroomId, memberId, msg, type} = JSON.parse(message.body);
@@ -201,14 +222,16 @@ stompClient.connect({}, (frame) => {
 			}
 		});	
 	}, 500);
+	
 	window.addEventListener('focus', (e) => {
 		lastCheck();
 	});
+	
+	
 });
 	
 	
 
 </script>
 
-<script src="${pageContext.request.contextPath}/resources/js/chat/chat.js"></script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

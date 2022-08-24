@@ -21,7 +21,8 @@ public class ChatMember {
 	@NonNull
 	private String buyerId;
 	private String buyerImg;
-	private String lastCheck;
+	private String sellerLastCheck;
+	private String buyerLastCheck;
 	private int productNo;
 	private LocalDateTime createdAt;
 	private LocalDateTime deletedAt;
