@@ -49,7 +49,6 @@
 .toggle-btn.active > .inner-circle {
   margin-left: 19px;
 }
-
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
@@ -76,6 +75,9 @@
 					<th class="col-sm-1"></th>
 				</tr>
 			</thead>
+			<c:if test="${empty list}">
+						<td colspan="8">조회된 회원이 없습니다.</td>
+					</c:if>
 			<tbody>
 			<c:forEach items="${list}" var="list" varStatus="vs">
 				<tr data-member-id="${list.memberId}" data-name="${list.name}" data-nickname="${list.nickname}" data-email="${list.email}" data-tel="${list.tel}" data-authorities="${list.authorities}">
@@ -103,7 +105,9 @@
 				</c:forEach>
 			</tbody>
 		</table>
-<div class="mt-5" id="pageBar">${pagebar}</div>
+<c:if test="${not empty list}">
+    	<div class="mt-5" id="pageBar">${pagebar}</div>
+</c:if>
 	</div>
 </div>
 <!-- 모달창 -->

@@ -23,9 +23,11 @@
 		  <button id="searchBtn" class="btn btn-primary" style="cursor: pointer;" onclick="search()">
 		      <i class="fas fa-search" style="color: #639A67;"></i>
 		  </button>
+		  <sec:authorize access="!hasRole('BLACK')">
 		  <div class="ml-1">
 			  <button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/usedProduct/product/registForm'">글쓰기</button>
 		  </div>
+		  </sec:authorize>
 		</div>
 			
 		<!-- 카테고리 선택 -->

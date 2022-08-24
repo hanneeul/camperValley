@@ -133,6 +133,8 @@ footer {
 	border: none;
 	color: red;
 	float: right;
+	font-weight: bold;
+    font-size: 15px;
 }
 
 .tb-todo tr:first-child>td, .tb-todo tr:first-child>th {

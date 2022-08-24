@@ -21,7 +21,7 @@
 </style>
 <div class="container" style="width: 870px;">            
 	<h5 class="cs-header text-center">FAQ 수정</h5>                          
-<form action="${pageContext.request.contextPath}/cs/faqUpdate" id="faqUpdateFrm" method="post" class="form-horizontal">
+<form:form name="faqUpdateFrm" action="${pageContext.request.contextPath}/cs/faqUpdate" id="faqUpdateFrm" method="post" class="form-horizontal">
 	
 	<div class="notice-wrap" style="width: 50%; float:none; margin:0 auto"></div>
 	<table class="table" id="tb-notice-enroll" style="margin-top: 47px;">
@@ -45,7 +45,23 @@
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<button class="btn btn-primary btn-sm" type="submit">수정하기</button>
 	</div>
-</form>
+</form:form>
 	</div>
-
+<script>
+document.faqUpdateFrm.onsubmit = (e) => {
+	const frm = e.target;
+	const titleVal = frm.title.value.trim();
+	if(!/^.+$/.test(titleVal)) {
+		alert("제목을 작성해주세요.");
+		frm.title.select();
+		return false;
+	}
+	const contentVal = frm.content.value.trim();
+	if(!/^(.|\n)+$/.test(contentVal)) {
+		alert("내용을 작성해주세요.");
+		frm.content.select();
+		return false;
+	}
+}
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
