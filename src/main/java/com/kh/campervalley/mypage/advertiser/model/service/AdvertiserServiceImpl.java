@@ -88,12 +88,14 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 		return result;
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int updateAdvertiserPause(int advertiserNo, String memberId) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberId", memberId);
 		map.put("auth", "ROLE_AD");
 		int result = advertiserDao.deleteAuthority(map);
+		result = advertiserDao.updateAdOff(memberId);
 
 		return result;
 	}

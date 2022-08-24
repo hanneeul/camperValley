@@ -161,6 +161,7 @@ public class CampsiteController {
 	}
 	// --------------------- EJ end
 	
+
 	// --------------------- JH start
 	@GetMapping("/searchCampsiteIndex")
 	public ModelAndView searchDetailTheme(

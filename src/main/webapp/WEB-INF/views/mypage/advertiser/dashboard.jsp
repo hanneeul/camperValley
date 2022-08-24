@@ -46,9 +46,12 @@
 						</div>
 					</form>
 				</div>
-				<div class="divAdMoney align-self-center">
-					<h5 class="d-inline">
-						<span>${advertiser.bizName}</span>의
+				<div class="divAdMoney align-self-center d-flex">
+					<h5 class="d-inline d-flex align-items-center">
+						<c:if test="${isPauseAdvertiser eq true}">
+							<span class="badge badge-pill badge-warning mx-2 pusedStatusBadge">권한정지</span>
+						</c:if>
+						<span class="advertiserName">${advertiser.bizName}</span>의&nbsp;
 						<a id="adMoneyCharge" href="${pageContext.request.contextPath}/mypage/advertiser/admoney?no=${advertiser.advertiserNo}">애드머니</a>
 					</h5>
 					<h5 class="d-inline" id="admoneyAmount" data-balance="${advertiser.admoney.balance}">
@@ -59,7 +62,9 @@
 			<div class="my-3 py-2" id="chartSection">
 				<canvas id="lineChart"></canvas>
 			</div>
-			<button type="button" class="btn btn-camper-color btn-sm" onclick="location.href='${pageContext.request.contextPath}/mypage/advertiser/enrollAd?no=${advertiser.advertiserNo}'">광고만들기</button>
+			<button type="button" class="btn btn-camper-color btn-sm"
+				onclick="location.href='${pageContext.request.contextPath}/mypage/advertiser/enrollAd?no=${advertiser.advertiserNo}'"
+				${isPauseAdvertiser eq true ? 'disabled' : ''}>광고만들기</button>
 			<table id="tblAdList" class="table my-3">
 				<thead class="adListHead">
 					<tr class="text-center">
@@ -83,7 +88,9 @@
 						<c:forEach items="${adList}" var="advertisement" varStatus="vs">
 							<tr data-advertisement-no="${advertisement.advertisementNo}" data-cpc="${advertisement.adCpc}"
 								data-daily-budget="${advertisement.adDailyBudget}" id="tr${vs.count}">
-								<td class="text-center"><button class="btn btn-camper-red btn-sm delAdBtn">삭제</button></td>
+								<td class="text-center">
+									<button class="btn btn-camper-red btn-sm delAdBtn" ${isPauseAdvertiser eq true ? 'disabled' : ''}>삭제</button>
+								</td>
 								<td>
 									<div class="custom-control custom-switch text-center">
 										<input type="checkbox" class="custom-control-input" name="adStatus" id="customSwitch${vs.count}"
@@ -128,7 +135,7 @@
 										name="adDailyBudget" value="${advertisement.adDailyBudget}" />
 								</td>
 								<td class="text-center">
-									<button class="btn btn-camper-color btn-sm updateAdBtn">적용</button>
+									<button class="btn btn-camper-color btn-sm updateAdBtn" ${isPauseAdvertiser eq true ? 'disabled' : ''}>적용</button>
 								</td>
 							</tr>
 						</c:forEach>

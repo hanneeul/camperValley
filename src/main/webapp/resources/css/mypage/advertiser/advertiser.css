@@ -58,7 +58,11 @@ input.input-daterange {
 form[name="chartPeriodFrm"] .form-row > *, .divAdMoney > * {
 	margin: 0 0.2rem;
 }
-.divAdMoney > h5 > span {
+.divAdMoney > h5 > span.pusedStatusBadge {
+	font-size: .75rem;
+	height: 1.2rem;
+}
+.divAdMoney > h5 > span.advertiserName {
 	color: #D9BF77;
 }
 #adMoneyCharge {
