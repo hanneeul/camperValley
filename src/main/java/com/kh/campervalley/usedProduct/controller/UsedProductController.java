@@ -292,6 +292,7 @@ public class UsedProductController  {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("profileImg", member.getProfileImg());
 		mav.addObject("member", member);
+		mav.addObject("sellerId", member.getMemberId());
 		mav.addObject("sellerProdNum", sellerProdNum);
 		mav.setViewName("jsonView");
 		

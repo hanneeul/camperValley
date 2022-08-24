@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.kh.campervalley.chat.model.dto.ChatLog;
 import com.kh.campervalley.chat.model.dto.ChatMember;
@@ -18,11 +19,14 @@ public interface ChatDao {
 	@Select("select * from chat_member where seller_id in (#{sellerId}, #{buyerId}) and buyer_id in (#{sellerId}, #{buyerId})")
 	ChatMember findChatMemberByMemberId(Map<String, Object> map);
 
-	@Insert("insert into chat_log values (seq_chat_log_no.nextval, #{chatroomId}, #{memberId}, null, #{msg}, #{time})")
+	@Insert("insert into chat_log(no, chatroom_id, member_id, msg, time) values (seq_chat_log_no.nextval, #{chatroomId}, #{memberId}, #{msg}, #{time})")
 	int insertChatLog(Map<String, Object> payload);
 
 	@Select("select * from chat_log where chatroom_id = #{chatroomId} order by time")
 	List<ChatLog> findChatLogByChatroomId(String chatroomId);
 
 	List<ChatLog> findRecentChatLogList(Map<String, Object> map);
+
+	@Update("update chat_member set last_check = #{lastCheck} where chatroom_id = #{chatroomId} and seller_id = #{sellerId}")
+	int updateLastCheck(Map<String, Object> payload);
 }

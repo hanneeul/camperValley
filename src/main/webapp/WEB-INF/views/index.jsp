@@ -6,7 +6,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index/index.css"/>
+<spring:eval var="localApiKey" expression="@customProperties['api.kakaoLocal']" />
+<spring:eval var="weatherApiKey" expression="@customProperties['api.openweatherMap']" />
 	<!-- 검색 -->
 	<div id="searchWeatherBox" style="background-image:url('${pageContext.request.contextPath}/resources/images/index/top.jpg')">
 		<form id="searchFrmTop" name="searchFrmTop" action="${pageContext.request.contextPath}/campsite/searchCampsiteIndex" class="shadow-custom width-1000 mx-auto p-4 bg-white d-flex justify-content-between">
@@ -75,50 +78,19 @@
 				</div>
 				<div id="selectWeather">
 					<div id="weather-btn" class="text-18 font-weight-bold py-4 mt-5">그날의 날씨는 ?</div>
-					<!-- <div class="d-flex justify-content-between mb-2">
-						<div>
-							<div class="text-center">
-								<div>금</div>
-								<i class="fa-solid fa-bolt-lightning fa-lg"></i>
-							</div>
+					<div id="responseSection" class="d-flex justify-content-start">
+						<!-- <div id="icon">
+							<i class="fas fa-sun fa-4x mt-2" style="color:rgb(225, 225, 225); top:10px;"></i>
 						</div>
-						<div>
-							<div class="text-center">
-								<div>토</div>
-								<i class="fa-solid fa-bolt-lightning fa-lg"></i>
-							</div>
+						<div id="temp" class="text-50 mx-3">12&#8451;</div>
+						<div id="areaAndMain">
+							<div id="dateInfo" class="text-18 mt-2" style="color:#d9bf77;">August 16, 2022</div>
+								<div id="main" class="text-15">구름많음</div>
 						</div>
-						<div>
-							<div class="text-center">
-								<div>일</div>
-								<i class="fa-solid fa-cloud fa-lg"></i>
-							</div>
-						</div>
-						<div>
-							<div class="text-center">
-								<div class="rounded-circle bg-camper-color text-light">월</div>
-								<i class="fa-solid fa-cloud-sun fa-lg"></i>
-							</div>
-						</div>
-						<div>
-							<div class="text-center">
-								<div>화</div>
-								<i class="fa-solid fa-cloud-rain fa-lg"></i>
-							</div>
-						</div>
-						<div>
-							<div class="text-center">
-								<div>수</div>
-								<i class="fa-solid fa-wind fa-lg"></i>
-							</div>
-						</div>
-						<div>
-							<div class="text-center">
-								<div>목</div>
-								<i class="fa-solid fa-cloud fa-lg"></i>
-							</div>
-						</div>
-					</div> -->
+						<div id="day">
+							<div id="day" class="text-22 ml-4 mt-4 pt-2 pl-2">수요일</div>
+						</div> -->
+					</div>
 				</div>
 			</div>
 		</form>
@@ -365,36 +337,103 @@ $(".campsite").mouseout((bg) => {
 	$(bg.target).animate({opacity:0.7}, 500);
 });
 
-// calendar 날짜 선택시 날씨 조회 비동기 요청
-document.querySelectorAll("#selectCalendar .this").forEach((date) => {
-	date.addEventListener("click", (e) => {
-		getWeather();
+let lat;
+let lon;
+let latLonArray;
+
+const getLatLon = (area) => {
+	$.ajax({
+		url: 'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodeURIComponent(area),
+		type: 'GET',
+		async: false,
+		headers: {'Authorization' : 'KakaoAK ${localApiKey}'},
+		success(response) {
+			lon = response.documents[0].x;
+			lat = response.documents[0].y;
+			latLonArray = [lat, lon];
+		},
+		error: console.log
+	});
+	return latLonArray;
+}
+let weatherIcon = {
+	'01' : 'fas fa-sun fa-4x',
+	'02' : 'fas fa-cloud-sun fa-4x',
+	'03' : 'fas fa-cloud fa-4x',
+	'04' : 'fas fa-cloud-meatball fa-4x',
+	'09' : 'fas fa-cloud-sun-rain fa-4x',
+	'10' : 'fas fa-cloud-showers-heavy fa-4x',
+	'11' : 'fas fa-poo-storm fa-4x',
+	'13' : 'far fa-snowflake fa-4x',
+	'50' : 'fas fa-smog fa-4x'
+};
+let weatherMain = {
+	'01' : '맑음(구름없음)',
+	'02' : '구름 조금',
+	'03' : '대체로 흐림',
+	'04' : '잔뜩 흐림',
+	'09' : '비 조금',
+	'10' : '비',
+	'11' : '천둥번개',
+	'13' : '눈',
+	'50' : '안개'
+}
+const getWeather = (latLonArray) => {
+	$("#responseSection").html("");
+	$.ajax({
+		url: `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=\${latLonArray[0]}&lon=\${latLonArray[1]}&appid=${weatherApiKey}`,
+		dataType: "json",
+		success(response) {
+			const {list} = response;
+			console.log(selectDate);
+			for(let i = 0; i < list.length; i++) {
+				const getDate = selectDate.getFullYear() + "-" + f(selectDate.getMonth() + 1) + "-" + f(selectDate.getDate());
+				if(list[i].dt_txt.includes("15:00") && list[i].dt_txt.split(" ")[0] == getDate) {
+					console.log(list[i]);
+					const icon = (list[i].weather[0].icon).substr(0,2);
+					const temp = Math.floor(list[i].main.temp, 1) + '&#8451;';
+					const monthName = selectDate.toLocaleString("en-US", {month: "short"});
+					const weekday = ['일', '월', '화', '수', '목', '금', '토'];
+					const dayName = weekday[selectDate.getDay()];
+					
+					const $iconDiv = $('<div></div>');
+					const $icon = $(`<i class="\${weatherIcon[icon]} mt-2" style="color: rgb(225, 225, 225); width:80px;"></i>`);
+					const $temp = $(`<div class="text-50 mx-3">\${temp}</div>`);
+					const $dateAndMainDiv = $('<div></div>');
+					const $dateInfo = $(`<div class="text-18 mt-2" style="color:#d9bf77;">\${monthName} \${selectDate.getDate()}, \${selectDate.getFullYear()}</div>`)
+					const $main = $(`<div class="text-15">\${weatherMain[icon]}</div>`);
+					const $day = $(`<div class="text-22 ml-4 mt-4 pt-2 pl-2">\${dayName}요일</div>`);
+					$dateAndMainDiv.append($dateInfo, $main);
+					$iconDiv.append($icon);
+					$("#responseSection").append($icon, $temp, $dateAndMainDiv, $day);
+				}
+				
+			}
+		},
+		error: console.log
+	});
+}
+
+const f = (n) => n < 10 ? "0" + n : n;
+
+$("#areaWeatherBox select").on("change", () => {
+	// 첫번째 select 변경 시 두번째 select 그 전의 값 불러오는 오류
+	$(document).ready(() => {
+		const area = $("#areaWeatherBox #sido2").val() + " " + $("#areaWeatherBox #gugun2").val();
+		console.log(area);
+		getWeather(getLatLon(area));
 	});
 });
 
-const getWeather = () => {
-	if(!$("#areaWeatherBox #sido2").val() || !$("#areaWeatherBox #gugun2").val()) {
-		$.ajax({
-			url: "https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=258c117568975d31910fb88d82e33c36",
-			dataType: "json",
-			success(response) {
-				const $totalWeatherBox = $('<div class="d-flex justify-content-between mb-2">');
-				const $weatherBox = $('<div></div>');
-				console.log(response);
-				/* 
-				<div class="d-flex justify-content-between mb-2">
-					<div>
-						<div class="text-center">
-							<div>금</div>
-							<i class="fa-solid fa-bolt-lightning fa-lg"></i>
-						</div>
-					</div>
-				*/
-			},
-			error: console.log
-		});
-	}
-}
+//calendar 날짜 선택시 날씨 조회 비동기 요청
+document.querySelectorAll("#selectCalendar .this").forEach((date) => {
+	date.addEventListener("click", (e) => {
+		if($("#areaWeatherBox #sido2").val() && $("#areaWeatherBox #gugun2").val()) {
+			const area = $("#areaWeatherBox #sido2").val() + " " + $("#areaWeatherBox #gugun2").val();
+			getWeather(getLatLon(area));
+		}
+	});
+});
 
 $("#searchFrmBottom #glamping").on("click", () => {
 	const frm = document.searchFrmBottom;
@@ -406,8 +445,6 @@ $("#searchFrmBottom #caravan").on("click", () => {
 	frm.induty.value = "카라반";
 	frm.submit();
 });
-
-
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 <%-- EJ start --%>

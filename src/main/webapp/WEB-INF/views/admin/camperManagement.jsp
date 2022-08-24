@@ -45,6 +45,9 @@
 						<th>작성일</th>
 					</tr>
 				</thead>
+				<c:if test="${empty list}">
+						<td colspan="5">등록된 글이 없습니다.</td>
+					</c:if>
 				<tbody>
 				<form action="${pageContext.request.contextPath}/admin/camperDelete" method="post" name="deleteCamperFrm">
 				<c:forEach items="${list}" var="list" varStatus="vs">
@@ -75,7 +78,9 @@
 					</form>
 				</tbody>
 			</table>
-			<div class="mt-5" id="pageBar">${pagebar}</div>
+			<c:if test="${not empty list}">
+    	<div class="mt-5" id="pageBar">${pagebar}</div>
+</c:if>
 	</div>
 </div>
 

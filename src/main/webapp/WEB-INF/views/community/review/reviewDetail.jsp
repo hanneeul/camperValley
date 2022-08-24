@@ -12,62 +12,14 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/review/review.css" />
 <style>
-#photo {
-	border-radius: 5px;
-	cursor: pointer;
-	transition: 0.3s;
-}
-#photo:hover {
-	opacity: 0.7;
-}
-.photo-modal {
-	display: none;
-	position: fixed;
-	z-index: 2000;
-	padding-top: 100px;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgb(0,0,0);
-	background-color: rgba(0,0,0,0.9);
-}
-.modal-content {
-	margin: auto;
-	display: block;
-	width: 80%;
-	max-width: fit-content;
-	animation-name: zoom;
-	animation-duration: 0.6s;
-}
-@keyframes zoom {
-	from {
-		transform: scale(0)
-	}
-	to {
-		transform: scale(1)
-	}
-}
-.modal-close {
-	position: absolute;
-	top: 15px;
-	right: 35px;
-	color: #f1f1f1;
-	font-size: 40px;
-	font-weight: bold;
-	transition: 0.3s;
-}
-.modal-close:hover, .modal-close:focus {
-	color: #bbb;
-	text-decoration: none;
-	cursor: pointer;
-}
-@media only screen and (max-width: 700px) {
-	.modal-content {
-		width: 100%;
-	}
-}
+.detail-photo {border-radius: 5px; cursor: pointer;	transition: 0.3s;}
+.detail-photo:hover {opacity: 0.7;}
+.photo-modal {display: none; position: fixed; z-index: 2000; padding-top: 100px; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.9);}
+.modal-content {margin: auto; display: block; width: 80%; max-width: fit-content; animation-name: zoom; animation-duration: 0.6s;}
+@keyframes zoom { from {transform: scale(0)} to {transform: scale(1)} }
+.modal-close {position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s;}
+.modal-close:hover, .modal-close:focus {color: #bbb; text-decoration: none; cursor: pointer;}
+@media only screen and (max-width: 700px) {	.modal-content {width: 100%;} }
 </style>
 
 <!-- Swiper -->
@@ -147,17 +99,19 @@
 				</ul>
 			</div>
 		</div>
+		<!-- Photo Swiper -->
 		<c:if test="${not empty photoList}">
-			<c:forEach items="${photoList}" var="photo">
-				<!-- Photo Swiper -->
-				<div class="swiper-container detail-photo-list">
-					<div class="swiper-wrapper">
-						<div class="swiper-slide"><img id="photo" onclick="photoZoomIn();" src="${pageContext.request.contextPath}/resources/upload/community/review/${photo.renamedFilename}" alt="${photo.originalFilename}"></div>
-					</div>
-					<div class="swiper-button-next"></div>
-					<div class="swiper-button-prev"></div>
+			<div class="swiper-container detail-photo-list">
+				<div class="swiper-wrapper">
+					<c:forEach items="${photoList}" var="photo">
+						<div class="swiper-slide">
+							<img class="detail-photo" src="${pageContext.request.contextPath}/resources/upload/community/review/${photo.renamedFilename}" alt="${photo.originalFilename}">
+						</div>
+					</c:forEach>
 				</div>
-			</c:forEach>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+			</div>
 			<!-- Photo Modal -->
 			<div id="photoModal" class="modal photo-modal">
 			  	<span class="modal-close" onclick="photoModalClose();">&times;</span>
@@ -282,12 +236,14 @@ const reviewDelete = () => {
  * 이미지 클릭시 모달창 실행
  */
 let photoModal = document.getElementById("photoModal");
-let photo = document.getElementById("photo");
 let photoModalContent = document.getElementById("photoModalContent");
-const photoZoomIn = () => {
-	photoModal.style.display = "block";
-	photoModalContent.src = photo.src;
-};
+
+document.querySelectorAll('.detail-photo').forEach((photo) => {
+	photo.addEventListener('click', (e) => {
+		photoModal.style.display = "block";
+		photoModalContent.src = e.target.src;
+	});
+});
 
 let modalClose = document.getElementsByClassName("modal-close")[0];
 const photoModalClose = () => {

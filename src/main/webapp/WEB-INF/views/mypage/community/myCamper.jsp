@@ -90,7 +90,7 @@
 							</select>
                         </td>
                         <td class="text-left">
-                            <span class="title" data-toggle="modal" data-target="#camper-detail">${camper.title}</span>
+                            <span class="title" data-toggle="modal" data-target="#camper-detail"><c:out value="${camper.title}"/></span>
                         </td>
                         <td>
 							${camper.departureDate} ~ ${camper.arrivalDate}
@@ -210,7 +210,7 @@ $("span.title").click((e)=>{
 		data: {camperNo},
 		success(response) {
 			const {camper} = response;
-			$("h4#detailTitle").html(camper.title);
+			$("h4#detailTitle").html(XSSFilter(camper.title));
 			$("span#area").html(camper.area);
 			const departureDate = camper.departureDate;
 			const arrivalDate = camper.arrivalDate;
@@ -220,27 +220,32 @@ $("span.title").click((e)=>{
 			$("div#memberCount").html(camper.memberCount + "명");
 			//상태
 			camper.status === "C" ? $("#camper-detail option[value=C]").attr("selected",true) : $("#camper-detail option[value=C]").attr("selected",false);
-			$("p#content").html(camper.content);
-			$("p#purpose").html(camper.purpose);
-			$("p#expectedCost").html(camper.expectedCost);
-			
+			$("p#content").html(XSSFilter(camper.content));
+			$("p#purpose").html(XSSFilter(camper.purpose));
+			$("p#expectedCost").html(XSSFilter(camper.expectedCost));
 		
+
 			$("#update").click((e) => {
 				const areas = camper.area.split(" ");
 				document.querySelectorAll("#sido1 option").forEach((option) => {
 					if(areas[0] === $(option).val()) {
-						$(option).prop("selected", true);
-						document.querySelectorAll("#gugun1 option").forEach((option) => {
-						$(option).prop("selected", true);
-							console.log(option);
-						});
+						$(option).prop("selected", true).change();
 					}
 				});
-
+				document.querySelectorAll("#gugun1 option").forEach((option) => {
+					if(areas[1] === $(option).val()) {
+						$(option).prop("selected", true).change();
+					}
+			});
+								
+				ps = (str)=>{
+					return ('00' + str).slice(-2);
+				}
 				
 				
-			//	$("#camperUpdate input[name=departureDate]").val(departureDate.year + "-" + departureDate.monthValue + "-" + departureDate.dayOfMonth);
-			//	$("#camperUpdate input[name=arrivalDate]").val(arrivalDate.year + "-" + arrivalDate.monthValue + "-" + arrivalDate.dayOfMonth);
+				$("#camperUpdate input[name=departureDate]").val(departureDate.year + "-" + ps(camper.departureDate.monthValue) + "-" + ps(departureDate.dayOfMonth));
+				$("#camperUpdate input[name=arrivalDate]").val(arrivalDate.year + "-" + ps(arrivalDate.monthValue) + "-" + ps(arrivalDate.dayOfMonth));
+				
 				$("#camperUpdate #memberCount").val(camper.memberCount);
 				$("#camperUpdate #title").val(camper.title);
 				$("#camperUpdate #content").val(camper.content);
@@ -275,7 +280,9 @@ $("#search").click(e=>{
 	
 });
 
-//
+const XSSFilter = (str) => {
+	return str.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("'", "&quot;").replaceAll('"', '&#39;');
+}
 
 
 

@@ -2,6 +2,7 @@ package com.kh.campervalley.cs.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,15 +10,20 @@ import java.util.Map;
 import javax.management.NotCompliantMBeanException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -219,6 +225,33 @@ public class CsController {
 			throw e;
 		}
 		return mav;
+	}
+	
+	@GetMapping(path = "/fileDownload", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@ResponseBody
+	public Resource fileDownload(@RequestParam int noticeAttachNo, HttpServletResponse response) throws Exception {
+		Resource resource = null;
+		try {
+			NoticeAttach attach = csService.selectOneAttachment(noticeAttachNo);
+			log.debug("attach = {}", attach);
+			
+			String saveDirectory = application.getRealPath("/resources/upload/cs");
+			File downFile = new File(saveDirectory, attach.getRenamedFilename());
+			
+			String location = "file:" + downFile;
+			log.debug("location = {}", location);
+			resource = resourceLoader.getResource(location);
+			
+			String filename = URLEncoder.encode(attach.getOriginalFilename(), "utf-8");
+			response.addHeader(HttpHeaders.CONTENT_DISPOSITION, 
+					"attachment; filename=\"" + filename + "\"");
+		}
+		catch(Exception e) {
+			log.error("파일 다운로드 오류", e);
+			throw e;
+		}
+		
+		return resource;
 	}
 
 	@GetMapping("/faq")

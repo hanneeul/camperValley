@@ -20,7 +20,7 @@
 </style>
 <div class="container" style="width: 870px;">            
 	<h5 class="cs-header text-center">공지사항 등록</h5>                          
-<form:form name="noticeFrm" action="${pageContext.request.contextPath}/cs/noticeEnroll" method="post" class="form-horizontal" enctype="multipart/form-data">
+<form:form name="noticeEnrollFrm" action="${pageContext.request.contextPath}/cs/noticeEnroll" method="post" class="form-horizontal" enctype="multipart/form-data">
 
 	<div class="notice-wrap" style="width: 50%; float:none; margin:0 auto"></div>
 	<table class="table" id="tb-notice-enroll" style="margin-top: 47px;">
@@ -53,6 +53,24 @@
 </form:form>
 	</div>
 <script>
+
+document.noticeEnrollFrm.onsubmit = (e) => {
+	const frm = e.target;
+	console.log(frm);
+	const titleVal = frm.title.value.trim();
+	if(!/^.+$/.test(titleVal)) {
+		alert("제목을 작성해주세요.");
+		frm.title.select();
+		return false;
+	}
+	const contentVal = frm.content.value.trim();
+	if(!/^(.|\n)+$/.test(contentVal)) {
+		alert("내용을 작성해주세요.");
+		frm.content.select();
+		return false;
+	}
+}
+
 document.querySelectorAll("[name=upFile]").forEach((input) => {
 	input.addEventListener('change', (e) => {
 		const [file] = e.target.files;

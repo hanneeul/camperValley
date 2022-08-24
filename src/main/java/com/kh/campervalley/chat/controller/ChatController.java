@@ -5,15 +5,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.campervalley.chat.model.dto.ChatLog;
 import com.kh.campervalley.chat.model.dto.ChatMember;
@@ -35,7 +37,7 @@ public class ChatController {
 	UsedProductService usedProductService;
 	
 	@GetMapping("/chat")
-	public void chat(@AuthenticationPrincipal Member member, @RequestParam("no") String no, ModelAndView mav, Model model) {
+	public void chat(@AuthenticationPrincipal Member member, @RequestParam("no") String no, Model model) {
 		// seller, buyer 정보
 		Member seller = usedProductService.getSellerInfo(Integer.parseInt(no));
 		String sellerId = seller.getMemberId();
@@ -82,9 +84,16 @@ public class ChatController {
 					log.debug("result = {}", result);		
 				}
 		}
+		List<ChatLog> list = chatService.findRecentChatLogList(map);
+		
+		log.debug("Recentlist = {}", list);
+		
+		model.addAttribute("list", list);
 		
 		log.debug("chatroomId = {}", chatroomId);
 		model.addAttribute("chatroomId", chatroomId);
+		model.addAttribute("sellerId", sellerId);
+		log.debug("sellerId = {}", sellerId);
 		model.addAttribute("no", no);
 	
 	}
@@ -106,28 +115,36 @@ public class ChatController {
 		return sb.toString();
 	}
 	
-	// 채팅목록
-	@GetMapping("/chatList")
-	@ResponseBody
-	public ModelAndView chatList(ModelAndView mav, @RequestParam String no, @AuthenticationPrincipal Member loginMember) {
-		Member seller = usedProductService.getSellerInfo(Integer.parseInt(no));
-		String sellerId = seller.getMemberId();
-		String buyerId = loginMember.getMemberId();
-		String buyerImg = loginMember.getProfileImg();
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("sellerId", sellerId);
-		map.put("buyerId", buyerId);
-		map.put("buyerImg", buyerImg);
-		
-		List<ChatLog> list = chatService.findRecentChatLogList(map);
-		
-		log.debug("Recentlist = {}", list);
-		System.out.println("list1234 = " + list);
-		
-		mav.addObject("list", list);	
-		mav.setViewName("jsonView");
-		return mav;			
-	}
+	/**
+	 * 로그인 성공시 후처리
+	 */
+	/*
+	 * @PostMapping("/loginSuccess.do") public String loginSuccess(@RequestParam
+	 * String memberId, HttpSession session, Model model) { Member seller =
+	 * usedProductService.getSellerInfo(Integer.parseInt(no)); String sellerId =
+	 * sellerId.getMemberId(); String buyerId = member.getMemberId(); String
+	 * buyerImg = member.getProfileImg();
+	 * 
+	 * Map<String, Object> map = new HashMap<>(); map.put("sellerId", sellerId);
+	 * map.put("buyerId", buyerId); map.put("buyerImg", buyerImg);
+	 * 
+	 * log.debug("loginSuccess");
+	 * 
+	 * // 관리자와의 1:1채팅 안읽은 메세지 카운팅 ChatMember chatMember =
+	 * chatService.findChatMemberByMemberId(memberId); int unreadCount = 0;
+	 * if(chatMember != null) { unreadCount =
+	 * chatService.getUnreadCount(chatMember); // 세션스코프에 저장 (리다이렉트이기때문)
+	 * session.setAttribute("unreadCount", unreadCount); }
+	 * log.debug("unreadCount = {}", unreadCount);
+	 * 
+	 * 
+	 * // security redirect 사용하기 SavedRequest savedRequest = (SavedRequest)
+	 * session.getAttribute("SPRING_SECURITY_SAVED_REQUEST"); String location = "/";
+	 * if (savedRequest != null) location = savedRequest.getRedirectUrl();
+	 * 
+	 * log.debug("location = {}", location);
+	 * 
+	 * return "redirect:" + location; }
+	 */
 	
 }

@@ -65,7 +65,7 @@
 											<td>${todo.todo}</td>
 											<td class="col-md-1">
 											<button class="x-icon btn-delete" data-todo-no="${todo.todoNo}">
-													<i class="fa-solid fa-xmark"></i>
+													X
 												</button></td>
 										</tr>
 										</c:forEach>
