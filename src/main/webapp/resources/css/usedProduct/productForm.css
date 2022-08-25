@@ -1,20 +1,20 @@
-.enrollWrap {
+.enrollWrap, .updateWrap {
 	background: rgb(255, 255, 255);
     font-size: 16px;
 }
 
-/************ enrollBody ************/
-.enrollBody {
+/************ enroll/updateBody ************/
+.enrollBody, .updateBody {
     font-size: 16px;
     position: relative;
 }
-.enrollBody section {
+.enrollBody section, .updateBody section {
     display: block;
 }
 .section {
     margin-bottom: 3rem;
 }
-.enrollBody section h2 {
+.enrollBody section h2, .updateBody section h2 {
 	height: 100px;
     font-size: 27px;
     display: flex;
@@ -29,28 +29,32 @@
 	font-weight: 600;
 	
 }
-.enrollBody section h2 span {
+.enrollBody section h2 span, .updateBody section h2 span {
     color: #EB0000;
     font-size: 1rem;
     margin-left: 1.5rem;
 }
 
-.enrollMain {
+.enrollMain, .updateMain {
     display: block;
     width: 1024px;
     margin: auto;
 }
-.enrollMain input, .enrollMain textarea {
+.enrollMain input, .enrollMain textarea,
+.updateMain input, .updateMain textarea {
     border: 1px solid rgb(195, 194, 204);
 }
-.enrollMain input:not([type="file"]):not([type="radio"]) {
+.enrollMain input:not([type="file"]):not([type="radio"]),
+.updateMain input:not([type="file"]):not([type="radio"]) {
     height: 3rem;
     padding: 0px 1rem;
 }
-.enrollMain input:not([type="file"]):not([type="radio"]):read-only {
+.enrollMain input:not([type="file"]):not([type="radio"]):read-only,
+.updateMain input:not([type="file"]):not([type="radio"]):read-only {
     background: rgb(244, 244, 250);
 }
-.enrollMain textarea {
+.enrollMain textarea,
+.updateMain textarea {
     padding: 1rem;
     resize: none;
     line-height: 1.35;
@@ -380,17 +384,19 @@ image_sub > .small {
 }
 .instruction textarea {
     padding: 1rem;
-    resize: none;
     line-height: 1.35;
 }
+#productContent {
+    resize: none!important;	
+}
 
-/************ 등록하기 ************/
+/************ 등록/수정하기 ************/
 .btmArea {
     display: flex;
     justify-content: flex-end;
     margin-right: -43px;
 }
-.enrollBtn {
+.enrollBtn, .updateBtn {
     height: 3rem;
     width: 8rem;
     color: rgb(255, 255, 255);
@@ -479,4 +485,7 @@ image_sub > .small {
     color: gray;
     margin-top: 10px;
     margin-right: 9px;
+}
+.ex-product-img small {
+	color: red!important;
 }
