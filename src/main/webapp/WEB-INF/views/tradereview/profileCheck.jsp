@@ -97,6 +97,7 @@ const renderProductList = (cPage) => {
 		dataType: "json",
 		success(response) {
 			const {productList, pagebar} = response;
+			console.log(productList);
 			for(let i = 0; i < productList.length; i++) {
 				const $productBox = $(`<div class="productBox d-flex ml-3 mb-4" onclick='location.href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=\${productList[i].productNo}"'></div>`);
 				const $productImgBox = $('<div class="image col-md-3 px-0"></div>');

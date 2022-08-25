@@ -57,6 +57,10 @@ public interface UsedProductDao {
 	
 	/*----- EJ START ----- */
 	List<UsedProduct> selectProductList(RowBounds rowBounds);
+	
+	int updateIsDelete(int productNo);
+	
+	int getWishCount(String memberId);	
 	/*----- EJ END ----- */
 
 	/*----- JH START ----- */
@@ -64,5 +68,11 @@ public interface UsedProductDao {
 
 	int selectTotalProductByMemberId(String memberId);
 	/*----- JH END ----- */
+
+	/*----- SJ START ----- */
+	int deleteProductImg(UsedProduct usedProduct);
+
+	int updateUsedProduct(UsedProduct usedProduct);
+	/*----- SJ END ----- */
 
 }

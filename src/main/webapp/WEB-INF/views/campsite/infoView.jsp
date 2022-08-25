@@ -439,34 +439,7 @@
 </div>
 <%-- EJ start --%>
 <sec:authentication property="principal" var="loginMember" scope="page"/>
-
-<sec:authorize access="isAuthenticated()">
 <script>
-<<<<<<< HEAD
-//--------------------- EJ start
-const headers = {
-	"${_csrf.headerName}" : "${_csrf.token}"
-};
-
-
-/**
- * 캠핑장 즐겨찾기
- */
-if(document.querySelector('#bookmarkBtn') != null) {
-	document.querySelector('#bookmarkBtn').addEventListener('click', (e) => {
-		$.ajax({
-			url : '${pageContext.request.contextPath}/campsite/addBookmark',
-			type : 'POST',
-			headers,
-			data : {
-				contentId : ${param.contentId},
-				memberId : "${loginMember.memberId}"
-			},
-			success(response) {
-				location.reload();
-			},
-			error : console.log
-=======
 <sec:authorize access="isAuthenticated()">
 	const headers = {
 		"${_csrf.headerName}" : "${_csrf.token}"
@@ -487,7 +460,6 @@ if(document.querySelector('#bookmarkBtn') != null) {
 				},
 				error : console.log
 			});
->>>>>>> refs/remotes/origin/dev
 		});
 	}
 	
@@ -508,23 +480,11 @@ if(document.querySelector('#bookmarkBtn') != null) {
 				error : console.log
 			});
 		});
-<<<<<<< HEAD
-	});
-}
-
-//--------------------- EJ end
-</script>
-</sec:authorize>
-<script>
-
-
-=======
 	}
 </sec:authorize>
 </script>
 <%-- EJ end --%>
 <script>
->>>>>>> refs/remotes/origin/dev
 /**
  * 이미지 클릭시 모달창 실행
  */

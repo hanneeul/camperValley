@@ -21,8 +21,8 @@
 		<%-- 본문시작 --%>
 		<div class="px-4">
 		  <div class="row justify-content-between" >
-                <div class="col-md-6 align-self-center border-right pl-4 font-weight-bold">
-                    <div class="rounded-circle" id="profileImg-wrp">
+               <div class="col-md-6 align-self-center border-right pl-4 font-weight-bold">
+                   <div class="rounded-circle" id="profileImg-wrp">
                     	<img alt="${loginMember.nickname}님의 프로필사진" src="${pageContext.request.contextPath}/resources/upload/member/${profileFileName}" id="profileImg"/>
                     </div >
                     	<span id="nickname" class="d-block">${loginMember.nickname}</span>
@@ -87,18 +87,27 @@
 						<div class="text-center">등록하신 관심 캠핑장이 존재하지 않습니다.</div>
 			            </c:if>
                     <c:forEach items="${bookmarkList}" var="bookmark">
-					<div class="row bookmarkWrapper py-4">
-						<div class="col-2 pl-3 d-flex align-items-center" id="imgWrapper">
-							<div class="imgWrapper border" style="cursor: pointer;">
-								<a href="http://localhost:9090/campervalley/campsite/infoView?contentId=${bookmark.contentId}">
-									<img class="campsiteImg" src="${bookmark.campsite.firstImageUrl}" 
-										<c:if test="${empty bookmark.campsite.firstImageUrl}"> style="visibility: hidden;" </c:if>
-										 alt="${bookmark.campsite.facltNm}대표사진" />
-								</a>
+						<div class="row bookmarkWrapper pt-3 pb-4">
+							<div class="col-2 pl-3 d-flex align-items-center" id="imgWrapper">
+								<div class="imgWrapper border" style="cursor: pointer;">
+									<a href="http://localhost:9090/campervalley/campsite/infoView?contentId=${bookmark.contentId}">
+										<c:if test="${bookmark.campsite.firstImageUrl ne null}">
+											<img class="campsiteImg" src="${bookmark.campsite.firstImageUrl}" 
+											 alt="${bookmark.campsite.facltNm}대표사진" />
+										</c:if>
+										<c:if test="${bookmark.campsite.firstImageUrl eq null}">
+											<div class="d-flex flex-column align-items-center">
+												<i class="fa-regular fa-face-sad-tear"></i>
+												<p class="my-2 text-center">이미지를<br/>찾을 수 없어요</p>
+											</div>
+										</c:if>
+									</a>
+								</div>
 							</div>
-						</div>
 						<div class="col campsiteInfo p-0 pl-3 pt-2">
-							<a href="http://localhost:9090/campervalley/campsite/infoView?contentId=${bookmark.contentId}"><h5 class="mb-3 campsiteName">${bookmark.campsite.facltNm}</h5></a>
+							<a href="http://localhost:9090/campervalley/campsite/infoView?contentId=${bookmark.contentId}">
+								<h5 class="mb-3 campsiteName">${bookmark.campsite.facltNm}</h5>
+							</a>
 							<h6 class="pt-2 campsiteIntro">${bookmark.campsite.lineIntro}</h6>
 							<div class="d-flex detailInfo mt-4">
 								<div>
@@ -115,152 +124,147 @@
 					</div>
 					</c:forEach>
 				</div>
-            <div class="row">
-                <div class="col-md-12 mt-5">
-                    <div class="col-md-12  d-flex justify-content-between p-0 mt-5">
-                        <h4 class="mb-4">
-                            작성후기
-                        </h4> 
-                        <a href="${pageContext.request.contextPath}/mypage/community/myReview" type="button" class="btn btn-link">
-                            >> 더보기
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <table class="table table-hover border-bottom">
-                        <thead>
-                            <tr>
-                                <th>
-                                    제목
-                                </th>
-                                <th>
-                                    야영장명
-                                </th>
-                                <th>
-                                    평점
-                                </th>
-                                <th>
-                                    조회수
-                                </th>
-                                <th>
-                                    추천수
-                                </th>
-                                <th>
-                                    작성일
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-	                        <c:if test="${empty reviewList}">
-			                    <tr>
-			                		<td colspan="6" class="text-center">작성하신 글이 존재하지 않습니다.</td>
-			                	</tr>
-	                        </c:if>
-	                        <c:forEach items="${reviewList}" var="review" varStatus="vs">
-	                            <tr data-no="${board.no}">
-	                                <td class="text-left">
-	                                    <%-- <a href="${pageContext.request.contextPath}/community/review/reviewDetail?reviewNo=${review.reviewNo}"> --%>
-	                                    	${review.title}[${review.commentCount}]
-	                                    <!-- </a> -->
-	                                </td>
-			                        <td class="text-left">
-			                          ${review.facltNm}
-			                        </td>
-			                        <td>
-			                          ${review.reviewGrade}
-			                        </td>
-			                        <td>
-			                          ${review.readCount}
-			                        </td>
-			                        <td>
-			                          ${review.recommendCount}
-			                        </td>
-			                        <td>
-										<fmt:parseDate value="${review.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
-										<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
-			                        </td>
+	            <div class="row">
+	                <div class="col-md-12 mt-5">
+	                    <div class="col-md-12  d-flex justify-content-between p-0 mt-5">
+	                        <h4 class="mb-4">
+	                            작성후기
+	                        </h4> 
+	                        <a href="${pageContext.request.contextPath}/mypage/community/myReview" type="button" class="btn btn-link">
+	                            >> 더보기
+	                        </a>
+	                    </div>
+	                </div>
+	                <div class="col-md-12">
+	                    <table class="table table-hover border-bottom">
+	                        <thead>
+	                            <tr>
+	                                <th>
+	                                    제목
+	                                </th>
+	                                <th>
+	                                    야영장명
+	                                </th>
+	                                <th>
+	                                    평점
+	                                </th>
+	                                <th>
+	                                    조회수
+	                                </th>
+	                                <th>
+	                                    추천수
+	                                </th>
+	                                <th>
+	                                    작성일
+	                                </th>
 	                            </tr>
-	                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row mt-3 mb-5">
-                <div class="col-md-12">
-                    <div class="col-md-12 d-flex justify-content-between p-0 mt-5">
-                        <h4 class="mb-4">
-                            캠퍼모집
-                        </h4> 
-                        <a type="button" class="btn btn-link" href="${pageContext.request.contextPath}/mypage/community/myCamper">
-                            >> 더보기
-                        </a>
-                    </div>
-			<table class="table table-hover text-center border-bottom" id="#my-camper-table">
-            	<thead>
-                	<tr>
-                        <th>
-                          상태
-                        </th>
-                        <th>
-                          제목
-                         </th>
-                         <th>
-                            캠핑기간
-                        </th>
-                        <th>
-                            지역
-                        </th>
-                        <th>
-                            모집인원
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                <c:if test="${empty camperList}">
-			    	<tr>
-			        	<td colspan="5" class="text-center">작성하신 글이 존재하지 않습니다.</td>
-			        </tr>
-	            </c:if>
-	            <c:forEach items="${camperList}" var="camper" varStatus="vs">
-                    <tr>
-                        <td>
-							<c:if test="${camper.status eq 'I'}">
-								모집중
-							</c:if>
-							<c:if test="${camper.status eq 'C'}">
-								모집완료
-							</c:if>
-                        </td>
-                        <td class="text-left">
-                            <span class="title" data-toggle="modal" data-target="#camper-detail">
-                            	${fn:substring(camper.title,0,20)}
-                            	<c:if test="${fn:length(camper.title) > 20}">
-                            	..
-                            	</c:if>	
-                            </span>
-                        </td>
-                        <td>
-                            ${camper.departureDate} ~ ${camper.arrivalDate}
-                        </td>
-                        <td>
-                            ${camper.area}
-                        </td>
-                        <td class="align-middle">
-                            ${camper.memberCount}명
-                        </td>
-	                    </tr>
-					</c:forEach>
-	                    
-                  </tbody>
-              </table>          
-		</div>
-                </div>
-            </div>
-         </div>          
-                      
-		<%-- 본문끝 --%>
+	                        </thead>
+	                        <tbody>
+		                        <c:if test="${empty reviewList}">
+				                    <tr>
+				                		<td colspan="6" class="text-center">작성하신 글이 존재하지 않습니다.</td>
+				                	</tr>
+		                        </c:if>
+		                        <c:forEach items="${reviewList}" var="review" varStatus="vs">
+		                            <tr data-no="${board.no}">
+		                                <td class="text-left">
+		                                    	<c:out value="${review.title}"/>[${review.commentCount}]
+		                                </td>
+				                        <td class="text-left">
+				                          <c:out value="${review.facltNm}"/>
+				                        </td>
+				                        <td>
+				                          ${review.reviewGrade}
+				                        </td>
+				                        <td>
+				                          ${review.readCount}
+				                        </td>
+				                        <td>
+				                          ${review.recommendCount}
+				                        </td>
+				                        <td>
+											<fmt:parseDate value="${review.createdAt}" pattern="yyyy-MM-dd'T'HH:mm" var="createdAt"/>
+											<fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd"/>
+				                        </td>
+		                            </tr>
+		                        </c:forEach>
+	                        </tbody>
+	                    </table>
+	                </div>
+	            </div>
+	            <div class="row mt-3 mb-5">
+	                <div class="col-md-12">
+	                    <div class="col-md-12 d-flex justify-content-between p-0 mt-5">
+	                        <h4 class="mb-4">
+	                            캠퍼모집
+	                        </h4> 
+	                        <a type="button" class="btn btn-link" href="${pageContext.request.contextPath}/mypage/community/myCamper">
+	                            >> 더보기
+	                        </a>
+	                    </div>
+							<table class="table table-hover text-center border-bottom" id="#my-camper-table">
+				            	<thead>
+				                	<tr>
+				                        <th>
+				                          상태
+				                        </th>
+				                        <th>
+				                          제목
+				                         </th>
+				                         <th>
+				                            캠핑기간
+				                        </th>
+				                        <th>
+				                            지역
+				                        </th>
+				                        <th>
+				                            모집인원
+				                        </th>
+				                    </tr>
+				                </thead>
+				                <tbody>
+					                <c:if test="${empty camperList}">
+								    	<tr>
+								        	<td colspan="5" class="text-center">작성하신 글이 존재하지 않습니다.</td>
+								        </tr>
+						            </c:if>
+						            <c:forEach items="${camperList}" var="camper" varStatus="vs">
+					                    <tr>
+					                        <td>
+												<c:if test="${camper.status eq 'I'}">
+													모집중
+												</c:if>
+												<c:if test="${camper.status eq 'C'}">
+													모집완료
+												</c:if>
+					                        </td>
+					                        <td class="text-left">
+					                            <span class="title" data-toggle="modal" data-target="#camper-detail">
+					                            	<c:out value="${fn:substring(camper.title,0,22)}"/>
+					                            	<c:if test="${fn:length(camper.title) > 22}">
+					                            	..
+					                            	</c:if>	
+					                            </span>
+					                        </td>
+					                        <td>
+					                            ${camper.departureDate} ~ ${camper.arrivalDate}
+					                        </td>
+					                        <td>
+					                            ${camper.area}
+					                        </td>
+					                        <td class="align-middle">
+					                            ${camper.memberCount}명
+					                        </td>
+						                    </tr>
+										</c:forEach>
+				                	</tbody>
+				            	</table>          
+							</div>
+	                	</div>
+	            	</div>
+	         	</div>          
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

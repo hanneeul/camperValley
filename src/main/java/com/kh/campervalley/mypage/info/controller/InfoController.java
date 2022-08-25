@@ -68,10 +68,8 @@ public class InfoController {
 			System.out.println(updateMember.getPassword()==null + "");
 			System.out.println(updateMember.getPassword().equals(""));
 			
-			//파일 처리
 			String saveDirectory = application.getRealPath("/resources/upload/member");
 			
-			//파일업로드
 			if (upFile.getSize() > 0) {
 				String originalFilename = upFile.getOriginalFilename();
 				String renamedFilename = CamperValleyUtils.getRenamedFilename(originalFilename);
@@ -81,37 +79,30 @@ public class InfoController {
 				updateMember.setProfileImg(renamedFilename);
 				
 			}
-			//기존파일 삭제
 			if(loginMember.getProfileImg() != null && changeImg.equals("1")) {
 				File delFile = new File(saveDirectory, loginMember.getProfileImg());
 				if(delFile.exists()) {
 					delFile.delete();
-					log.debug("{}님 프로필 사진{} 삭제", loginMember.getMemberId(), loginMember.getProfileImg());		
 				}
 			}
 			
 			
-			//비밀번호 암호화
 			if(updateMember.getPassword().equals(""))
 				updateMember.setPassword(loginMember.getPassword());
 			else
 				updateMember.setPassword(bcryptPasswordEncoder.encode(updateMember.getPassword()));
-			//업데이트 처리
-			log.debug("updateMember = {}", updateMember);
-			log.debug("loginMember = {}", loginMember);
+			
 			int result = memberService.updateMember(updateMember);
-			log.debug(result+"");
 			loginMember.setNickname(updateMember.getNickname());
 			loginMember.setPassword(updateMember.getPassword());
 			loginMember.setEmail(updateMember.getEmail());
-			loginMember.setName(updateMember.getTel());
+			loginMember.setTel(updateMember.getTel());
 			if(changeImg.equals("1"))
 				loginMember.setProfileImg(updateMember.getProfileImg());
 			
 			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
 					loginMember, loginMember.getPassword());
 					
-			log.debug("success{}",loginMember.getProfileImg());
 			
 			redirectAttr.addFlashAttribute("msg", "회원정보가 성공적으로 수정되었습니다.");
 		} catch (Exception e) {
@@ -123,7 +114,6 @@ public class InfoController {
 	
 	@GetMapping("/main")
 	public ModelAndView mypageMain(@AuthenticationPrincipal Member member) {
-		log.debug("member = {}", member);
 		ModelAndView mav = new ModelAndView();
 		
 		try {
@@ -163,7 +153,6 @@ public class InfoController {
 			log.error("회원탈퇴오류", e);
 			throw e; 
 		}
-		
 		
 		return "redirect:/";
 	}

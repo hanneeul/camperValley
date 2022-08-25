@@ -48,8 +48,4 @@ public interface MypageCommunityDao {
 	
 	int searchTotalMyReview(Map<String, Object> map);
 
-	 	
-	
-
-
 }

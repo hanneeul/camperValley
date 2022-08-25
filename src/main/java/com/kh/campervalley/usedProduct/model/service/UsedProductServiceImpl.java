@@ -16,6 +16,7 @@ import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.dto.WishProduct;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -46,7 +47,7 @@ public class UsedProductServiceImpl implements UsedProductService {
 		int offset = (page - 1) * numPerPage;
 		if(adListSize > 0) {
 			for(int i = 1; i <= adListSize; i++) {
-				log.debug("adList.i = {}", i);
+				//log.debug("adList.i = {}", i);
 				
 				if(i * AD_INTERVAL <= offset)
 					prevPageAds++;
@@ -179,7 +180,7 @@ public class UsedProductServiceImpl implements UsedProductService {
 
 	@Override
 	public int productDelete(int productNo) throws Exception {
-		return usedProductDao.productDelete(productNo);
+		return usedProductDao.updateIsDelete(productNo);
 	}
 
 	@Override
@@ -235,6 +236,13 @@ public class UsedProductServiceImpl implements UsedProductService {
 		 return usedProductDao.getSellerProdNum(productNo);
 	}
 
+	/*----- EJ START ----- */
+	@Override
+	public int getWishCount(String memberId) {
+		return usedProductDao.getWishCount(memberId);
+	}
+	/*----- EJ END ----- */
+	
 	/*----- JH START ----- */
 	@Override
 	public List<UsedProduct> selectProductListByMemberId(int cPage, int numPerPage, String memberId) {
@@ -248,5 +256,17 @@ public class UsedProductServiceImpl implements UsedProductService {
 		return usedProductDao.selectTotalProductByMemberId(memberId);
 	}
 	/*----- JH END ----- */
-
+	
+	/*----- SJ START ----- */
+	@Override
+	public int deleteProductImg(UsedProduct usedProduct) {
+		return usedProductDao.deleteProductImg(usedProduct);
+	}
+	
+	@Override
+	public int updateUsedProduct(UsedProduct usedProduct) {
+		return usedProductDao.updateUsedProduct(usedProduct);
+	}
+	/*----- SJ END ----- */
+	
 }

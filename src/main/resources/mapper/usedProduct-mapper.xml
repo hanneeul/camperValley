@@ -342,5 +342,57 @@ select *
 	order by
 		product_enroll_time desc
 </select>
+
+<update id="updateIsDelete">
+	update
+		used_product
+	set
+		is_delete = 'Y'
+	where
+		product_no = #{productNo}
+</update>
+
+<select id="getWishCount" resultType="_int">
+	select
+		count(*)
+	from
+		wish_product
+	where
+		member_id = #{memberId}
+</select>
 <!-- EJ END -->
+
+<!-- SJ START -->
+<update id="deleteProductImg">
+	update
+		used_product
+	set
+		product_img1 = #{productImg1},
+		product_img2 = #{productImg2},
+		product_img3 = #{productImg3},
+		product_img4 = #{productImg4},
+		product_img5 = #{productImg5}
+  	where
+  		product_no = #{productNo}
+</update>
+
+<update id="updateUsedProduct">
+	update
+		used_product
+	set
+		cate_no = #{cateNo},
+		product_title = #{productTitle},
+		product_content = #{productContent},
+		product_img1 = #{productImg1},
+		product_img2 = #{productImg2},
+		product_img3 = #{productImg3},
+		product_img4 = #{productImg4},
+		product_img5 = #{productImg5},
+		product_price = #{productPrice},
+		product_location = #{productLocation},
+		product_delivery_fee = #{productDeliveryFee}
+  	where
+  		product_no = #{productNo}
+</update>
+<!-- SJ END -->
 </mapper>

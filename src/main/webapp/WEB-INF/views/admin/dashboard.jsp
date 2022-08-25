@@ -62,7 +62,7 @@
 										<c:forEach items="${todo}" var="todo" varStatus="vs">
 										<tr>
 											<th class="col-md-1"><input type="checkbox" value="${todo.todoNo}" class="isCompleted" ${not empty todo.completedAt ? 'checked' : ''}></th>
-											<td>${todo.todo}</td>
+											<td style="font-size: 0.92rem; font-weight: bold;">${todo.todo}</td>
 											<td class="col-md-1">
 											<button class="x-icon btn-delete" data-todo-no="${todo.todoNo}">
 													X

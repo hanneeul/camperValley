@@ -238,37 +238,39 @@ $(document).ready(function() {
                                  </c:if>
                             </div>
                          </div>
-                           <div class="detail-info__text-body-bottom">
-                              <div class="detail-info__btn-list" style="display: flex;">
-                                 <c:choose>
-                                     <c:when test="${empty wishProduct}">
-                                          <!-- 관심상품(찜) -->   
-                                             <div class="detail-info__zzim">
-                                             <button  id="zzim_btn" class="heartBtn heart-click">
-                                                <i class="fa-regular fa-heart"></i>
-                                             <span id="zzim_span"></span>관심상품</button>
-                                          </div>
-                                      </c:when>
-                                      <c:otherwise>
-                                          <!-- 꽉찬하트 -->
-                                             <div class="detail-info__zzim">
-                                             <button id="zzim_btn" class="heartBtn heart-click">
-                                                <i class="fa-solid fa-heart"></i> 관심상품
-                                             </button>
-                                          </div>
-												  </c:otherwise>
-												</c:choose>
-										   <!-- 채팅하기 -->
-										   	<c:if test="${usedProduct.sellerId ne loginMember.memberId}">
-										   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-										   		<div class="detail-info__chat" >
-													<button type="submit" id="chat_btn" onclick="chatNo(${usedProduct.productNo})" style="background-color: #639A67">
-														<i class="fa-solid fa-comment"></i>			 	
-													채팅하기</button>
-										   		</div>
-										   	</c:if>
+
+                         <sec:authorize access="isAuthenticated()">
+	                           <div class="detail-info__text-body-bottom">
+	                              <div class="detail-info__btn-list" style="display: flex;">
+	                                 <c:choose>
+	                                     <c:when test="${empty wishProduct}">
+	                                          <!-- 관심상품(찜) -->   
+	                                             <div class="detail-info__zzim">
+	                                             <button  id="zzim_btn" class="heartBtn heart-click">
+	                                                <i class="fa-regular fa-heart"></i>
+	                                             <span id="zzim_span"></span>관심상품</button>
+	                                          </div>
+	                                      </c:when>
+	                                      <c:otherwise>
+	                                          <!-- 꽉찬하트 -->
+	                                             <div class="detail-info__zzim">
+	                                             <button id="zzim_btn" class="heartBtn heart-click">
+	                                                <i class="fa-solid fa-heart"></i> 관심상품
+	                                             </button>
+	                                          </div>
+													  </c:otherwise>
+													</c:choose>
+											   <!-- 채팅하기 -->
+											   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+											   		<%-- <div class="detail-info__chat" >
+														<button type="submit" id="chat_btn" onclick="chatNo(${usedProduct.productNo})" style="background-color: #639A67">
+															<i class="fa-solid fa-comment"></i>			 	
+														채팅하기</button>
+											   		</div> --%>
+											 </div>
+
 										 </div>
-									 </div>
+									 </sec:authorize>
 								</div>
 							</div>
 						</div>
@@ -312,18 +314,11 @@ $(document).ready(function() {
 								<span class="sellerInfo_name"><!-- productDetail.js --></span>
 								<div class="sellerInfo_productNum">
 									<span class="productNumLink"><!-- productDetail.js --></span>
+									<span class="moreProdLink_Num" style="color: rgb(247, 47, 51);"></span><span>상품 더보기</span>
 								</div>
 							</div>
+							
 						</div><!-- //store -->
-						<!-- 판매자가 올린 최신 상품 2개  -->
-						<div class="sellerInfo_productWrap">
-							<!-- productDetail.js -->
-						</div>
-						<div class="sellerInfo_moreProd">
-							<a class="moreProdLink" href="#">
-								<span class="moreProdLink_Num" style="color: rgb(247, 47, 51);"></span><span>상품 더보기</span>		 
-							</a>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -353,24 +348,26 @@ var productNo = $('.hiddenNo').val();
 var memberId = $('.memberId').val();
 
 $(document).ready(function() {
-	$.ajax({
-	   	url : '/campervalley/usedProduct/product/findHeart',
-	   	type : 'GET',
-	   	dataType : 'json',
-	   	data : {
-	   		productNo : productNo
-	   	},
-	   	success : function(data) {
-	   		if(data.wishProduct == null) {
-	   			$('.heart-click').html('<i class="fa-regular fa-heart"></i> 관심상품');
-	   		} else {
-	   		   	$('.heart-click').html('<i class="fa-solid fa-heart"></i> 관심상품');
-	   		}
-	   	}, 
-	   	error : function() {
-	   		alert('하트조회오류');
-	   	}
-	});
+	if(${loginMember ne null}) {
+		$.ajax({
+		   	url : '/campervalley/usedProduct/product/findHeart',
+		   	type : 'GET',
+		   	dataType : 'json',
+		   	data : {
+		   		productNo : productNo
+		   	},
+		   	success : function(data) {
+		   		if(data.wishProduct == null) {
+		   			$('.heart-click').html('<i class="fa-regular fa-heart"></i> 관심상품');
+		   		} else {
+		   		   	$('.heart-click').html('<i class="fa-solid fa-heart"></i> 관심상품');
+		   		}
+		   	}, 
+		   	error : function() {
+		   		alert('하트조회오류');
+		   	}
+		});
+	}
 });
 
 $(".heart-click").click(function() {
@@ -448,9 +445,9 @@ const productDelete = () => {
    }
 };
 
-/* document.querySelector("#update_btn").addEventListener('click', (e) => {
-   location.href = '/campervalley/usedProduct/product/productUpdate';
-}); */
+document.querySelector("#update_btn").addEventListener('click', (e) => {
+   location.href = '/campervalley/usedProduct/product/productUpdate?no=${usedProduct.productNo}';
+});
 </script>
 
 <script>

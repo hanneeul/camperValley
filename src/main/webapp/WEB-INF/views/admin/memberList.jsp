@@ -25,10 +25,6 @@
   border-radius: 50px;
   padding: 3px;
   cursor: pointer;
-  -webkit-transition: all 0.3s 0.1s ease-in-out;
-  -moz-transition: all 0.3s 0.1s ease-in-out;
-  -o-transition: all 0.3s 0.1s ease-in-out;
-  transition: all 0.3s 0.1s ease-in-out;
 }
 
 .toggle-btn > .inner-circle {
@@ -36,10 +32,6 @@
   height: 15px;
   background: #fff;
   border-radius: 50%;
-  -webkit-transition: all 0.3s 0.1s ease-in-out;
-  -moz-transition: all 0.3s 0.1s ease-in-out;
-  -o-transition: all 0.3s 0.1s ease-in-out;
-  transition: all 0.3s 0.1s ease-in-out;
 }
 
 .toggle-btn.active {
@@ -47,7 +39,7 @@
 }
 
 .toggle-btn.active > .inner-circle {
-  margin-left: 19px;
+  margin-left: 19px !important;
 }
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
@@ -57,7 +49,7 @@
 	<div class="admin-content" style="width: 80%;">
 		<h5 class="admin-hd">회원 관리</h5>
 		<div class="search-box" style="display: flex;">
-			<input class="ad-input-search" type="text" placeholder="전체 사용자 검색" name="searchKeyword" id="searchKeyword">
+			<input class="ad-input-search" type="text" placeholder="회원 아이디 검색" name="searchKeyword" id="searchKeyword">
 			<button class="ad-btn-search" type="button">
 				<i class="fa fa-search"></i>
 			</button>
@@ -144,7 +136,7 @@
 			</div>
 			  <div class="form-group">
 						<label for="role" class="col-form-label">권한&nbsp;<span style="color:red;">*</span></label>
-						<input type="checkbox" name="ROLE_USER" id="user"/>
+						<input type="checkbox" name="ROLE_USER" id="user" checked="checked" onclick="return false"/>
 						<label for="user">사용자</label>
 						&nbsp;
 						<input type="checkbox" name="ROLE_ADMIN" id="admin"/>
@@ -173,6 +165,49 @@
   </div>
 </div>
 <script>
+document.adminMemberUpdateFrm.onsubmit = (e) => {
+	const frm = e.target;
+	const nicknameVal = frm.nickname.value.trim();
+	if(!/^.+$/.test(nicknameVal)) {
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '닉네임을 입력해주세요.',
+		    buttons: {
+		    	'확인': function() {}
+		    }
+		});
+		frm.nickname.select();
+		return false;
+	}
+	const emailVal = frm.email.value.trim();
+	if(!/^(.|\n)+$/.test(emailVal)) {
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '이메일을 입력해주세요.',
+		    buttons: {
+		    	'확인': function() {}
+		    }
+		});
+		frm.email.select();
+		return false;
+	}
+	const telVal = frm.tel.value.trim();
+	if(!/^(.|\n)+$/.test(telVal)) {
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '전화번호을 입력해주세요.',
+		    buttons: {
+		    	'확인': function() {}
+		    }
+		});
+		frm.tel.select();
+		return false;
+	}
+}
+
 document.querySelectorAll('.ad-btn-search').forEach((btn) => {
 	btn.addEventListener('click', (e) => {
 		let keyword = document.getElementById('searchKeyword').value;

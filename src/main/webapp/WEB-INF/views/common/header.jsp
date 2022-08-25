@@ -59,9 +59,13 @@
 					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/campsite/searchDetail">캠핑장</a></li>
 					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/usedProduct/main/mainPage">캠핑용품거래</a></li>
 					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/community/camper/camperList">커뮤니티</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/mypage/info/main">마이페이지</a></li>
+					<sec:authorize access="isAuthenticated()">
+						<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/mypage/info/main">마이페이지</a></li>
+					</sec:authorize>
 					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/cs/noticeList">고객센터</a></li>
-					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/admin/dashboard">관리자페이지</a></li>
+					<sec:authorize access="hasRole('ADMIN')">
+						<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/admin/dashboard">관리자페이지</a></li>
+					</sec:authorize>
 
 				</ul>
 				    <sec:authorize access="isAnonymous()">
@@ -72,13 +76,13 @@
 			    	</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
 					<sec:authentication property="principal" var="loginMember" scope="session"/>
-					<form action="${pageContext.request.contextPath}/member/logout" method="post" style="display:contents;">
-						<ul class="navbar-nav col-md-3 mt-4 ml-5">
-							<li class="nav-item pt-2"><span class="camper-color"><i class="fa-solid fa-user fa-1x"></i>&nbsp;[<sec:authentication property="principal.nickname"/>]</span>님</li>
-							<li class="nav-item ml-4"><button class="nav-link small btn btn-link" href="${pageContext.request.contextPath}/member/logout"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:11px;"></i>&nbsp;<span id="logout" >로그아웃</span></button></li>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-						</ul>
-					</form>
+						<form action="${pageContext.request.contextPath}/member/logout" method="post" style="display:contents;">
+							<ul class="navbar-nav col-md-3 mt-4 ml-5">
+								<li class="nav-item pt-2"><span class="camper-color"><i class="fa-solid fa-user fa-1x"></i>&nbsp;[<sec:authentication property="principal.nickname"/>]</span>님</li>
+								<li class="nav-item ml-4"><button class="nav-link small btn btn-link" href="${pageContext.request.contextPath}/member/logout"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:11px;"></i>&nbsp;<span id="logout" >로그아웃</span></button></li>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							</ul>
+						</form>
 			   		</sec:authorize>
 			</div>
 		</nav>
@@ -100,7 +104,7 @@
 		  	const mainMenu = menu.target.innerHTML;
 		  	switch(mainMenu) {
 				case "커뮤니티" : renderSubMenu(0, "캠퍼모집", "캠핑장후기"); break;
-				case "마이페이지" : renderSubMenu(0.9, "회원정보", "중고거래", "나의채팅방", "커뮤니티", "광고주"); break;
+				case "마이페이지" : renderSubMenu(0.9, "회원정보", "중고거래", "커뮤니티", "광고주"); break;
 				case "고객센터" : renderSubMenu(1.9, "공지사항", "FAQ"); break;
 				case "관리자페이지" : renderSubMenu(2.8, "회원관리", "게시판관리", "신고내역관리", "1:1문의관리"); break;
 				default : $subNavbar.stop().slideUp('fast');
@@ -121,7 +125,7 @@
 					case "캠핑장후기" 	: aTag.href = "${pageContext.request.contextPath}/community/review/reviewList"; break;
 					case "회원정보" 	: aTag.href = "${pageContext.request.contextPath}/mypage/info/main"; break;
 					case "중고거래" 	: aTag.href = "${pageContext.request.contextPath}/mypage/trade/purchased"; break;
-					case "나의채팅방" 	: aTag.href = "${pageContext.request.contextPath}/mypage/trade/purchased"; break;
+					//case "나의채팅방" 	: aTag.href = "${pageContext.request.contextPath}/mypage/trade/purchased"; break;
 					case "커뮤니티" 	: aTag.href = "${pageContext.request.contextPath}/mypage/community/myCamper"; break;
 					case "광고주" 	:
 						if("${moveToAderEnroll}" == "true") {

@@ -71,7 +71,7 @@
 			<img src="${pageContext.request.contextPath}/resources/upload/cs/${attach.renamedFilename}" alt="" class="mt-3" style="max-width:100%"/>
 			</c:forEach>
 		</c:if>
-			<p class="mt-3 text-center">${notice.content}</p>
+			<p class="mt-4 text-center">${notice.content}</p>
 			
 			</div>
 	<c:choose>	
