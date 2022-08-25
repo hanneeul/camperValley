@@ -40,7 +40,7 @@
 			            </div>
 	                    <div>
 		                	<button class="btn btn-camper-color btn-sm align-self-center mr-3 my-2 d-block btn-delete" onclick="fillModal(${product.productNo});" data-toggle="modal" data-target="#buyerEnrollModal">판매완료 처리</button>
-			                <a href="${pageContext.request.contextPath}/usedProduct/product/productUpdate" class="btn btn-camper-color btn-sm align-self-center mr-3 my-2 d-block" >게시글 수정</a>
+			                <a href="${pageContext.request.contextPath}/usedProduct/product/productUpdate?no=${product.productNo}" class="btn btn-camper-color btn-sm align-self-center mr-3 my-2 d-block" >게시글 수정</a>
 	                        <form:form action="${pageContext.request.contextPath}/mypage/trade/productDelete" style="display:contents">
 			                	<button class="btn btn-outline-camper-color btn-sm align-self-center mr-3 my-2 d-block btn-delete">삭제</button>
 			                	<input type="hidden" name="productNo" value="${product.productNo}" />
