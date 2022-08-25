@@ -209,9 +209,15 @@ public class UsedProductController  {
 	/* 상품 상세보기 - 상품 정보 */
 	// 상품 리스트 - > 상세페이지
 	@GetMapping("/product/productDetail")
-	public String productDetail(@RequestParam String no, Model model) {
+	public String productDetail(@RequestParam String no, Model model, @AuthenticationPrincipal Member loginMember) {
 
 		usedProductService.viewUpdate(no); //조회수 증가
+		/*----- EJ start -----*/
+		if(loginMember != null) {
+			int wishCnt = usedProductService.getWishCount(loginMember.getMemberId());
+			model.addAttribute("wishCnt", wishCnt);				
+		}
+		/*----- EJ end -----*/
 		/*----- JH start -----*/
 		// 별점평균, 판매상품/거래리뷰 갯수
 		TradeReviewExt member = tradereviewService.getProfileInfo(no);
