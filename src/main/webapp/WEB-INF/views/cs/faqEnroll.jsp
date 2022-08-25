@@ -11,15 +11,6 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/cs/cs.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-<style>
-.custom-file-input {
-	position: absolute;
-}
-.custom-file-label {
-	display: block;
-	position: relative;
-}
-</style>
 <div class="container" style="width: 870px;">            
 	<h5 class="cs-header text-center">FAQ 등록</h5>                          
 <form:form name="faqEnrollFrm" action="${pageContext.request.contextPath}/cs/faqEnroll" method="POST" class="form-horizontal">
@@ -55,13 +46,27 @@ document.faqEnrollFrm.onsubmit = (e) => {
 	console.log(frm);
 	const titleVal = frm.title.value.trim();
 	if(!/^.+$/.test(titleVal)) {
-		alert("제목을 작성해주세요.");
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '제목을 입력해주세요.',
+		    buttons: {
+		    	'확인': function() {}
+		    }
+		});
 		frm.title.select();
 		return false;
 	}
 	const contentVal = frm.content.value.trim();
 	if(!/^(.|\n)+$/.test(contentVal)) {
-		alert("내용을 작성해주세요.");
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '내용을 입력해주세요.',
+		    buttons: {
+		    	'확인': function() {}
+		    }
+		});
 		frm.content.select();
 		return false;
 	}
