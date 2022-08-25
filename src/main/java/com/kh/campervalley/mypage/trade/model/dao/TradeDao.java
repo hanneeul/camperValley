@@ -33,4 +33,6 @@ public interface TradeDao {
 	
 	List<UsedProductExt> selectMorePuschasedProduct(@NonNull String memberId, RowBounds rowBounds);
 	
+	int updateProductSetDelete(int productNo);
+	
 }

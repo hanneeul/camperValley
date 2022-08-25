@@ -15,6 +15,8 @@
 		    where seller_id = #{memberId}
 		        and
 		           transaction_date is null
+		       	and
+		       		is_delete = 'N'
 		    order by
 		    	product_enroll_time desc
 		    )
@@ -33,6 +35,8 @@
 		    where seller_id = #{memberId}
 		        and
 		           transaction_date is not null
+		       	and
+		       		is_delete = 'N'		        
 		    order by
 		    	transaction_date desc
 		    )
@@ -73,6 +77,8 @@
 				member_id = #{memberId}
 				and
 				transaction_date is null
+		       	and
+		       		is_delete = 'N'
 			 order by wish_no desc
 			) 
 		where
@@ -88,6 +94,8 @@
 			seller_id = #{memberId}
 		    and
  	    	transaction_date is null
+			and
+		    is_delete = 'N' 	    	
 		order by
 		    product_enroll_time desc
 	</select>
@@ -101,6 +109,8 @@
 			seller_id = #{memberId}
 		    and
  	    	transaction_date is not null
+			and
+		    is_delete = 'N' 
 		order by
 		    transaction_date desc
 	</select>
@@ -111,6 +121,15 @@
 		where
 			wish_no = #{wishNo}
 	</delete>
+	
+	<update id="updateProductSetDelete">
+		update
+			used_product
+		set
+			is_delete = 'Y'
+		where
+			product_no = #{productNo}
+	</update>
 	
 	<select id="selectMorePuschasedProduct" resultType="UsedProductExt">
 		select
@@ -126,6 +145,18 @@
 	    	transaction_date desc
 	</select>
 	
-
+		<select id="selectMoreWishProduct" resultType="WishExt">
+			select
+				w.*, u.product_title, u.product_price, u.product_img1,u.product_location
+			from
+				wish_product w join used_product u
+				on
+				w.product_no = u.product_no
+			where
+				member_id = #{memberId}
+				and
+				transaction_date is null
+			 order by wish_no desc
+	</select>
 
 </mapper>
