@@ -40,7 +40,7 @@
 			            </div>
 	                    <div>
 	                        <br>
-			                <a href="거래후기url" class="btn btn-camper-color btn-sm align-self-center mr-3 d-block" >게시글 수정</a>
+			                <a href="${pageContext.request.contextPath}/usedProduct/product/productUpdate" class="btn btn-camper-color btn-sm align-self-center mr-3 d-block" >게시글 수정</a>
 	                        <br>
 	                        <form:form action="${pageContext.request.contextPath}/mypage/trade/productDelete" style="display:contents">
 			                	<button class="btn btn-outline-camper-color btn-sm align-self-center mr-3 d-block btn-delete">삭제</button>
@@ -133,7 +133,7 @@
 			 	
 	  	    }
 	  	  });
-      });
+		});
 
 		io.observe($('.list').get($('.list').length-1));
 
