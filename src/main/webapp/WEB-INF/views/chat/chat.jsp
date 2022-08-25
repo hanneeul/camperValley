@@ -137,17 +137,29 @@ const stompClient = Stomp.over(ws); */
 stompClient.connect({}, (frame) => {
 	console.log('connect : ', frame);
 	
+	const sellerId;
+	const buyerId;
+	
+	if('${sellerId}' == memberId) {
+		sellerId = memberId;
+		buyerId = '${buyerId}';
+		
+	} else {
+		buyerId = memberId;
+		sellerId = '${sellerId}';
+	}
 
 	const lastCheck = () => {
 		console.log('lastCheck!');
 		let payload = {
 			chatroomId,
-			sellerId : '${sellerId}',
+			sellerId,
+			buyerId,
 			lastCheck : Date.now(),
 			type : "LAST_CHECK"
 		};
 		
-		 /* stompClient.send("/app/chat/lastCheck", {}, JSON.stringify(payload));  */
+		stompClient.send("/app/chat/lastCheck", {}, JSON.stringify(payload)); 
 	}
 	
 	lastCheck();

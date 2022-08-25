@@ -90,7 +90,7 @@
 			<c:set var="time_before" value="일 전" />
 		</c:if>
 		
-		<div class="item col-3" onclick="test(${item.productNo})" style="cursor: pointer">
+		<div class="item col-3" onclick="test(${item.productNo})" style="cursor: pointer; margin-right: -58.5px;">
 			<div class="item">
 				<div id="itemSolid">
 					<div class="img-box">

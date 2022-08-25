@@ -25,7 +25,7 @@
 		  </button>
 		  <sec:authorize access="!hasRole('BLACK')">
 		  <div class="ml-1">
-			  <button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/usedProduct/product/registForm'">글쓰기</button>
+			  <button type="button" id="enrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/usedProduct/product/registForm'">글쓰기</button>
 		  </div>
 		  </sec:authorize>
 		</div>
