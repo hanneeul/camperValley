@@ -20,7 +20,6 @@
 					</h4>
 					<div class="line"></div>
 				</div>
-				
 				<form:form name="enrollMemberFrm" method="POST" >
 					<table class="mx-auto">
 						<tr>
@@ -30,12 +29,12 @@
 							<td>
 								<div id="memberIdContainer">
 									<input type="text" 
-										   class="form-control" 
-										   placeholder="아이디"
-										   name="memberId" 
-										   id="memberId"
-										   autocomplete="off"
-										   required>
+										class="form-control" 
+										placeholder="아이디"
+										name="memberId" 
+										id="memberId"
+										autocomplete="off"
+										required>
 			 						<span class="text-danger guide-id-empty my-2 pl-1 d-none">필수 입력항목입니다.</span>
 									<span class="text-danger guide-id-duplicate my-2 pl-1 d-none">이미 사용 중이거나 탈퇴한 아이디입니다.</span>
 									<span class="text-danger guide-id-invalidation my-2 pl-1 d-none">아이디는 5-15자의 영문/숫자만 가능합니다.</span>
@@ -101,7 +100,7 @@
 						<tr>
 							<td>	
 								<div id="emailContainer">
-									<input type="email" class="form-control " placeholder="이메일" name="email" id="email" autocomplete="off" required>
+									<input type="email" class="form-control " placeholder="이메일" name="email" id="email" required autocomplete="off" >
 									<input type="hidden" id="emailValid" value="0" />
 									<span class="text-danger guide-email-empty my-2 pl-1 d-none">필수입력항목입니다.</span>
 									<span class="text-danger guide-email-Invalidation my-2 pl-1 d-none">이메일 주소를 다시 확인해주세요.</span>
@@ -531,16 +530,16 @@
 </div>
 
 <div class="modal fade" id="terms-privacy-modal" tabindex="-1" aria-labelledby="terms-privacy-modal-label" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="terms-privacy-modal-label">개인정보 수집 및 이용 동의</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <pre>
+	<div class="modal-dialog modal-dialog-scrollable modal-lg">
+	    <div class="modal-content">
+    		<div class="modal-header">
+        		<h5 class="modal-title" id="terms-privacy-modal-label">개인정보 수집 및 이용 동의</h5>
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        			<span aria-hidden="true">&times;</span>
+        		</button>
+     		</div>
+			<div class="modal-body">
+				<pre>
 제 1장 총칙
 
 제 1조 (목적)
@@ -732,19 +731,20 @@
 
 1. 본 약관은 2022년 8월 29일부터 시행됩니다.
         
-        </pre>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-camper-color w-100" data-dismiss="modal">닫기</button>
-      </div>
-    </div>
-  </div>
+	        	</pre>
+			</div>
+			<div class="modal-footer">
+	       		 <button type="button" class="btn btn-camper-color w-100" data-dismiss="modal">닫기</button>
+	     	 </div>
+		</div>
+	</div>
 </div>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+
 <script src="${pageContext.request.contextPath}/resources/js/member/validation.js"></script>
 <script>
-// 제출이벤트
+
 $('form[name=enrollMemberFrm]').submit((e) =>{
 
 	if(!validateId($("input[name=memberId]").val()) || $("#idValid").val() === '0'){ 
@@ -777,8 +777,6 @@ $('form[name=enrollMemberFrm]').submit((e) =>{
 	}	
 });
 
-/*focusout 이벤트*/
-
 $("input[name=memberId]").focusout((e)=>{
 	validateId($("input[name=memberId]").val());
 })
@@ -801,9 +799,7 @@ $("input[name=tel").focusout((e)=>{
 	validateTel($("input[name=tel]").val());
 })
 
-/*	유효성검사		*/
 
-//id
 function validateId(memberId){
 	const idValid = $("#idValid"); //id라 지워도 될듯?
 	const guideIdEmpty = $('.guide-id-empty');
@@ -813,7 +809,6 @@ function validateId(memberId){
 	const guides = $('#memberIdContainer span');
 	
 	idValid.val(0);
-
 	
 	let result = "";
 	
@@ -845,7 +840,7 @@ function validateId(memberId){
 	});
 	return true;
 }
-//name
+
 function validateName(name){
 	const guideNameEmpty= $(".guide-name-empty");
 	const guideNameInvalidation = $(".guide-name-invalidation");
@@ -862,7 +857,6 @@ function validateName(name){
 	return true;
 }
 
-//nickname
 function validateNickname(nickname){
 	const nicknameValid = $("#nicknameValid");
 	const guideNicknameEmpty= $(".guide-nickname-empty");
@@ -905,7 +899,6 @@ function validateNickname(nickname){
 	return true;
 }
 
-//pw
 function validatePw(password){
 	const guidePwEmpty= $(".guide-pw-empty");
 	const guidePwInvalidation = $(".guide-pw-invalidation");
@@ -925,7 +918,6 @@ function validatePw(password){
 	return true;
 }
 
-//pw확인
 function validatePwCheck(password, passwordCheck){
 	const guidePwCkEmpty= $(".guide-pw-ck-empty");
 	const guidePwCkInvalidation = $(".guide-pw-ck-invalidation");
@@ -942,7 +934,6 @@ function validatePwCheck(password, passwordCheck){
 	return true;
 }	
 
-//email
 function validateEmail(email){
 	const emailValid = $("#emailValid")
 	const guideEmailEmpty= $(".guide-email-empty");
@@ -980,7 +971,6 @@ function validateEmail(email){
 	});
 	return true;
 }
-//tel
 
 function validateTel(tel){
 	const guideTelEmpty = $(".guide-tel-empty");
@@ -998,7 +988,6 @@ function validateTel(tel){
 	return true;
 }
 
-//체크박스 전체선택
 $("input[name=agreeAll]").click((e)=>{
 	const agrees = $("input[name=agree]")
 	if($(e.target).prop("checked")){
@@ -1019,7 +1008,6 @@ $("input[name=agree]").click((e)=>{
 	}
 
 });
-
 
 function addClassDBlock(elem){
 	elem.addClass('d-block');

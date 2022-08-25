@@ -16,11 +16,9 @@
 			<jsp:include page="/WEB-INF/views/common/mypageSidebar.jsp" />
 		</div>
 		<div class="col-lg-10 px-5 mt-2" id="edit-container">
-		<%-- 본문시작 --%>
 			<h4 class="">
 				회원탈퇴
 			</h4>
-		
 			<div class=" px-2 border-top border-bottom my-4 pt-4 mr-5">
 				<h6 class="font-weight-bold">
 	            회원탈퇴 신청 전 확인해 주세요.
@@ -31,15 +29,14 @@
 	                이상의 내용에 동의하여 탈퇴를 원하실 경우, 아래의 "<strong>회원 탈퇴</strong>" 버튼을 클릭해주세요. 
 	            </p>
 			</div>
-	        	<div class="text-center">
+	        <div class="text-center">
 	        	<form:form style="display:contents">
 		            <button class="btn btn-success px-4">
 		            	회원탈퇴
 		            </button>
 	        	</form:form>
-	            </div>
+	    	</div>
         </div>
-		<%-- 본문끝 --%>
 	</div>
 </div>
-	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+<jsp:include page="/WEB-INF/views/common/footer.jsp" />

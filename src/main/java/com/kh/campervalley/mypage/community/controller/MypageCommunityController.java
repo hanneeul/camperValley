@@ -58,6 +58,7 @@ public class MypageCommunityController {
 	@GetMapping("/bookmark")
 	public ModelAndView bookmarkList(ModelAndView mav, @AuthenticationPrincipal Member loginMember, 
 			@RequestParam(defaultValue = "1") int cPage, HttpServletRequest request) {
+		
 		try {
 			int numPerPage = MypageCommunityService.MY_BOOKMARK_NUM_PER_PAGE;
 			String url = request.getRequestURI();
@@ -76,6 +77,7 @@ public class MypageCommunityController {
 			throw e;
 		}
 		return mav;
+		
 	}
 	// --------------------- EJ end
 	// --------------------- JE start
@@ -83,21 +85,18 @@ public class MypageCommunityController {
 	public ModelAndView searchId(@RequestParam(defaultValue = "1") int cPage,
 				@RequestParam(required = false) String searchOption,
 				@RequestParam(required = false) String searchKeyword, 
-				@AuthenticationPrincipal Member member ,ModelAndView mav, HttpServletRequest request) {
+				@AuthenticationPrincipal Member member ,ModelAndView mav, HttpServletRequest request) throws Exception {
+		
 		try {
 			int numPerPage = MypageCommunityService.MY_REVIEW_NUM_PER_PAGE;
 			List<CampsiteReviewExt> list = null;
 			int totalContent;
 			String url = request.getRequestURI();
 			String pagebar = "";
-			log.debug("searchOption = {}",searchOption );
-			log.debug("searchKeyword = {}", searchKeyword);
 			if(searchOption == null && searchKeyword == null) {
 				list = mypageCommunityService.selectMyReviewList(
 											cPage, numPerPage, member.getMemberId());
-				log.debug("list = {}", list);
 				totalContent = mypageCommunityService.selectTotalMyReview(member.getMemberId());
-				log.debug("totalContents={}",totalContent);
 				pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalContent, url);
 			} else if(searchOption != null && searchKeyword != null) {
 				Map<String, Object> map = new HashMap<>();
@@ -107,9 +106,7 @@ public class MypageCommunityController {
 				url += "?searchOption=" + searchOption + "&searchKeyword=" + searchKeyword;
 				list = mypageCommunityService.searchMyReviewList(
 						cPage, numPerPage, map);
-				log.debug("list = {}", list);
 				totalContent = mypageCommunityService.searchTotalMyReview(map);
-				log.debug("totalContent = {}", totalContent);
 				pagebar = CamperValleyUtils.getMultiParamPagebar(cPage, numPerPage, totalContent, url);
 			}		
 			mav.addObject("list", list);
@@ -127,23 +124,20 @@ public class MypageCommunityController {
 	public ModelAndView myCamperList(@RequestParam(defaultValue = "1") int cPage,
 				@RequestParam(required = false) String searchOption,
 				@RequestParam(required = false) String searchKeyword, 
-				@AuthenticationPrincipal Member member ,ModelAndView mav, HttpServletRequest request) {
+				@AuthenticationPrincipal Member member ,ModelAndView mav, HttpServletRequest request)  throws Exception{
+		
 		try {
 			int numPerPage = MypageCommunityService.MY_CAMPER_NUM_PER_PAGE;
 			List<Camper> list = null;
 			int totalContent;
 			String url = request.getRequestURI();
 			String pagebar = "";
-			
-			//검색할 것 없을 때
-			log.debug("searchOption = {}",searchOption );
-			log.debug("searchKeyword = {}", searchKeyword);
+
 			if(searchOption == null && searchKeyword == null) {
 				
 				list = mypageCommunityService.selectMyCamperList(
 											cPage, numPerPage, member.getMemberId());
 				totalContent = mypageCommunityService.selectTotalMyCamper(member.getMemberId());
-				log.debug("totalContents={}",totalContent);
 				pagebar = CamperValleyUtils.getPagebar(cPage, numPerPage, totalContent, url);
 				
 			} else if(searchOption != null && searchKeyword != null) {
@@ -157,12 +151,14 @@ public class MypageCommunityController {
 										cPage, numPerPage, map);
 				totalContent = mypageCommunityService.searchTotalMyCamper(map);
 				pagebar = CamperValleyUtils.getMultiParamPagebar(cPage, numPerPage, totalContent, url);
+				
 			}
 			
 			mav.addObject("list", list);
 			mav.addObject("member", member);
 			mav.addObject("pagebar", pagebar);
 			mav.setViewName("mypage/community/myCamper");
+			
 		} catch (Exception e) {
 			log.error("마이페이지-캠퍼모집글 목록조회 오류",e);
 			throw e;
@@ -172,22 +168,21 @@ public class MypageCommunityController {
 	
 	@PostMapping("/myCamper/status/update")
 	public ResponseEntity<?> camperDetail(Camper camper) {
+		
 		Map<String, Object> map = new HashMap<>();
 		try {
-			log.debug("{}",camper.getStatus());
-			log.debug("{}",camper.getCamperNo());
+			
 			int result = mypageCommunityService.updateCamperStatusByCamperNo(camper);
-			log.debug("{}",result);
 			map.put("msg", "모집상태 변경에 성공했습니다.");
+			
 		} catch(Exception e) {
 			log.error("캠퍼모집 상태 업데이트 오류", e);
-			map.put("error", e.getMessage());;
+			map.put("error", e.getMessage());
 
 			return ResponseEntity
 					.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
 					.body(map);
-			
 		} 
 		
 		return ResponseEntity
@@ -199,13 +194,14 @@ public class MypageCommunityController {
 	
 	@PostMapping("/myCamper/camperUpdate") 
 	public String camperUpdate(Camper camper, RedirectAttributes redirectAttr,
-				@RequestHeader(name = "Referer", required = false) String referer) {
+				@RequestHeader(name = "Referer", required = false) String referer) throws Exception{
+		
 		try {
 			log.debug("camper = {}", camper);
 			log.debug("referer = {}", referer);
 			log.debug("content = {}", camper.getContent());
 			int result = camperService.updateCamper(camper);
-			redirectAttr.addFlashAttribute("msg", "게시글을 성공적으로 수정했습었습니다.");
+			redirectAttr.addFlashAttribute("msg", "게시글을 성공적으로 수정했습니다.");
 		} catch(Exception e) {
 			log.debug("캠퍼모집 수정 오류", e);
 			throw e;
@@ -213,17 +209,15 @@ public class MypageCommunityController {
 		return "redirect:/mypage/community/myCamper";
 	}
 	
-
-	
 	@PostMapping("/myReview/delete")
 	public String reviewDelete(
 			@RequestParam int reviewNo, 
-			RedirectAttributes redirectAttr) {
+			RedirectAttributes redirectAttr) throws Exception{
+		
 		try {
 			String delDirectory = application.getRealPath("/resources/upload/community/review");
 			List<ReviewPhoto> photos = reviewService.selectOneReview(reviewNo).getPhotos();
-			log.debug("photos[0]={}",photos.get(0).getReviewPhotoNo());
-			log.debug("!photos.isEmpty()={}",!photos.isEmpty());
+
 			if(photos != null && !photos.isEmpty() && photos.get(0).getRenamedFilename() != null) {
 				for(ReviewPhoto photo : photos) {
 					File delFile = new File(delDirectory, photo.getRenamedFilename());
@@ -246,6 +240,7 @@ public class MypageCommunityController {
 	public String camperDelete(
 			@RequestParam int camperNo, 
 			RedirectAttributes redirectAttr) {
+		
 		try {
 			int result = camperService.deleteCamper(camperNo);
 			redirectAttr.addFlashAttribute("msg", "게시글을 성공적으로 삭제했습니다.");
@@ -255,8 +250,6 @@ public class MypageCommunityController {
 		}
 		return "redirect:/mypage/community/myCamper";
 	}
-	
-	
 	
 	// --------------------- JE end
 }

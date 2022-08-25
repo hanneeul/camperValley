@@ -91,5 +91,4 @@ public class MypageCommunityServiceImpl implements MypageCommunityService{
 		return mypageCommunityDao.searchTotalMyReview(map);
 	}
 
-
 }
