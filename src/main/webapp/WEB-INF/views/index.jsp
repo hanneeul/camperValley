@@ -45,55 +45,53 @@
 			</div>
 		</form>
 		
-		<!-- 날씨 -->
-		<form name="weatherFrm" class="shadow-custom width-1000 mx-auto p-4 bg-white d-flex justify-content-between">
-			<div id="selectCalendar" class="mt-2">
-		        <div class="calendarHeader d-flex justify-content-center">
-		        	<div class="nav-btn font-weight-bold text-18 pr-3" onclick="prevMonth();">&lt;</div>
-		            <div class="font-weight-bold text-18">
-		            	<span id="year"></span>년 <span id="month"></span>월
-		            </div>
-		            <div class="nav-btn font-weight-bold text-18 pl-3" onclick="nextMonth();">&gt;</div>
-		        </div>
-		        <div class="m-4">
-		            <div class="days text-15 my-2">
-		                <div class="day">일</div>
-		                <div class="day">월</div>
-		                <div class="day">화</div>
-		                <div class="day">수</div>
-		                <div class="day">목</div>
-		                <div class="day">금</div>
-		                <div class="day">토</div>
-		            </div>
-		            <div class="dates text-15 mt-1"></div>
-		        </div>
-	    	</div>
-			<div id="areaWeatherBox" class="my-2 d-flex flex-column justify-content-start pr-5">
-				<div id="selectArea">
-					<div class="text-18 font-weight-bold pb-1 mb-3">지역</div>
-					<div class="d-flex justify-content-between">
-						<select name="sido" id="sido2" class="input p-2 mr-2 mb-3"></select>
-						<select name="gugun" id="gugun2" class="input p-2 mr-2 mb-3"></select>
-					</div>
-				</div>
-				<div id="selectWeather">
-					<div id="weather-btn" class="text-18 font-weight-bold py-4 mt-5">그날의 날씨는 ?</div>
-					<div id="responseSection" class="d-flex justify-content-start">
-						<!-- <div id="icon">
-							<i class="fas fa-sun fa-4x mt-2" style="color:rgb(225, 225, 225); top:10px;"></i>
-						</div>
-						<div id="temp" class="text-50 mx-3">12&#8451;</div>
-						<div id="areaAndMain">
-							<div id="dateInfo" class="text-18 mt-2" style="color:#d9bf77;">August 16, 2022</div>
-								<div id="main" class="text-15">구름많음</div>
-						</div>
-						<div id="day">
-							<div id="day" class="text-22 ml-4 mt-4 pt-2 pl-2">수요일</div>
-						</div> -->
-					</div>
-				</div>
+		<!-- 달력 -->
+		<div class="d-flex justify-content-between width-1000 mx-auto">
+			<div name="calendarFrm" class="shadow-custom mx-0 py-3 bg-white">
+				<div id="selectCalendar" class="mt-2">
+			        <div class="calendarHeader d-flex justify-content-center">
+			        	<div class="nav-btn font-weight-bold text-18 pr-3" onclick="prevMonth();">&lt;</div>
+			            <div class="font-weight-bold text-18">
+			            	<span id="year"></span>년 <span id="month"></span>월
+			            </div>
+			            <div class="nav-btn font-weight-bold text-18 pl-3" onclick="nextMonth();">&gt;</div>
+			        </div>
+			        <div class="m-4">
+			            <div class="days text-15 my-2">
+			                <div class="day">일</div>
+			                <div class="day">월</div>
+			                <div class="day">화</div>
+			                <div class="day">수</div>
+			                <div class="day">목</div>
+			                <div class="day">금</div>
+			                <div class="day">토</div>
+			            </div>
+			            <div class="dates text-15 mt-4"></div>
+			        </div>
+		    	</div>
 			</div>
-		</form>
+			<!-- 날씨 -->
+	    	<form name="weatherFrm" class="shadow-custom mx-0 py-3 bg-white">
+				<div id="areaWeatherBox" class="m-2 px-3 d-flex flex-column justify-content-start">
+					<div id="selectArea">
+						<div class="text-18 font-weight-bold pb-1 mt-1 mb-2">날씨</div>
+						<div class="d-flex justify-content-between">
+							<div class="my-1">지역선택</div>
+							<select name="sido" id="sido2" class="input p-2 mr-2 mb-1"></select>
+							<select name="gugun" id="gugun2" class="input p-2 mr-2 mb-1"></select>
+						</div>
+					</div>
+					<div>
+						<div id="responseSection" class="mt-3">
+							<div class="text-center mx-0 mt-5" style="color:#d9bf77;">
+								<i class="fa fa-warning"></i>
+								지역을 선택해주세요.
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
 	<!-- 광고 -->
 	<%-- EJ start --%>
@@ -212,7 +210,6 @@ document.querySelector("#searchFrmTop #searchCampsite").addEventListener("click"
 
 // ----- 날씨조회 -----
 let date = new Date();
-let selectDate = new Date();
 
 const renderCalendar = () => {
     const viewYear = date.getFullYear(); // 년도
@@ -257,14 +254,14 @@ const renderCalendar = () => {
     	// 다음달 날짜 포함 x
        	if(firstDateIndex === lastDateIndex) {
 	        dates.forEach((date, i) => {
-	        	if(i >= dates.indexOf(today.getDate())) dates[i] = `<div class="date"><div class='this' onclick='changeSelectDate(this);'>\${date}</div></div>`;
+	        	if(i >= dates.indexOf(today.getDate())) dates[i] = `<div class="date"><div class='this'>\${date}</div></div>`;
 	        	else dates[i] = `<div class="date"><div class='other'>\${date}</div></div>`;
 	        });
         } 
     	// 다음달 날짜 포함 o
        	else {
 	        dates.forEach((date, i) => {
-	        	if(i >= dates.indexOf(today.getDate()) && i < lastDateIndex) dates[i] = `<div class="date"><div class='this' onclick='changeSelectDate(this);'>\${date}</div></div>`;
+	        	if(i >= dates.indexOf(today.getDate()) && i < lastDateIndex) dates[i] = `<div class="date"><div class='this'>\${date}</div></div>`;
 	        	else dates[i] = `<div class="date"><div class='other'>\${date}</div></div>`;
         	});
         }
@@ -274,7 +271,7 @@ const renderCalendar = () => {
     	// 다음달 날짜 포함 x
        	if(firstDateIndex === lastDateIndex) {
 	        dates.forEach((date, i) => {
-	        	if(i >= firstDateIndex) dates[i] = `<div class="date"><div class='this' onclick='changeSelectDate(this);'>\${date}</div></div>`;
+	        	if(i >= firstDateIndex) dates[i] = `<div class="date"><div class='this'>\${date}</div></div>`;
 	        	else dates[i] = `<div class="date"><div class='other'>\${date}</div></div>`;
         	});
        	} 
@@ -289,44 +286,32 @@ const renderCalendar = () => {
    	document.querySelector(".dates").innerHTML = dates.join("");
    	
    };
-   
-const renderSelectDate = () => {
-   	const year = selectDate.getFullYear();
-   	const month = selectDate.getMonth();
-   	const date = selectDate.getDate();
-   	
-   	if(parseInt($("#year").html()) === year && ($("#month").html() - 1) === month) {
-   		document.querySelectorAll(".this").forEach((dateTag) => {
-   			if(parseInt($(dateTag).html()) === date) {
-   				$(dateTag).addClass("text-light bg-camper-color");
-   			}
-   		});
-   }
+
+const renderToday = () => {
+	const year = new Date().getFullYear();
+	const month = new Date().getMonth();
+	const date = new Date().getDate();
+	
+	if(parseInt($("#year").html()) === year && ($("#month").html() - 1) === month) {
+		document.querySelectorAll(".this").forEach((dateTag) => {
+			if(parseInt($(dateTag).html()) === date) {
+				$(dateTag).addClass("text-light bg-camper-color");
+			}
+		});
+	}
 };
-   
 renderCalendar();
-renderSelectDate();
-$("#weather-btn span").mouseover((e) => {
-   
-});
+renderToday();
 
 const prevMonth = () => {
     date.setMonth(date.getMonth() - 1);
     renderCalendar();
-    renderSelectDate();
+    renderToday();
 }
 const nextMonth = () => {
     date.setMonth(date.getMonth() + 1);
     renderCalendar();
-    renderSelectDate();
-}
-// 클릭시
-const changeSelectDate = (e) => {
-	$(".this").removeClass("text-light bg-camper-color");
-	selectDate.setFullYear(parseInt($("#year").html()));
-	selectDate.setMonth(parseInt($("#month").html() - 1));
-	selectDate.setDate(parseInt($(e).html()));
-	renderSelectDate();
+    renderToday();
 }
 
 // gubun section opacity 조절
@@ -357,15 +342,15 @@ const getLatLon = (area) => {
 	return latLonArray;
 }
 let weatherIcon = {
-	'01' : 'fas fa-sun fa-4x',
-	'02' : 'fas fa-cloud-sun fa-4x',
-	'03' : 'fas fa-cloud fa-4x',
-	'04' : 'fas fa-cloud-meatball fa-4x',
-	'09' : 'fas fa-cloud-sun-rain fa-4x',
-	'10' : 'fas fa-cloud-showers-heavy fa-4x',
-	'11' : 'fas fa-poo-storm fa-4x',
-	'13' : 'far fa-snowflake fa-4x',
-	'50' : 'fas fa-smog fa-4x'
+	'01' : 'fas fa-sun fa-2x',
+	'02' : 'fas fa-cloud-sun fa-2x',
+	'03' : 'fas fa-cloud fa-2x',
+	'04' : 'fas fa-cloud-meatball fa-2x',
+	'09' : 'fas fa-cloud-sun-rain fa-2x',
+	'10' : 'fas fa-cloud-showers-heavy fa-2x',
+	'11' : 'fas fa-poo-storm fa-2x',
+	'13' : 'far fa-snowflake fa-2x',
+	'50' : 'fas fa-smog fa-2x'
 };
 let weatherMain = {
 	'01' : '맑음(구름없음)',
@@ -385,27 +370,57 @@ const getWeather = (latLonArray) => {
 		dataType: "json",
 		success(response) {
 			const {list} = response;
-			console.log(selectDate);
+			// 최고, 최저 기온
+			let dayList = [];
 			for(let i = 0; i < list.length; i++) {
-				const getDate = selectDate.getFullYear() + "-" + f(selectDate.getMonth() + 1) + "-" + f(selectDate.getDate());
-				if(list[i].dt_txt.includes("15:00") && list[i].dt_txt.split(" ")[0] == getDate) {
-					console.log(list[i]);
+				const getDay = list[i].dt_txt.split(" ")[0];
+				dayList.push(getDay);
+			}
+			dayList = Array.from(new Set(dayList));
+			let lowList = []; 
+			let highList = [];
+			let tempList = [];
+			for(let i = 0; i < dayList.length; i++) {
+				for(let j = 0; j < list.length; j ++) {
+					if(dayList[i] === list[j].dt_txt.split(" ")[0]) {
+						tempList.push(parseFloat(list[j].main.temp));
+						console.log(list[j].main.temp);
+					}
+				}
+				lowList.push((Math.min.apply(null, tempList)).toFixed(1));
+				highList.push((Math.max.apply(null, tempList)).toFixed(1));
+				tempList = [];
+			}
+			let day = new Date();
+			let cnt = 0;
+			for(let i = 0; i < list.length; i++) {
+				if(list[i].dt_txt.includes("15:00")) {
 					const icon = (list[i].weather[0].icon).substr(0,2);
-					const temp = Math.floor(list[i].main.temp, 1) + '&#8451;';
-					const monthName = selectDate.toLocaleString("en-US", {month: "short"});
+					const temp = Math.round(list[i].main.temp * 10) / 10 + '&#8451;';
+					const monthName = day.toLocaleString("en-US", {month: "short"});
 					const weekday = ['일', '월', '화', '수', '목', '금', '토'];
-					const dayName = weekday[selectDate.getDay()];
-					
-					const $iconDiv = $('<div></div>');
-					const $icon = $(`<i class="\${weatherIcon[icon]} mt-2" style="color: rgb(225, 225, 225); width:80px;"></i>`);
-					const $temp = $(`<div class="text-50 mx-3">\${temp}</div>`);
-					const $dateAndMainDiv = $('<div></div>');
-					const $dateInfo = $(`<div class="text-18 mt-2" style="color:#d9bf77;">\${monthName} \${selectDate.getDate()}, \${selectDate.getFullYear()}</div>`)
-					const $main = $(`<div class="text-15">\${weatherMain[icon]}</div>`);
-					const $day = $(`<div class="text-22 ml-4 mt-4 pt-2 pl-2">\${dayName}요일</div>`);
-					$dateAndMainDiv.append($dateInfo, $main);
+					const dayName = weekday[day.getDay()];
+					let $getWeatherDiv;
+					if(cnt === 0) $getWeatherDiv = $('<div class="todayBox d-flex justify-content-start px-3 py-1"></div>');
+					else $getWeatherDiv = $('<div class="d-flex justify-content-start px-3 py-1"></div>');
+					let $day; 
+					if(dayName == '일') $day = $(`<div class="text-18 text-danger mt-2">\${dayName}</div>`);
+					else $day = $(`<div class="text-18 mt-2">\${dayName}</div>`);
+					const $dateInfo = $(`<span class="text-15 mt-2 mr-4" style="color: rgb(165, 165, 165)">(\${day.getMonth() + 1}. \${day.getDate()})</span>`)
+					const $iconDiv = $('<div class="mx-4 mt-2"></div>');
+					const $icon = $(`<i class="\${weatherIcon[icon]}" style="color: rgb(195, 195, 195); width:40px;"></i>`);
+					const $tempDiv = $('<div class="temp mt-2"></div>');
+					const $highTemp = $(`<span class="text-danger text-18">\${highList[cnt]}&deg;</span>`);
+					const $dash = $('<span style="color:rgb(165, 165, 165)">/</span>')
+					const $lowTemp = $(`<span class="text-primary text-15">\${lowList[cnt]}&deg;</span>`);
+					const $main = $(`<div class="main text-15 mt-2 text-right">\${weatherMain[icon]}</div>`);
 					$iconDiv.append($icon);
-					$("#responseSection").append($icon, $temp, $dateAndMainDiv, $day);
+					$tempDiv.append($highTemp, $dash, $lowTemp);
+					$getWeatherDiv.append($day, $dateInfo, $iconDiv, $tempDiv, $main);
+					$("#responseSection").append($getWeatherDiv);
+					
+					day.setDate(day.getDate() + 1);
+					cnt++;
 				}
 				
 			}
