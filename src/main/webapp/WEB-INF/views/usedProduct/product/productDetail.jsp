@@ -313,18 +313,11 @@ $(document).ready(function() {
 								<span class="sellerInfo_name"><!-- productDetail.js --></span>
 								<div class="sellerInfo_productNum">
 									<span class="productNumLink"><!-- productDetail.js --></span>
+									<span class="moreProdLink_Num" style="color: rgb(247, 47, 51);"></span><span>상품 더보기</span>
 								</div>
 							</div>
+							
 						</div><!-- //store -->
-						<!-- 판매자가 올린 최신 상품 2개  -->
-						<div class="sellerInfo_productWrap">
-							<!-- productDetail.js -->
-						</div>
-						<div class="sellerInfo_moreProd">
-							<a class="moreProdLink" href="#">
-								<span class="moreProdLink_Num" style="color: rgb(247, 47, 51);"></span><span>상품 더보기</span>		 
-							</a>
-						</div>
 					</div>
 				</div>
 			</div>
