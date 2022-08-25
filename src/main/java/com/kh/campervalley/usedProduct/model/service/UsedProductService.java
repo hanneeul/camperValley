@@ -45,6 +45,8 @@ public interface UsedProductService {
 
 	/*----- EJ START ----- */
 	public int getWishCount(String memberId);
+	
+	public int updateUsedProductAfterSelling(Map<String, Object> param);
 	/*----- EJ END ----- */
 
 	/*----- JH START ----- */

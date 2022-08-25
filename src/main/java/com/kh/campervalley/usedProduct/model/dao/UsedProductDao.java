@@ -61,6 +61,8 @@ public interface UsedProductDao {
 	int updateIsDelete(int productNo);
 	
 	int getWishCount(String memberId);	
+	
+	public int updateUsedProductAfterSelling(Map<String, Object> param);
 	/*----- EJ END ----- */
 
 	/*----- JH START ----- */

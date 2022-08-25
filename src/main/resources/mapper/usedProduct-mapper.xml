@@ -360,6 +360,16 @@ select *
 	where
 		member_id = #{memberId}
 </select>
+
+<update id="updateUsedProductAfterSelling" parameterType="map">
+	update
+		used_product
+	set
+		transaction_date = sysdate,
+		buyer_id = #{buyerId}
+	where
+		product_no = #{productNo}
+</update>
 <!-- EJ END -->
 
 <!-- SJ START -->
