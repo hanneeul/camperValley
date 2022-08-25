@@ -248,5 +248,17 @@ public class UsedProductServiceImpl implements UsedProductService {
 		return usedProductDao.selectTotalProductByMemberId(memberId);
 	}
 	/*----- JH END ----- */
-
+	
+	/*----- SJ START ----- */
+	@Override
+	public int deleteProductImg(UsedProduct usedProduct) {
+		return usedProductDao.deleteProductImg(usedProduct);
+	}
+	
+	@Override
+	public int updateUsedProduct(UsedProduct usedProduct) {
+		return usedProductDao.updateUsedProduct(usedProduct);
+	}
+	/*----- SJ END ----- */
+	
 }

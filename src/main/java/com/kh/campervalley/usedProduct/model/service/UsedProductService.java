@@ -48,4 +48,11 @@ public interface UsedProductService {
 
 	public int selectTotalProductByMemberId(String memberId);
 	/*----- JH END ----- */
+
+	/*----- SJ START ----- */
+	public int deleteProductImg(UsedProduct usedProduct);
+
+	public int updateUsedProduct(UsedProduct usedProduct);
+	/*----- SJ END ----- */
+
 }

@@ -65,4 +65,10 @@ public interface UsedProductDao {
 	int selectTotalProductByMemberId(String memberId);
 	/*----- JH END ----- */
 
+	/*----- SJ START ----- */
+	int deleteProductImg(UsedProduct usedProduct);
+
+	int updateUsedProduct(UsedProduct usedProduct);
+	/*----- SJ END ----- */
+
 }

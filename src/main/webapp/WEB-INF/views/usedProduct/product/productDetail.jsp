@@ -447,9 +447,9 @@ const productDelete = () => {
    }
 };
 
-/* document.querySelector("#update_btn").addEventListener('click', (e) => {
-   location.href = '/campervalley/usedProduct/product/productUpdate';
-}); */
+document.querySelector("#update_btn").addEventListener('click', (e) => {
+   location.href = '/campervalley/usedProduct/product/productUpdate?no=${usedProduct.productNo}';
+});
 </script>
 
 <script>

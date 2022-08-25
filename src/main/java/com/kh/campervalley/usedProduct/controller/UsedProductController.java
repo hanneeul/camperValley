@@ -2,12 +2,12 @@ package com.kh.campervalley.usedProduct.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.common.CamperValleyUtils;
+import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdZone;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
@@ -74,44 +75,45 @@ public class UsedProductController  {
 	public void registForm() {};
 	
 	@PostMapping("/product/productEnroll")
-	@ResponseBody
-	public ModelAndView productEnroll(@ModelAttribute UsedProduct usedProduct, RedirectAttributes redirectAttr,
-										@RequestParam MultipartFile[] upFiles, @AuthenticationPrincipal Member loginMember) {
-		// 이미지 파일 복사
-		String saveDirectory = application.getRealPath("/resources/upload/usedProduct");
+    @ResponseBody
+    public ModelAndView productEnroll(@ModelAttribute UsedProduct usedProduct, RedirectAttributes redirectAttr,
+                                        @RequestParam MultipartFile[] upFiles, @AuthenticationPrincipal Member loginMember) {
+        // 이미지 파일 복사
+        String saveDirectory = application.getRealPath("/resources/upload/usedProduct");
 
-		File file;
-		
-			for(int i = 0; i <= upFiles.length - 1; i++) {
-				String fileName = upFiles[i].getOriginalFilename();
-				file = new File(saveDirectory, fileName);
-				
-				try {
-					FileCopyUtils.copy( upFiles[i].getInputStream(), new FileOutputStream(file));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			       
-			        if(i == 0) usedProduct.setProductImg1(fileName);
-			        else if(i == 1) usedProduct.setProductImg2(fileName);
-			        else if(i == 2)  usedProduct.setProductImg3(fileName);
-			        else if(i == 3)  usedProduct.setProductImg4(fileName);
-			        else if(i == 4)  usedProduct.setProductImg5(fileName);
-			        
-			}
-			// 로그인한 회원의 아이디
-			usedProduct.setSellerId(loginMember.getMemberId()); 
-			
-			log.debug("usedProduct1234 = {}", usedProduct);
-			
-			// DB 
-			int result = usedProductService.productInsert(usedProduct);
-			
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("jsonView");
-			return mav;
-	
-	};
+        File file;
+        
+            for(int i = 0; i <= upFiles.length - 1; i++) {
+                String fileName = upFiles[i].getOriginalFilename();
+                String renamedFilename = CamperValleyUtils.getRenamedFilename(fileName);
+                file = new File(saveDirectory, renamedFilename);
+                
+                try {
+                    FileCopyUtils.copy( upFiles[i].getInputStream(), new FileOutputStream(file));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                   
+                    if(i == 0) usedProduct.setProductImg1(renamedFilename);
+                    else if(i == 1) usedProduct.setProductImg2(renamedFilename);
+                    else if(i == 2)  usedProduct.setProductImg3(renamedFilename);
+                    else if(i == 3)  usedProduct.setProductImg4(renamedFilename);
+                    else if(i == 4)  usedProduct.setProductImg5(renamedFilename);
+                    
+            }
+            // 로그인한 회원의 아이디
+            usedProduct.setSellerId(loginMember.getMemberId()); 
+            
+            log.debug("usedProduct1234 = {}", usedProduct);
+            
+            // DB 
+            int result = usedProductService.productInsert(usedProduct);
+            
+            ModelAndView mav = new ModelAndView();
+            mav.setViewName("jsonView");
+            return mav;
+    
+    };
 
 	/* 카테고리 검색 */
 	@PostMapping("/main/getProductList") 
@@ -211,8 +213,118 @@ public class UsedProductController  {
 		return "/usedProduct/product/productDetail";
 	}
 	
+	/*----- SJ START ----- */
 	@GetMapping("/product/productUpdate")
-	public void productUpdate() {};
+	public void productUpdate(@RequestParam String no, Model model) {
+		try {
+			UsedProduct usedProduct = usedProductService.productDetail(no);
+			model.addAttribute("usedProduct", usedProduct);
+		} catch (Exception e) {
+			log.error("상품 수정 오류", e);
+			throw e;
+		}
+	};
+	
+	@PostMapping("/product/productUpdate")
+	@ResponseBody
+	public ModelAndView productUpdate(
+			ModelAndView mav, 
+			@ModelAttribute UsedProduct usedProduct,
+			@RequestParam() MultipartFile[] upFiles, 
+			@RequestParam(required = false) String productImg1,
+			@RequestParam(required = false) String productImg2,
+			@RequestParam(required = false) String productImg3,
+			@RequestParam(required = false) String productImg4,
+			@RequestParam(required = false) String productImg5) throws Exception {
+		
+		String saveDirectory = application.getRealPath("/resources/upload/usedProduct");
+		
+		List<String> productImgList = new ArrayList<>();
+		productImgList.add(productImg1);
+		productImgList.add(productImg2);
+		productImgList.add(productImg3);
+		productImgList.add(productImg4);
+		productImgList.add(productImg5);
+		
+		log.debug("productImg1 = {}", productImg1);
+		log.debug("productImg2 = {}", productImg2);
+		log.debug("productImg3 = {}", productImg3);
+		log.debug("productImg4 = {}", productImg4);
+		log.debug("productImg5 = {}", productImg5);
+		
+		if(productImgList != null) {
+			for(int i = 0; i < productImgList.size(); i++) {
+				String fileName = productImgList.get(i);
+				if(fileName != null) {
+					File delFile = new File(saveDirectory, fileName);
+					log.debug("fileName = {}", fileName);
+					log.debug("delFile = {}", delFile);
+//					if(delFile.exists()) {
+//						delFile.delete();
+//					}
+				}
+//				if(productImg1 != null) usedProduct.setProductImg1(null);
+//				if(productImg2 != null) usedProduct.setProductImg2(null);
+//				if(productImg3 != null) usedProduct.setProductImg3(null);
+//				if(productImg4 != null) usedProduct.setProductImg4(null);
+//				if(productImg5 != null) usedProduct.setProductImg5(null);
+			}
+//			int result = usedProductService.deleteProductImg(usedProduct);
+		}
+		
+        File[] fileArr = new File[upFiles.length];
+        
+        UsedProduct originalUsedProduct = usedProductService.productDetail(String.valueOf(usedProduct.getProductNo()));
+        if(upFiles.length == 0) {
+        	usedProduct.setProductImg1(originalUsedProduct.getProductImg1());
+        	usedProduct.setProductImg2(originalUsedProduct.getProductImg2());
+        	usedProduct.setProductImg3(originalUsedProduct.getProductImg3());
+        	usedProduct.setProductImg4(originalUsedProduct.getProductImg4());
+        	usedProduct.setProductImg5(originalUsedProduct.getProductImg5());
+        }
+        else {
+        	List<String> originalFilenameList = new ArrayList<>();
+        	originalFilenameList.add(originalUsedProduct.getProductImg1());
+        	originalFilenameList.add(originalUsedProduct.getProductImg2());
+        	originalFilenameList.add(originalUsedProduct.getProductImg3());
+        	originalFilenameList.add(originalUsedProduct.getProductImg4());
+        	originalFilenameList.add(originalUsedProduct.getProductImg5());
+        	
+        	for(int i = 0 ; i < upFiles.length; i++) {
+        		String fileName = upFiles[i].getOriginalFilename();
+        		String renamedFilename = CamperValleyUtils.getRenamedFilename(fileName);
+        		fileArr[i] = new File(saveDirectory, renamedFilename);
+        	}
+        	
+        	int startJ = 0;
+        	for(int i = 0; i < 5; i++) {
+        		for(int j = startJ; j < upFiles.length; j++) {
+        			if(originalFilenameList.get(i) == null) {
+        				originalFilenameList.set(i, fileArr[j].getName());
+        				try {
+        					FileCopyUtils.copy(upFiles[j].getInputStream(), new FileOutputStream(fileArr[j]));
+        				} catch (Exception e) {
+        					e.printStackTrace();
+        				}
+        				startJ = ++j;
+        				break;
+        			}
+        		}
+        	}
+        	
+        	usedProduct.setProductImg1(originalFilenameList.get(0));
+        	usedProduct.setProductImg2(originalFilenameList.get(1));
+        	usedProduct.setProductImg3(originalFilenameList.get(2));
+        	usedProduct.setProductImg4(originalFilenameList.get(3));
+        	usedProduct.setProductImg5(originalFilenameList.get(4));
+        	
+        }
+        int result = usedProductService.updateUsedProduct(usedProduct);
+        
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	/*----- SJ END ----- */
 
 	/* 관심상품 */
 	@GetMapping("/product/findHeart")
