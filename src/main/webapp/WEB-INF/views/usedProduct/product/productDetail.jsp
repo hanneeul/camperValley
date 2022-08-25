@@ -51,7 +51,6 @@ $(document).ready(function() {
 //첫 이미지로 돌아오기
 </script>
 <script>
-
 $(document).ready(function() {
    
    $.ajax({
@@ -238,138 +237,144 @@ $(document).ready(function() {
                                  </c:if>
                             </div>
                          </div>
-
+<%--                   <div class="detail-info__text-body-bItem">
+                             <div class="detail-info__text-body-bItem-title" style="align-self: center;">▪문의메일 : </div>
+                             <!-- 문의메일 -->
+                             <div class="detail-info__email" id="sellerEmail">
+                                 <a class="btn btn-outline-success btn-outline-camper-color"
+                                     href="mailto:${usedProduct.member.email}?subject=캠퍼밸리에서 [${usedProduct.productTitle}] 보고 문의드립니다.
+                                    &amp;body=캠퍼밸리 회원ID : ${loginMember.memberId} (*회원ID 삭제 금지)%0D%0A%0D%0A여기에 문의 내용을 작성해주세요.%0D%0A
+                                    &amp;target=_blank">
+                                    ${member.nickname}님에게 메일 보내기
+                                </a>
+                            </div>
+                         </div> --%>
                          <sec:authorize access="isAuthenticated()">
-	                           <div class="detail-info__text-body-bottom">
-	                              <div class="detail-info__btn-list" style="display: flex;">
-	                                 <c:choose>
-	                                     <c:when test="${empty wishProduct}">
-	                                          <!-- 관심상품(찜) -->   
-	                                             <div class="detail-info__zzim">
-	                                             <button  id="zzim_btn" class="heartBtn heart-click">
-	                                                <i class="fa-regular fa-heart"></i>
-	                                             <span id="zzim_span"></span>관심상품</button>
-	                                          </div>
-	                                      </c:when>
-	                                      <c:otherwise>
-	                                          <!-- 꽉찬하트 -->
-	                                             <div class="detail-info__zzim">
-	                                             <button id="zzim_btn" class="heartBtn heart-click">
-	                                                <i class="fa-solid fa-heart"></i> 관심상품
-	                                             </button>
-	                                          </div>
-													  </c:otherwise>
-													</c:choose>
-											   <!-- 채팅하기 -->
-											   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-											   		<%-- <div class="detail-info__chat" >
-														<button type="submit" id="chat_btn" onclick="chatNo(${usedProduct.productNo})" style="background-color: #639A67">
-															<i class="fa-solid fa-comment"></i>			 	
-														채팅하기</button>
-											   		</div> --%>
-											 </div>
+                              <div class="detail-info__text-body-bottom">
+                                 <div class="detail-info__btn-list" style="display: flex;">
+                                    <c:choose>
+                                        <c:when test="${empty wishProduct}">
+                                             <!-- 관심상품(찜) -->   
+                                                <div class="detail-info__zzim">
+                                                <button  id="zzim_btn" class="heartBtn heart-click">
+                                                   <i class="fa-regular fa-heart"></i>
+                                                <span id="zzim_span"></span>관심상품</button>
+                                             </div>
+                                         </c:when>
+                                         <c:otherwise>
+                                             <!-- 꽉찬하트 -->
+                                                <div class="detail-info__zzim">
+                                                <button id="zzim_btn" class="heartBtn heart-click">
+                                                   <i class="fa-solid fa-heart"></i> 관심상품
+                                                </button>
+                                             </div>
+                                         </c:otherwise>
+                                       </c:choose>
+                                    <!-- 채팅하기 -->
+                                          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                          <%-- <div class="detail-info__chat" >
+                                          <button type="submit" id="chat_btn" onclick="chatNo(${usedProduct.productNo})" style="background-color: #639A67">
+                                             <i class="fa-solid fa-comment"></i>             
+                                          채팅하기</button>
+                                          </div> --%>
+                                  </div>
 
-										 </div>
-									 </sec:authorize>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<!----------------------------- 하단 상품정보 ----------------------------->
-		<div id="btmProdInfo_Wrap1">
-			<div id="btmProdInfo_Wrap2">
-				<!-- '상품정보'-->
-				<div class="btmProdInfo_TitleWrap">
-					<div class="btmProdInfo_Title">
-						상품정보<span class="btmProdInfo_TitleSpan"></span>
-					</div>
-				</div>
-				
-				<!-- 상품정보  -->
-				<div class="prodInfo_wrap1">
-					<div class="prodInfo_wrap2">
-						<div class="prodInfo_contentWrap">
-							<div class="content_marginTop"></div>
-							<!-- 상품내용 -->
-							<div class="prodInfo_contentText">
-								${usedProduct.productContent}
-							</div>
-					</div>
-				</div>
-				</div>
-			</div>
-				
-			<div class="prodInfo_RightWrap">
-				<div class="prodInfo_sellerWrap1">
-					<div class="prodInfo_sellerWrap2">
-						<div class="sellerInfo_Title">판매자정보</div>
-					</div>
-						<div class="seller" style="cursor:pointer">
-							<span class="sellerProfileImg_Link"></span>
-							<div class="sellerInfoWrap">
-								<span class="sellerInfo_name"><!-- productDetail.js --></span>
-								<div class="sellerInfo_productNum">
-									<span class="productNumLink"><!-- productDetail.js --></span>
-									<span class="moreProdLink_Num" style="color: rgb(247, 47, 51);"></span><span>상품 더보기</span>
-								</div>
-							</div>
-							
-						</div><!-- //store -->
-					</div>
-				</div>
-			</div>
-		</div>
-	 	<!-- nav -->
-		<div id="nav">
-		 </div>
-	 </div>
+                               </div>
+                            </sec:authorize>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      
+      <!----------------------------- 하단 상품정보 ----------------------------->
+      <div id="btmProdInfo_Wrap1">
+         <div id="btmProdInfo_Wrap2">
+            <!-- '상품정보'-->
+            <div class="btmProdInfo_TitleWrap">
+               <div class="btmProdInfo_Title">
+                  상품정보<span class="btmProdInfo_TitleSpan"></span>
+               </div>
+            </div>
+            
+            <!-- 상품정보  -->
+            <div class="prodInfo_wrap1">
+               <div class="prodInfo_wrap2">
+                  <div class="prodInfo_contentWrap">
+                     <div class="content_marginTop"></div>
+                     <!-- 상품내용 -->
+                     <div class="prodInfo_contentText">
+                        ${usedProduct.productContent}
+                     </div>
+               </div>
+            </div>
+            </div>
+         </div>
+            
+         <div class="prodInfo_RightWrap">
+            <div class="prodInfo_sellerWrap1">
+               <div class="prodInfo_sellerWrap2">
+                  <div class="sellerInfo_Title">판매자정보</div>
+               </div>
+                  <div class="seller" style="cursor:pointer">
+                     <span class="sellerProfileImg_Link"></span>
+                     <div class="sellerInfoWrap">
+                        <span class="sellerInfo_name"><!-- productDetail.js --></span>
+                        <div class="sellerInfo_productNum">
+                           <span class="productNumLink"><!-- productDetail.js --></span>
+                           <span class="moreProdLink_Num" style="color: rgb(247, 47, 51);"></span><span>상품 더보기</span>
+                        </div>
+                     </div>
+                     
+                  </div><!-- //store -->
+               </div>
+            </div>
+         </div>
+      </div>
+       <!-- nav -->
+      <div id="nav">
+       </div>
+    </div>
 <script>
 /*---- JH -----*/
 // modal 연결
 document.querySelector(".seller").addEventListener("click", (e) => {
-	$("#profileCheck").modal().on('hide.bs.modal');
-	return false;
+   $("#profileCheck").modal().on('hide.bs.modal');
+   return false;
 });
 /*---- JH -----*/
-
 //ajax 통신을 위한 csrf 설정
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 $(document).ajaxSend(function(e, xhr, options) {
     xhr.setRequestHeader(header, token);
 });
-
 /* 관심상품 */
 var productNo = $('.hiddenNo').val();
 var memberId = $('.memberId').val();
-
 $(document).ready(function() {
-	if(${loginMember ne null}) {
-		$.ajax({
-		   	url : '/campervalley/usedProduct/product/findHeart',
-		   	type : 'GET',
-		   	dataType : 'json',
-		   	data : {
-		   		productNo : productNo
-		   	},
-		   	success : function(data) {
-		   		if(data.wishProduct == null) {
-		   			$('.heart-click').html('<i class="fa-regular fa-heart"></i> 관심상품');
-		   		} else {
-		   		   	$('.heart-click').html('<i class="fa-solid fa-heart"></i> 관심상품');
-		   		}
-		   	}, 
-		   	error : function() {
-		   		alert('하트조회오류');
-		   	}
-		});
-	}
+   if(${loginMember ne null}) {
+      $.ajax({
+            url : '/campervalley/usedProduct/product/findHeart',
+            type : 'GET',
+            dataType : 'json',
+            data : {
+               productNo : productNo
+            },
+            success : function(data) {
+               if(data.wishProduct == null) {
+                  $('.heart-click').html('<i class="fa-regular fa-heart"></i> 관심상품');
+               } else {
+                     $('.heart-click').html('<i class="fa-solid fa-heart"></i> 관심상품');
+               }
+            }, 
+            error : function() {
+            }
+      });
+   }
 });
-
 $(".heart-click").click(function() {
     
     var productNo = $('.hiddenNo').val();
@@ -396,7 +401,6 @@ $(".heart-click").click(function() {
                console.log('하트 추가 성공!');
             }, 
             error : function() {
-               alert('로그인 후 관심상품으로 등록 가능합니다.')
             }
          });
          console.log("꽉찬하트로 바꾸기");
@@ -421,7 +425,6 @@ $(".heart-click").click(function() {
              console.log('하트 삭제 성공!');
         },
         error : function() {
-          alert('로그인 후 관심상품으로 등록 가능합니다.');
         }
       });
       console.log("빈하트로 바꾸기");
@@ -433,28 +436,33 @@ $(".heart-click").click(function() {
 
 /* 상품 삭제 */
 const productDelete = () => {
-   const bool = confirm('게시글을 정말 삭제하시겠습니까?');
-   
-   if(!bool) {
-      alert('삭제를 취소했습니다.');
-   }
-   else {
-      const frm = document.productDeleteFrm;
-      frm.submit();
-      alert('게시글이 삭제되었습니다.');
-   }
+   $.alert({
+       title: ' ',
+       content: '게시글을 삭제하시겠습니까?',
+       buttons: {
+          '확인': function() {
+                const frm = document.productDeleteFrm;
+                frm.submit();
+                
+	            $.alert({
+	        	    title: '',
+	        	    content: '게시글이 삭제되었습니다.',
+	        	    buttons: {
+	        	    	'확인': function() {}
+	        	    }
+	    		});	
+          },
+          '취소': function() {}
+      }
+   });
 };
-
-document.querySelector("#update_btn").addEventListener('click', (e) => {
-   location.href = '/campervalley/usedProduct/product/productUpdate?no=${usedProduct.productNo}';
-});
 </script>
 
 <script>
 /* 채팅하기 */ 
-function chatNo(no) {
+/* function chatNo(no) {
       location.href = '/campervalley/chat/chat?no=' + no;
-}
+} */
 </script>
 
 
