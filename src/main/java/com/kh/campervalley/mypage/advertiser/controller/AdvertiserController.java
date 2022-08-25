@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -122,14 +123,15 @@ public class AdvertiserController {
 	}
 	
 	@PostMapping("/exit")
-	public String submitAdvertiserExitFrm(@RequestParam int advertiserNo, @RequestParam String memberId) {
+	public String submitAdvertiserExitFrm(@RequestParam int advertiserNo, @RequestParam String memberId, HttpSession session) {
 		try {
 			int result = advertiserService.exitAdvertiser(advertiserNo, memberId);
+			session.invalidate();
 		} catch (Exception e) {
 			log.error("광고주 탈퇴요청 오류", e);
 			throw e;
 		}
-		return "redirect:/mypage/info/main";
+		return "redirect:/";
 	}
 	
 	@GetMapping("/dashboard")
