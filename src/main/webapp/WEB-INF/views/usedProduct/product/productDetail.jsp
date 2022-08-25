@@ -262,11 +262,11 @@ $(document).ready(function() {
 											   <!-- 채팅하기 -->
 											   <!-- post 날린 요청의 결과 chatRoom(윈도우 팝업창)에서 볼 수 있음 -->
 											   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-											   		<div class="detail-info__chat" >
+											   		<%-- <div class="detail-info__chat" >
 														<button type="submit" id="chat_btn" onclick="chatNo(${usedProduct.productNo})" style="background-color: #639A67">
 															<i class="fa-solid fa-comment"></i>			 	
 														채팅하기</button>
-											   		</div>
+											   		</div> --%>
 											 </div>
 										 </div>
 									 </sec:authorize>
