@@ -238,36 +238,38 @@ $(document).ready(function() {
                                  </c:if>
                             </div>
                          </div>
-                           <div class="detail-info__text-body-bottom">
-                              <div class="detail-info__btn-list" style="display: flex;">
-                                 <c:choose>
-                                     <c:when test="${empty wishProduct}">
-                                          <!-- 관심상품(찜) -->   
-                                             <div class="detail-info__zzim">
-                                             <button  id="zzim_btn" class="heartBtn heart-click">
-                                                <i class="fa-regular fa-heart"></i>
-                                             <span id="zzim_span"></span>관심상품</button>
-                                          </div>
-                                      </c:when>
-                                      <c:otherwise>
-                                          <!-- 꽉찬하트 -->
-                                             <div class="detail-info__zzim">
-                                             <button id="zzim_btn" class="heartBtn heart-click">
-                                                <i class="fa-solid fa-heart"></i> 관심상품
-                                             </button>
-                                          </div>
-												  </c:otherwise>
-												</c:choose>
-										   <!-- 채팅하기 -->
-										   <!-- post 날린 요청의 결과 chatRoom(윈도우 팝업창)에서 볼 수 있음 -->
-										   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-										   		<div class="detail-info__chat" >
-													<button type="submit" id="chat_btn" onclick="chatNo(${usedProduct.productNo})" style="background-color: #639A67">
-														<i class="fa-solid fa-comment"></i>			 	
-													채팅하기</button>
-										   		</div>
+                         <sec:authorize access="isAuthenticated()">
+	                           <div class="detail-info__text-body-bottom">
+	                              <div class="detail-info__btn-list" style="display: flex;">
+	                                 <c:choose>
+	                                     <c:when test="${empty wishProduct}">
+	                                          <!-- 관심상품(찜) -->   
+	                                             <div class="detail-info__zzim">
+	                                             <button  id="zzim_btn" class="heartBtn heart-click">
+	                                                <i class="fa-regular fa-heart"></i>
+	                                             <span id="zzim_span"></span>관심상품</button>
+	                                          </div>
+	                                      </c:when>
+	                                      <c:otherwise>
+	                                          <!-- 꽉찬하트 -->
+	                                             <div class="detail-info__zzim">
+	                                             <button id="zzim_btn" class="heartBtn heart-click">
+	                                                <i class="fa-solid fa-heart"></i> 관심상품
+	                                             </button>
+	                                          </div>
+													  </c:otherwise>
+													</c:choose>
+											   <!-- 채팅하기 -->
+											   <!-- post 날린 요청의 결과 chatRoom(윈도우 팝업창)에서 볼 수 있음 -->
+											   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+											   		<div class="detail-info__chat" >
+														<button type="submit" id="chat_btn" onclick="chatNo(${usedProduct.productNo})" style="background-color: #639A67">
+															<i class="fa-solid fa-comment"></i>			 	
+														채팅하기</button>
+											   		</div>
+											 </div>
 										 </div>
-									 </div>
+									 </sec:authorize>
 								</div>
 							</div>
 						</div>
@@ -352,24 +354,26 @@ var productNo = $('.hiddenNo').val();
 var memberId = $('.memberId').val();
 
 $(document).ready(function() {
-	$.ajax({
-	   	url : '/campervalley/usedProduct/product/findHeart',
-	   	type : 'GET',
-	   	dataType : 'json',
-	   	data : {
-	   		productNo : productNo
-	   	},
-	   	success : function(data) {
-	   		if(data.wishProduct == null) {
-	   			$('.heart-click').html('<i class="fa-regular fa-heart"></i> 관심상품');
-	   		} else {
-	   		   	$('.heart-click').html('<i class="fa-solid fa-heart"></i> 관심상품');
-	   		}
-	   	}, 
-	   	error : function() {
-	   		alert('하트조회오류');
-	   	}
-	});
+	if(${loginMember ne null}) {
+		$.ajax({
+		   	url : '/campervalley/usedProduct/product/findHeart',
+		   	type : 'GET',
+		   	dataType : 'json',
+		   	data : {
+		   		productNo : productNo
+		   	},
+		   	success : function(data) {
+		   		if(data.wishProduct == null) {
+		   			$('.heart-click').html('<i class="fa-regular fa-heart"></i> 관심상품');
+		   		} else {
+		   		   	$('.heart-click').html('<i class="fa-solid fa-heart"></i> 관심상품');
+		   		}
+		   	}, 
+		   	error : function() {
+		   		alert('하트조회오류');
+		   	}
+		});
+	}
 });
 
 $(".heart-click").click(function() {
