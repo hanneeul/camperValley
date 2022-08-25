@@ -27,6 +27,13 @@ public interface ChatDao {
 
 	List<ChatLog> findRecentChatLogList(Map<String, Object> map);
 
-	@Update("update chat_member set last_check = #{lastCheck} where chatroom_id = #{chatroomId} and seller_id = #{sellerId}")
+	@Update("update chat_member set buyer_last_check = #{lastCheck} where chatroom_id = #{chatroomId} and seller_id = #{sellerId} and buyer_id = #{buyerId}")
 	int updateLastCheck(Map<String, Object> payload);
+
+	@Select("select * from chat_member where seller_id = #{memberId} or buyer_id = #{memberId}")
+	List<ChatMember> findChatMember(String memberId);
+
+	int getUnreadCntBySeller(ChatMember chatMember);
+
+	int getUnreadCntByBuyer(ChatMember chatMember);
 }

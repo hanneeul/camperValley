@@ -31,8 +31,8 @@
 	        where chatroom_id = cl.chatroom_id and buyer_id != #{buyerId}
 	    ) member_id,
 	    msg,
-	    time,
-	    (select count(*) from chat_log where chatroom_id = cl.chatroom_id and time > (select last_check from chat_member where chatroom_id = cl.chatroom_id and seller_id = #{buyerId})) unread_count
+	    time
+<!-- 	    (select count(*) from chat_log where chatroom_id = cl.chatroom_id and time > (select last_check from chat_member where chatroom_id = cl.chatroom_id and seller_id = #{buyerId})) unread_count -->
 	from
 	    ( select
 	        cl.*, 
@@ -47,4 +47,27 @@
         
 </select> 
 
+<select id="getUnreadCntBySeller" resultType="_int">
+select count(*) unread_count
+from chat_log 
+where
+    chatroom_id = #{chatroomId}
+    and member_id != #{sellerId}
+    and
+        time > ( select seller_last_check 
+                from chat_member 
+                where chatroom_id = #{chatroomId} and seller_id = #{sellerId} )
+</select>
+
+<select id="getUnreadCntByBuyer" resultType="_int">
+select count(*) unread_count
+from chat_log 
+where
+    chatroom_id = #{chatroomId}
+    and member_id != #{buyerId}
+    and
+        time > ( select buyer_last_check 
+                from chat_member
+                where chatroom_id = #{chatroomId} and buyer_id = #{buyerId} )
+</select>
 </mapper>

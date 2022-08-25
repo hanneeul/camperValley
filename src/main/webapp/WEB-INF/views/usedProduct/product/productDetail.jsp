@@ -238,6 +238,7 @@ $(document).ready(function() {
                                  </c:if>
                             </div>
                          </div>
+
                          <sec:authorize access="isAuthenticated()">
 	                           <div class="detail-info__text-body-bottom">
 	                              <div class="detail-info__btn-list" style="display: flex;">
@@ -260,7 +261,6 @@ $(document).ready(function() {
 													  </c:otherwise>
 													</c:choose>
 											   <!-- 채팅하기 -->
-											   <!-- post 날린 요청의 결과 chatRoom(윈도우 팝업창)에서 볼 수 있음 -->
 											   		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 											   		<%-- <div class="detail-info__chat" >
 														<button type="submit" id="chat_btn" onclick="chatNo(${usedProduct.productNo})" style="background-color: #639A67">
@@ -268,6 +268,7 @@ $(document).ready(function() {
 														채팅하기</button>
 											   		</div> --%>
 											 </div>
+
 										 </div>
 									 </sec:authorize>
 								</div>
