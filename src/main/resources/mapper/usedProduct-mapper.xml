@@ -334,7 +334,25 @@ select *
 <!-- EJ START -->
 <select id="selectProductList" resultType="UsedProduct">
 	select
-		*
+		product_no,
+		seller_id,
+		cate_no,
+		product_title,
+		product_content,
+		product_img1,
+		product_img2,
+		product_img3,
+		product_img4,
+		product_img5,
+		product_price,
+		product_location,
+		product_delivery_fee,
+		(product_enroll_time + 9/24) as product_enroll_time,
+		product_views,
+		transaction_date,
+		buyer_id,
+		is_delete,
+		heart
 	from
 		used_product
 	where
