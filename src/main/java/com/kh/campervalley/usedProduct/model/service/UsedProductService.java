@@ -11,6 +11,8 @@ import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.dto.WishProduct;
 
+import lombok.NonNull;
+
 public interface UsedProductService {
 
 	public int productInsert(UsedProduct usedProduct); // 상품 등록
@@ -40,6 +42,10 @@ public interface UsedProductService {
 	public Member getSellerInfo(int productNo);
 
 	public int getSellerProdNum(int productNo);
+
+	/*----- EJ START ----- */
+	public int getWishCount(String memberId);
+	/*----- EJ END ----- */
 
 	/*----- JH START ----- */
 	int NUM_PER_PAGE_MODAL = 5;

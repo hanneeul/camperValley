@@ -57,9 +57,14 @@ public class UsedProductController  {
 
 	/* 메인페이지 */
 	@GetMapping("/main/mainPage")
-	public ModelAndView mainPage(ModelAndView mav) {
+	public ModelAndView mainPage(ModelAndView mav, @AuthenticationPrincipal Member loginMember) {
 		try {
 			List<AdvertisementExt> adList = advertiserService.getDisplayAdList(3, AdZone.usedProductHome);
+			if(loginMember != null) {
+				int wishCnt = usedProductService.getWishCount(loginMember.getMemberId());
+				
+				mav.addObject("wishCnt", wishCnt);				
+			}
 			log.debug("adList = {}", adList);
 			
 			mav.addObject("adList", adList);
@@ -118,14 +123,18 @@ public class UsedProductController  {
 	/* 카테고리 검색 */
 	@PostMapping("/main/getProductList") 
 	@ResponseBody
-	public ModelAndView getProductList(@RequestParam(name = "page") int page, @RequestParam(name = "adCount") int beforeAd) {
+	public ModelAndView getProductList(@RequestParam(name = "page") int page, @RequestParam(name = "adCount") int beforeAd,
+			@AuthenticationPrincipal Member loginMember) {
 		ModelAndView mav = new ModelAndView();
 		List<AdvertisementExt> feedAdList = advertiserService.getDisplayFeedAdList(beforeAd, 10, AdZone.usedProductFeed);
 		mav.addObject("feedAdList", feedAdList);
 		int adListSize = beforeAd + feedAdList.size();
 		
 		List<UsedProduct> list = usedProductService.getProductList(page, adListSize);
-		
+		if(loginMember != null) {
+			int wishCnt = usedProductService.getWishCount(loginMember.getMemberId());
+			mav.addObject("wishCnt", wishCnt);				
+		}
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
 		return mav;
@@ -135,12 +144,15 @@ public class UsedProductController  {
 	public ModelAndView cateDisplay(ModelAndView mav,
 					@RequestParam(value = "page", required=false, defaultValue = "0") String page,
 					@RequestParam(value = "cateNo") String cateNo,
-					@RequestParam(value = "order", required=false) String order) {
+					@RequestParam(value = "order", required=false) String order,
+					@AuthenticationPrincipal Member loginMember) {
 		usedProductService.cateProductList(cateNo, Integer.parseInt(page), order, mav);
 		
 		List<AdvertisementExt> adList = advertiserService.getDisplayAdList(3, AdZone.usedProductHome);
-		log.debug("adList = {}", adList);
-		
+		if(loginMember != null) {
+			int wishCnt = usedProductService.getWishCount(loginMember.getMemberId());
+			mav.addObject("wishCnt", wishCnt);				
+		}
 		mav.addObject("adList", adList);
 		
 		mav.addObject("display", "/usedProduct/main/cateDisplay.jsp");
@@ -165,7 +177,8 @@ public class UsedProductController  {
 	@GetMapping("/main/searchDisplay")
 	public String searchDisplay(Model model, @RequestParam(value = "keyword") String keyword,
 								@RequestParam(value = "page", required = false, defaultValue = "0") String page,
-								@RequestParam(value = "order", required = false) String order) {
+								@RequestParam(value = "order", required = false) String order,
+								@AuthenticationPrincipal Member loginMember) {
 		
 		usedProductService.searchProductList(keyword, Integer.parseInt(page), order, model);
 		
@@ -179,7 +192,10 @@ public class UsedProductController  {
 		}
 		
 		List<AdvertisementExt> adList = advertiserService.getDisplayAdList(3, AdZone.usedProductHome);
-		log.debug("adList = {}", adList);
+		if(loginMember != null) {
+			int wishCnt = usedProductService.getWishCount(loginMember.getMemberId());
+			model.addAttribute("wishCnt", wishCnt);				
+		}
 		
 		model.addAttribute("adList", adList);
 		

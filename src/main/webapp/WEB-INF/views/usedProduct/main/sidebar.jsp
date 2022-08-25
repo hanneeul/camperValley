@@ -14,7 +14,7 @@
 		<div class="favoritesText" style="font-weight: 600; font-size: 14px;">관심상품</div>
 		<div class="favoritesCount">
 			<p id="toFavorites" class="toFavorites">
-				<i class="fas fa-heart" style="color: red;"></i>&nbsp; <span id="wishProduct">0</span>
+				<i class="fas fa-heart" style="color: red;"></i>&nbsp; <span id="wishProduct">${wishCnt}</span>
 			</p>
 		</div>
 		<!-- faboritesCount -->
@@ -24,12 +24,12 @@
 	
 	<!-- 최근 본 상품 -->
 	<div class="recently">
-		<div class="recentlyText">최근본상품</div>
+		<!-- <div class="recentlyText">최근본상품</div>
 		<div class="recentlyProduct" style="text-align: center;">
 			<span id="recentlyCnt"></span>
 			<div id="recentlyArea">
 				<a id="recentlyList"> </a>
-				<!-- 최근본상품 -->
+				최근본상품
 				<a id="noList"></a>
 			</div>
 		</div>
@@ -38,6 +38,6 @@
 			<a id="currentPage"></a>
 			
 			<button id="recentlyAddPage" class="btn addpage" onclick=""></button>
-		</div>
+		</div> -->
 	</div>
 </div>

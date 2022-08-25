@@ -342,6 +342,24 @@ select *
 	order by
 		product_enroll_time desc
 </select>
+
+<update id="updateIsDelete">
+	update
+		used_product
+	set
+		is_delete = 'Y'
+	where
+		product_no = #{productNo}
+</update>
+
+<select id="getWishCount" resultType="_int">
+	select
+		count(*)
+	from
+		wish_product
+	where
+		member_id = #{memberId}
+</select>
 <!-- EJ END -->
 
 <!-- SJ START -->

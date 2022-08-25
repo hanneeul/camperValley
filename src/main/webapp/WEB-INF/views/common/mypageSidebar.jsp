@@ -30,9 +30,11 @@
     <li class="nav-item sideNavMenu">
     	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/trade/wish">관심상품</a>
     </li>
+    <!--
     <li class="nav-item sideNavMenu">
     	<a class="nav-link" href="">나의채팅방</a>
     </li>
+    -->
     <li class="nav-item navGroup">
     	<a class="nav-link" href="">커뮤니티</a>
     </li>

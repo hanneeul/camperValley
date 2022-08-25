@@ -48,8 +48,8 @@
 .recently {        
     background-color: white;
     width: 90px;
-    border: 1px solid gray;
-    position: relative;
+    /* border: 1px solid gray; */
+    /* position: relative; */
     top: 74px;
     left: 11px;
 }

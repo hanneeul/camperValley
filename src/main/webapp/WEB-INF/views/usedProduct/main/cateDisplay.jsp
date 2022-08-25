@@ -112,7 +112,9 @@
 </div>
 	<!-- sidebar -->
 	<div id="nav">
-		 <jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
+		 <jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp">
+		 	<jsp:param value="${wishCnt}" name="wishCnt"/>
+		 </jsp:include>
 	</div>
 </div>
 
