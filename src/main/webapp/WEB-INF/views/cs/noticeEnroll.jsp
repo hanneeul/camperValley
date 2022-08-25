@@ -9,15 +9,6 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/cs/cs.css" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-<style>
-.custom-file-input {
-	position: absolute;
-}
-.custom-file-label {
-	display: block;
-	position: relative;
-}
-</style>
 <div class="container" style="width: 870px;">            
 	<h5 class="cs-header text-center">공지사항 등록</h5>                          
 <form:form name="noticeEnrollFrm" action="${pageContext.request.contextPath}/cs/noticeEnroll" method="post" class="form-horizontal" enctype="multipart/form-data">
@@ -40,8 +31,8 @@
 		<tr>
 			<th>첨부파일</th>
 			<td>
-				<input type="file" class="custom-file-input" name="upFile" id="upFile1" style="width:30px" multiple>
-				<label class="custom-file-label" for="upFile1">파일 선택</label>
+				<input type="file" class="custom-file-input" name="upFile" id="upFile1" style="width:30px; position: absolute;" multiple>
+				<label class="custom-file-label" for="upFile1" style="display: block; position: relative;">파일 선택</label>
 			</td>
 		</tr>
 	</table>
@@ -59,13 +50,27 @@ document.noticeEnrollFrm.onsubmit = (e) => {
 	console.log(frm);
 	const titleVal = frm.title.value.trim();
 	if(!/^.+$/.test(titleVal)) {
-		alert("제목을 작성해주세요.");
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '제목을 입력해주세요.',
+		    buttons: {
+		    	'확인': function() {}
+		    }
+		});
 		frm.title.select();
 		return false;
 	}
 	const contentVal = frm.content.value.trim();
 	if(!/^(.|\n)+$/.test(contentVal)) {
-		alert("내용을 작성해주세요.");
+		$.alert({
+			icon: 'fa fa-warning',
+		    title: '',
+		    content: '내용을 입력해주세요.',
+		    buttons: {
+		    	'확인': function() {}
+		    }
+		});
 		frm.content.select();
 		return false;
 	}

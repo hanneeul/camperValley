@@ -419,7 +419,6 @@ public class AdminController {
 	@PostMapping("/insertTodo")
 	public String insertTodo(Todo todo) {
 		try {
-			// 업무로직
 			int result = adminService.insertTodo(todo);
 			
 		} catch (Exception e) {
