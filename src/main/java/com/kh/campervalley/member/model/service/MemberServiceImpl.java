@@ -30,18 +30,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member selectOneMember(String attribute, String memberId) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("memberId", memberId);
-		map.put("attribute",  attribute);
+	public Member selectOneMember(Map<String, Object> map) {
+
 		return memberDao.selectOneMember(map);
 	}
 
 	@Override
-	public String selectIDByNameAndEmail(String name, String email) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("name", name);
-		map.put("email", email);
+	public String selectIDByNameAndEmail(Map<String, Object> map) {
 		return memberDao.selectIDByNameAndEmail(map);
 	}
 

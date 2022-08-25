@@ -25,6 +25,4 @@ public interface MemberDao {
 
 	int updateMemberWithdrawal(@NonNull String memberId);
 
-
-
 }

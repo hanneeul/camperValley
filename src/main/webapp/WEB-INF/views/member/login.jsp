@@ -32,8 +32,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/member/login.css" />
 
 <body>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-<div class="bg-container"></div>
+	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+	<div class="bg-container"></div>
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
 		aria-labelledby="loginModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered px-5" role="document">
@@ -57,30 +57,31 @@
 							type="password" class="form-control" name="password"
 							placeholder="비밀번호" required>
 					</div>
-                    <div class="modal-footer">
+	                <div class="modal-footer">
 					<div class="justify-content-between">
 						<div>
 							<input type="checkbox" class="form-check-input" name="remember-me" id="remember-me" />
 							<label for="remember-me" class="form-check-label">자동로그인</label>
 						</div>				
 						<div>
-                            <a href="${pageContext.request.contextPath}/member/searchId">아이디찾기</a> /
-                            <a href="${pageContext.request.contextPath}/member/searchPassword">비밀번호찾기</a>
+	                        <a href="${pageContext.request.contextPath}/member/searchId">아이디찾기</a> /
+	                        <a href="${pageContext.request.contextPath}/member/searchPassword">비밀번호찾기</a>
 						</div>
-                    </div>
-                    <div>				
+	                </div>
+	                <div>				
 						<div>
-                            <button type="submit" class="btn btn-camper-color">로그인</button>
-                        </div>
-                        <div>
+	                        <button type="submit" class="btn btn-camper-color">로그인</button>
+	                    </div>
+	                    <div>
 							<a href="${pageContext.request.contextPath}/member/enroll" type="button" class="btn btn-outline-camper-color bg-white btn-block" >회원가입</a>
 						</div>
 					</div>
-                </div>
+	            </div>
 				</form:form>
 			</div>
 		</div>
 	</div>
+	
 <script type="text/javascript">
 $("#loginModal")
 .modal()
@@ -93,6 +94,7 @@ $("#loginModal")
 	</c:if>
 });
 </script>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>
 </html>

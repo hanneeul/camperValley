@@ -27,8 +27,8 @@
 
 <div id="container" class="my-5">
 	<section id="content">
-        <div class="mx-auto text-center my-5" style="width: 640px;">
-            <div class="box">
+    	<div class="mx-auto text-center my-5" style="width: 640px;">
+        	<div class="box">
             	<p class="font-weight-bold m-1 mt-3 my-5">회원가입이 완료되었습니다.</p>
                 <div class="my-4">
                     <a href="${pageContext.request.contextPath}/" class="btn btn-camper-color btn-lg m-3 border-2" >홈으로 이동</a>
@@ -38,7 +38,4 @@
         </div>
 	</section>
 </div>
-<script>
-	
-</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
