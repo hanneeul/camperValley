@@ -389,7 +389,7 @@
 	select
 		ad.*,
 		money.*,
-		(select daily_click_cnt from ad_performance where ad.advertisement_no = advertisement_no and display_at = trunc(sysdate + 9/24)) * ad_cpc today_cost
+		(select daily_click_cnt from ad_performance where ad.advertisement_no = advertisement_no and trunc(display_at) = trunc(sysdate + 9/24)) * ad_cpc today_cost
 	from
 		advertisement ad
 			join advertiser ader

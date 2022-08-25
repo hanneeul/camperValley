@@ -113,10 +113,10 @@ public interface AdvertiserDao {
 
 	List<AdvertisementExt> selectDisplayAd(Map<String, Object> param);
 
-	@Update("update ad_performance set daily_view_cnt = daily_view_cnt + 1 where advertisement_no = #{advertisementNo} and display_at = trunc(sysdate + 9/24)")
+	@Update("update ad_performance set daily_view_cnt = daily_view_cnt + 1 where advertisement_no = #{advertisementNo} and trunc(display_at) = trunc(sysdate + 9/24)")
 	int updatePerformView(int advertisementNo);
 
-	@Update("update ad_performance set daily_click_cnt = daily_click_cnt + 1 where advertisement_no = #{advertisementNo} and display_at = trunc(sysdate + 9/24)")
+	@Update("update ad_performance set daily_click_cnt = daily_click_cnt + 1 where advertisement_no = #{advertisementNo} and trunc(display_at) = trunc(sysdate + 9/24)")
 	int updatePerformClick(int advertisementNo);
 
 	Map<String, Object> selectOneAdmoneyNo(int advertisementNo);
