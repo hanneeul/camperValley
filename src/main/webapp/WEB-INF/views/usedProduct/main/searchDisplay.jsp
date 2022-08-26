@@ -35,13 +35,13 @@
 				</c:forEach>
 			</div>
 			<c:if test="${fn:length(adList) > 1}">
-				<a class="carousel-control-prev mx-auto" href="#carouselExampleIndicators" role="button" data-slide="prev" style="margin-top: 133px;">
+				<a class="carousel-control-prev mx-auto" href="#carouselExampleIndicators" role="button" data-slide="prev" style="margin-top: 30px;">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
+					<span class="visually-hidden"></span>
 				</a>
-				<a class="carousel-control-next mx-auto" href="#carouselExampleIndicators" role="button" data-slide="next" style="margin-top: 133px;">
+				<a class="carousel-control-next mx-auto" href="#carouselExampleIndicators" role="button" data-slide="next" style="margin-top: 30px;">
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
+					<span class="visually-hidden"></span>
 				</a>
 			</c:if>
 		</div>
