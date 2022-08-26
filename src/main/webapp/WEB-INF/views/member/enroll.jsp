@@ -77,7 +77,7 @@
 						<tr>
 							<td>
 								<div id="passwordContainer">
-									<input type="password" class="form-control" name="password" id="password" placeholder="비밀번호" autocomplete="off" required>
+									<input type="password" class="form-control" name="password" id="password" placeholder="비밀번호" autocomplete="new-password" required>
 									<input type="hidden" id="passwordValid" value="0" /> <!-- 0-사용불가 1-사용가능 -->
 									<span class="text-danger guide-pw-empty my-2 pl-1 d-none">필수 입력항목입니다.</span>
 									<span class="text-danger guide-pw-invalidation my-2 pl-1 d-none">영문자+숫자+특수문자 조합으로 8자리 이상 입력해주세요.</span>

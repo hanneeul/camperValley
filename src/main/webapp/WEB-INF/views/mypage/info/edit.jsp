@@ -85,7 +85,7 @@
 							</td>
 							<td colspan="2">
 								<input type="email" class="form-control" value="<sec:authentication property="principal.email"/>" name="email" id="email" autocomplete="off" required>
-								<input type="hidden" id="nickValid" value="0" /> <!-- 0-사용불가 1-사용가능 -->
+								<input type="hidden" id="emailValid" value="0" /> <!-- 0-사용불가 1-사용가능 -->
 							</td>
 							<td style="width:6.6rem; text-align: right;">
 								<button class="btn btn-outline-secondary" type="button" id="duplicateEmailChk">중복확인</button>
@@ -216,12 +216,12 @@ $("#duplicateEmailChk").click((e) => {
          success(response){
              const{value, available} = response;
              if(available){
+                emailValid.val(1);
              	$.alert({
 		    		title: ' ',
 		    		content: '사용할 수 있는 이메일입니다.',
 		    		buttons: {'확인': function() {}}
 		    	})
-                emailValid.val(1);
              } else{
 	             $.alert({
 			        title: ' ',
@@ -272,7 +272,7 @@ $("#duplicateEmailChk").click((e) => {
          }	
      
      } else if($("input[name=email]").val() !== "${loginMember.email}"){
-         if(emailValid) {
+         if(emailValid.val()==='0') {
              $.alert({
 	    		    title: ' ',
 	    		    content: '이메일의 \'중복확인\' 버튼을 눌러 사용 가능 여부를 확인해 주세요.',
