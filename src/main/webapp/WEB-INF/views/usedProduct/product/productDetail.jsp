@@ -436,7 +436,6 @@ $(".heart-click").click(function() {
       $(this).html('<i class="fa-regular fa-heart"></i> 관심상품');
    }
 });
-
 /* 상품 삭제 */
 const productDelete = () => {
    $.alert({
@@ -451,7 +450,7 @@ const productDelete = () => {
 	        	    buttons: {
 	        	    	'확인': function() {
 	                        const frm = document.productDeleteFrm;
-	                        frm.submit(); //
+	                        frm.submit();
 	        	    	}
 	        	    }
 	    		});	
@@ -460,7 +459,6 @@ const productDelete = () => {
       }
    });
 };
-
 document.querySelector("#update_btn").addEventListener('click', (e) => {
 	   location.href = '/campervalley/usedProduct/product/productUpdate?no=${usedProduct.productNo}';
 	});
