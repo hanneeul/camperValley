@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 a {
     color: black;
     cursor: pointer;
@@ -83,8 +82,9 @@ div {
     font-size: 17px;
 }
 #zzim_btn {
-    margin-right: 10px;
-    background-color: #D9BF77;
+    margin-right: 158px;
+    background-color: #639A67;
+    margin-bottom: 4px;
 }
 #zzim_span:hover {
 	color: black;
@@ -203,11 +203,16 @@ div {
 	display: flex;
 }
 .detail-info__delivery {
-	position:: relative;
+	position: relative;
 	display: flex;
+	height: 22.5px;
 }
 .detail-info__location {
 	position: relative;
+	display: flex;
+}
+.detail-info__email {
+	position:: relative;
 	display: flex;
 }
 .detail-info__btn-list {
@@ -266,7 +271,7 @@ div {
 }
 .prodInfo_sellerWrap1 {
 	height: calc(100% - 50px);
-    border-right: 1px solid rgb(238, 238, 238);
+    
     padding: 0px 32px 250px;
     position: relative;
     left: -17px;
@@ -458,9 +463,9 @@ div {
     font-size: 17px;
 }
 #zzim_btn, #chat_btn {    
-    color: white;
+	color: white;
     letter-spacing: 1.7px;
-    width: 325px;
+    width: 400px;
     height: 51px;
     border: none;
 }
@@ -579,5 +584,4 @@ div {
     font-size: 0.85rem;
     color: #a0a0a0;
     white-space: nowrap;
-}
 }

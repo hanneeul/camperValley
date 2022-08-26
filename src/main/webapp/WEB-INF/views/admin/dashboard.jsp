@@ -159,8 +159,8 @@ var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
 
 var m = new Date();
 
-var context = document.getElementById('member-graph').getContext('2d');
-var memberGraph = new Chart(context, {
+var contextMember = document.getElementById('member-graph').getContext('2d');
+var memberGraph = new Chart(contextMember, {
 	type : 'bar', 
 	data : { 
 		labels : [
@@ -194,13 +194,12 @@ var memberGraph = new Chart(context, {
 });
 
 // 애드머니 결제 현황
-var context = document.getElementById('money-graph').getContext('2d');
-var moneyGraph = new Chart(context, {
+var contextAd = document.getElementById('money-graph').getContext('2d');
+var moneyGraph = new Chart(contextAd, {
 	type : 'line', 
 	data : { 
-		labels : [
-		'5일전', '4일전', '3일전', '2일전', '1일전', '오늘' ],
-		datasets : [ { 
+		labels : ['5일전', '4일전', '3일전', '2일전', '1일전', '오늘' ],
+		datasets : [{ 
 			label : '총 결제금액',
 			fill : true, 
 			data : [ ${adMinus5}, ${adMinus4}, ${adMinus3}, ${adMinus2}, ${adMinus1}, ${adSysdate} 
@@ -210,25 +209,26 @@ var moneyGraph = new Chart(context, {
 			borderColor : [
 			'rgba(32, 158, 145, 0.5);' ],
 			borderWidth : 1
-		} ]
+		}]
 	},
 	options : {
+		responsive: true,
 		legend : {
 			display : false
 		},
 		scales : {
-			yAxes : [ {
+			yAxes : [{
 				ticks : {
 					beginAtZero : true
 				}
-			} ]
+			}]
 		}
 	}
 });
 
 // 등록글 수
-var context = document.getElementById('board-graph').getContext('2d');
-var boardGraph = new Chart(context,
+var contextBoard = document.getElementById('board-graph').getContext('2d');
+var boardGraph = new Chart(contextBoard,
 		{
 			type : 'doughnut',
 			data : {

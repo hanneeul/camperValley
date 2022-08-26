@@ -65,8 +65,6 @@ public class InfoController {
 		
 		Map<String, Object> map = new HashMap<>();
 		try {
-			System.out.println(updateMember.getPassword()==null + "");
-			System.out.println(updateMember.getPassword().equals(""));
 			
 			String saveDirectory = application.getRealPath("/resources/upload/member");
 			
@@ -102,7 +100,6 @@ public class InfoController {
 			
 			Authentication newAuthentication = new UsernamePasswordAuthenticationToken(
 					loginMember, loginMember.getPassword());
-					
 			
 			redirectAttr.addFlashAttribute("msg", "회원정보가 성공적으로 수정되었습니다.");
 		} catch (Exception e) {

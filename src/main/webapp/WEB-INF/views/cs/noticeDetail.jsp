@@ -52,23 +52,23 @@
 			</div>
 
 			
+		<c:if test="${not empty notice.attachments}">
 			<div class="file_down pt-3 pb-1" style="background-color: #f8f9f9; border-bottom: 1px solid #e8e8e8;">
 				<ul>
 					<c:forEach items="${notice.attachments}" var="attach" varStatus="vs">
-						<c:if test="${not empty notice.attachments}">
 									<li class="p-1"><i class="fas fa-save fa-sm" style="margin-right: 7px;"></i>
 									<a href="${pageContext.request.contextPath}/cs/fileDownload?noticeAttachNo=${attach.noticeAttachNo}" style="color: #626262; font-size: 13px;" class="attach" 
 									data-attach-no="${attach.noticeAttachNo}">${vs.count} : ${attach.originalFilename}</a></li>
-						</c:if>
 					</c:forEach>
 				</ul>
 			</div>
+		</c:if>
 			
 			
 			<div class="noticeDetail_view text-center">
 			<c:if test="${not empty notice.attachments}">
 				<c:forEach items="${notice.attachments}" var="attach" varStatus="vs">
-			<img src="${pageContext.request.contextPath}/resources/upload/cs/${attach.renamedFilename}" alt="" class="mt-3" style="max-width:100%"/>
+			<img src="${pageContext.request.contextPath}/resources/upload/cs/${attach.renamedFilename}" alt="" class="mt-3" style="max-width:80%"/>
 			</c:forEach>
 		</c:if>
 			<p class="mt-4 text-center">${notice.content}</p>
