@@ -66,15 +66,6 @@ public class AdvertiserController {
 	@Autowired
 	ResourceLoader resourceLoader;
 	
-	@Value("${api.impRestKey}")
-	private String IMP_REST_KEY;
-	
-	@Value("${api.impRestSecret}")
-	private String IMP_SECRET_KEY;
-	
-	final String IMP_TOKEN_URL = "https://api.iamport.kr/users/getToken";
-	final String IMP_CANCEL_URL = "https://api.iamport.kr/payments/cancel";
-	
 	@GetMapping("/register")
 	public void registerAdvertiser() { }
 
@@ -216,67 +207,98 @@ public class AdvertiserController {
 	
 	@PostMapping("/admoneyCharge")
 	public ResponseEntity<?> chargeAdmoney(Pay pay) {
-		log.debug("pay = {}", pay);
 		Admoney admoney = null;
 		try {
+
+			// Pay 테이블 insert && Admoney 테이블 내의 결제회원의 잔액정보 update
 			int result = advertiserService.chargeAdmoney(pay);
+
+			// update처리된 잔액정보 조회
 			admoney = advertiserService.selectOneAdmoney(pay.getAdvertiserNo());
+
 		} catch (Exception e) {
 			log.error("애드머니 충전내역 저장 오류", e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(admoney);
 		}
-		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(admoney);
+		return ResponseEntity.status(HttpStatus.OK)
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(admoney);
 	};
+	
+	@Value("${api.impRestKey}")
+	private String IMP_REST_KEY;
+	
+	@Value("${api.impRestSecret}")
+	private String IMP_SECRET_KEY;
+	
+	final String IMP_TOKEN_URL = "https://api.iamport.kr/users/getToken";
+	final String IMP_CANCEL_URL = "https://api.iamport.kr/payments/cancel";
 	
 	@ResponseBody
 	@PostMapping("/refund")
-	public ResponseEntity<?> refundAdmoney(@RequestParam(value="merchantUidList[]") List<String> merchantUidList, 
-			@RequestParam(name="advertiserNo") int advertiserNo, String reason) throws Exception {
+	public ResponseEntity<?> refundAdmoney(@RequestParam(value = "merchantUidList[]") List<String> merchantUidList,
+			@RequestParam(name = "advertiserNo") int advertiserNo, String reason) throws Exception {
 		Admoney admoney = null;
 		int result = 0;
 		try {
-			List<Pay> payList = advertiserService.selectPayByMerchantUidList(merchantUidList);
-			log.debug("payList = {}", payList);
 
-			// 인증토큰발급
+			// 환불대상으로 지정한 pay 테이블 record 정보 SELECT
+			List<Pay> payList = advertiserService.selectPayByMerchantUidList(merchantUidList);
+
+			/* ---------------- API서버 결제정보 접근을 위한 access token 발급 요청 ---------------- */
+			// 요청 헤더
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Content-type", "application/json");
 
+			// 요청 Body에 전달할 data : REST API키, REST API Secret
 			Map<String, String> tokenParams = new HashMap<>();
 			tokenParams.put("imp_key", IMP_REST_KEY);
 			tokenParams.put("imp_secret", IMP_SECRET_KEY);
-			String jsonTokenParams = new ObjectMapper().writeValueAsString(tokenParams); // json으로 변환
+			// Map에 담긴 data를 json 타입으로 변환
+			String jsonTokenParams = new ObjectMapper().writeValueAsString(tokenParams);
 
-			RestTemplate restTemplate = new RestTemplate();
+			// 헤더와 데이터를 묶어 하나의 요청으로 생성
 			HttpEntity<Map<String, String>> tokenRequest = new HttpEntity(jsonTokenParams, headers);
+
+			// access token 발급 REST API 호출 (POST 방식)
+			RestTemplate restTemplate = new RestTemplate();
 			Map<String, Object> responseToken = (Map<String, Object>) restTemplate
 					.postForObject(IMP_TOKEN_URL, tokenRequest, Map.class).get("response");
 
+			// 응답객체에 담긴 access token 저장
 			String ACCESS_TOKEN = (String) responseToken.get("access_token");
 
-			// API서버 환불요청 및 DB업데이트
+			/* ------------------------------ API서버 환불 요청 ------------------------------ */
+			// access token 을 요청 헤더의 인증정보 속성으로 추가
 			headers.add("Authorization", ACCESS_TOKEN);
+
+			// 환불대상 결제 건별 환불 요청
 			for (int i = 0; i < payList.size(); i++) {
+
+				// 환불 요청 Body에 전달할 data : 환불사유, API서버 결제고유값, 환불금액
 				Map<String, Object> params = new HashMap<>();
 				params.put("reason", reason);
 				params.put("imp_uid", payList.get(i).getImpUid());
 				params.put("amount", payList.get(i).getPaidAmount());
 				String jsonParams = new ObjectMapper().writeValueAsString(params);
 
+				// 헤더와 데이터를 묶어 하나의 요청으로 생성
 				HttpEntity<Map<String, String>> request = new HttpEntity(jsonParams, headers);
+
+				// 환불 요청 REST API 호출 (POST 방식)
 				Map<String, Object> response = restTemplate.postForObject(IMP_CANCEL_URL, request, Map.class);
-				log.debug("Refund API response = {}", response);
 
 				// 정상환불 code = 0
 				if (String.valueOf(response.get("code")).equals("0")) {
+					// 요청 결과가 '정상환불'일경우 DB 결제정보 테이블 UPDATE && Admoney 테이블 내의 결제회원의 잔액정보 UPDATE
 					result = advertiserService.refundAdmoney(payList.get(i));
 				} else {
 					String errorMID = payList.get(i).getMerchantUid();
-					return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
-							.body(errorMID);
+					return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMID);
 				}
 			}
+
+			// 환불처리 종료 후 update된 잔액정보 조회
 			admoney = advertiserService.selectOneAdmoney(advertiserNo);
 
 		} catch (RestClientException e) {
@@ -288,7 +310,8 @@ public class AdvertiserController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
 					.body(admoney);
 		}
-		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(admoney);
+		return ResponseEntity.status(HttpStatus.OK)
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(admoney);
 	}
 	
 	@GetMapping("/enrollAd")

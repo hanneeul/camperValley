@@ -111,31 +111,39 @@
 <spring:eval var="impStoreCode" expression="@customProperties['api.impStoreCode']" />
 <sec:authentication property="principal" var="loginMember" scope="page"/>
 <script>
+
 // 결제기능
 IMP.init('${impStoreCode}');
+
 const clickChargeBtn = (amount) => {
 	const merchantUid = '${admoney.advertiserNo}_' + new Date().getTime();
 
 	IMP.request_pay({
-		pg : 'html5_inicis.INIpayTest', // 일반결제 테스트 상점아이디 : INIpayTest
+		
+		// 일반결제 테스트 상점아이디 : INIpayTest
+		pg : 'html5_inicis.INIpayTest',
+		
 		pay_method : 'card',
 		merchant_uid : merchantUid,
 		name : '애드머니충전',
 		digital: true,
-		amount : amount, // 임의결제금액
+		amount : amount,
 		buyer_name : '${loginMember.name}',
 		buyer_tel : '${loginMember.tel}',
 		buyer_email : '${loginMember.email}'
+		
 	}, function (rsp) {
+		
+		// 결제 성공 시
 		if(rsp.success) {
-			console.log(rsp);
+			
 			const {imp_uid : impUid, pay_method : payMethod, paid_amount : paidAmount, status, 
-				buyer_email : buyerEmail, buyer_name : buyerName, buyer_tel : buyerTel, paid_at : paidAt, pg_provider : pgProvider} = rsp;
+				buyer_email : buyerEmail, buyer_name : buyerName, buyer_tel : buyerTel, 
+				paid_at : paidAt, pg_provider : pgProvider} = rsp;
 			
-			const headers = {
-				"${_csrf.headerName}" : "${_csrf.token}"
-			};
+			const headers = {"${_csrf.headerName}" : "${_csrf.token}"};
 			
+			// DB에 결제정보 반영
 			$.ajax({
 				url : '${pageContext.request.contextPath}/mypage/advertiser/admoneyCharge',
 				method : 'POST',
@@ -153,8 +161,9 @@ const clickChargeBtn = (amount) => {
 					paidAt,
 					pgProvider
 				}
+				
 			}).done(function(data) {
-				console.log(data);
+				
 				const {balance : afterBalace} = data;
 				$.confirm({
 					title: '결제완료',
@@ -166,6 +175,7 @@ const clickChargeBtn = (amount) => {
 					}
 				});
 			});
+			
 		} else {
 			console.log(rsp.error_msg);
 		}
@@ -188,6 +198,7 @@ const cancelPay = () => {
 		return;
 
 	$.ajax({
+		
 		url : '${pageContext.request.contextPath}/mypage/advertiser/refund',
 		method : 'post',
 		headers,
@@ -196,6 +207,7 @@ const cancelPay = () => {
 			advertiserNo : '${admoney.advertiserNo}',
 			reason : '테스트 결제 환불'
 		}
+		
 	}).done(function(result) { // 환불 성공시 로직 
 		console.log(result);
 		$.confirm({
