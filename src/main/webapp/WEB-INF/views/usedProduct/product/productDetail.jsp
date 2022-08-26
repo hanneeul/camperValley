@@ -8,7 +8,6 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/productDetail.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
 
 <input type="hidden" class="hiddenNo" value="${usedProduct.productNo}"/>
 <input type="hidden" class="memberId" value="${loginMember.memberId}"/>
@@ -98,6 +97,7 @@ $(document).ready(function() {
    
 });
 </script>
+
 <div id="section" style="width: 98%; margin:30px auto;">
    <div class="detail_area">
    <div class="detail_div">
@@ -243,7 +243,9 @@ $(document).ready(function() {
                              <div class="detail-info__email" id="sellerEmail">
                                  <a class="btn btn-outline-success btn-outline-camper-color"
                                      href="mailto:${usedProduct.member.email}?subject=캠퍼밸리에서 [${usedProduct.productTitle}] 보고 문의드립니다.
-                                    &amp;body=캠퍼밸리 회원ID : ${loginMember.memberId} (*회원ID 삭제 금지)%0D%0A%0D%0A여기에 문의 내용을 작성해주세요.%0D%0A
+                                    &amp;body=캠퍼밸리 회원ID : ${loginMember.memberId} (*회원ID 삭제 금지)
+                                    %0D%0A%0D%0A여기에 문의 내용을 작성해주세요.
+                                    %0D%0A%0D%0A상품 URL : http://localhost:9090/campervalley/usedProduct/product/productDetail?no=${usedProduct.productNo}
                                     &amp;target=_blank">
                                     ${member.nickname}님에게 메일 보내기
                                 </a>
@@ -318,6 +320,7 @@ $(document).ready(function() {
                <div class="prodInfo_sellerWrap2">
                   <div class="sellerInfo_Title">판매자정보</div>
                </div>
+               
                   <div class="seller" style="cursor:pointer">
                      <span class="sellerProfileImg_Link"></span>
                      <div class="sellerInfoWrap">
@@ -441,14 +444,15 @@ const productDelete = () => {
        content: '게시글을 삭제하시겠습니까?',
        buttons: {
           '확인': function() {
-                const frm = document.productDeleteFrm;
-                frm.submit();
                 
 	            $.alert({
 	        	    title: '',
 	        	    content: '게시글이 삭제되었습니다.',
 	        	    buttons: {
-	        	    	'확인': function() {}
+	        	    	'확인': function() {
+	                        const frm = document.productDeleteFrm;
+	                        frm.submit();
+	        	    	}
 	        	    }
 	    		});	
           },
@@ -456,6 +460,10 @@ const productDelete = () => {
       }
    });
 };
+
+document.querySelector("#update_btn").addEventListener('click', (e) => {
+	   location.href = '/campervalley/usedProduct/product/productUpdate?no=${usedProduct.productNo}';
+	});
 </script>
 
 <script>
@@ -465,8 +473,6 @@ const productDelete = () => {
 } */
 </script>
 
-
-<jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
 <%-- profile modal --%>
 <jsp:include page="/WEB-INF/views/tradereview/profileCheck.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
