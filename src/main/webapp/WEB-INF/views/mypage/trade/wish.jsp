@@ -67,8 +67,8 @@ form{
 <script>
 
 const io = new IntersectionObserver((entries, observer) => {
-	  entries.forEach((entry) => {
-    	$('div.spinner-border').removeClass("d-none");
+	entries.forEach((entry) => {
+   		$('div.spinner-border').removeClass("d-none");
 	    if (entry.isIntersecting) {
 	    	let list = null;
 	    	observer.disconnect();
@@ -122,12 +122,6 @@ const io = new IntersectionObserver((entries, observer) => {
 });
 
 io.observe($('.list').get($('.list').length-1)); 
-
-
-
-
-
-
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
