@@ -451,7 +451,7 @@ const productDelete = () => {
 	        	    buttons: {
 	        	    	'확인': function() {
 	                        const frm = document.productDeleteFrm;
-	                        frm.submit();
+	                        frm.submit(); //
 	        	    	}
 	        	    }
 	    		});	
