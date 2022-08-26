@@ -128,7 +128,7 @@ function getProductList(page) {
 							   + '<div class="displayName">'
 							   + item.productTitle + '</div>'
 							   + '<div class="price-time">'
-							   + '<div class="displayPrice">' + item.productPrice
+							   + '<div class="displayPrice">' + Number(item.productPrice).toLocaleString("ko-KR")
 							   + '</div>' + '<div class="displayTime"><span>'
 							   + time + time_before + '<span></div>' + '</div>'
 							   + '</div>' + '</div>' + '</div>' + '</div>';

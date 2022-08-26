@@ -27,7 +27,7 @@
 				<div class="divNowAdMoney d-flex justify-content-between">
 					<h6 class="d-inline">현재 보유 애드머니</h6>
 					<div>
-						<h5 class="d-inline" id="balance">${admoney.balance}</h5>
+						<h5 class="d-inline" id="balance"><fmt:formatNumber value="${admoney.balance}" pattern="#,###" /></h5>
 						<small class="ml-1">원</small>
 					</div>
 				</div>
@@ -74,7 +74,7 @@
 			</div>
 			<form:form action="" onsubmit="return false;" name="refundAdmoneyFrm">
 				<div class="modal-body px-4">
-					<p>보유애드머니 : <span class="camper-color mx-1">${admoney.balance}</span><small>원</small></p>
+					<p>보유애드머니 : <span class="camper-color mx-1"><fmt:formatNumber value="${admoney.balance}" pattern="#,###" /></span><small>원</small></p>
 					<small>*소진이 시작된 결제건은 제외됩니다.</small>
 					<div class="d-flex justify-content-center" id="payListWrapper">
 						<table id="payListTbl" class="table">
@@ -92,7 +92,7 @@
 											<input type="checkbox" class="" name="cancelTarget" value="${pay.merchantUid}">
 										</td>
 										<td class="text-center">${pay.merchantUid}</td>
-										<td class="text-center">${pay.paidAmount}</td>
+										<td class="text-center"><fmt:formatNumber value="${pay.paidAmount}" pattern="#,###" /></td>
 									</tr>
 								</c:forEach>
 							</tbody>
