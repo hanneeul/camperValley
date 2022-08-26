@@ -117,7 +117,7 @@ select *
 				m.member_id
 			from
 				used_product p, member m
-			where p.seller_id = m.member_id and cate_no=#{cateNo}
+			where p.seller_id = m.member_id and cate_no=#{cateNo} and is_delete='N' and transaction_date is null 
 			order by
 			<choose>
 				<when test='order =="A"'>p.product_enroll_time desc</when>
@@ -137,7 +137,7 @@ select *
 <select id="cateProductCount" parameterType="java.util.HashMap" resultType="int">
 	select count(0)
 	from used_product p, member m
-	where p.seller_id = m.member_id and p.cate_no=#{cateNo}
+	where p.seller_id = m.member_id and p.cate_no=#{cateNo} and p.is_delete='N' and p.transaction_date is null 
 </select>
 
 <select id="cateList" resultType="ProductCategory">
@@ -179,7 +179,7 @@ select *
 			from
 				used_product p, member m
 			where 
-				p.seller_id = m.member_id
+				p.seller_id = m.member_id and is_delete='N' and transaction_date is null 
 				<if test=" productTitle != null and productTitle != '' ">
 				and p.product_title Like '%' || #{productTitle} || '%'
 				</if>
@@ -205,7 +205,7 @@ select *
 	select count(0)
 	from used_product p, member m
 	where 
-		p.seller_id = m.member_id
+		p.seller_id = m.member_id and p.is_delete='N' and p.transaction_date is null  
 		<if test=" productTitle != null and productTitle != '' ">
 		and p.product_title Like '%' || #{productTitle} || '%'
 		</if>

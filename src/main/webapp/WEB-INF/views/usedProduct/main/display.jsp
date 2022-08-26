@@ -67,18 +67,15 @@
 <script>
 // 광고
 // 전체 상품 목록 출력 및 페이징
-
 //ajax 통신을 위한 csrf 설정
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 $(document).ajaxSend(function(e, xhr, options) {
     xhr.setRequestHeader(header, token);
 });
-
 var page = 1;
 let adCount = 0;
 let totalItemCount = 0;
-
 $(document).ready(function() {
 	getProductList(page);
 });
@@ -87,7 +84,6 @@ function viewMore() {
 	getProductList(page);
 }
 function getProductList(page) {
-
 	$.ajax({
 		type : 'post',
 		url : '${pageContext.request.contextPath}/usedProduct/main/getProductList',
@@ -118,7 +114,7 @@ function getProductList(page) {
 						time = Math.round(time / 60);
 						time_before = "시간 전";
 					}
-
+					
 					if((totalItemCount + 1) % 6 != 0 || data.feedAdList[adCount] == null) {
 						html = '<div class="item col-3"' + 'onclick="productDetailNo('
 							+ item.productNo + ');"'
@@ -185,7 +181,6 @@ const viewUpFirstAd = () => {
 	const active = document.querySelector(".carousel-inner .active");
 	if(active == null)
 		return;
-
 	const advertisementNo = active.dataset.advertisementNo;
 	viewUpAd(advertisementNo);
 };
