@@ -53,7 +53,7 @@
 					<img src="${list.productImg1}" class="rounded float-start" alt="상품이미지">
 					<h5 id="displayTitle">${list.productTitle}</h5>
 					<div class="price-time">
-						<p class="displayPrice">${list.productPrice}</p>
+						<p class="displayPrice">${list.productPrice}원</p>
 						<h5 class="displayTime">${list.productEnrollTime}</h5>
 					</div>
 				</div>
@@ -129,7 +129,7 @@ function getProductList(page) {
 							   + item.productTitle + '</div>'
 							   + '<div class="price-time">'
 							   + '<div class="displayPrice">' + item.productPrice
-							   + '</div>' + '<div class="displayTime"><span>'
+							   + '원</div>' + '<div class="displayTime"><span>'
 							   + time + time_before + '<span></div>' + '</div>'
 							   + '</div>' + '</div>' + '</div>' + '</div>';
 					}
