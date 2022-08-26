@@ -107,14 +107,20 @@ const renderProductList = (cPage) => {
 				const $title = $(`<div class="title text-15 font-weight-bold">\${productList[i].productTitle}</div>`);
 				const createdAt = productList[i].productEnrollTime;
 				const $createdAt = $(`<div class="createdAt text-13 text-secondary">\${createdAt.substr(0,4)}.\${createdAt.substr(5,2)}.\${createdAt.substr(8,2)}</div>`);
+				const $priceStatus = $('<div class="d-flex justify-content-between"></div>');
+				
 				const $price = $(`<div class="price my-2 font-weight-bold">\${	parseInt(productList[i].productPrice).toLocaleString()}원</div>`);
+				let $status;
+				if(productList[i].buyerId == '') $status = $('<div class="text-13 camper-color">판매중</div>');
+				else $status = $('<div class="text-13 text-danger">판매완료</div>');
 				const $content = $('<div class="content text-13"></div>');
 				const content = productList[i].productContent;
 				if(content.length <= 50) $content.html(content);
 				else $content.html(content.substr(0, 50) + '...');
 				$productImgBox.append($productImg);
 				$titleCreatedAt.append($title, $createdAt);
-				$productInfoBox.append($titleCreatedAt, $price, $content);
+				$priceStatus.append($price, $status);
+				$productInfoBox.append($titleCreatedAt, $priceStatus, $content);
 				$productBox.append($productImgBox, $productInfoBox);
 				$("#listSection").append($productBox);
 			}

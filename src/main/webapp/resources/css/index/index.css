@@ -21,7 +21,7 @@
 }
 #searchFrmTop .input {
 	height: 30px;
-	width: 280px;
+	width: 380px;
 	font-size: 12px;
 	outline: 1px solid rgba(0, 50, 0, 0.5);
 	border-style: none;
@@ -34,7 +34,7 @@
 	color: white;
 }
 #inputArea .input{
-	width: 150px;
+	width: 210px;
 	cursor: pointer;
 	color: rgb(105, 105, 105);
 }

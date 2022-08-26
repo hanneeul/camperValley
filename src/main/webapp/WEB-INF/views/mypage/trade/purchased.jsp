@@ -107,7 +107,7 @@ const io = new IntersectionObserver((entries, observer) => {
 	        		},
 	        	success(response){
 	        			const {list} = response;
-	        			console.log(list.length)
+	        			console.log(list.length);
 	        			$('input[name=addNum]').val(list.length) ;
 	        			list.forEach((product) =>{
 							const $prdDetailLink = '<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no='+product.productNo+'"></a>';  	        			
@@ -141,7 +141,7 @@ const io = new IntersectionObserver((entries, observer) => {
 			        				className: 'review-update btn btn-danger btn-sm align-self-center mr-3',
 			        			}).attr('data-reviewno',product.reviewNo)
 			        				.attr('data-starscore',product.starScore)
-			        				.attr('product.content',product.reviewNo);
+			        				.attr('data-content',product.content);
 		        			}
 		        				
 		        			$('.list-container').append($('<hr>'));		

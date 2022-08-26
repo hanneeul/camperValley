@@ -18,6 +18,7 @@
 				<select name="sido" id="sido1" class="input p-2 mr-2 mb-3"></select>
 				<select name="gugun" id="gugun1" class="input p-2 mr-2 mb-3"></select>
 			</div>
+			<!-- 
 			<div id="inputTheme">
 				<div class="py-2 camper-color text-18">테마</div>
 				<select name="themaEnvrnCl" class="input p-2 mb-3">
@@ -35,7 +36,8 @@
 					<option value="겨울눈꽃명소">겨울눈꽃명소</option>
 					<option value="걷기길">걷기길</option>
 				</select>
-			</div>
+			</div> 
+			-->
 			<div id="inputFacltNm">
 				<div class="py-2 camper-color text-18">캠핑장명</div>
 				<input name="facltNm" class="input p-2 mb-3" type="text" placeholder="캠핑장명을 입력해주세요."/>
@@ -192,7 +194,7 @@ $('document').ready(function() {
 
 document.querySelector("#searchFrmTop #searchCampsite").addEventListener("click", (e) => {
 	const frm = document.searchFrmTop;
-	if(frm.sido.value == "시/도" && frm.themaEnvrnCl.value == "" && frm.facltNm.value == "") {
+	if(frm.sido.value == "시/도" && frm.facltNm.value == "") {
 		$.alert({
 			icon: 'fa fa-warning',
 		    title: '',
