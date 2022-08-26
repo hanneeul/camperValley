@@ -10,6 +10,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ import com.kh.campervalley.community.review.model.dto.ReviewComment;
 import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
 import com.kh.campervalley.community.review.model.dto.ReviewRecommend;
 import com.kh.campervalley.community.review.model.service.ReviewService;
+import com.kh.campervalley.member.model.dto.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -195,12 +197,17 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/reviewDetail")
-	public ModelAndView reviewDetail(ModelAndView mav, @RequestParam int reviewNo) throws Exception {
+	public ModelAndView reviewDetail(ModelAndView mav, @RequestParam int reviewNo, @AuthenticationPrincipal Member loginMember) throws Exception {
 		try {
 			int result = reviewService.updateReadCount(reviewNo);
 			CampsiteReviewExt review = reviewService.selectOneReview(reviewNo);
 			List<ReviewComment> commentList = reviewService.selectReviewCommentList(reviewNo);
 			List<ReviewPhoto> photoList = reviewService.selectReviewPhotoList(reviewNo);
+			
+			Map<String, Object> param = new HashMap<>();
+			param.put("reviewNo", reviewNo);
+			param.put("memberId", loginMember.getMemberId());
+			ReviewRecommend recommend = reviewService.recommendCheck(param);
 			
 			review.setTitle(review.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
 			review.setContent(review.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
@@ -209,6 +216,7 @@ public class ReviewController {
 			mav.addObject("review", review);
 			mav.addObject("commentList", commentList);
 			mav.addObject("photoList", photoList);
+			mav.addObject("recommend", recommend);
 		} catch (Exception e) {
 			log.error("후기 상세 조회 오류", e);
 			throw e;
@@ -313,12 +321,12 @@ public class ReviewController {
 			
 			if(recommend == null) {
 				int result = reviewService.insertReviewRecommend(param);
+				review.addReviewRecommend(recommend);
 			}
 			else {
 				int result = reviewService.setReviewRecommendStatus(recommend);
+				review.addReviewRecommend(recommend);
 			}
-			review.addReviewRecommend(recommend);
-			model.addAttribute("recommend", recommend);
 		} catch (Exception e) {
 			log.error("후기 추천 오류", e);
 			throw e;

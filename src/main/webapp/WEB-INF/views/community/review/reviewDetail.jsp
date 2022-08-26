@@ -136,25 +136,23 @@
 				<input type="hidden" name="reviewNo" id="reviewNo" value="${review.reviewNo}" />
 				<input type="hidden" name="memberId" id="memberId" value="${loginMember.memberId}" />
 				<div class="text-center mt-3 pt-3">
-					<c:forEach items="${review.recommends}" var="recommend">
-						<c:choose>
-							<c:when test="${recommend.status eq 'N'}">
-								<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue" onclick="recommend();">
-									<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천하기
-								</button>
-							</c:when>
-							<c:when test="${recommend.status eq 'Y'}">
-								<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue active" onclick="recommend();">
-									<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천완료
-								</button>
-							</c:when>
-							<c:otherwise>
-								<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue" onclick="recommend();">
-									<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천하기
-								</button>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
+					<c:choose>
+						<c:when test="${recommend.status eq 'N'}">
+							<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue" onclick="recommend();">
+								<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천하기
+							</button>
+						</c:when>
+						<c:when test="${recommend.status eq 'Y'}">
+							<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue active" onclick="recommend();">
+								<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천완료
+							</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" id="recommendBtn" class="btn btn-outline-primary btn-outline-camper-blue" onclick="recommend();">
+								<i class="fa-regular fa-thumbs-up"></i>&nbsp;추천하기
+							</button>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</form:form>
 		</c:if>

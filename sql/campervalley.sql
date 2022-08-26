@@ -410,7 +410,7 @@ create table review_recommend (
 	recommend_no number not null,
 	review_no number not null,
 	member_id varchar2(15) not null,
-	status char(1) default 'N' not null,
+	status char(1) default 'Y' not null,
     
 	constraint pk_review_recommend primary key(recommend_no),
 	constraint fk_review_recommend_review_no foreign key(review_no) references campsite_review(review_no) on delete cascade, --원본글 삭제 시 추천도 삭제

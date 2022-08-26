@@ -203,11 +203,16 @@ div {
 	display: flex;
 }
 .detail-info__delivery {
-	position:: relative;
+	position: relative;
 	display: flex;
+	height: 22.5px;
 }
 .detail-info__location {
 	position: relative;
+	display: flex;
+}
+.detail-info__email {
+	position:: relative;
 	display: flex;
 }
 .detail-info__btn-list {
