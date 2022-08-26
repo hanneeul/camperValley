@@ -116,8 +116,11 @@ select *
 				p.heart,
 				m.member_id
 			from
-				used_product p, member m
-			where p.seller_id = m.member_id and cate_no=#{cateNo} and is_delete='N' and transaction_date is null 
+				used_product p join member m
+					on p.seller_id = m.member_id
+			where
+				cate_no=#{cateNo}
+				and is_delete='N' and transaction_date is null
 			order by
 			<choose>
 				<when test='order =="A"'>p.product_enroll_time desc</when>
@@ -136,8 +139,11 @@ select *
 
 <select id="cateProductCount" parameterType="java.util.HashMap" resultType="int">
 	select count(0)
-	from used_product p, member m
-	where p.seller_id = m.member_id and p.cate_no=#{cateNo} and p.is_delete='N' and p.transaction_date is null 
+	from
+		used_product p join member m
+			on p.seller_id = m.member_id
+	where cate_no=#{cateNo}
+				and is_delete='N' and transaction_date is null
 </select>
 
 <select id="cateList" resultType="ProductCategory">
@@ -177,9 +183,10 @@ select *
 				p.heart, 
 				m.nickname
 			from
-				used_product p, member m
+				used_product p join member m
+					on p.seller_id = m.member_id
 			where 
-				p.seller_id = m.member_id and is_delete='N' and transaction_date is null 
+				is_delete='N' and transaction_date is null
 				<if test=" productTitle != null and productTitle != '' ">
 				and p.product_title Like '%' || #{productTitle} || '%'
 				</if>
@@ -203,9 +210,11 @@ select *
 
 <select id="searchProductCount" parameterType="java.util.HashMap" resultType="int">
 	select count(0)
-	from used_product p, member m
-	where 
-		p.seller_id = m.member_id and p.is_delete='N' and p.transaction_date is null  
+	from
+		used_product p join member m
+			on p.seller_id = m.member_id
+	where
+		is_delete='N' and transaction_date is null
 		<if test=" productTitle != null and productTitle != '' ">
 		and p.product_title Like '%' || #{productTitle} || '%'
 		</if>
@@ -336,7 +345,25 @@ select *
 <!-- EJ START -->
 <select id="selectProductList" resultType="UsedProduct">
 	select
-		*
+		product_no,
+		seller_id,
+		cate_no,
+		product_title,
+		product_content,
+		product_img1,
+		product_img2,
+		product_img3,
+		product_img4,
+		product_img5,
+		product_price,
+		product_location,
+		product_delivery_fee,
+		(product_enroll_time + 9/24) as product_enroll_time,
+		product_views,
+		transaction_date,
+		buyer_id,
+		is_delete,
+		heart
 	from
 		used_product
 	where
@@ -358,10 +385,29 @@ select *
 	select
 		count(*)
 	from
-		wish_product
+		wish_product wish join used_product used
+			on wish.product_no = used.product_no
+		join member m
+			on wish.member_id = m.member_id
 	where
-		member_id = #{memberId}
+		wish.member_id = #{memberId}
+		and
+		used.is_delete = 'N'
+		and
+		used.transaction_date is null
+		and
+		m.withdrawal = 'N'
 </select>
+
+<update id="updateUsedProductAfterSelling" parameterType="map">
+	update
+		used_product
+	set
+		transaction_date = sysdate,
+		buyer_id = #{buyerId}
+	where
+		product_no = #{productNo}
+</update>
 <!-- EJ END -->
 
 <!-- SJ START -->

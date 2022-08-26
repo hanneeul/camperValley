@@ -38,10 +38,13 @@ public class HomeController {
 			HttpSession session = request.getSession();
 			if(loginMember != null) {
 				boolean isPauseAdvertiser = advertiserService.isPauseAdvertiser(loginMember.getMemberId());
-				log.debug("isPauseAdvertiser ={}", isPauseAdvertiser);
+				boolean isAdvertiser = advertiserService.isAdvertiser(loginMember.getMemberId());
+				log.debug("isPauseAdvertiser = {}", isPauseAdvertiser);
+				log.debug("isAdvertiser = {}", isAdvertiser);
 				
 				// 권한정지광고주 true, 권한보유 광고주 false
 				session.setAttribute("isPauseAdvertiser", isPauseAdvertiser);
+				session.setAttribute("isAdvertiser", isAdvertiser);
 			}
 			
 			List<AdvertisementExt> adList = advertiserService.getDisplayAdList(3, AdZone.mainHome);

@@ -22,3 +22,18 @@ div.container img{
 }
 
 
+/* EJ start */
+.hide {
+	display: none !important;
+}
+small.failMsg {
+	color: #c7392b;
+	display: block;
+	margin: .4rem;
+}
+small.SuccessMsg {
+	color: #639A67;
+	display: block;
+	margin: .4rem;
+}
+/* EJ end */

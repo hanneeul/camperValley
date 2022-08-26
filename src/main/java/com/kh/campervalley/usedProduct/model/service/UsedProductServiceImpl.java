@@ -241,6 +241,11 @@ public class UsedProductServiceImpl implements UsedProductService {
 	public int getWishCount(String memberId) {
 		return usedProductDao.getWishCount(memberId);
 	}
+	
+	@Override
+	public int updateUsedProductAfterSelling(Map<String, Object> param) {
+		return usedProductDao.updateUsedProductAfterSelling(param);
+	}
 	/*----- EJ END ----- */
 	
 	/*----- JH START ----- */

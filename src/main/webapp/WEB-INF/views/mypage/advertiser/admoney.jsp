@@ -72,9 +72,10 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="" onsubmit="return false;" name="refundAdmoneyFrm">
+			<form:form action="" onsubmit="return false;" name="refundAdmoneyFrm">
 				<div class="modal-body px-4">
-					<p>환불가능금액 : <span class="camper-color mx-1">${admoney.balance}</span><small>원</small></p>
+					<p>보유애드머니 : <span class="camper-color mx-1">${admoney.balance}</span><small>원</small></p>
+					<small>*소진이 시작된 결제건은 제외됩니다.</small>
 					<div class="d-flex justify-content-center" id="payListWrapper">
 						<table id="payListTbl" class="table">
 							<thead>
@@ -102,7 +103,7 @@
 					<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">뒤로가기</button>
 					<button type="button" onclick="cancelPay();" class="btn btn-sm btn-camper-red">환불하기</button>
 				</div>
-			</form>
+			</form:form>
 		</div>
 	</div>
 </div>

@@ -13,7 +13,7 @@
 </div>
 <ul class="sideNav navbar-nav px-3 mb-3">
     <li class="nav-item navGroup">
-    	<a class="nav-link" href="">회원관리</a>
+    	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/info/main">회원관리</a>
     </li>
     <li class="nav-item sideNavMenu">
     	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/info/edit"">회원정보관리</a>
@@ -50,17 +50,15 @@
     <li class="nav-item navGroup">
     	<a class="nav-link" href="">광고주</a>
     </li>
-    <sec:authorize access="!hasRole('AD') && ${isPauseAdvertiser eq false}">
+    <sec:authorize access="!hasRole('AD') && ${isPauseAdvertiser eq false && isAdvertiser eq false}">
 	    <li class="nav-item sideNavMenu">
 	    	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/advertiser/register">광고주등록</a>
 	    </li>
     </sec:authorize>
-    <sec:authorize access="hasRole('AD') || ${isPauseAdvertiser eq true}">
+    <sec:authorize access="hasRole('AD') || ${isPauseAdvertiser eq true && isAdvertiser eq true }">
 	    <li class="nav-item sideNavMenu">
 	    	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/advertiser/dashboard">광고관리</a>
 	    </li>
-    </sec:authorize>
-    <sec:authorize access="hasRole('AD') || ${isPauseAdvertiser eq true}">
 	    <li class="nav-item sideNavMenu">
 	    	<a class="nav-link" href="${pageContext.request.contextPath}/mypage/advertiser/exit">광고주해제</a>
 	    </li>

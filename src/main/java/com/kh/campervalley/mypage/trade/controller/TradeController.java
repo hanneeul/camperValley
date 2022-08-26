@@ -17,10 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.member.model.dto.Member;
+import com.kh.campervalley.member.model.service.MemberService;
 import com.kh.campervalley.mypage.trade.dto.WishExt;
 import com.kh.campervalley.mypage.trade.model.service.TradeService;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
@@ -38,6 +40,9 @@ public class TradeController {
 	
 	@Autowired
 	private UsedProductService usedProductService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@Autowired
 	ServletContext application;
@@ -231,5 +236,50 @@ public class TradeController {
 		
 		return "redirect:/mypage/trade/wish";
 	}
+
+	/*----- EJ start -----*/
+	@PostMapping("/buyerExist")
+	public ResponseEntity<?> checkBuyerIdExist(@RequestParam String buyerId) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			Map<String, Object> param = new HashMap<>();
+			param.put("attribute", "member_id");
+			param.put("value", buyerId);
+			Member member = memberService.selectOneMember(param);
+			if (member != null) {
+				map.put("result", true);
+			} else {
+				map.put("result", false);
+			}
+
+		} catch (Exception e) {
+			log.error("구매자아이디 조회오류", e);
+			map.put("msg", "구매자아이디 조회오류");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map);
+		}
+		return ResponseEntity.status(HttpStatus.OK)
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	}
+
+	@PostMapping("/buyerUpdate")
+	public ResponseEntity<?> completeProductSelling(int productNo, String buyerId) {
+		Map<String, Object> map = new HashMap<>();
+		try {
+			log.debug("productNo, buyerId = {}, {}", productNo, buyerId);
+			Map<String, Object> param = new HashMap<>();
+			param.put("productNo", productNo);
+			param.put("buyerId", buyerId);
+			
+			int result = usedProductService.updateUsedProductAfterSelling(param);
+			if(result > 0)
+				map.put("result", true);
+		} catch (Exception e) {
+			log.error("판매완료 처리 오류", e);
+			map.put("msg", "판매완료 처리 오류");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(map);
+		}
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE).body(map);
+	}
+	/*----- EJ end -----*/
 
 }

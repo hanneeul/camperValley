@@ -10,16 +10,18 @@
 <!-- 사이드 배너 시작 -->
 <div class="navBanner">
 	<!-- 찜 하트 수 -->
-	<div class="favorites">
-		<div class="favoritesText" style="font-weight: 600; font-size: 14px;">관심상품</div>
-		<div class="favoritesCount">
-			<p id="toFavorites" class="toFavorites">
-				<i class="fas fa-heart" style="color: red;"></i>&nbsp; <span id="wishProduct">${wishCnt}</span>
-			</p>
+	<sec:authorize access="isAuthenticated()">
+		<div class="favorites">
+			<div class="favoritesText" style="font-weight: 600; font-size: 14px;">관심상품</div>
+			<div class="favoritesCount">
+				<p id="toFavorites" class="toFavorites">
+					<i class="fas fa-heart" style="color: red;"></i>&nbsp; <span id="wishProduct">${wishCnt}</span>
+				</p>
+			</div>
+			<!-- faboritesCount -->
+			<br>
 		</div>
-		<!-- faboritesCount -->
-		<br>
-	</div>
+	</sec:authorize>
 	<!-- 찜 끝 -->
 	
 	<!-- 최근 본 상품 -->
