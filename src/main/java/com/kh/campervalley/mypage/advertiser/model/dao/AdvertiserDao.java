@@ -134,4 +134,6 @@ public interface AdvertiserDao {
 
 	boolean isPauseAdvertiser(String memberId);
 
+	boolean isAdvertiser(String memberId);
+
 }
