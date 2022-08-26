@@ -155,6 +155,7 @@ function getProductList(page) {
 								+ '	<div class="displayTime"></div>'
 								+ '</div>'
 								+ '</div></div></div>'
+						viewUpAd(advertisementNo);
 					}
 					
 					$('#display-list').append(html);

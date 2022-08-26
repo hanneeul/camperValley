@@ -319,4 +319,9 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	public boolean isPauseAdvertiser(String memberId) {
 		return advertiserDao.isPauseAdvertiser(memberId); // 권한정지면 true
 	}
+	
+	@Override
+	public boolean isAdvertiser(String memberId) {
+		return advertiserDao.isAdvertiser(memberId);
+	}
 }

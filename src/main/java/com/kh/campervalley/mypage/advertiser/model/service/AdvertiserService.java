@@ -87,4 +87,6 @@ public interface AdvertiserService {
 
 	boolean isPauseAdvertiser(String memberId);
 
+	boolean isAdvertiser(String memberId);
+
 }

@@ -30,7 +30,7 @@ public interface AdvertiserDao {
 	@Insert("insert into admoney values (seq_admoney_no.nextval, #{advertiserNo}, default)")
 	int insertAdmoney(int advertiserNo);
 
-	@Insert("insert into license_file values (seq_license_file_no.nextval, #{advertiserNo}, #{originalFilename}, #{renamedFilename}, default)")
+	@Insert("insert into license_file values (seq_license_file_no.nextval, #{advertiserNo}, #{originalFilename}, #{renamedFilename}, (sysdate + 9/24))")
 	int insertLicenseFile(LicenseFile licenseFile);
 
 	List<AdvertiserExt> selectAdvertiserList(RowBounds rowBounds);
@@ -53,7 +53,7 @@ public interface AdvertiserDao {
 	@Delete("delete from authority where member_id = #{memberId} and auth = #{auth}")
 	int deleteAuthority(Map<String, Object> map);
 
-	@Update("update advertisement set ad_status = 0, updated_at = sysdate where advertiser_no = (select ader.advertiser_no from advertiser ader where member_id = #{memberId})")
+	@Update("update advertisement set ad_status = 0, updated_at = (sysdate + 9/24) where advertiser_no = (select ader.advertiser_no from advertiser ader where member_id = #{memberId})")
 	int updateAdOff(String memberId);
 	
 	AdvertiserMoneyExt selectOneAdvertiserMoney(String memberId);
@@ -79,10 +79,10 @@ public interface AdvertiserDao {
 
 	int insertAdvertisement(AdvertisementExt advertisement);
 
-	@Insert("insert into ad_attach values (seq_ad_attach_no.nextval, #{advertisementNo}, #{originalFilename}, #{renamedFilename}, default)")
+	@Insert("insert into ad_attach values (seq_ad_attach_no.nextval, #{advertisementNo}, #{originalFilename}, #{renamedFilename}, (sysdate + 9/24))")
 	int insertAdAttach(AdAttach adAttach);
 
-	@Insert("insert into ad_performance values (seq_ad_performance_no.nextval, #{advertisementNo}, default, default, default)")
+	@Insert("insert into ad_performance values (seq_ad_performance_no.nextval, #{advertisementNo}, (sysdate + 9/24), default, default)")
 	int insertAdPerformance(int advertisementNo);
 
 	List<AdvertisementExt> selectAdListByAdvertiserNo(int advertiserNo, RowBounds rowBounds);
@@ -90,17 +90,17 @@ public interface AdvertiserDao {
 	@Select("select count(*) from advertisement where advertiser_no = #{advertiserNo} and deleted_at is null")
 	int selectTotalAdvertisement(int advertiserNo);
 
-	@Update("update advertisement set deleted_at = sysdate where advertisement_no = #{advertisementNo}")
+	@Update("update advertisement set deleted_at = (sysdate + 9/24) where advertisement_no = #{advertisementNo}")
 	int updateDelAtAdvertisement(int advertisementNo);
 
 	Advertiser selectAdvertiserByMemberId(@NonNull String memberId);
 
 	int checkBalanceAndCpc(Advertisement advertisement);
 
-	@Update("update advertisement set ad_cpc = #{adCpc}, ad_daily_budget = #{adDailyBudget}, ad_status = #{adStatus}, updated_at = sysdate where advertisement_no = #{advertisementNo}")
+	@Update("update advertisement set ad_cpc = #{adCpc}, ad_daily_budget = #{adDailyBudget}, ad_status = #{adStatus}, updated_at = (sysdate + 9/24) where advertisement_no = #{advertisementNo}")
 	int updateAdvertisement(Advertisement advertisement);
 
-	@Select("select count(*) from ad_performance where advertisement_no = #{advertisementNo} and trunc(display_at) = trunc(sysdate)")
+	@Select("select count(*) from ad_performance where advertisement_no = #{advertisementNo} and trunc(display_at) = trunc(sysdate + 9/24)")
 	int checkTodayPerformanceCnt(int advertisementNo);
 
 	List<Integer> selectAdvertisementForInsertPerform();
@@ -113,10 +113,10 @@ public interface AdvertiserDao {
 
 	List<AdvertisementExt> selectDisplayAd(Map<String, Object> param);
 
-	@Update("update ad_performance set daily_view_cnt = daily_view_cnt + 1 where advertisement_no = #{advertisementNo} and display_at = trunc(sysdate)")
+	@Update("update ad_performance set daily_view_cnt = daily_view_cnt + 1 where advertisement_no = #{advertisementNo} and trunc(display_at) = trunc(sysdate + 9/24)")
 	int updatePerformView(int advertisementNo);
 
-	@Update("update ad_performance set daily_click_cnt = daily_click_cnt + 1 where advertisement_no = #{advertisementNo} and display_at = trunc(sysdate)")
+	@Update("update ad_performance set daily_click_cnt = daily_click_cnt + 1 where advertisement_no = #{advertisementNo} and trunc(display_at) = trunc(sysdate + 9/24)")
 	int updatePerformClick(int advertisementNo);
 
 	Map<String, Object> selectOneAdmoneyNo(int advertisementNo);
@@ -129,9 +129,11 @@ public interface AdvertiserDao {
 
 	List<Map<String, Object>> selectChartData(Map<String, Object> param);
 
-	@Update("update advertiser set deleted_at = sysdate where advertiser_no = #{advertiserNo}")
+	@Update("update advertiser set deleted_at = (sysdate + 9/24) where advertiser_no = #{advertiserNo}")
 	int updateAdvertiserDeletedAt(int advertiserNo);
 
 	boolean isPauseAdvertiser(String memberId);
+
+	boolean isAdvertiser(String memberId);
 
 }

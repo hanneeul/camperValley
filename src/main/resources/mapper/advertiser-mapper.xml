@@ -13,7 +13,7 @@
 		#{bizLicenseNo},
 		#{bizName},
 		default,
-		default,
+		(sysdate + 9/24),
 		null
 	)
 	<selectKey keyProperty="advertiserNo" resultType="_int" order="AFTER">
@@ -228,7 +228,7 @@
 		#{adCpc},
 		#{adDailyBudget},
 		#{adStatus},
-		default,
+		(sysdate + 9/24),
 		null,
 		null
 	)
@@ -281,7 +281,7 @@
 	from
 		advertisement ad
 	where
-		(select ad_performance_no from ad_performance where advertisement_no = ad.advertisement_no and display_at = trunc(sysdate)) is null
+		(select ad_performance_no from ad_performance where advertisement_no = ad.advertisement_no and display_at = trunc(sysdate + 9/24)) is null
 		and ad_status = 1
 </select>
 
@@ -311,10 +311,11 @@
 
 <insert id="InsertTodayPerformance" parameterType="java.util.List">
 	insert into
-		ad_performance (ad_performance_no, advertisement_no)
+		ad_performance (ad_performance_no, advertisement_no, display_at)
 	select
 		seq_ad_performance_no.nextval,
-		A.*
+		A.*,
+		trunc(sysdate + 9/24) display_at
 	from (
 		<foreach collection="list" item="advertisementNo" separator="union all">
 			select #{advertisementNo} advertisement_no
@@ -388,7 +389,7 @@
 	select
 		ad.*,
 		money.*,
-		(select daily_click_cnt from ad_performance where ad.advertisement_no = advertisement_no and display_at = trunc(sysdate)) * ad_cpc today_cost
+		(select daily_click_cnt from ad_performance where ad.advertisement_no = advertisement_no and trunc(display_at) = trunc(sysdate + 9/24)) * ad_cpc today_cost
 	from
 		advertisement ad
 			join advertiser ader
@@ -434,19 +435,32 @@
 </select>
 
 <select id="isPauseAdvertiser" resultType="_boolean">
-select
-	count(*)
-from
-	advertiser ader left join (select * from authority where auth = 'ROLE_AD')auth
-		on ader.member_id = auth.member_id
-	join member m
-		on ader.member_id = m.member_id
-where
-	ader.member_id = #{memberId}
-	and withdrawal = 'N'
-	and deleted_at is null
-	and biz_status = 'Y'
-	and auth is null
+	select
+		count(*)
+	from
+		advertiser ader left join (select * from authority where auth = 'ROLE_AD')auth
+			on ader.member_id = auth.member_id
+		join member m
+			on ader.member_id = m.member_id
+	where
+		ader.member_id = #{memberId}
+		and withdrawal = 'N'
+		and deleted_at is null
+		and biz_status = 'Y'
+		and auth is null
+</select>
+
+<select id="isAdvertiser" resultType="_boolean">
+	select
+		count(*)
+	from
+		advertiser ader join member m
+			on ader.member_id = m.member_id
+	where
+		ader.member_id = #{memberId}
+		and ader.deleted_at is null
+		and withdrawal = 'N'
+		and biz_status = 'Y'
 </select>
 
 </mapper>

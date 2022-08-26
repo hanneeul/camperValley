@@ -254,7 +254,7 @@ values (
 	seq_review_recommend_no.nextval, 
 	#{reviewNo}, 
 	#{memberId}, 
-	'Y')
+	default)
 </insert>
 
 <update id="setReviewRecommendStatusY">

@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.campervalley.common.CamperValleyUtils;
@@ -122,14 +124,21 @@ public class AdvertiserController {
 	}
 	
 	@PostMapping("/exit")
-	public String submitAdvertiserExitFrm(@RequestParam int advertiserNo, @RequestParam String memberId) {
+	public String submitAdvertiserExitFrm(@RequestParam int advertiserNo, @RequestParam String memberId, HttpServletRequest request) {
 		try {
 			int result = advertiserService.exitAdvertiser(advertiserNo, memberId);
+			HttpSession session = request.getSession();
+			
+//			boolean isPauseAdvertiser = advertiserService.isPauseAdvertiser(memberId);
+//			boolean isAdvertiser = advertiserService.isAdvertiser(memberId);
+//			session.setAttribute("isPauseAdvertiser", isPauseAdvertiser);
+//			session.setAttribute("isAdvertiser", isAdvertiser);
+			session.invalidate();
 		} catch (Exception e) {
 			log.error("광고주 탈퇴요청 오류", e);
 			throw e;
 		}
-		return "redirect:/mypage/info/main";
+		return "redirect:/";
 	}
 	
 	@GetMapping("/dashboard")
