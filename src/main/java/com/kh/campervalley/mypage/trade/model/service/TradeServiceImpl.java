@@ -70,6 +70,11 @@ public class TradeServiceImpl implements TradeService {
 		RowBounds rowBounds = new RowBounds(offset, numPerReq);
 		return tradeDao.selectMorePuschasedProduct(memberId, rowBounds);
 	}
+	@Override
+	public int updateProductSetDelete(int productNo) {
+		return tradeDao.updateProductSetDelete(productNo);
+		
+	}
 	
 
 }

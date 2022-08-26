@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 
 import com.kh.campervalley.cs.model.dto.Category;
+import com.kh.campervalley.member.model.dto.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,5 +37,4 @@ public class UsedProduct {
 	private String buyerId;
 	private String isDelete;
 	private String heart;
-	
 }

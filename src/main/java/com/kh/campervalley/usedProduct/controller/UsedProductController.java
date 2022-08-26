@@ -25,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.campervalley.common.CamperValleyUtils;
-import com.kh.campervalley.community.review.model.dto.ReviewPhoto;
 import com.kh.campervalley.member.model.dto.Member;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdZone;
 import com.kh.campervalley.mypage.advertiser.model.dto.AdvertisementExt;
@@ -228,7 +227,8 @@ public class UsedProductController  {
 		/*----- JH end -----*/
 		
 		// 상품 정보 받아옴
-		UsedProduct usedProduct = usedProductService.productDetail(no);
+		log.debug("no = {}", no);
+		UsedProduct usedProduct = usedProductService.productDetail(Integer.parseInt(no));
 		
 		model.addAttribute("usedProduct", usedProduct);
 		model.addAttribute("/usedProduct/product/productDetail.jsp");
@@ -239,7 +239,7 @@ public class UsedProductController  {
 	@GetMapping("/product/productUpdate")
 	public void productUpdate(@RequestParam String no, Model model) {
 		try {
-			UsedProduct usedProduct = usedProductService.productDetail(no);
+			UsedProduct usedProduct = usedProductService.productDetail(Integer.parseInt(no));
 			model.addAttribute("usedProduct", usedProduct);
 		} catch (Exception e) {
 			log.error("상품 수정 오류", e);
@@ -260,13 +260,21 @@ public class UsedProductController  {
 			@RequestParam(required = false) String productImg5) throws Exception {
 		
 		String saveDirectory = application.getRealPath("/resources/upload/usedProduct");
+		UsedProduct originalUsedProduct = usedProductService.productDetail(usedProduct.getProductNo());
 		
-		List<String> productImgList = new ArrayList<>();
-		productImgList.add(productImg1);
-		productImgList.add(productImg2);
-		productImgList.add(productImg3);
-		productImgList.add(productImg4);
-		productImgList.add(productImg5);
+		List<String> originalFilenameList = new ArrayList<>();
+    	originalFilenameList.add(originalUsedProduct.getProductImg1());
+    	originalFilenameList.add(originalUsedProduct.getProductImg2());
+    	originalFilenameList.add(originalUsedProduct.getProductImg3());
+    	originalFilenameList.add(originalUsedProduct.getProductImg4());
+    	originalFilenameList.add(originalUsedProduct.getProductImg5());
+		
+		List<String> delProductImgList = new ArrayList<>();
+		delProductImgList.add(productImg1);
+		delProductImgList.add(productImg2);
+		delProductImgList.add(productImg3);
+		delProductImgList.add(productImg4);
+		delProductImgList.add(productImg5);
 		
 		log.debug("productImg1 = {}", productImg1);
 		log.debug("productImg2 = {}", productImg2);
@@ -274,29 +282,26 @@ public class UsedProductController  {
 		log.debug("productImg4 = {}", productImg4);
 		log.debug("productImg5 = {}", productImg5);
 		
-		if(productImgList != null) {
-			for(int i = 0; i < productImgList.size(); i++) {
-				String fileName = productImgList.get(i);
+		List<String> afterDelProductImgList = new ArrayList<>();
+		if(delProductImgList != null) {
+			for(int i = 0; i < delProductImgList.size(); i++) {
+				String fileName = delProductImgList.get(i);
 				if(fileName != null) {
 					File delFile = new File(saveDirectory, fileName);
 					log.debug("fileName = {}", fileName);
 					log.debug("delFile = {}", delFile);
-//					if(delFile.exists()) {
-//						delFile.delete();
-//					}
+					if(delFile.exists()) {
+						delFile.delete();
+					}
+				} else if(originalFilenameList.get(i) != null){
+					afterDelProductImgList.add(originalFilenameList.get(i));
 				}
-//				if(productImg1 != null) usedProduct.setProductImg1(null);
-//				if(productImg2 != null) usedProduct.setProductImg2(null);
-//				if(productImg3 != null) usedProduct.setProductImg3(null);
-//				if(productImg4 != null) usedProduct.setProductImg4(null);
-//				if(productImg5 != null) usedProduct.setProductImg5(null);
 			}
-//			int result = usedProductService.deleteProductImg(usedProduct);
 		}
+		log.debug("afterDelProductImgList = {}", afterDelProductImgList);
 		
         File[] fileArr = new File[upFiles.length];
         
-        UsedProduct originalUsedProduct = usedProductService.productDetail(String.valueOf(usedProduct.getProductNo()));
         if(upFiles.length == 0) {
         	usedProduct.setProductImg1(originalUsedProduct.getProductImg1());
         	usedProduct.setProductImg2(originalUsedProduct.getProductImg2());
@@ -305,12 +310,6 @@ public class UsedProductController  {
         	usedProduct.setProductImg5(originalUsedProduct.getProductImg5());
         }
         else {
-        	List<String> originalFilenameList = new ArrayList<>();
-        	originalFilenameList.add(originalUsedProduct.getProductImg1());
-        	originalFilenameList.add(originalUsedProduct.getProductImg2());
-        	originalFilenameList.add(originalUsedProduct.getProductImg3());
-        	originalFilenameList.add(originalUsedProduct.getProductImg4());
-        	originalFilenameList.add(originalUsedProduct.getProductImg5());
         	
         	for(int i = 0 ; i < upFiles.length; i++) {
         		String fileName = upFiles[i].getOriginalFilename();
@@ -319,9 +318,14 @@ public class UsedProductController  {
         	}
         	
         	int startJ = 0;
+        	int delFileIndex = 0;
         	for(int i = 0; i < 5; i++) {
         		for(int j = startJ; j < upFiles.length; j++) {
-        			if(originalFilenameList.get(i) == null) {
+        			if(i < afterDelProductImgList.size() && afterDelProductImgList.get(delFileIndex) != null) {
+        				originalFilenameList.set(delFileIndex, afterDelProductImgList.get(delFileIndex));
+        				delFileIndex++;
+        				break;
+        			} else {
         				originalFilenameList.set(i, fileArr[j].getName());
         				try {
         					FileCopyUtils.copy(upFiles[j].getInputStream(), new FileOutputStream(fileArr[j]));
@@ -333,6 +337,7 @@ public class UsedProductController  {
         			}
         		}
         	}
+        	log.debug("originalFilenameList = {}", originalFilenameList);
         	
         	usedProduct.setProductImg1(originalFilenameList.get(0));
         	usedProduct.setProductImg2(originalFilenameList.get(1));
@@ -341,13 +346,14 @@ public class UsedProductController  {
         	usedProduct.setProductImg5(originalFilenameList.get(4));
         	
         }
+        log.debug("usedProduct = {}", usedProduct);
         int result = usedProductService.updateUsedProduct(usedProduct);
         
 		mav.setViewName("jsonView");
 		return mav;
 	}
 	/*----- SJ END ----- */
-
+	
 	/* 관심상품 */
 	@GetMapping("/product/findHeart")
 	@ResponseBody

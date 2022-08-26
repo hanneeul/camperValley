@@ -120,6 +120,7 @@
 		<if test="searchType == 'product_content'">
 			${searchType} like '%' || #{searchKeyword} || '%'
 		</if>
+		and is_delete = 'N'
 	</where>
 	order by product_no desc
 </select>
@@ -136,6 +137,7 @@
 	<if test="searchType == 'product_content'">
 		${searchType} like '%' || #{searchKeyword} || '%'
 	</if>
+		and is_delete = 'N'
 	</where>
 </select>
 

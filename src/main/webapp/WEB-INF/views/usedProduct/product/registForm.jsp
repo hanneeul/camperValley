@@ -16,7 +16,6 @@
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoLocation}&libraries=services"></script>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/productForm.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/usedProduct/sidebar.css"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 <div id="section" style="width: 98%; margin:50px auto">
@@ -36,12 +35,13 @@
 								<div class="image_con">
 									<ul class="image-ul" id="image-ul">
 										<li class="image-li">이미지 등록
-				    							<input type="file" id="upFiles" multiple="">
+				    						<input type="file" id="upFiles" multiple="">
 										</li>
 									</ul>
 									<div class="div-image" id="div-image">
-												* 상품 이미지는 640x640에 최적화 되어 있습니다.</div>
-									<div class="add_description" style="">
+										이미지를 1장 이상 선택해주세요</div>
+									<div class="add_description">
+										* 상품 이미지는 640x640에 최적화 되어 있습니다.<br>
 										- 이미지는 상품등록 시 정사각형으로 짤려서 등록됩니다.<br>
 										- 큰 이미지일경우 이미지가 깨지는 경우가 발생할 수 있습니다.<br>
 									</div>
@@ -54,7 +54,7 @@
 								<div class="subject_con">
 									<div class="contentDiv">
 										<div class="subjectBox">
-											<input type="text" placeholder="상품 제목을 입력해주세요." class="producTitle" id="productTitle" name="productTitle">
+											<input type="text" placeholder="상품 제목을 입력해주세요." class="productTitle" id="productTitle" name="productTitle">
 										</div>
 										<div class="subjectSize"><span>최대 30자</span></div>
 									</div>
@@ -68,7 +68,7 @@
 								<div class="category_con" style="margin-left: -40px;">
 									<div class="contentDiv">
 										<div class="categoryStep">
-											<ul class="categories" id="large_categories">
+											<ul class="categories" id="categories">
 												<li class="category"><button type="button" class="cate_btn" id="100">텐트/타프</button></li>
 												<li class="category"><button type="button" class="cate_btn" id="200">침낭/매트</button></li>
 												<li class="category"><button type="button" class="cate_btn" id="300">테이블/의자</button></li>
@@ -143,14 +143,11 @@
 						
 			<footer class="enrollBtm">
 				<div class="btmArea">
-					<button type="submit" class="enrollBtn" id="enrollBtn">등록하기</button>
+					<button type="submit" class="enrollBtn" id="enrollBtn" onclick="confirm()">등록하기</button>
 				</div>
 			</footer>
 		</div>
 	</form>
-	<div id="nav">
-		<jsp:include page="/WEB-INF/views/usedProduct/main/sidebar.jsp"/>
-	</div>
 </div>
 
 <script>
@@ -165,7 +162,7 @@ $('#enrollForm').ready(function() {
 $('#upFiles').on('change', readImage); // 파일 올릴떄마다 readImage함수 호출
 const fileBuffer = []; // 파일 저장 변수
 function readImage() {
-	const limitSize = 30 * 1024 * 1024; // 이미지 사이즈 설정
+	const limitSize = 80 * 1024 * 1024; // 이미지 사이즈 설정
 	const input = this;
 	
 	if(input.files && input.files[0]) { // 첫번째 선택파일이 있을 경우
@@ -173,8 +170,13 @@ function readImage() {
 		
 		// 이미지 갯수(5개)까지
 		if($('.registImages').length + input.files.length > 5) {
-			alert ('사진은 최대 5장까지 등록 가능합니다.');
-			return false;
+			$.alert({
+			    title: '',
+			    content: '사진은 최대 5장까지 등록 가능합니다.',
+			    buttons: {'확인': function() {
+			    }}
+			});
+			return false;	    	
 		}
 		
 		var index = 0;
@@ -183,16 +185,26 @@ function readImage() {
 			// 이미지 사이즈 제한
 			const imageSize = input.files[index].size;
 			if(imageSize > limitSize) {
-				alert('이미지 사이즈는 10MB까지 등록 가능합니다.');
-				return false;
+				$.alert({
+				    title: '',
+				    content: '이미지 사이즈는 80MB까지 등록 가능합니다.',
+				    buttons: {'확인': function() {
+				    }}
+				});
+				return false;	
 			}
 			const image = input.files[index];
 			
 			// 이미지 유효성 검사
 			const fileEx = image.name.slice(image.name.lastIndexOf(".")+1).toLowerCase();
 			if(fileEx != "jpg" && fileEx != "png" && fileEx != "gif" && fileEx != "bmp" && fileEx != "jpeg") {
-				alert('파일은 이미지 파일만 등록할 수 있습니다.');
-				return false;
+				$.alert({
+				    title: '',
+				    content: '파일은 이미지 파일만 등록할 수 있습니다.',
+				    buttons: {'확인': function() {
+				    }}
+				});
+				return false;	
 			}
 			
 			fileBuffer.push(image); // push
@@ -262,6 +274,7 @@ $('.category >.cate_btn').on("click", function(){
 	
 	$('#cateNoInput').val(cateNo);
 });
+
 /* 거래지역 */
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
        mapOption = {
@@ -277,6 +290,7 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
        position: new daum.maps.LatLng(37.537187, 127.005476),
        map: map
    });
+   
 $('#search_address').click(function() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -309,19 +323,22 @@ $('.productPrice').on('keyup', function(e) {
       $(this).val(val.replace(/[^0-9]/g, '')); // 숫자 제외한 문자 공백으로 대체
    }
 });
+
 function confirm() {
-	 if(!fileBuffer.length) { $('#div-image').show(); $('#productImg').focus(); return true;}
-	 else if($('#productTitle').val()=='') {$('#div-subject').show(); $('#productTitle').focus(); return true;}
-	 else if(cate_no == null) { $('#div-category').show(); $('#categories').focus(); return true;}
-	 if($('#productLocation').val()=='') { $('#div-location').show(); $('#productLocation').focus(); return true;}
-	 if($('#productPrice').val()=='') { $('#productPrice').show(); $('#productPrice').focus(); return true;}
+	 if(!fileBuffer.length) { $('#div-image').show(); $('#upFiles').focus(); return false;}
+	 else if($('.productTitle').val()=='') {$('#div-subject').show(); $('.productTitle').focus(); return false;}
+	 else if($('#cateNoInput').val()=='') { $('#div-category').show(); $('#div-category').focus(); return false;}
+	 else if($('#productLocation').val()=='') { $('#div-location').show(); $('#productLocation').focus(); return false;}
+	 else if($('#productPrice').val()=='') { $('#div-price').show(); $('#productPrice').focus(); return false;}
  }
-//ajax 통신을 위한 csrf 설정
+ 
+//ajax 통신을 위한 csrf 설정/
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 $(document).ajaxSend(function(e, xhr, options) {
     xhr.setRequestHeader(header, token);
 });
+
 $('#enrollBtn').click(function(){
 	
 	registAction.call(this);
@@ -348,11 +365,17 @@ $('#enrollBtn').click(function(){
 				});
 			},
 			success: function(data) {
-				window.location.href = '/campervalley/usedProduct/main/mainPage'
-				alert('상품이 등록되었습니다.');
+		            $.alert({
+		        	    title: '',
+		        	    content: '상품이 등록되었습니다.',
+		        	    buttons: {
+		        	    	'확인': function() {
+		        				window.location.href = '/campervalley/usedProduct/main/mainPage';
+		        	    	}
+		        	    }
+		    		});	
 			},
 			error: function(error) {
-				alert('error : ', error);
 			}
 			
 		});

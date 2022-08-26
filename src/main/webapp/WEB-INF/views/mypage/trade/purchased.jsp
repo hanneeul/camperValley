@@ -16,36 +16,33 @@
 			<jsp:include page="/WEB-INF/views/common/mypageSidebar.jsp" />
 		</div>
 		<div class="col-lg-10 px-5 ">
-		<%-- 본문시작 --%>
-		   <h3 class="mb-5 mt-1">구매내역</h3>
+			<h3 class="mb-5 mt-1">구매내역</h3>
 		    <div class="list-container">
-		    <c:forEach items="${list}" var="product" varStatus="vs">
-		        <div class="d-flex justify-content-between list mt-4 mb-4 list">
-		            <div class="d-flex">
-		            	<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=${product.productNo}"><img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${product.productImg1}" alt="${product.productTitle}대표 이미지" width="120px" class="mr-3 ml-3"></a>
-		            	<div class="d-flex">
-		                    <ul class="list-unstyled mt-2">
-			                        <li>
-			                            <a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=${product.productNo}" class="text-dark font-weight-bold">${product.productTitle}</a>
-			                        </li>
-			                        <li><fmt:formatNumber value="${product.productPrice}" pattern="#,###"/>원</li>
-			                        <br>
-			                        <li>${product.productLocation}</li>
-			                    </ul>
-			                </div>
-			            </div>
-		            <c:if test="${empty product.reviewNo || product.reviewNo eq ''}">
-		                <a class="review-enroll btn btn-camper-color btn-sm align-self-center mr-3" data-productno="${product.productNo}">거래후기 등록</a>
-		            </c:if>
-		            <c:if test="${not empty product.reviewNo && product.reviewNo ne ''}" >
-		                <a class="review-update btn btn-danger btn-sm align-self-center mr-3" data-reviewno="${product.reviewNo}" data-starscore="${product.starScore}" data-content="${product.content}">거래후기 수정</a>
-		            </c:if>
-		        </div>
-		        <hr />
-	        </c:forEach>
+			    <c:forEach items="${list}" var="product" varStatus="vs">
+			        <div class="d-flex justify-content-between list mt-4 mb-4 list">
+			        	<div class="d-flex">
+			            	<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=${product.productNo}"><img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${product.productImg1}" alt="${product.productTitle}대표 이미지" width="120px" height="120" class="mr-3 ml-3"></a>
+			            	<div class="d-flex">
+			                	<ul class="list-unstyled mt-2">
+				                	<li>
+				                    	<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=${product.productNo}" class="text-dark font-weight-bold">${product.productTitle}</a>
+				                    </li>
+				                    <li><fmt:formatNumber value="${product.productPrice}" pattern="#,###"/>원</li>
+				                    <br>
+				                    <li>${product.productLocation}</li>
+								</ul>
+							</div>
+				        </div>
+			            <c:if test="${empty product.reviewNo || product.reviewNo eq ''}">
+			                <a class="review-enroll btn btn-camper-color btn-sm align-self-center mr-3" data-productno="${product.productNo}">거래후기 등록</a>
+			            </c:if>
+			            <c:if test="${not empty product.reviewNo && product.reviewNo ne ''}" >
+			                <a class="review-update btn btn-danger btn-sm align-self-center mr-3" data-reviewno="${product.reviewNo}" data-starscore="${product.starScore}" data-content="${product.content}">거래후기 수정</a>
+			            </c:if>
+			        </div>
+			        <c:if test="${vs.last eq false}"><hr /></c:if>
+	        	</c:forEach>
 		    </div>
-
-		<%-- 본문끝 --%>
 		</div>
 	</div>
 </div>
@@ -87,13 +84,11 @@
 		$("#reviewUpdate .reviewNo").val(reviewNo);
 	});
 
-
-
 </script>
 <%-- JH END --%>
 <script>
 const io = new IntersectionObserver((entries, observer) => {
-	  entries.forEach((entry) => {
+	entries.forEach((entry) => {
     	$('div.spinner-border').removeClass("d-none");
 	    if (entry.isIntersecting) {
 	    	let list = null;
@@ -106,51 +101,46 @@ const io = new IntersectionObserver((entries, observer) => {
 	        		offset: $('.list').length,
 	        		},
 	        	success(response){
-	        			const {list} = response;
-	        			console.log(list.length)
-	        			$('input[name=addNum]').val(list.length) ;
-	        			list.forEach((product) =>{
-							const $prdDetailLink = '<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no='+product.productNo+'"></a>';  	        			
-							const $br = '<br>';
-							const $a = '<a></a>';
-		        				
-		        			$('.list-container').append('<div class="d-flex justify-content-between mt-4 mb-4 list"></div>');
-		        			$('.list').last().append('<div class="d-flex"></div>');
-		        			$('.list .d-flex').last().append($prdDetailLink, '<div class="d-flex"></div>');
-		        			$('.list .d-flex a').last().append('<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/' + product.productImg1 +'" alt="'+ product.productTitle +'대표 이미지" width="120px" class="mr-3 ml-3">');
-		        			$('.list .d-flex').last().append('<ul class="list-unstyled mt-2"></ul>');
-		        			$('.list ul.list-unstyled').last().append('<li></li>');
-		        			$('.list li').last().append($prdDetailLink);
-		        			$('.list a').last().prop({
-		        				innerHTML:product.productTitle,
-		        				className: 'font-weight-bold text-dark'
-		        			});
-		        			$('.list ul.list-unstyled').last().append('<li>'+ product.productPrice +'원</li>', $br, '<li>'+ product.productLocation +'</li>');
+	        		const {list} = response;
+	        		$('input[name=addNum]').val(list.length) ;
+	        		list.forEach((product) =>{
+						const $prdDetailLink = '<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no='+product.productNo+'"></a>';  	        			
+						const $br = '<br>';
+						const $a = '<a></a>';
 		        			
-		        			$('.list').last().append($a);
+						$('.list-container').append($('<hr>'));
+		        		$('.list-container').append('<div class="d-flex justify-content-between mt-4 mb-4 list"></div>');
+		        		$('.list').last().append('<div class="d-flex"></div>');
+		        		$('.list .d-flex').last().append($prdDetailLink, '<div class="d-flex"></div>');
+		        		$('.list .d-flex a').last().append('<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/' + product.productImg1 +'" alt="'+ product.productTitle +'대표 이미지" width="120px" height="120px" class="mr-3 ml-3">');
+		        		$('.list .d-flex').last().append('<ul class="list-unstyled mt-2"></ul>');
+		        		$('.list ul.list-unstyled').last().append('<li></li>');
+		        		$('.list li').last().append($prdDetailLink);
+		        		$('.list a').last().prop({
+		        			innerHTML:product.productTitle,
+		        			className: 'font-weight-bold text-dark'
+		        		});
+		        		$('.list ul.list-unstyled').last().append('<li>'+ product.productPrice +'원</li>', $br, '<li>'+ product.productLocation +'</li>');
+		        		$('.list').last().append($a);
 		        			
-		        			//console.log('거래후기등록하는 경우',product.reviewNo, typeof(product.reviewNo));
-		        			if(product.reviewNo == 0){
-			        			$('.list a').last().prop({
-			        				innerHTML: '거래후기 등록',
-			        				className: 'review-enroll btn btn-camper-color btn-sm align-self-center mr-3',
-			        			}).attr('data-productno',product.productNo);
-		        			} else {
-			        			$('.list a').last().prop({
-			        				innerHTML: '거래후기 수정',
-			        				className: 'review-update btn btn-danger btn-sm align-self-center mr-3',
-			        			}).attr('data-reviewno',product.reviewNo)
-			        				.attr('data-starscore',product.starScore)
-			        				.attr('product.content',product.reviewNo);
+		        		if(product.reviewNo == 0){
+			        		$('.list a').last().prop({
+			        			innerHTML: '거래후기 등록',
+			        			className: 'review-enroll btn btn-camper-color btn-sm align-self-center mr-3',
+			        		}).attr('data-productno',product.productNo);
+		        		} else {
+			        		$('.list a').last().prop({
+			        			innerHTML: '거래후기 수정',
+			        			className: 'review-update btn btn-danger btn-sm align-self-center mr-3',
+			        		}).attr('data-reviewno',product.reviewNo)
+			        			.attr('data-starscore',product.starScore)
+			        			.attr('product.content',product.reviewNo);
 		        			}
-		        				
-		        			$('.list-container').append($('<hr>'));		
-	        			
-	        			} );
+	        			});
 	        		},
         		error: console.log
-	        	
 	        });
+	        
 	    	$('div.spinner-border').addClass("d-none");
 	  	    if($('input[name=addNum]').val() === '0')
 		  		return;
@@ -159,6 +149,6 @@ const io = new IntersectionObserver((entries, observer) => {
 	  });
 });
 
-	io.observe($('.list').get($('.list').length-1));
+io.observe($('.list').get($('.list').length-1));
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

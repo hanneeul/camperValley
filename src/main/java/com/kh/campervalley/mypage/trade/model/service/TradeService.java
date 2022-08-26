@@ -30,6 +30,7 @@ public interface TradeService {
 	List<UsedProduct> selectMoreSoldProduct(int offset, int numPerReq, String memberId);
 	
 	List<UsedProductExt> selectMorePuschasedProduct(int offset, int numPerReq, @NonNull String memberId);
-
+	
+	int updateProductSetDelete(int productNo);
 
 }

@@ -11,8 +11,6 @@ import com.kh.campervalley.usedProduct.model.dto.ProductCategory;
 import com.kh.campervalley.usedProduct.model.dto.UsedProduct;
 import com.kh.campervalley.usedProduct.model.dto.WishProduct;
 
-import lombok.NonNull;
-
 public interface UsedProductService {
 
 	public int productInsert(UsedProduct usedProduct); // 상품 등록
@@ -27,7 +25,7 @@ public interface UsedProductService {
 
 	public void viewUpdate(String no);
 
-	public UsedProduct productDetail(String no);
+	public UsedProduct productDetail(int productNo);
 
 	public UsedProduct saveHeart(WishProduct wishProduct, String productNo);
 
@@ -58,8 +56,6 @@ public interface UsedProductService {
 	/*----- JH END ----- */
 
 	/*----- SJ START ----- */
-	public int deleteProductImg(UsedProduct usedProduct);
-
 	public int updateUsedProduct(UsedProduct usedProduct);
 	/*----- SJ END ----- */
 

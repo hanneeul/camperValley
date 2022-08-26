@@ -31,7 +31,7 @@ public interface UsedProductDao {
 
 	void viewUpdate(String no);
 
-	UsedProduct productDetail(String no);
+	UsedProduct productDetail(int productNo);
 
 	void updateUpHeart(UsedProduct usedProduct);
 
@@ -72,8 +72,6 @@ public interface UsedProductDao {
 	/*----- JH END ----- */
 
 	/*----- SJ START ----- */
-	int deleteProductImg(UsedProduct usedProduct);
-
 	int updateUsedProduct(UsedProduct usedProduct);
 	/*----- SJ END ----- */
 
