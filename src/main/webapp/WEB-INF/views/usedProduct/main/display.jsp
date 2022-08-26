@@ -10,9 +10,10 @@
 
 <hr />
 <!-- 광고 -->
+<c:if test="${not empty adList}">
 <div class="adPlace">
 	<div id="carouselExampleIndicators" class="carousel slide"
-		data-bs-ride="carousel">
+		data-ride="carousel">
 		<ol class="carousel-indicators">
 			<c:forEach items="${adList}" var="advertisement" varStatus="vs">
 				<li data-target="#carouselExampleIndicators" data-slide-to="${vs.count - 1}" ${vs.count eq 1 ? 'active' : ''}></li>
@@ -40,6 +41,7 @@
 		</c:if>
 	</div>
 </div>
+</c:if>
 
 <div id="displayHeader">
 	<p class="displayName" style="margin-left: 7px;">전체 상품 목록</p>
