@@ -81,7 +81,6 @@ public class TradeController {
 		return mav;
 	}
 	
-	//판매상품 추가 조회
 	@GetMapping("/moreSellingProduct")
 	public ResponseEntity<?> addSellingProduct(
 						int offset, @AuthenticationPrincipal Member member) {
