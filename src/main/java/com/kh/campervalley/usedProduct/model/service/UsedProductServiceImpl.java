@@ -133,8 +133,8 @@ public class UsedProductServiceImpl implements UsedProductService {
 	}
 
 	@Override
-	public UsedProduct productDetail(String no) {
-		return usedProductDao.productDetail(no);
+	public UsedProduct productDetail(int productNo) {
+		return usedProductDao.productDetail(productNo);
 	}
 
 	@Override
@@ -258,11 +258,6 @@ public class UsedProductServiceImpl implements UsedProductService {
 	/*----- JH END ----- */
 	
 	/*----- SJ START ----- */
-	@Override
-	public int deleteProductImg(UsedProduct usedProduct) {
-		return usedProductDao.deleteProductImg(usedProduct);
-	}
-	
 	@Override
 	public int updateUsedProduct(UsedProduct usedProduct) {
 		return usedProductDao.updateUsedProduct(usedProduct);

@@ -36,7 +36,7 @@ public class CampsiteReviewExt extends CampsiteReview {
 		photos.add(photo);
 	}
 	
-	public void addReviewRecommend(@NonNull ReviewRecommend recommend) {
+	public void addReviewRecommend(ReviewRecommend recommend) {
 		recommends.add(recommend);
 	}
 	
