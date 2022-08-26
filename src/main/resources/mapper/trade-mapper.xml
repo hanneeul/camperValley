@@ -70,7 +70,13 @@
 			select
 				w.*, u.product_title, u.product_price, u.product_img1,u.product_location
 			from
-				wish_product w join used_product u
+				wish_product w join (select
+										u.* 
+									from 
+                                    	used_product u join member m
+                                        on u.seller_id = m.member_id
+                                    where
+                                    	m.withdrawal = 'N' ) u
 				on
 				w.product_no = u.product_no
 			where
@@ -78,7 +84,7 @@
 				and
 				transaction_date is null
 		       	and
-		       		is_delete = 'N'
+		       	is_delete = 'N'
 			 order by wish_no desc
 			) 
 		where
@@ -149,7 +155,13 @@
 			select
 				w.*, u.product_title, u.product_price, u.product_img1,u.product_location
 			from
-				wish_product w join used_product u
+				wish_product w join (select
+										u.* 
+									from 
+                                    	used_product u join member m
+                                        on u.seller_id = m.member_id
+                                    where
+                                    	m.withdrawal = 'N' ) u
 				on
 				w.product_no = u.product_no
 			where
