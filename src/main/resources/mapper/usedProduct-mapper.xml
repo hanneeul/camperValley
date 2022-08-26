@@ -328,6 +328,7 @@ select *
 		used_product
 	where 
 		seller_id = #{memberId}
+		and is_delete = 'N'
 	order by
 		product_enroll_time desc
 </select>

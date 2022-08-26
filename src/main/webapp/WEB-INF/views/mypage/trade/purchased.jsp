@@ -101,40 +101,42 @@ const io = new IntersectionObserver((entries, observer) => {
 	        		offset: $('.list').length,
 	        		},
 	        	success(response){
-	        		const {list} = response;
-	        		$('input[name=addNum]').val(list.length) ;
-	        		list.forEach((product) =>{
-						const $prdDetailLink = '<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no='+product.productNo+'"></a>';  	        			
-						const $br = '<br>';
-						const $a = '<a></a>';
-		        			
-						$('.list-container').append($('<hr>'));
-		        		$('.list-container').append('<div class="d-flex justify-content-between mt-4 mb-4 list"></div>');
-		        		$('.list').last().append('<div class="d-flex"></div>');
-		        		$('.list .d-flex').last().append($prdDetailLink, '<div class="d-flex"></div>');
-		        		$('.list .d-flex a').last().append('<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/' + product.productImg1 +'" alt="'+ product.productTitle +'대표 이미지" width="120px" height="120px" class="mr-3 ml-3">');
-		        		$('.list .d-flex').last().append('<ul class="list-unstyled mt-2"></ul>');
-		        		$('.list ul.list-unstyled').last().append('<li></li>');
-		        		$('.list li').last().append($prdDetailLink);
-		        		$('.list a').last().prop({
-		        			innerHTML:product.productTitle,
-		        			className: 'font-weight-bold text-dark'
-		        		});
-		        		$('.list ul.list-unstyled').last().append('<li>'+ product.productPrice +'원</li>', $br, '<li>'+ product.productLocation +'</li>');
-		        		$('.list').last().append($a);
-		        			
-		        		if(product.reviewNo == 0){
+	        			const {list} = response;
+	        			console.log(list.length);
+	        			$('input[name=addNum]').val(list.length) ;
+	        			list.forEach((product) =>{
+							const $prdDetailLink = '<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no='+product.productNo+'"></a>';  	        			
+							const $br = '<br>';
+							const $a = '<a></a>';
+		        				
+							$('.list-container').append($('<hr>'));
+			        		$('.list-container').append('<div class="d-flex justify-content-between mt-4 mb-4 list"></div>');
+			        		$('.list').last().append('<div class="d-flex"></div>');
+			        		$('.list .d-flex').last().append($prdDetailLink, '<div class="d-flex"></div>');
+			        		$('.list .d-flex a').last().append('<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/' + product.productImg1 +'" alt="'+ product.productTitle +'대표 이미지" width="120px" height="120px" class="mr-3 ml-3">');
+			        		$('.list .d-flex').last().append('<ul class="list-unstyled mt-2"></ul>');
+			        		$('.list ul.list-unstyled').last().append('<li></li>');
+			        		$('.list li').last().append($prdDetailLink);
 			        		$('.list a').last().prop({
-			        			innerHTML: '거래후기 등록',
-			        			className: 'review-enroll btn btn-camper-color btn-sm align-self-center mr-3',
-			        		}).attr('data-productno',product.productNo);
-		        		} else {
-			        		$('.list a').last().prop({
-			        			innerHTML: '거래후기 수정',
-			        			className: 'review-update btn btn-danger btn-sm align-self-center mr-3',
-			        		}).attr('data-reviewno',product.reviewNo)
-			        			.attr('data-starscore',product.starScore)
-			        			.attr('product.content',product.reviewNo);
+			        			innerHTML:product.productTitle,
+			        			className: 'font-weight-bold text-dark'
+			        		});
+			        		$('.list ul.list-unstyled').last().append('<li>'+ product.productPrice +'원</li>', $br, '<li>'+ product.productLocation +'</li>');
+			        		$('.list').last().append($a);
+		        			
+		        			//console.log('거래후기등록하는 경우',product.reviewNo, typeof(product.reviewNo));
+		        			if(product.reviewNo == 0){
+			        			$('.list a').last().prop({
+			        				innerHTML: '거래후기 등록',
+			        				className: 'review-enroll btn btn-camper-color btn-sm align-self-center mr-3',
+			        			}).attr('data-productno',product.productNo);
+		        			} else {
+			        			$('.list a').last().prop({
+			        				innerHTML: '거래후기 수정',
+			        				className: 'review-update btn btn-danger btn-sm align-self-center mr-3',
+			        			}).attr('data-reviewno',product.reviewNo)
+			        				.attr('data-starscore',product.starScore)
+			        				.attr('data-content',product.content);
 		        			}
 	        			});
 	        		},

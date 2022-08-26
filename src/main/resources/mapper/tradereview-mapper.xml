@@ -80,7 +80,7 @@
 <select id="selectCounts" resultMap="countsMap">
 	select
 		round(avg(case when u.seller_id = (select seller_id from used_product where product_no = #{no}) then t.star_score end), 1) star_score_avg,
-	    count(case when u.seller_id = (select seller_id from used_product where product_no = #{no}) then 1 end) product_count,
+	    count(case when u.seller_id = (select seller_id from used_product where product_no = #{no}) and u.is_delete = 'N' then 1 end) product_count,
 	    count(case when u.seller_id = (select seller_id from used_product where product_no = #{no}) and t.review_no is not null then 1 end) review_count
 	from
 	    used_product u left join trade_review t
