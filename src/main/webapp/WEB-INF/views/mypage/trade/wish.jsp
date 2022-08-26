@@ -77,38 +77,38 @@ const io = new IntersectionObserver((entries, observer) => {
 	        	url:'${pageContext.request.contextPath}/mypage/trade/moreWishProduct',
 	        	async: false,
 	        	data:{
-	        		offset: $('.list').length,
+	        		offset: $('.list').length + 1,
 	        		},
 	        	success(response){
-	        			const {list} = response;
-	        			$('input[name=addNum]').val(list.length) ;
-	        			list.forEach((product) =>{
-							const $prdDetailLink = '<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no='+product.productNo+'"></a>';  	        			
-							const $br = '<br>';
-							const $a = '<a></a>';
-		        			$('.list-container').append('<hr/>');	
-		        			$('.list-container').append('<div class="d-flex justify-content-between mt-4 mb-4 list"></div>');
-		        			$('.list').last().append('<div class="d-flex"></div>');
-		        			$('.list .d-flex').last().append($prdDetailLink, '<div class="d-flex"></div>');
-		        			$('.list .d-flex a').last().append('<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/' + product.productImg1 +'" alt="'+ product.productTitle +'대표 이미지" width="120px" height="120" class="mr-3 ml-3">');
-		        			$('.list .d-flex').last().append('<ul class="list-unstyled mt-2"></ul>');
-		        			$('.list ul.list-unstyled').last().append('<li></li>');
-		        			$('.list li').last().append($prdDetailLink);
-		        			$('.list a').last().prop({
-		        				innerHTML:product.productTitle,
-		        				className: 'font-weight-bold text-dark'
-		        			});
-		        			$('.list ul.list-unstyled').last().append('<li>'+ product.productPrice +'원</li>', $br, '<li>'+ product.productLocation +'</li>');
+	        		const {list} = response;
+	        		$('input[name=addNum]').val(list.length) ;
+	        		list.forEach((product) =>{
+						const $prdDetailLink = '<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no='+product.productNo+'"></a>';  	        			
+						const $br = '<br>';
+						const $a = '<a></a>';
+		        		$('.list-container').append('<hr/>');	
+		        		$('.list-container').append('<div class="d-flex justify-content-between mt-4 mb-4 list"></div>');
+		        		$('.list').last().append('<div class="d-flex"></div>');
+		        		$('.list .d-flex').last().append($prdDetailLink, '<div class="d-flex"></div>');
+		        		$('.list .d-flex a').last().append('<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/' + product.productImg1 +'" alt="'+ product.productTitle +'대표 이미지" width="120px" height="120" class="mr-3 ml-3">');
+		        		$('.list .d-flex').last().append('<ul class="list-unstyled mt-2"></ul>');
+		        		$('.list ul.list-unstyled').last().append('<li></li>');
+		        		$('.list li').last().append($prdDetailLink);
+		        		$('.list a').last().prop({
+		        			innerHTML:product.productTitle,
+		        			className: 'font-weight-bold text-dark'
+		        		});
+		        		$('.list ul.list-unstyled').last().append('<li>'+ product.productPrice +'원</li>', $br, '<li>'+ product.productLocation +'</li>');
 		        			
-		        			$('.list').last().append('<form action="${pageContext.request.contextPath}/mypage/trade/wishDelete" method="post"></form>');
-		        			$('.list form').last().append('<button></button>','<input type="hidden" name="wishNo" value="'+ product.wishNo +'" />','<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>',);
-		        			$('.list button').last().prop({
-		        				innerHTML: '<i class="fa-solid fa-heart"></i>',
-		        				className: 'border-0 bg-transparent remove-wish',
-		        			});
+		        		$('.list').last().append('<form action="${pageContext.request.contextPath}/mypage/trade/wishDelete" method="post"></form>');
+		        		$('.list form').last().append('<button></button>','<input type="hidden" name="wishNo" value="'+ product.wishNo +'" />','<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>',);
+		        		$('.list button').last().prop({
+		        			innerHTML: '<i class="fa-solid fa-heart"></i>',
+		        			className: 'border-0 bg-transparent remove-wish',
+		        		});
 
-	        			} );
-	        		},
+	        		} );
+	        	},
         		error: console.log
 	        	
 	        });
