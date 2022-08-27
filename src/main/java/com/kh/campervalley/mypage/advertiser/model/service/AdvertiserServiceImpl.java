@@ -306,6 +306,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 	@Override
 	public int exitAdvertiser(int advertiserNo, String memberId) {
 		int result = advertiserDao.updateAdvertiserDeletedAt(advertiserNo);
+		result = advertiserDao.updateAdvertisementExit(advertiserNo);
 
 		Map<String, Object> param = new HashMap<>();
 		param.put("memberId", memberId);
