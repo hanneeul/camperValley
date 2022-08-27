@@ -29,62 +29,62 @@
 			<div class="row m-0 text-center">
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl0" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl0" value="일출명소">#일출명소
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl0" value="일출명소" ${fn:contains(searchParam.themaEnvrnCl, '일출명소') ? 'checked' : ''}>#일출명소
 				  	</label>
 				</div>
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl1" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl1" value="일몰명소">#일몰명소
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl1" value="일몰명소" ${fn:contains(searchParam.themaEnvrnCl, '일몰명소') ? 'checked' : ''}>#일몰명소
 				  	</label>
 				</div>
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl2" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl2" value="수상레저">#수상레저
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl2" value="수상레저" ${fn:contains(searchParam.themaEnvrnCl, '수상레저') ? 'checked' : ''}>#수상레저
 				  	</label>
 				</div>
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl3" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl3" value="항공레저">#항공레저
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl3" value="항공레저" ${fn:contains(searchParam.themaEnvrnCl, '항공레저') ? 'checked' : ''}>#항공레저
 				  	</label>
 				</div>
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl4" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl4" value="스키">#스키
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl4" value="스키" ${fn:contains(searchParam.themaEnvrnCl, '스키') ? 'checked' : ''}>#스키
 				  	</label>
 				</div>
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl5" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl5" value="낚시">#낚시
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl5" value="낚시" ${fn:contains(searchParam.themaEnvrnCl, '낚시') ? 'checked' : ''}>#낚시
 				  	</label>
 				</div>
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl6" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl6" value="액티비티">#액티비티
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl6" value="액티비티" ${fn:contains(searchParam.themaEnvrnCl, '액티비티') ? 'checked' : ''}>#액티비티
 				  	</label>
 				</div>
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl7" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl7" value="봄꽃여행">#봄꽃여행
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl7" value="봄꽃여행" ${fn:contains(searchParam.themaEnvrnCl, '봄꽃여행') ? 'checked' : ''}>#봄꽃여행
 				  	</label>
 				</div>
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl8" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl8" value="여름물놀이">#여름물놀이
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl8" value="여름물놀이" ${fn:contains(searchParam.themaEnvrnCl, '여름물놀이') ? 'checked' : ''}>#여름물놀이
 				  	</label>
 				</div>
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl9" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl9" value="가을단풍명소">#가을단풍명소
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl9" value="가을단풍명소" ${fn:contains(searchParam.themaEnvrnCl, '가을단풍명소') ? 'checked' : ''}>#가을단풍명소
 				  	</label>
 				</div>
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl10" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl10" value="겨울눈꽃명소">#겨울눈꽃명소
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl10" value="겨울눈꽃명소" ${fn:contains(searchParam.themaEnvrnCl, '겨울눈꽃명소') ? 'checked' : ''}>#겨울눈꽃명소
 				  	</label>
 				</div>
 				<div class="btn-group-toggle col-md-2 px-0 py-1" data-toggle="buttons">
 				  	<label for="themaEnvrnCl11" class="btn btn-outline-success btn-outline-camper-color">
-				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl11" value="걷기길">#걷기길
+				    	<input type="checkbox" name="themaEnvrnCl" id="themaEnvrnCl11" value="걷기길" ${fn:contains(searchParam.themaEnvrnCl, '걷기길') ? 'checked' : ''}>#걷기길
 				  	</label>
 				</div>
 			</div>
