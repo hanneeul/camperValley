@@ -18,6 +18,7 @@
 		<intercept-url pattern="/member/memberLogout.do" access="permitAll"/>
 		
 		<intercept-url pattern="/usedProduct/main/mainPage" access="permitAll"/>
+		<intercept-url pattern="/usedProduct/main/getProductList" access="permitAll"/>
 		<intercept-url pattern="/usedProduct/product/productDetail" access="permitAll"/>
 		<intercept-url pattern="/usedProduct/product/**" access="hasRole('USER')"/>
 		
@@ -29,6 +30,8 @@
 		<intercept-url pattern="/community/review/**" access="hasRole('USER')"/>
 		
 		<intercept-url pattern="/community/camper/camperList" access="permitAll"/>
+		<intercept-url pattern="/community/camper/moreCamperList" access="permitAll"/>
+		<intercept-url pattern="/community/camper/camperDetail" access="permitAll"/>
 		<intercept-url pattern="/community/camper/**" access="hasRole('USER')"/>
 		
 		<intercept-url pattern="/member/**" access="isAnonymous()"/>
