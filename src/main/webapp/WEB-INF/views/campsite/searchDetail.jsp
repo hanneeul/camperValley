@@ -60,7 +60,6 @@ body {overflow-y: auto!important;}
 		</div>
 	</div>
 	<!-- modal insert -->
-	<%-- 나중에 파일 분리? --%>
 	<div class="modal fade" id="conditionsModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="conditionsModalLabel" aria-hidden="true">
 	  	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 	    	<div class="modal-content">
@@ -74,47 +73,47 @@ body {overflow-y: auto!important;}
 		      	<div class="modal-body">
 		        	<h6 class="font-weight-bold">운영형태</h6>
 		        	<div class="form-check-inline form-check d-flex m-0">
-						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm0" value="지자체">
+						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm0" value="지자체" ${fn:contains(searchParam.facltDivNm, '지자체') ? 'checked' : ''}>
 						<label for="facltDivNm0" class="form-check-label mr-2">지자체</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm1" value="국립공원">
+						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm1" value="국립공원" ${fn:contains(searchParam.facltDivNm, '국립공원') ? 'checked' : ''}>
 						<label for="facltDivNm1" class="form-check-label mr-2">국립공원</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm2" value="자연휴양림">
+						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm2" value="자연휴양림" ${fn:contains(searchParam.facltDivNm, '자연휴양림') ? 'checked' : ''}>
 						<label for="facltDivNm2" class="form-check-label mr-2">자연휴양림</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm3" value="국민여가">
+						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm3" value="국민여가" ${fn:contains(searchParam.facltDivNm, '국민여가') ? 'checked' : ''}>
 						<label for="facltDivNm3" class="form-check-label mr-2">국민여가</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm4" value="민간">
+						<input type="checkbox" class="form-check-input" name="facltDivNm" id="facltDivNm4" value="민간" ${fn:contains(searchParam.facltDivNm, '민간') ? 'checked' : ''}>
 						<label for="facltDivNm4" class="form-check-label">민간</label>&nbsp;
 					</div>
 					<hr />
 					<h6 class="font-weight-bold">입지구분</h6>
 		        	<div class="form-check-inline form-check d-flex m-0">
-						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl0" value="해변">
+						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl0" value="해변" ${fn:contains(searchParam.lctCl, '해변') ? 'checked' : ''}>
 						<label for="lctCl0" class="form-check-label mr-2">해변</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl1" value="섬">
+						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl1" value="섬" ${fn:contains(searchParam.lctCl, '섬') ? 'checked' : ''}>
 						<label for="lctCl1" class="form-check-label mr-2">섬</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl2" value="산">
+						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl2" value="산" ${fn:contains(searchParam.lctCl, '산') ? 'checked' : ''}>
 						<label for="lctCl2" class="form-check-label mr-2">산</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl3" value="숲">
+						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl3" value="숲" ${fn:contains(searchParam.lctCl, '숲') ? 'checked' : ''}>
 						<label for="lctCl3" class="form-check-label mr-2">숲</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl4" value="계곡">
+						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl4" value="계곡" ${fn:contains(searchParam.lctCl, '계곡') ? 'checked' : ''}>
 						<label for="lctCl4" class="form-check-label mr-2">계곡</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl5" value="강">
+						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl5" value="강" ${fn:contains(searchParam.lctCl, '강') ? 'checked' : ''}>
 						<label for="lctCl5" class="form-check-label mr-2">강</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl6" value="호수">
+						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl6" value="호수" ${fn:contains(searchParam.lctCl, '호수') ? 'checked' : ''}>
 						<label for="lctCl6" class="form-check-label mr-2">호수</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl7" value="도심">
+						<input type="checkbox" class="form-check-input" name="lctCl" id="lctCl7" value="도심" ${fn:contains(searchParam.lctCl, '도심') ? 'checked' : ''}>
 						<label for="lctCl7" class="form-check-label">도심</label>&nbsp;
 					</div>
 					<hr />
 					<h6 class="font-weight-bold">주요시설</h6>
 		        	<div class="form-check-inline form-check d-flex m-0">
-						<input type="checkbox" class="form-check-input" name="induty" id="induty0" value="일반야영장">
+						<input type="checkbox" class="form-check-input" name="induty" id="induty0" value="일반야영장" ${fn:contains(searchParam.induty, '일반야영장') ? 'checked' : ''}>
 						<label for="induty0" class="form-check-label mr-2">일반야영장</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="induty" id="induty1" value="자동차야영장">
+						<input type="checkbox" class="form-check-input" name="induty" id="induty1" value="자동차야영장" ${fn:contains(searchParam.induty, '자동차야영장') ? 'checked' : ''}>
 						<label for="induty1" class="form-check-label mr-2">자동차야영장</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="induty" id="induty2" value="카라반">
+						<input type="checkbox" class="form-check-input" name="induty" id="induty2" value="카라반" ${fn:contains(searchParam.induty, '카라반') ? 'checked' : ''}>
 						<label for="induty2" class="form-check-label mr-2">카라반</label>&nbsp;
-						<input type="checkbox" class="form-check-input" name="induty" id="induty3" value="글램핑">
+						<input type="checkbox" class="form-check-input" name="induty" id="induty3" value="글램핑" ${fn:contains(searchParam.induty, '글램핑') ? 'checked' : ''}>
 						<label for="induty3" class="form-check-label">글램핑</label>&nbsp;
 					</div>
 		      	</div>
@@ -127,32 +126,7 @@ body {overflow-y: auto!important;}
 	</div>
 </form:form>
 <script>
-document.querySelector('#conditionsSubmitBtn').addEventListener('click', (e) => {
-	/* const facltDivNmVal = $("input[name='facltDivNm']:checked");
-	const lctClVal = $("input[name='lctCl']:checked");
-	const indutyVal = $("input[name='induty']:checked");
-	
-	const facltDivNmArr = [];
-	facltDivNmVal.each(function(e) {
-		let thisVal = $(this).val();
-		facltDivNmArr.push(thisVal);
-		console.log($("#facltDivNm").val(facltDivNmArr));
-    });
-	
-	const lctClArr = [];
-	lctClVal.each(function(e) {
-		let thisVal = $(this).val();
-		lctClArr.push(thisVal);
-		console.log($("#lctCl").val(lctClArr));
-    });
-	
-	const indutyArr = [];
-	indutyVal.each(function(e) {
-		let thisVal = $(this).val();
-		indutyArr.push(thisVal);
-		console.log($("#induty").val(indutyArr));
-    }); */
-	
+document.querySelector('#conditionsSubmitBtn').addEventListener('click', (e) => {	
 	$(".modal-backdrop").remove();
 	$('#conditionsModal').hide();
 });
