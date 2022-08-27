@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.campervalley.campsite.model.common.CampsiteApiData;
 import com.kh.campervalley.campsite.model.dto.CampsiteExt;
 import com.kh.campervalley.campsite.model.dto.CampsiteFacility;
 import com.kh.campervalley.campsite.model.dto.CampsiteImage;
@@ -36,9 +35,6 @@ public class CampsiteController {
 	
 	@Autowired
 	private CampsiteService campsiteService;
-	
-	@Autowired
-	CampsiteApiData campsiteApiData;
 	
 	@GetMapping("/searchDetail")
 	public ModelAndView searchDetail(
@@ -69,6 +65,7 @@ public class CampsiteController {
 				list = campsiteService.searchCampsiteList(searchParam);
 			}
 			mav.addObject("list", list);
+			mav.addObject("searchParam", searchParam);
 			mav.setViewName("campsite/searchDetail");
 			
 		} catch (Exception e) {
