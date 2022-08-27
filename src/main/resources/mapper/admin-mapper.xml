@@ -21,6 +21,8 @@
            	on(u.buyer_id = m.member_id)
            join authority a
            	on(a.member_id = m.member_id)
+       order by
+	   	   r.state_yn
 </select>
 
 <select id="selectTotalReportList" resultType="_int">

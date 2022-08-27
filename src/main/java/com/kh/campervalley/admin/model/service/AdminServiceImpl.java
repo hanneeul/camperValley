@@ -247,7 +247,7 @@ public class AdminServiceImpl implements AdminService {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public int updateReport(int reportNo) {
 		return adminDao.updateReport(reportNo);
