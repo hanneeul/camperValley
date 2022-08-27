@@ -30,13 +30,13 @@
 			</c:forEach>
 		</div>
 		<c:if test="${fn:length(adList) > 1}">
-			<a class="carousel-control-prev mx-auto" href="#carouselExampleIndicators" role="button" data-slide="prev" style="margin-top: 133px;">
+			<a class="carousel-control-prev mx-auto" href="#carouselExampleIndicators" role="button" data-slide="prev" style="margin-top: 30px;">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Previous</span>
+				<span class="visually-hidden"></span>
 			</a>
-			<a class="carousel-control-next mx-auto" href="#carouselExampleIndicators" role="button" data-slide="next" style="margin-top: 133px;">
+			<a class="carousel-control-next mx-auto" href="#carouselExampleIndicators" role="button" data-slide="next" style="margin-top: 30px;">
 				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Next</span>
+				<span class="visually-hidden"></span>
 			</a>
 		</c:if>
 	</div>
@@ -55,7 +55,7 @@
 					<img src="${list.productImg1}" class="rounded float-start" alt="상품이미지">
 					<h5 id="displayTitle">${list.productTitle}</h5>
 					<div class="price-time">
-						<p class="displayPrice">${list.productPrice}</p>
+						<p class="displayPrice">${list.productPrice}원</p>
 						<h5 class="displayTime">${list.productEnrollTime}</h5>
 					</div>
 				</div>

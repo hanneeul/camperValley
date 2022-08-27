@@ -184,7 +184,6 @@ document.querySelectorAll(".btn-update").forEach((btn) => {
 		if(category === "language")
 			document.querySelector("#category").setAttribute('value','게시글과 무관한 내용');
 		
-		
 		const content = tr.dataset.content;
 		const productNo = tr.dataset.productNo;
 		const review = tr.dataset.review;
@@ -195,9 +194,7 @@ document.querySelectorAll(".btn-update").forEach((btn) => {
 		
 		 if(authorities.includes('ROLE_BLACK')) {
 			document.getElementById("black").checked = true;
-			
 			console.log(document.getElementById("black").checked);
-			
 		} else {
 			document.getElementById("black").checked = false;
 		}

@@ -20,7 +20,6 @@
 		#{area},
 		#{memberCount},
 		default,
-		default,
 		null,
 		default)
 </insert>
@@ -48,6 +47,7 @@
 	<if test="searchType != null and searchType != '' and searchKeyword != null and searchKeyword != ''">
 		and ${searchType} like '%' || #{searchKeyword} || '%'
 	</if>
+		and m.enabled = 1
 	</where>
 	order by
 		camper_no desc

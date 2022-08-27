@@ -29,8 +29,12 @@
 				placeholder="이메일" autocomplete="off" required>
 		</div>
 		<div class="p-0 m-0" id="searchBox">
-		    <button  id="searchBtn" class="btn btn-camper-color btn-block btn-lg font-weight-bold">확인</button>
-			<p class="pt-4">&nbsp;-&nbsp;&nbsp;&nbsp;가입시 등록한 아이디와 이메일을 입력해주세요.</p>	
+		    <button id="searchBtn" class="btn btn-camper-color btn-block btn-lg font-weight-bold">
+		    	확인
+		    </button>
+			<p class="pt-4">
+				&nbsp;-&nbsp;&nbsp;&nbsp;가입시 등록한 아이디와 이메일을 입력해주세요.
+			</p>	
 		</div>
 	</form:form>
 </div>

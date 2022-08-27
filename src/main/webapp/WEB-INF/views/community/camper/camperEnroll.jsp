@@ -7,15 +7,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community/camper/camperEnroll.css" />
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
-<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/datepicker.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/advertiser/jquery-ui.css" />
+<link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<div class="container-md campsite-review-list-wrap pt-3">
 		<jsp:include page="/WEB-INF/views/community/communityHeading.jsp"/>
@@ -117,7 +112,6 @@
 		</div>
 	</div>
 <script>
-console.log("${loginMember}");
 $(document).ready(() => {
 	$(review).removeClass("active");
 	$(camper).addClass("active");
@@ -181,6 +175,7 @@ window.addEventListener('load', (e) => {
 		startDate: '0d'
 	});	
 });
+
 
 const frm = document.camperEnrollFrm;
 frm.addEventListener("submit", (e) => {

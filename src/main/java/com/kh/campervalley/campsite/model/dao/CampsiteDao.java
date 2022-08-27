@@ -15,19 +15,8 @@ import com.kh.campervalley.campsite.model.dto.CampsiteImage;
 @Mapper
 public interface CampsiteDao {
 
-	@Insert("insert into campsite values (#{contentId}, #{facltNm}, #{lineIntro}, #{intro}, #{facltDivNm}, "
-			+ "#{induty}, #{lctCl}, #{addr1}, #{addr2}, #{mapX}, #{mapY}, #{tel}, #{homepage}, #{resveCl}, "
-			+ "#{operPdCl}, #{operDeCl}, #{posblFcltyCl}, #{themaEnvrnCl}, #{firstImageUrl})")
 	int insertCampsite(CampsiteExt campsite);
 	
-	@Insert("insert into campsite_facility values (#{contentId}, #{gnrlSiteCo}, #{autoSiteCo}, #{glampSiteCo}, "
-			+ "#{caravSiteCo}, #{indvdlCaravSiteCo}, #{siteMg1Width}, #{siteMg2Width}, #{siteMg3Width}, "
-			+ "#{siteMg1Vrticl}, #{siteMg2Vrticl}, #{siteMg3Vrticl}, #{siteMg1Co}, #{siteMg2Co}, #{siteMg3Co}, "
-			+ "#{siteBottomCl1}, #{siteBottomCl2}, #{siteBottomCl3}, #{siteBottomCl4}, #{siteBottomCl5}, "
-			+ "#{glampInnerFclty}, #{caravInnerFclty}, #{trlerAcmpnyAt}, #{caravAcmpnyAt}, "
-			+ "#{toiletCo}, #{swrmCo}, #{wtrplCo}, #{brazierCl}, "
-			+ "#{sbrsCl}, #{sbrsEtc}, #{extshrCo}, #{frprvtWrppCo}, #{frprvtSandCo}, "
-			+ "#{eqpmnLendCl}, #{animalCmgCl})")
 	int insertCampsiteFacility(CampsiteFacility campsiteFacility);
 
 	@Delete("delete from campsite")
@@ -36,7 +25,6 @@ public interface CampsiteDao {
 	@Select("select content_id from campsite")
 	List<CampsiteExt> selectContentIdList();
 	
-	@Insert("insert into campsite_image values (#{serialnum}, #{contentId}, #{imageUrl})")
 	int insertCampsiteImage(CampsiteImage campsiteImage);
 	
 	List<CampsiteExt> recentCampsiteList();

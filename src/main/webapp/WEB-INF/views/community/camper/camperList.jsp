@@ -23,9 +23,11 @@
 				    		<i class="fa-solid fa-magnifying-glass camper-color"></i>
 				    	</button>
 				  	</div>
-					<div class="ml-1">
-						<button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/community/camper/camperEnroll'">글쓰기</button>
-					</div>
+				  	<c:if test="${not empty loginMember}">
+						<div class="ml-1">
+							<button type="button" id="communityEnrollBtn" class="btn btn-success bg-camper-color" onclick="location.href='${pageContext.request.contextPath}/community/camper/camperEnroll'">글쓰기</button>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -175,10 +177,9 @@ const renderBoardBoxDetail = (boardBox) => {
 			$("#purpose").html(camper.purpose);
 			$("#expectedCost").html(camper.expectedCost);
 			$("#chatUrl").val(camper.chatUrl);
-			
-			if (${not empty loginMember}) {
+			$("#loginMemberSection").html("");
+			if(${not empty loginMember}) {
 				if("${loginMember.memberId}" == camper.memberId) {
-					$("#loginMemberSection").html("");
 					const $frm = $(`<form name="deleteFrm" class="text-right" action="${pageContext.request.contextPath}/community/camper/camperDelete?camperNo=\${camperNo}" method="post"></form>`);
 					const $updateBtn = $('<button type="button" class="btn btn-outline-camper-color text-13 px-4 mx-2">수정</button>');
 					const $deleteBtn = $('<button type="button" class="btn btn-outline-danger text-13 px-4">삭제</button>');
@@ -187,12 +188,16 @@ const renderBoardBoxDetail = (boardBox) => {
 						const areas = (camper.area).split(" ");
 						document.querySelectorAll("#sido1 option").forEach((option) => {
 							if(areas[0] === $(option).val()) {
-								$(option).prop("selected", true);
-								document.querySelectorAll("#gugun1 option").forEach((option) => {
-									console.log(option);
-								});
+								$(option).prop("selected", true).change();
 							}
 						});
+						document.querySelectorAll("#gugun1 option").forEach((option) => {
+							if(areas[1] === $(option).val()) {
+								$(option).prop("selected", true);
+							}
+						});
+						$("#camperUpdate #departureDate").val(`\${camper.departureDate.year}-\${f(camper.departureDate.monthValue)}-\${f(camper.departureDate.dayOfMonth)}`);
+						$("#camperUpdate #arrivalDate").val(`\${camper.arrivalDate.year}-\${f(camper.arrivalDate.monthValue)}-\${f(camper.arrivalDate.dayOfMonth)}`);
 						$("#camperUpdate #memberCount").val(camper.memberCount);
 						$("#camperUpdate #title").val(camper.title);
 						$("#camperUpdate #content").val(camper.content);
@@ -239,7 +244,6 @@ const renderBoardBoxMore = (isChk) => {
 		success(response) {
 			const {camperList} = response;
 			for(let i = 0; i < camperList.length; i++) {
-				console.log(camperList[i]);
 				const $boardBox = $('<div class="boardBox my-4 p-4" onclick="renderBoardBoxDetail(this);"></div>');
 				// 현재 로그인된 아이디와 동일할 때
 				if (${not empty loginMember}) {

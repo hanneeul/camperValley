@@ -387,6 +387,8 @@ public class UsedProductController  {
 		// +1된 하트 갯수 가져오기
 		UsedProduct usedProduct = usedProductService.saveHeart(wishProduct, productNo);
 		
+		usedProduct.setHeart(usedProduct.getHeart());
+		
 		return usedProduct;
 	}
 	

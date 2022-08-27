@@ -67,7 +67,7 @@
 										<label for="title">제목<span class="text-danger">*</span></label>
 									</td>
 									<td class="col-md-10 px-0">
-										<input id="title" type="text" name="title" class="input" style="width:98%"/>
+										<input id="title" type="text" name="title" class="input" style="width:98%" spellcheck="false"/>
 									</td>
 								</tr>
 								<tr>
@@ -75,7 +75,7 @@
 										<label for="content">상세내용<span class="text-danger">*</span></label>
 									</td>
 									<td class="col-md-10 px-0">
-										<textarea id="content" name="content" cols="30" rows="5" style="width:98%"></textarea>
+										<textarea id="content" name="content" cols="30" rows="5" style="width:98%" spellcheck="false"></textarea>
 									</td>
 								</tr>
 								<tr>
@@ -83,7 +83,7 @@
 										<label for="purpose">모임취지<span class="text-danger">*</span></label>
 									</td>
 									<td class="col-md-10 px-0">
-										<textarea id="purpose" name="purpose" cols="30" rows="2" style="width:98%"></textarea>
+										<textarea id="purpose" name="purpose" cols="30" rows="2" style="width:98%" spellcheck="false"></textarea>
 									</td>
 								</tr>
 								<tr>
@@ -91,12 +91,12 @@
 										<label for="expectedCost">예상비용<span class="text-danger">*</span></label>
 									</td>
 									<td class="col-md-10 px-0">
-										<textarea id="expectedCost" name="expectedCost" cols="30" rows="2" style="width:98%"></textarea>
+										<textarea id="expectedCost" name="expectedCost" cols="30" rows="2" style="width:98%" spellcheck="false"></textarea>
 									</td>
 								</tr>
 								<tr>
 									<td class="label col-md-2 px-0 pt-2">
-										<label for="chatUrl">오픈채팅 URL<span class="text-danger">*</span></label>
+										<label for="chatUrl">오픈채팅 URL<span class="text-danger" spellcheck="false">*</span></label>
 									</td>
 									<td class="col-md-10 px-0">
 										<input id="chatUrl" type="text" name="chatUrl" class="input" style="width:98%"/>

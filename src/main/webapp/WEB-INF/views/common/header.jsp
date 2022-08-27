@@ -54,7 +54,7 @@
 			</button>
 			<div class="collapse navbar-collapse p mr-0" id="navbarText">
 				<img class="col-md-3 mr-4 pl-5 pr-5" style="width:100" src="${pageContext.request.contextPath}/resources/images/logo.png" onclick="location.href='${pageContext.request.contextPath}'" alt="logo" />
-				<ul class="navbar-nav col-md-6 p-0 mt-4 justify-content-start">
+				<ul class="navbar-nav col-md-6 p-0 pr-4 mt-4 justify-content-center">
 					<!-- 선택시 active -->
 					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/campsite/searchDetail">캠핑장</a></li>
 					<li class="nav-item"><a class="mainMenu nav-link text-dark px-3" href="${pageContext.request.contextPath}/usedProduct/main/mainPage">캠핑용품거래</a></li>
@@ -97,17 +97,41 @@
 		
 		<script>
 		const $subNavbar = $(navbarSub);
-		$(document).ready(() => $subNavbar.hide());
+		$(document).ready(() => {
+			$subNavbar.hide();
+			console.log($(".mainMenu").length);
+		});
+		
 		
 		// // 서브메뉴바보여주기 - mouseenter event
 		$(".mainMenu").mouseenter((menu) => {
 		  	const mainMenu = menu.target.innerHTML;
+		  	let comPosition;
+		  	let csPosition;
+		  	let myPosition;
+		  	switch($(".mainMenu").length) {
+		  	case 4 : 
+		  		comPosition = 0.7;
+		  		csPosition = 1.4;
+		  		break;
+		  	case 5 :
+		  		comPosition = 0.2;
+		  		csPosition = 0.9;
+		  		myPosition = 1.8;
+		  		break;
+		  	case 6 :
+		  		comPosition = -0.35;
+		  		csPosition = 0.3;
+		  		myPosition = 1.3;
+		  		break;
+		  	}
+		  	
 		  	switch(mainMenu) {
-				case "커뮤니티" : renderSubMenu(0, "캠퍼모집", "캠핑장후기"); break;
-				case "고객센터" : renderSubMenu(0.6, "공지사항", "FAQ"); break;
-				case "마이페이지" : renderSubMenu(1.6, "회원정보", "중고거래", "커뮤니티", "광고주"); break;
-				case "관리자페이지" : renderSubMenu(2.8, "회원관리", "게시판관리", "신고내역관리", "1:1문의관리"); break;
-				default : $subNavbar.stop().slideUp('fast');
+			case "커뮤니티" : renderSubMenu(comPosition, "캠퍼모집", "캠핑장후기"); break;
+			case "고객센터" : renderSubMenu(csPosition, "공지사항", "FAQ"); break;
+			case "마이페이지" : renderSubMenu(myPosition, "회원정보", "중고거래", "커뮤니티", "광고주"); break;
+			case "관리자페이지" : renderSubMenu(2.5, "회원관리", "게시판관리", "신고내역관리", "1:1문의관리"); break;
+			default : $subNavbar.stop().slideUp('fast');
 		  	}
 		});
 	
@@ -116,7 +140,7 @@
 			for(let i = 0; i < subMenuList.length; i++) {
 				const aTag = document.createElement("a");
 				aTag.className = "navbar-brand p-0 mr-3 ml-3 text-light position-relative";
-				aTag.style.left = `\${-40 + index * 100}px`;
+				aTag.style.left = `\${index * 100}px`;
 				
 				aTag.innerHTML = subMenuList[i];
 				
@@ -146,7 +170,7 @@
 					const spanTag = document.createElement("span");
 					spanTag.className = "bar text-light position-relative";
 					spanTag.innerHTML = "|";
-					spanTag.style.left = `\${-40 + index * 100}px`;
+					spanTag.style.left = `\${index * 100}px`;
 					$subNavbar.append(spanTag);
 				}
 			}

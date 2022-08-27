@@ -31,7 +31,7 @@
 		<intercept-url pattern="/community/camper/camperList" access="permitAll"/>
 		<intercept-url pattern="/community/camper/**" access="hasRole('USER')"/>
 		
-		<intercept-url pattern="/member/enroll" access="isAnonymous()"/>
+		<intercept-url pattern="/member/**" access="isAnonymous()"/>
 	
 		<intercept-url pattern="/cs/noticeEnroll" access="hasRole('ADMIN')"/>
 		<intercept-url pattern="/cs/noticeUpdate" access="hasRole('ADMIN')"/>
@@ -46,14 +46,8 @@
 		<intercept-url pattern="/campsite/**" access="permitAll"/>
 		
 		<intercept-url pattern="/" access="permitAll"/>
-	<!-- 권한
  		<intercept-url pattern="/index.jsp" access="permitAll"/>
-		<intercept-url pattern="/member/**" access="isAnonymous()"/>
-		<intercept-url pattern="/mypage/advertiser/**" access="hasRole('AD')"/>
-		<intercept-url pattern="/member/admin" access="hasRole('ADMIN')"/>
-		
  		<intercept-url pattern="/**" access="isAuthenticated()"/>
-	 -->
 		
 
 		<form-login
