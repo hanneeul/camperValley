@@ -57,10 +57,13 @@ public class EmailService {
 		String token = createToken(emailTo);
 		  
 		try { 
-			HtmlEmail htmlEmail = new HtmlEmail(); htmlEmail.setCharset(charSet);
-			htmlEmail.setHostName(hostSMTP); htmlEmail.setSSLOnConnect(true);
+			HtmlEmail htmlEmail = new HtmlEmail();
+			htmlEmail.setCharset(charSet);
+			htmlEmail.setHostName(hostSMTP);
+			htmlEmail.setSSLOnConnect(true);
 			htmlEmail.setSmtpPort(465);
-			htmlEmail.setAuthentication(hostSMTPid, hostSMTPpwd); htmlEmail.addTo(emailTo,nameTo ,charSet); // 받는사람 정보 
+			htmlEmail.setAuthentication(hostSMTPid, hostSMTPpwd);
+			htmlEmail.addTo(emailTo,nameTo ,charSet); 
 			htmlEmail.setFrom(fromEmail, fromName, charSet);
 			htmlEmail.setSubject("[캠퍼밸리] 비밀번호 재설정 안내");
 			htmlEmail.setHtmlMsg("<!DOCTYPE html>\r\n"

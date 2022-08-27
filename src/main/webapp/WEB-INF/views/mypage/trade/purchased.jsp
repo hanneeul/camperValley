@@ -21,11 +21,11 @@
 			    <c:forEach items="${list}" var="product" varStatus="vs">
 			        <div class="d-flex justify-content-between list mt-4 mb-4 list">
 			        	<div class="d-flex">
-			            	<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=${product.productNo}"><img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${product.productImg1}" alt="${product.productTitle}대표 이미지" width="120px" height="120" class="mr-3 ml-3"></a>
+			            	<a <c:if test="${product.isDelete eq 'N'}"> href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=${product.productNo}" </c:if>><img src="${pageContext.request.contextPath}/resources/upload/usedProduct/${product.productImg1}" alt="${product.productTitle}대표 이미지" width="120px" height="120" class="mr-3 ml-3"></a>
 			            	<div class="d-flex">
 			                	<ul class="list-unstyled mt-2">
 				                	<li>
-				                    	<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=${product.productNo}" class="text-dark font-weight-bold">${product.productTitle}</a>
+				                    	<a <c:if test="${product.isDelete eq 'N'}"> href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no=${product.productNo}" </c:if> class="text-dark font-weight-bold">${product.productTitle}</a>
 				                    </li>
 				                    <li><fmt:formatNumber value="${product.productPrice}" pattern="#,###"/>원</li>
 				                    <br>
@@ -105,22 +105,35 @@ const io = new IntersectionObserver((entries, observer) => {
 	        			console.log(list.length);
 	        			$('input[name=addNum]').val(list.length) ;
 	        			list.forEach((product) =>{
-							const $prdDetailLink = '<a href="${pageContext.request.contextPath}/usedProduct/product/productDetail?no='+product.productNo+'"></a>';  	        			
+							const $prdDetailLink = '${pageContext.request.contextPath}/usedProduct/product/productDetail?no='+product.productNo;  	        			
+							
 							const $br = '<br>';
 							const $a = '<a></a>';
 		        				
 							$('.list-container').append($('<hr>'));
 			        		$('.list-container').append('<div class="d-flex justify-content-between mt-4 mb-4 list"></div>');
 			        		$('.list').last().append('<div class="d-flex"></div>');
-			        		$('.list .d-flex').last().append($prdDetailLink, '<div class="d-flex"></div>');
+			        		$('.list .d-flex').last().append($a, '<div class="d-flex"></div>');
+			        		console.log(product.isDelete === 'N');
+			        		if(product.isDelete === 'N' ){
+			        			console.log(product.isDelete);
+			        			$('.list a').last().prop({
+			        				href: $prdDetailLink
+			        			});
+			        		}
 			        		$('.list .d-flex a').last().append('<img src="${pageContext.request.contextPath}/resources/upload/usedProduct/' + product.productImg1 +'" alt="'+ product.productTitle +'대표 이미지" width="120px" height="120px" class="mr-3 ml-3">');
 			        		$('.list .d-flex').last().append('<ul class="list-unstyled mt-2"></ul>');
 			        		$('.list ul.list-unstyled').last().append('<li></li>');
-			        		$('.list li').last().append($prdDetailLink);
+			        		$('.list li').last().append($a);
 			        		$('.list a').last().prop({
 			        			innerHTML:product.productTitle,
-			        			className: 'font-weight-bold text-dark'
+			        			className: 'font-weight-bold text-dark',
 			        		});
+			        		//조건문
+			        		$('.list a').last().prop({
+			        			href: $prdDetailLink
+			        		});
+			        		//조건문 end
 			        		$('.list ul.list-unstyled').last().append('<li>'+ product.productPrice +'원</li>', $br, '<li>'+ product.productLocation +'</li>');
 			        		$('.list').last().append($a);
 		        			
@@ -146,7 +159,7 @@ const io = new IntersectionObserver((entries, observer) => {
 	    	$('div.spinner-border').addClass("d-none");
 	  	    if($('input[name=addNum]').val() === '0')
 		  		return;
-			  io.observe($('.list').get($('.list').length-1));
+			io.observe($('.list').get($('.list').length-1));
 	    }
 	  });
 });
