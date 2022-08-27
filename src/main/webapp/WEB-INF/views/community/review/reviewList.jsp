@@ -69,7 +69,7 @@
 				<c:if test="${not empty list}">
 					<c:forEach items="${list}" var="review" varStatus="vs">
 				    	<tr>
-				      		<th scope="row">${vs.count}</th>
+				      		<th scope="row">${review.reviewNo}</th>
 				      		<td>
 				      			<a 
 				      				class="font-weight-bold text-decoration-none review-title"
