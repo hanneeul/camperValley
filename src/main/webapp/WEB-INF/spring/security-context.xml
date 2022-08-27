@@ -14,28 +14,40 @@
 	<!-- static자원은 security filter처리하지 않음 -->
 	<http security="none" pattern="/resources/**" />
 	<http auto-config="true">
-	<!-- EJ Strat -->
-	<!-- EJ End -->
-	<!-- HN Strat -->
-	<intercept-url pattern="/member/memberLogout.do" access="permitAll"/>
-	<!-- HN End -->
-	<!-- HR Strat -->
-	<!-- HR End -->
-	<!-- JE Strat -->
-	<!-- JE End -->
-	<!-- JH Strat -->
-	<!-- JH End -->
-	<!-- SJ Strat -->
-	<!-- SJ End -->
 	
-	<!-- 권한
+		<intercept-url pattern="/member/memberLogout.do" access="permitAll"/>
+		
+		<intercept-url pattern="/usedProduct/main/mainPage" access="permitAll"/>
+		<intercept-url pattern="/usedProduct/product/productDetail" access="permitAll"/>
+		<intercept-url pattern="/usedProduct/product/**" access="hasRole('USER')"/>
+		
+		<intercept-url pattern="/mypage/advertiser/register" access="isAuthenticated()"/>
+		<intercept-url pattern="/mypage/advertiser/viewUp" access="isAnonymous()"/>
+		<intercept-url pattern="/mypage/advertiser/clickUp" access="isAnonymous()"/>
+		
+		<intercept-url pattern="/community/review/reviewList" access="permitAll"/>
+		<intercept-url pattern="/community/review/**" access="hasRole('USER')"/>
+		
+		<intercept-url pattern="/community/camper/camperList" access="permitAll"/>
+		<intercept-url pattern="/community/camper/**" access="hasRole('USER')"/>
+		
+		<intercept-url pattern="/member/**" access="isAnonymous()"/>
+	
+		<intercept-url pattern="/cs/noticeEnroll" access="hasRole('ADMIN')"/>
+		<intercept-url pattern="/cs/noticeUpdate" access="hasRole('ADMIN')"/>
+		<intercept-url pattern="/cs/faqUpdate" access="hasRole('ADMIN')"/>
+		<intercept-url pattern="/cs/faqEnroll" access="hasRole('ADMIN')"/>
+		<intercept-url pattern="/cs/**" access="permitAll"/>
+		
+		<intercept-url pattern="/tradereview/**" access="hasRole('USER')"/>
+		
+		<intercept-url pattern="/mypage/advertiser/**" access="hasRole('AD')"/>
+		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
+		<intercept-url pattern="/campsite/**" access="permitAll"/>
+		
 		<intercept-url pattern="/" access="permitAll"/>
  		<intercept-url pattern="/index.jsp" access="permitAll"/>
-		<intercept-url pattern="/member/**" access="isAnonymous()"/>
-
-		
  		<intercept-url pattern="/**" access="isAuthenticated()"/>
-	 -->
 		
 
 		<form-login

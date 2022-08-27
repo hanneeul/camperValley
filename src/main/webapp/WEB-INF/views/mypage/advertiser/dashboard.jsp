@@ -55,7 +55,7 @@
 						<a id="adMoneyCharge" href="${pageContext.request.contextPath}/mypage/advertiser/admoney?no=${advertiser.advertiserNo}">애드머니</a>
 					</h5>
 					<h5 class="d-inline" id="admoneyAmount" data-balance="${advertiser.admoney.balance}">
-						${advertiser.admoney.balance}<small class="ml-1">원</small>
+						<fmt:formatNumber value="${advertiser.admoney.balance}" pattern="#,###" /><small class="ml-1">원</small>
 					</h5>
 				</div>
 			</div>

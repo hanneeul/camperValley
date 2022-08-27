@@ -116,7 +116,7 @@
 							<button type="submit" class="btn btn-camper-color btn-block">광고등록</button>
 						</div>
 						<div class="col-3">
-							<button type="button" class="btn btn-secondary btn-block">뒤로</button>
+							<button type="button" class="btn btn-secondary btn-block" onclick="history.go(-1);">뒤로</button>
 						</div>
 					</div>	
 				</form:form>

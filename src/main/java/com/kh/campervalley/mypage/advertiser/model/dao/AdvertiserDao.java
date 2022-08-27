@@ -53,7 +53,7 @@ public interface AdvertiserDao {
 	@Delete("delete from authority where member_id = #{memberId} and auth = #{auth}")
 	int deleteAuthority(Map<String, Object> map);
 
-	@Update("update advertisement set ad_status = 0, updated_at = (sysdate + 9/24) where advertiser_no = (select ader.advertiser_no from advertiser ader where member_id = #{memberId})")
+	@Update("update advertisement set ad_status = 0, updated_at = (sysdate + 9/24) where advertiser_no = (select ader.advertiser_no from advertiser ader where member_id = #{memberId} and deleted_at is null)")
 	int updateAdOff(String memberId);
 	
 	AdvertiserMoneyExt selectOneAdvertiserMoney(String memberId);
