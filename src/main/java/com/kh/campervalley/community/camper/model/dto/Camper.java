@@ -28,17 +28,16 @@ public class Camper {
 	private String expectedCost;
 	@NonNull
 	private String chatUrl;
-	/* @NonNull */
+	@NonNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate departureDate;
-	/* @NonNull */
+	@NonNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate arrivalDate;
-	/* @NonNull */
+	@NonNull
 	private String area;
 	@NonNull
 	private int memberCount;
-	private int readCount;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private Status status;
