@@ -110,7 +110,7 @@ $(document).ready(function() {
                <input type="hidden" name="productNo" id="productNo" value="${usedProduct.productNo}" />
              </form:form>
                <button id="delete_btn" onclick="productDelete();">삭제하기</button>
-               <button id="update_btn" style="margin-right: 8px; background-color: #D8EBB5">수정하기</button>
+               <button id="update_btn" style="margin-right: 8px; background-color: #D8EBB5" onclick="location.href = '/campervalley/usedProduct/product/productUpdate?no=${usedProduct.productNo}';">수정하기</button>
            </div>
        </c:if>
         <hr style="margin-top: 3rem; margin-bottom: 1rem;"/>
@@ -178,7 +178,7 @@ $(document).ready(function() {
                         <div class="detail-info__text-price__div">
                            <!-- 상품가격 -->
                            <div class="detail-info__price" id="product_price">
-                              ${usedProduct.productPrice}
+                              ${usedProduct.productPrice}원
                            </div>
                         </div>
                      </div>
@@ -237,7 +237,7 @@ $(document).ready(function() {
                                  </c:if>
                             </div>
                          </div>
-<%--                   <div class="detail-info__text-body-bItem">
+                         <div class="detail-info__text-body-bItem">
                              <div class="detail-info__text-body-bItem-title" style="align-self: center;">▪문의메일 : </div>
                              <!-- 문의메일 -->
                              <div class="detail-info__email" id="sellerEmail">
@@ -250,8 +250,9 @@ $(document).ready(function() {
                                     ${member.nickname}님에게 메일 보내기
                                 </a>
                             </div>
-                         </div> --%>
+                         </div>
                          <sec:authorize access="isAuthenticated()">
+                         <c:if test="${not empty loginMember && loginMember.memberId ne usedProduct.sellerId}">
                               <div class="detail-info__text-body-bottom">
                                  <div class="detail-info__btn-list" style="display: flex;">
                                     <c:choose>
@@ -280,9 +281,10 @@ $(document).ready(function() {
                                           채팅하기</button>
                                           </div> --%>
                                   </div>
-
                                </div>
+                            </c:if>
                             </sec:authorize>
+                            
                         </div>
                      </div>
                   </div>
@@ -459,9 +461,6 @@ const productDelete = () => {
       }
    });
 };
-document.querySelector("#update_btn").addEventListener('click', (e) => {
-	   location.href = '/campervalley/usedProduct/product/productUpdate?no=${usedProduct.productNo}';
-	});
 </script>
 
 <script>

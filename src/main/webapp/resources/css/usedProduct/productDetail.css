@@ -41,6 +41,7 @@ div {
     overflow: hidden;
     position: relative;
     margin: 0 auto;
+    height: 502px;
 }
 .slide ul{
     width: 5000px;
@@ -51,7 +52,7 @@ div {
 }
 .slide img {
     width: 475px;
-	height: 444px;
+	height: 485px;
 }
 .slide ul li{
     display: inline-block;
@@ -82,9 +83,10 @@ div {
     font-size: 17px;
 }
 #zzim_btn {
-    margin-right: 158px;
+ 	margin-right: 158px;
     background-color: #639A67;
     margin-bottom: 4px;
+    margin-top: -23px;
 }
 #zzim_span:hover {
 	color: black;
@@ -465,8 +467,8 @@ div {
 #zzim_btn, #chat_btn {    
 	color: white;
     letter-spacing: 1.7px;
-    width: 400px;
-    height: 51px;
+    width: 500px;
+    height: 52px;
     border: none;
 }
 .detail-info__zzim i {

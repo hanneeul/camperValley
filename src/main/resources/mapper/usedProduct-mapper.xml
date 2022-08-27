@@ -450,6 +450,7 @@ select *
 	<result column="transaction_date" property="transactionDate"/>
 	<result column="buyer_id" property="buyerId"/>
 	<result column="is_delete" property="isDelete"/>
+	<result column="heart" property="heart"/>
 	
 	<association property="member" javaType="member">
 		<id column="member_id" property="memberId"/>
