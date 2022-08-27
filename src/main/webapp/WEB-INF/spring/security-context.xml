@@ -32,9 +32,7 @@
 		<intercept-url pattern="/" access="permitAll"/>
  		<intercept-url pattern="/index.jsp" access="permitAll"/>
 		<intercept-url pattern="/member/**" access="isAnonymous()"/>
-		<intercept-url pattern="/mypage/advertiser/**" access="hasRole('AD')"/>
-		<intercept-url pattern="/member/admin" access="hasRole('ADMIN')"/>
-		<intercept-url pattern="/member/enroll" access="isAnonymous()"/>
+
 		
  		<intercept-url pattern="/**" access="isAuthenticated()"/>
 	 -->

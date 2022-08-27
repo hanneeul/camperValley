@@ -197,13 +197,10 @@ public class MypageCommunityController {
 				@RequestHeader(name = "Referer", required = false) String referer) throws Exception{
 		
 		try {
-			log.debug("camper = {}", camper);
-			log.debug("referer = {}", referer);
-			log.debug("content = {}", camper.getContent());
 			int result = camperService.updateCamper(camper);
 			redirectAttr.addFlashAttribute("msg", "게시글을 성공적으로 수정했습니다.");
 		} catch(Exception e) {
-			log.debug("캠퍼모집 수정 오류", e);
+			log.error("캠퍼모집 수정 오류", e);
 			throw e;
 		}
 		return "redirect:/mypage/community/myCamper";

@@ -215,10 +215,10 @@ public class TradeController {
 	}
 	
 	@PostMapping("/productDelete")
-	public String productDelete(UsedProduct usedProduct, RedirectAttributes redirectAttr) throws Exception {	
+	public String productDelete(int productNo, RedirectAttributes redirectAttr) throws Exception {	
 
 		try {
-			int result = tradeService.updateProductSetDelete(usedProduct.getProductNo());
+			int result = tradeService.updateProductSetDelete(productNo);
 			redirectAttr.addFlashAttribute("msg", "게시글을 성공적으로 삭제했습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();

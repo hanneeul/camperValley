@@ -201,7 +201,8 @@ public class MemberController {
 	}
 
 	@PostMapping("/searchPassword")
-	public String searchPassword(@RequestParam String memberId, @RequestParam String email, RedirectAttributes redirectAttr) {
+	public String searchPassword(@RequestParam String memberId,
+				@RequestParam String email, RedirectAttributes redirectAttr) throws Exception{
 		Map<String, Object> map = new HashMap<>();
 		
 		try {
@@ -212,7 +213,7 @@ public class MemberController {
 			if (member != null && email.equals(member.getEmail())) {
 				
 				emailService.passwordResetMmailSender(email, member.getName());
-				redirectAttr.addFlashAttribute("msg", "이메일로 인증번호를 발송하였습니다.");
+				redirectAttr.addFlashAttribute("msg", "이메일로 비밀번호 재설정 링크 발송하였습니다.");
 				return "redirect:/";
 				
 			} else {
@@ -224,7 +225,7 @@ public class MemberController {
 		} catch (Exception e) {
 			
 			e.printStackTrace();
-			return "redirect:/member/searchPassword";
+			throw e;
 			
 		}
 	}
