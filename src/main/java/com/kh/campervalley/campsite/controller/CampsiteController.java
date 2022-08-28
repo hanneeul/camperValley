@@ -92,6 +92,7 @@ public class CampsiteController {
 				list = campsiteService.searchCampsiteThemeList(searchParam);
 			}
 			mav.addObject("list", list);
+			mav.addObject("searchParam", searchParam);
 			mav.setViewName("campsite/searchTheme");
 		} catch (Exception e) {
 			log.error("캠핑장 목록 조회 오류", e);
