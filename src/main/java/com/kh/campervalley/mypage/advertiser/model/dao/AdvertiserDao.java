@@ -82,7 +82,7 @@ public interface AdvertiserDao {
 	@Insert("insert into ad_attach values (seq_ad_attach_no.nextval, #{advertisementNo}, #{originalFilename}, #{renamedFilename}, (sysdate + 9/24))")
 	int insertAdAttach(AdAttach adAttach);
 
-	@Insert("insert into ad_performance values (seq_ad_performance_no.nextval, #{advertisementNo}, (sysdate + 9/24), default, default)")
+	@Insert("insert into ad_performance values (seq_ad_performance_no.nextval, #{advertisementNo}, trunc(sysdate + 9/24), default, default)")
 	int insertAdPerformance(int advertisementNo);
 
 	List<AdvertisementExt> selectAdListByAdvertiserNo(int advertiserNo, RowBounds rowBounds);
@@ -135,5 +135,8 @@ public interface AdvertiserDao {
 	boolean isPauseAdvertiser(String memberId);
 
 	boolean isAdvertiser(String memberId);
+
+	@Update("update advertisement set ad_status = 0, deleted_at = (sysdate + 9/24) where advertiser_no = #{advertiserNo}")
+	int updateAdvertisementExit(int advertiserNo);
 
 }
