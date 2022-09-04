@@ -3,6 +3,10 @@
 <summary><h4>개발배경 & 구현목표</h4></summary>
 <img src="https://user-images.githubusercontent.com/94452904/188316743-97a3c6cf-4a1d-48b2-94cc-f6fcb5891205.png"/>
 </details>
+<details>
+<summary><h4>ERD</h4></summary>
+<img src="https://user-images.githubusercontent.com/94452904/188317686-3496b9ae-4ea3-4127-b7bb-c3254e2a3215.PNG"/>
+</details>
 
 ## Member
 ![008](https://user-images.githubusercontent.com/94452904/188316308-66cf3308-5b3b-430c-8c90-1ccad330172e.png)
@@ -41,7 +45,6 @@
   - 게시판관리
   - 신고 내역 조회/블랙리스트 관리
   - 1:1채팅문의 관리
-
 
 
 ## Tech
