@@ -62,7 +62,6 @@
 					login-processing-url="/member/login"
 					default-target-url="/"
 					always-use-default-target="false"
-					authentication-success-forward-url="/chat/loginSuccess"
 					username-parameter="memberId" 
 					password-parameter="password"
 		/>

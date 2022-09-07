@@ -3,7 +3,7 @@
 -------------------------------------------
 
 create table member (
-  member_id varchar2(15) not null,
+  	member_id varchar2(15) not null,
 	name varchar2(30) not null,
 	nickname varchar2(30) not null,
 	password varchar2(300) not null,
@@ -14,23 +14,24 @@ create table member (
 	withdraw char(1) default 'N',
 	enabled number default 1,
 
-  constraint pk_member primary key(member_id),
-  constraint ck_member_enabled check(enabled in (0, 1)),
-  constraint ck_member_withdraw check(withdraw in ('Y', 'N'))
+  	constraint pk_member primary key(member_id),
+  	constraint ck_member_enabled check(enabled in (0, 1)),
+  	constraint ck_member_withdraw check(withdraw in ('Y', 'N'))
 );
 
 create table authority (
 	auth varchar2(50) not null,
 	member_id varchar2(15) not null,
-    constraint pk_authority primary key(member_id, auth),
-    constraint fk_authority_member_id foreign key(member_id) references member(member_id) on delete cascade
+    
+	constraint pk_authority primary key(member_id, auth),
+    	constraint fk_authority_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
 create table persistent_logins (
-    username varchar(64) not null, 
-    series varchar(64) primary key, 
-    token varchar(64) not null, --username, password, expiry time을 hashing한 값
-    last_used timestamp not null
+    	username varchar(64) not null, 
+    	series varchar(64) primary key, 
+    	token varchar(64) not null, --username, password, expiry time?쓣 hashing?븳 媛?
+    	last_used timestamp not null
 );
 
 create table notice (
@@ -42,9 +43,9 @@ create table notice (
 	created_at date default sysdate,
 	read_count number default 0,
     
-    constraint pk_notice_no primary key(notice_no),
-    constraint fk_notice_member_id foreign key(member_id) references member(member_id) on delete set null,
-    constraint ck_notice_category check(category in ('notice', 'faq'))
+    	constraint pk_notice_no primary key(notice_no),
+    	constraint fk_notice_member_id foreign key(member_id) references member(member_id) on delete set null,
+    	constraint ck_notice_category check(category in ('notice', 'faq'))
 );
 create sequence seq_notice_no;
 
@@ -55,8 +56,8 @@ create table notice_attach (
 	renamed_filename varchar2(255),
 	created_at date default sysdate,
     
-    constraint pk_notice_attach_no primary key(notice_attach_no),
-    constraint fk_notice_attach_notice_no foreign key(notice_no) references notice(notice_no) on delete cascade
+    	constraint pk_notice_attach_no primary key(notice_attach_no),
+    	constraint fk_notice_attach_notice_no foreign key(notice_no) references notice(notice_no) on delete cascade
 );
 create sequence seq_notice_attach_no;
 
@@ -82,8 +83,8 @@ create table license_file (
 	renamed_filename varchar2(255),
 	created_at date default sysdate,
     
-    constraint pk_license_file primary key(license_file_no),
-    constraint fk_license_file_advertiser_no foreign key(advertiser_no) references advertiser(advertiser_no) on delete cascade
+    	constraint pk_license_file primary key(license_file_no),
+    	constraint fk_license_file_advertiser_no foreign key(advertiser_no) references advertiser(advertiser_no) on delete cascade
 );
 create sequence seq_license_file_no;
 
@@ -97,7 +98,7 @@ create table admoney (
 );
 create sequence seq_admoney_no;
 
--- pk, imp_uid 자료형 수정함(8/9), pay_statement 컬럼명 수정
+-- pk, imp_uid ?옄猷뚰삎 ?닔?젙?븿(8/9), pay_statement 而щ읆紐? ?닔?젙
 create table pay (
 	merchant_uid varchar2(16) not null,
 	advertiser_no number not null,
@@ -147,15 +148,15 @@ create table ad_attach (
 create sequence seq_ad_attach_no;
 
 create table ad_performance (
-    ad_performance_no number not null,
-    advertisement_no number not null,
-    display_at date default trunc(sysdate),
-    daily_click_cnt number default 0,
-    daily_view_cnt number default 0,
+    	ad_performance_no number not null,
+    	advertisement_no number not null,
+    	display_at date default trunc(sysdate),
+    	daily_click_cnt number default 0,
+    	daily_view_cnt number default 0,
     
-    constraint pk_ad_performance primary key(ad_performance_no),
-    constraint fk_ad_performance_advertisement_no foreign key(advertisement_no) references advertisement(advertisement_no) on delete cascade,
-    constraint uq_ad_performance_adno_display unique(advertisement_no, display_at)
+   	constraint pk_ad_performance primary key(ad_performance_no),
+    	constraint fk_ad_performance_advertisement_no foreign key(advertisement_no) references advertisement(advertisement_no) on delete cascade,
+    	constraint uq_ad_performance_adno_display unique(advertisement_no, display_at)
 );
 create sequence seq_ad_performance_no;
 
@@ -175,17 +176,18 @@ create table camper (
 	created_at date default sysdate,
 	updated_at date,
 	status varchar2(20) default 'I',
-  constraint pk_camper_no primary key(camper_no),
-  constraint fk_camper_member_id foreign key(member_id) references member(member_id) on delete cascade,
-  constraint ck_camper_status check(state in ('C', 'I'))
+
+  	constraint pk_camper_no primary key(camper_no),
+  	constraint fk_camper_member_id foreign key(member_id) references member(member_id) on delete cascade,
+  	constraint ck_camper_status check(state in ('C', 'I'))
 );
 create sequence seq_camper_join_no;
 
 create table category (
-    cate_no number not null, 
-    cate_name varchar2(50) not null,
+    	cate_no number not null, 
+    	cate_name varchar2(50) not null,
     
-    constraint pk_category primary key(cate_no)
+    	constraint pk_category primary key(cate_no)
 );
 create sequence seq_category_no;
 
@@ -211,11 +213,11 @@ create table used_product (
 	buyer_id varchar2(15),
 	is_delete char(1) default 'N',
     
-    constraint pk_used_product primary key(product_no),
-    constraint fk_used_product_seller_id foreign key(seller_id) references member(member_id) on delete cascade,
-    constraint fk_used_product_buyer_id foreign key(buyer_id) references member(member_id),
-    constraint fk_used_product_cate_no foreign key(cate_no) references category(cate_no) on delete cascade,
-    constraint ck_used_product_is_delete check(is_delete in ('Y', 'N'))
+    	constraint pk_used_product primary key(product_no),
+    	constraint fk_used_product_seller_id foreign key(seller_id) references member(member_id) on delete cascade,
+    	constraint fk_used_product_buyer_id foreign key(buyer_id) references member(member_id),
+    	constraint fk_used_product_cate_no foreign key(cate_no) references category(cate_no) on delete cascade,
+    	constraint ck_used_product_is_delete check(is_delete in ('Y', 'N'))
 );
 create sequence seq_used_product_no;
 
@@ -231,36 +233,32 @@ create table wish_product (
 );
 create sequence seq_wish_product_no;
 
-
-create table chat_member (
+create table chat_room (
 	chatroom_id varchar2(50) not null,
-	seller_id varchar2(15) not null,
-	buyer_id varchar2(15) not null,
+	buyer_nickname varchar2(30) not null,
+	seller_nickname varchar2(30) not null,
 	last_check number default 0,
 	created_at date default sysdate,
 	deleted_at date,
-	product_no number not null,
     
-    	constraint pk_chat_member primary key(chatroom_id),
-   	constraint fk_chat_member_seller_id foreign key(seller_id) references member(member_id),
-    	constraint fk_chat_member_buyer_id foreign key(buyer_id) references member(member_id),
-    	constraint fk_chat_member_product_no foreign key(product_no) references used_product(product_no)
+    	constraint pk_chat_member primary key(chatroom_id),c
+   	constraint fk_chat_member_buyer_nickname foreign key(buyer_nickname) references member(nickname),
+    	constraint fk_chat_member_seller_nickname foreign key(seller_nickname) references member(nickname)
 );
 
-create table chat_log (
-	no number not null,
+create table chat_content (
+	content_no number not null,
 	chatroom_id varchar2(50) not null,
-	seller_id varchar2(15) not null,
-	buyer_id varchar2(15) not null,
-	msg varchar2(4000),
-	time number,
+	buyer_nickname varchar2(30) not null,
+	seller_nickname varchar2(30) not null,
+	message_content varchar2(4000),
+	message_time number,
     
-    constraint pk_chat_log_no primary key(no),
-    constraint fk_chat_log_chatroom_id foreign key(chatroom_id) references chat_member(chatroom_id),
-    constraint fk_chat_log_seller_id foreign key(seller_id) references member(member_id),
-    constraint fk_chat_log_buyer_id foreign key(buyer_id) references member(member_id)
+    	constraint pk_chat_content_no primary key(content_no),
+    	constraint fk_chat_content_chatroom_id foreign key(chatroom_id) references chat_room(chatroom_id)
+
 );
-create sequence seq_chat_log_no;
+create sequence seq_chat_content_no;
 
 create table trade_review (
   review_no number,
@@ -269,25 +267,27 @@ create table trade_review (
 	content varchar2(1000) not null,
 	created_at date default sysdate,
 	updated_at date,
-  constraint pk_trade_review_no primary key(review_no),
-  constraint fk_trade_review_product_no foreign key(product_no) references used_product(product_no) on delete cascade
+
+  	constraint pk_trade_review_no primary key(review_no),
+  	constraint fk_trade_review_product_no foreign key(product_no) references used_product(product_no) on delete cascade
 );
 create sequence seq_trade_review_no;
 
 create table review_report (
-  report_no number,
+  	report_no number,
 	review_no number not null,
 	category varchar2(100) not null,
 	content varchar2(100) not null,
 	created_at date default sysdate,
 	state_yn char(1) default 'N',
-  constraint pk_review_report primary key(report_no),
-  constraint fk_review_report_review_no foreign key(review_no) references trade_review(review_no) on delete cascade,
-  constraint ck_review_report_state_yn check(state_yn in ('Y', 'N'))
+
+  	constraint pk_review_report primary key(report_no),
+  	constraint fk_review_report_review_no foreign key(review_no) references trade_review(review_no) on delete cascade,
+  	constraint ck_review_report_state_yn check(state_yn in ('Y', 'N'))
 );
 create sequence seq_review_report_no;
 
---캠핑장
+--罹좏븨?옣
 create table campsite (
 	content_id number not null,
 	faclt_nm varchar2(100),
@@ -313,7 +313,7 @@ create table campsite (
 );
 
 
---캠핑장시설
+--罹좏븨?옣?떆?꽕
 create table campsite_facility (
 	content_id number not null,
 	gnrl_site_co number,
@@ -351,25 +351,25 @@ create table campsite_facility (
 	eqpmn_lend_cl varchar2(100),
 	animal_cmg_cl varchar2(100),
     
-  constraint pk_campsite_facility primary key(content_id),
-  constraint fk_campsite_facility_content_id foreign key(content_id) references campsite(content_id) on delete cascade,
-  constraint ck_campsite_facility_trler_acmpny_at check(trler_acmpny_at in ('Y', 'N')),
-  constraint ck_campsite_facility_carav_acmpny_at check(carav_acmpny_at in ('Y', 'N'))
+  	constraint pk_campsite_facility primary key(content_id),
+  	constraint fk_campsite_facility_content_id foreign key(content_id) references campsite(content_id) on delete cascade,
+  	constraint ck_campsite_facility_trler_acmpny_at check(trler_acmpny_at in ('Y', 'N')),
+  	constraint ck_campsite_facility_carav_acmpny_at check(carav_acmpny_at in ('Y', 'N'))
 );
 
 
---캠핑장이미지
+--罹좏븨?옣?씠誘몄?
 create table campsite_image (
 	serialnum number not null,
 	content_id number not null,
 	image_url varchar2(200),
     
-  constraint pk_campsite_image primary key(serialnum),
-  constraint fk_campsite_image_content_id foreign key(content_id) references campsite(content_id) on delete cascade --캠핑장 삭제 시 캠핑장이미지도 삭제
+  	constraint pk_campsite_image primary key(serialnum),
+ 	constraint fk_campsite_image_content_id foreign key(content_id) references campsite(content_id) on delete cascade --罹좏븨?옣 ?궘?젣 ?떆 罹좏븨?옣?씠誘몄??룄 ?궘?젣
 );
 
 
---캠핑장후기
+--罹좏븨?옣?썑湲?
 create table campsite_review (
 	review_no number not null,
 	member_id varchar2(15),
@@ -385,13 +385,13 @@ create table campsite_review (
 	read_count number default 0 not null,
     
 	constraint pk_campsite_review primary key(review_no),
-	constraint fk_campsite_review_member_id foreign key(member_id) references member(member_id) on delete set null, --회원탈퇴 시 작성자 nll로 변경
-	constraint fk_campsite_review_content_id foreign key(content_id) references campsite(content_id) on delete set null --캠핑장삭제 시 contentId null로 변경
+	constraint fk_campsite_review_member_id foreign key(member_id) references member(member_id) on delete set null, --?쉶?썝?깉?눜 ?떆 ?옉?꽦?옄 nll濡? 蹂?寃?
+	constraint fk_campsite_review_content_id foreign key(content_id) references campsite(content_id) on delete set null --罹좏븨?옣?궘?젣 ?떆 contentId null濡? 蹂?寃?
 );
 create sequence seq_campsite_review_no;
 
 
---캠핑장후기사진
+--罹좏븨?옣?썑湲곗궗吏?
 create table review_photo (
 	review_photo_no number not null,
 	review_no number not null,
@@ -400,12 +400,12 @@ create table review_photo (
 	created_at date default sysdate not null,
     
 	constraint pk_review_photo primary key(review_photo_no),
-	constraint fk_review_photo_review_no foreign key(review_no) references campsite_review(review_no) on delete cascade --원본글 삭제 시 사진도 삭제
+	constraint fk_review_photo_review_no foreign key(review_no) references campsite_review(review_no) on delete cascade --?썝蹂멸? ?궘?젣 ?떆 ?궗吏꾨룄 ?궘?젣
 );
 create sequence seq_review_photo_no;
 
 
---캠핑장후기추천
+--罹좏븨?옣?썑湲곗텛泥?
 create table review_recommend (
 	recommend_no number not null,
 	review_no number not null,
@@ -413,14 +413,14 @@ create table review_recommend (
 	status char(1) default 'Y' not null,
     
 	constraint pk_review_recommend primary key(recommend_no),
-	constraint fk_review_recommend_review_no foreign key(review_no) references campsite_review(review_no) on delete cascade, --원본글 삭제 시 추천도 삭제
-	constraint fk_review_recommend_member_id foreign key(member_id) references member(member_id) on delete cascade, --회원탈퇴 시 추천도 삭제
+	constraint fk_review_recommend_review_no foreign key(review_no) references campsite_review(review_no) on delete cascade, --?썝蹂멸? ?궘?젣 ?떆 異붿쿇?룄 ?궘?젣
+	constraint fk_review_recommend_member_id foreign key(member_id) references member(member_id) on delete cascade, --?쉶?썝?깉?눜 ?떆 異붿쿇?룄 ?궘?젣
 	constraint ck_review_recommend_status check(status in ('Y', 'N'))
 );
-create sequence seq_review_recommend_no; --sequence 추가
+create sequence seq_review_recommend_no; --sequence 異붽?
 
 
---캠핑장후기댓글
+--罹좏븨?옣?썑湲곕뙎湲?
 create table review_comment (
 	review_comment_no number not null,
 	review_no number not null,
@@ -432,12 +432,12 @@ create table review_comment (
 	updated_at date,
     
 	constraint pk_review_comment primary key(review_comment_no),
-	constraint fk_review_comment_review_no foreign key(review_no) references campsite_review(review_no) on delete cascade, --원본글 삭제 시 댓글도 삭제
-	constraint fk_review_comment_member_id foreign key(member_id) references member(member_id) on delete set null, --회원탈퇴 시 작성자 null로 변경
+	constraint fk_review_comment_review_no foreign key(review_no) references campsite_review(review_no) on delete cascade, --?썝蹂멸? ?궘?젣 ?떆 ?뙎湲??룄 ?궘?젣
+	constraint fk_review_comment_member_id foreign key(member_id) references member(member_id) on delete set null, --?쉶?썝?깉?눜 ?떆 ?옉?꽦?옄 null濡? 蹂?寃?
 	constraint ck_review_comment_comment_level check(comment_level in (1, 2)),
-	constraint fk_review_comment_ref foreign key(comment_ref) references review_comment(review_comment_no) on delete set null --원본댓글 삭제 시 답댓글 ref null로 변경
+	constraint fk_review_comment_ref foreign key(comment_ref) references review_comment(review_comment_no) on delete set null --?썝蹂몃뙎湲? ?궘?젣 ?떆 ?떟?뙎湲? ref null濡? 蹂?寃?
 );
-create sequence seq_review_comment_no; --sequence 추가
+create sequence seq_review_comment_no; --sequence 異붽?
 
 
 create table campsite_bookmark (
@@ -445,21 +445,16 @@ create table campsite_bookmark (
 	member_id varchar2(15) not null,
 	content_id number not null,
     
-    constraint pk_campsite_bookmark primary key(camp_bm_no),
-    constraint fk_campsite_bookmark_member_id foreign key(member_id) references member(member_id) on delete cascade,
-    constraint fk_campsite_bookmark_content_id foreign key(content_id) references campsite(content_id) on delete cascade
+    	constraint pk_campsite_bookmark primary key(camp_bm_no),
+    	constraint fk_campsite_bookmark_member_id foreign key(member_id) references member(member_id) on delete cascade,
+    	constraint fk_campsite_bookmark_content_id foreign key(content_id) references campsite(content_id) on delete cascade
 );
 create sequence seq_campsite_bookmark_no;
 
-select * from campsite_review;
-select * from review_photo;
-
 create table todo (
-    todo_no number,
-    todo varchar2(4000),
-    created_at date default sysdate, 
-    completed_at date,
-    constraint pk_todo_no primary key(todo_no)
+    	todo_no number,
+    	todo varchar2(4000),
+    	created_at date default sysdate, 
+    	completed_at date,
+    	constraint pk_todo_no primary key(todo_no)
 );
-
-create sequence seq_todo_no;
