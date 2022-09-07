@@ -78,7 +78,7 @@
 					<sec:authentication property="principal" var="loginMember" scope="session"/>
 						<form action="${pageContext.request.contextPath}/member/logout" method="post" style="display:contents;">
 							<ul class="navbar-nav col-md-3 mt-4 ml-5">
-								<li class="nav-item pt-2"><span class="camper-color"><i class="fa-solid fa-user fa-1x"></i>&nbsp;[<sec:authentication property="principal.nickname"/>]</span>님</li>
+								<li class="nav-item pt-2"><span class="camper-color"><i class="fa-solid fa-user fa-1x"></i>&nbsp;[<sec:authentication property="principal.nickname"/>]</span>님&nbsp;</li>
 								<li class="nav-item ml-4"><button class="nav-link small btn btn-link" href="${pageContext.request.contextPath}/member/logout"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size:11px;"></i>&nbsp;<span id="logout" >로그아웃</span></button></li>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							</ul>
@@ -129,7 +129,7 @@
 		  	switch(mainMenu) {
 			case "커뮤니티" : renderSubMenu(comPosition, "캠퍼모집", "캠핑장후기"); break;
 			case "고객센터" : renderSubMenu(csPosition, "공지사항", "FAQ"); break;
-			case "마이페이지" : renderSubMenu(myPosition, "회원정보", "중고거래", "커뮤니티", "광고주"); break;
+			case "마이페이지" : renderSubMenu(myPosition, "회원정보", "중고거래", "나의채팅방", "커뮤니티", "광고주"); break;
 			case "관리자페이지" : renderSubMenu(2.5, "회원관리", "게시판관리", "신고내역관리", "1:1문의관리"); break;
 			default : $subNavbar.stop().slideUp('fast');
 		  	}
@@ -149,6 +149,7 @@
 					case "캠핑장후기" 	: aTag.href = "${pageContext.request.contextPath}/community/review/reviewList"; break;
 					case "회원정보" 	: aTag.href = "${pageContext.request.contextPath}/mypage/info/main"; break;
 					case "중고거래" 	: aTag.href = "${pageContext.request.contextPath}/mypage/trade/purchased"; break;
+					case "나의채팅방" 	: aTag.href = "${pageContext.request.contextPath}/chat/chatMainPage"; break;
 					case "커뮤니티" 	: aTag.href = "${pageContext.request.contextPath}/mypage/community/myCamper"; break;
 					case "광고주" 	:
 						if("${moveToAderEnroll}" == "true") {
