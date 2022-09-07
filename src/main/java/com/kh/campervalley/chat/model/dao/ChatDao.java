@@ -3,37 +3,43 @@ package com.kh.campervalley.chat.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
-import com.kh.campervalley.chat.model.dto.ChatLog;
-import com.kh.campervalley.chat.model.dto.ChatMember;
+import com.kh.campervalley.chat.model.dto.ChatContent;
+import com.kh.campervalley.chat.model.dto.ChatRoom;
 
 @Mapper
 public interface ChatDao {
 
-	int insertChatMember(Map<String, Object> map);
+	@Insert("insert into chat_room (chatroom_id, buyer_nickname, seller_nickname) values (#{chatroomId}, #{buyerNickname}, #{sellerNickname})")
+	int createChatRoom(@Param("chatroomId")String chatroomId, @Param("buyerNickname")String buyerNickname, @Param("sellerNickname")String sellerNickname);
+	
+	@Select("select * from (select cc.*, row_number() over(partition by chatroom_id order by message_time desc) rnum from chat_content cc where buyer_nickname = #{loginMemberNickname} or seller_nickname = #{loginMemberNickname}) cc where rnum = 1 order by message_time desc")
+	List<ChatContent> findRecentChatList(String loginMemberNickname);
 
-	@Select("select * from chat_member where seller_id in (#{sellerId}, #{buyerId}) and buyer_id in (#{sellerId}, #{buyerId})")
-	ChatMember findChatMemberByMemberId(Map<String, Object> map);
+	@Delete("delete from chat_room where chatroom_id = #{chatroomId}")
+	int deleteChatRoom(@Param("chatroomId")String chatroomId);
 
-	@Insert("insert into chat_log(no, chatroom_id, member_id, msg, time) values (seq_chat_log_no.nextval, #{chatroomId}, #{memberId}, #{msg}, #{time})")
-	int insertChatLog(Map<String, Object> payload);
+	@Select("select * from chat_content where chatroom_id = #{chatroomId} order by content_no")
+	List<ChatContent> findChatRoomList(String chatroomId);
 
-	@Select("select * from chat_log where chatroom_id = #{chatroomId} order by time")
-	List<ChatLog> findChatLogByChatroomId(String chatroomId);
+	@Insert("insert into chat_content values (seq_chat_content_no.nextval, #{chatroomId}, #{buyerNickname}, #{sellerNickname}, #{msg}, to_date((#{time}), 'YYYY-MM-DD HH24:MI:SS'))")
+	int insertChatContentSend(Map<String, Object> payload);
 
-	List<ChatLog> findRecentChatLogList(Map<String, Object> map);
+	// 채팅방 존재 여부
+	@Select("select * from chat_room where buyer_nickname = #{buyerNickname} and seller_nickname = #{sellerNickname}")
+	ChatRoom findChatRoomBySellerNickname(@Param("buyerNickname")String buyerNickname, @Param("sellerNickname")String sellerNickname);
+	
+	// 채팅방 존재 여부
+	@Select("select * from chat_room where buyer_nickname = #{sellerNickname} and seller_nickname = #{buyerNickname}")
+	ChatRoom findChatRoomByBuyerNickname(@Param("sellerNickname")String sellerNickname, @Param("buyerNickname")String buyerNickname);
 
-	@Update("update chat_member set buyer_last_check = #{lastCheck} where chatroom_id = #{chatroomId} and seller_id = #{sellerId} and buyer_id = #{buyerId}")
-	int updateLastCheck(Map<String, Object> payload);
+	@Select("select * from chat_content where chatroom_id = #{chatroomId} order by content_no")
+	List<ChatContent> findChatContentByChatRoomId(String chatroomId);
 
-	@Select("select * from chat_member where seller_id = #{memberId} or buyer_id = #{memberId}")
-	List<ChatMember> findChatMember(String memberId);
 
-	int getUnreadCntBySeller(ChatMember chatMember);
-
-	int getUnreadCntByBuyer(ChatMember chatMember);
 }

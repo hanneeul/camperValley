@@ -12,18 +12,15 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class ChatMember {
+public class ChatRoom {
 
 	@NonNull
 	private String chatroomId;
 	@NonNull
-	private String sellerId;
+	private String sellerNickname;
 	@NonNull
-	private String buyerId;
-	private String buyerImg;
-	private String sellerLastCheck;
-	private String buyerLastCheck;
-	private int productNo;
+	private String buyerNickname;
+	private String lastCheck;
 	private LocalDateTime createdAt;
 	private LocalDateTime deletedAt;
 }

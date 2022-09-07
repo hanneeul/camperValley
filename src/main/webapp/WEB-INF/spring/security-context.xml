@@ -21,6 +21,7 @@
 		<intercept-url pattern="/usedProduct/main/getProductList" access="permitAll"/>
 		<intercept-url pattern="/usedProduct/product/productDetail" access="permitAll"/>
 		<intercept-url pattern="/usedProduct/product/**" access="hasRole('USER')"/>
+		<intercept-url pattern="/chat" access="hasRole('USER')"/>
 		
 		<intercept-url pattern="/mypage/advertiser/register" access="isAuthenticated()"/>
 		<intercept-url pattern="/mypage/advertiser/dashboard" access="hasRole('USER')"/>

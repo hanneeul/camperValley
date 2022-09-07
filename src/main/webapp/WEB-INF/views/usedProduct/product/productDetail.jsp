@@ -13,90 +13,7 @@
 <input type="hidden" class="memberId" value="${loginMember.memberId}"/>
 <input type="hidden" class="owner" value=""/>
 
-<script>
-/* 슬라이더 */
-$(document).ready(function() {
-   var imgs;
-   var img_count;
-   var img_position = 1;
-   imgs = $(".slide ul");
-   img_count = imgs.children().length;
-   //버튼을 클릭했을 때 함수 실행
-   $('#back').click(function () {
-     back();
-   });
-   $('#next').click(function () {
-     next();
-   });
-   function back() {
-     if(1<img_position){
-       imgs.animate({
-         left:'+=475px'
-       });
-       img_position--;
-     }
-   }
-   
-   function next() {
-     if(img_count>img_position){
-       imgs.animate({
-         left:'-=475px'
-       });
-       img_position++;
-     }
-}
-});
-//이미지 끝까지 가면 버튼 사라지기
-//첫 이미지로 돌아오기
-</script>
-<script>
-$(document).ready(function() {
-   
-   $.ajax({
-      type : 'GET',
-      url : '/campervalley/usedProduct/product/getSellerInfo',
-      data : {
-         productNo : $('.hiddenNo').val()
-      },
-      dataType : 'json',
-      success : function(data) {
-         // 클릭 -> 해당 판매자 정보로 이동
-         
-         $('.owner').val(data.member.memberId);
-         
-         // 상점 사진
-         if(data.profileImg == null) {
-            $('.sellerProfileImg_Link').append($('<img/>', {
-               src : "/campervalley/resources/images/usedProduct/noProfile.png",
-               width : '54',
-               height : '54',
-               alt : ''
-            })) 
-         } else {
-            $('.sellerProfileImg_Link').append($('<img/>', {
-               src : '/campervalley/resources/upload/member/' + data.profileImg,
-               width : '54',
-               height : '54',
-               alt : ''
-            })) 
-         }
-         
-         $('.sellerInfo_name').text(data.member.nickname);
-         
-         // 상품 총 개수
-         $('.productNumLink').text('상품 '+data.sellerProdNum);
-         
-         // -개 상품 더보기
-         $('.moreProdLink_Num').text((data.sellerProdNum-1) + '개');
-      
-      }, error : function() {
-         alert('에러!');
-      }
-      
-   });
-   
-});
-</script>
+
 
 <div id="section" style="width: 98%; margin:30px auto;">
    <div class="detail_area">
@@ -274,12 +191,11 @@ $(document).ready(function() {
                                          </c:otherwise>
                                        </c:choose>
                                     <!-- 채팅하기 -->
-                                          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                          <%-- <div class="detail-info__chat" >
-                                          <button type="submit" id="chat_btn" onclick="chatNo(${usedProduct.productNo})" style="background-color: #639A67">
-                                             <i class="fa-solid fa-comment"></i>             
-                                          채팅하기</button>
-                                          </div> --%>
+                                          <div class="detail-info__chat">
+	                                          <button type="submit" id="chat_btn" onclick="location.href='${pageContext.request.contextPath}/chat/chatRoom?nickname=${member.nickname}';">
+	                                             <i class="fa-solid fa-comment"></i>             
+	                                          채팅하기</button>
+                                          </div>
                                   </div>
                                </div>
                             </c:if>
@@ -316,26 +232,27 @@ $(document).ready(function() {
             </div>
             </div>
          </div>
-            
-         <div class="prodInfo_RightWrap">
-            <div class="prodInfo_sellerWrap1">
-               <div class="prodInfo_sellerWrap2">
-                  <div class="sellerInfo_Title">판매자정보</div>
-               </div>
-               
-                  <div class="seller" style="cursor:pointer">
-                     <span class="sellerProfileImg_Link"></span>
-                     <div class="sellerInfoWrap">
-                        <span class="sellerInfo_name"><!-- productDetail.js --></span>
-                        <div class="sellerInfo_productNum">
-                           <span class="productNumLink"><!-- productDetail.js --></span>
-                           <span class="moreProdLink_Num" style="color: rgb(247, 47, 51);"></span><span>상품 더보기</span>
-                        </div>
-                     </div>
-                     
-                  </div><!-- //store -->
-               </div>
-            </div>
+         <c:if test="${not empty loginMember}">            
+	         <div class="prodInfo_RightWrap">
+	            <div class="prodInfo_sellerWrap1">
+	               <div class="prodInfo_sellerWrap2">
+	                  <div class="sellerInfo_Title">판매자정보</div>
+	               </div>
+	               
+	                  <div class="seller" style="cursor:pointer">
+	                     <span class="sellerProfileImg_Link"></span>
+	                     <div class="sellerInfoWrap">
+	                        <span class="sellerInfo_name"><!-- productDetail.js --></span>
+	                        <div class="sellerInfo_productNum">
+	                           <span class="productNumLink"><!-- productDetail.js --></span>
+	                           <span class="moreProdLink_Num" style="color: rgb(247, 47, 51);"></span><span>상품 더보기</span>
+	                        </div>
+	                     </div>
+	                     
+	                  </div><!-- //store -->
+	               </div>
+	            </div>
+	       </c:if>
          </div>
       </div>
        <!-- nav -->
@@ -398,11 +315,6 @@ $(".heart-click").click(function() {
             success : function(usedProduct) {
                document.location.reload(true);
                
-               let heart = usedProduct.heart;
-               // 하트 수 갱신
-               $('#zzim').text(하트);
-               $('#zzim_btn').text(하트);
-               
                console.log('하트 추가 성공!');
             }, 
             error : function() {
@@ -425,9 +337,7 @@ $(".heart-click").click(function() {
         success : function(usedProduct) {
            document.location.reload(true);
            
-           let heart = usedProduct.heart;
-              
-             console.log('하트 삭제 성공!');
+           console.log('하트 삭제 성공!');
         },
         error : function() {
         }
@@ -461,13 +371,84 @@ const productDelete = () => {
       }
    });
 };
-</script>
 
-<script>
-/* 채팅하기 */ 
-/* function chatNo(no) {
-      location.href = '/campervalley/chat/chat?no=' + no;
-} */
+/* 슬라이더 */
+$(document).ready(function() {
+   var imgs;
+   var img_count;
+   var img_position = 1;
+   imgs = $(".slide ul");
+   img_count = imgs.children().length;
+   //버튼을 클릭했을 때 함수 실행
+   $('#back').click(function () {
+     back();
+   });
+   $('#next').click(function () {
+     next();
+   });
+   function back() {
+     if(1<img_position){
+       imgs.animate({
+         left:'+=475px'
+       });
+       img_position--;
+     }
+   }
+   
+   function next() {
+     if(img_count>img_position){
+       imgs.animate({
+         left:'-=475px'
+       });
+       img_position++;
+     }
+}
+});
+
+$(document).ready(function() {
+   
+   $.ajax({
+      type : 'GET',
+      url : '/campervalley/usedProduct/product/getSellerInfo',
+      data : {
+         productNo : $('.hiddenNo').val()
+      },
+      dataType : 'json',
+      success : function(data) {
+         // 클릭 -> 해당 판매자 정보로 이동
+         
+         $('.owner').val(data.member.memberId);
+         
+         // 상점 사진
+         if(data.profileImg == null) {
+            $('.sellerProfileImg_Link').append($('<img/>', {
+               src : "/campervalley/resources/images/usedProduct/noProfile.png",
+               width : '54',
+               height : '54',
+               alt : ''
+            })) 
+         } else {
+            $('.sellerProfileImg_Link').append($('<img/>', {
+               src : '/campervalley/resources/upload/member/' + data.profileImg,
+               width : '54',
+               height : '54',
+               alt : ''
+            })) 
+         }
+         
+         $('.sellerInfo_name').text(data.member.nickname);
+         
+         // 상품 총 개수
+         $('.productNumLink').text('상품 '+data.sellerProdNum);
+         
+         // -개 상품 더보기
+         $('.moreProdLink_Num').text((data.sellerProdNum-1) + '개');
+      
+      }, error : function() {}
+      
+   });
+   
+});
 </script>
 
 <%-- profile modal --%>
