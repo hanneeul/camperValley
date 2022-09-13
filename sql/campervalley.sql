@@ -236,11 +236,9 @@ create table chat_room (
 	chatroom_id varchar2(50) not null,
 	buyer_nickname varchar2(30) not null,
 	seller_nickname varchar2(30) not null,
-	last_check number default 0,
 	created_at date default sysdate,
-	deleted_at date,
     
-    	constraint pk_chat_member primary key(chatroom_id),c
+    	constraint pk_chat_member primary key(chatroom_id),
    	constraint fk_chat_member_buyer_nickname foreign key(buyer_nickname) references member(nickname),
     	constraint fk_chat_member_seller_nickname foreign key(seller_nickname) references member(nickname)
 );
