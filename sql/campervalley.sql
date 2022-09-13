@@ -98,7 +98,6 @@ create table admoney (
 );
 create sequence seq_admoney_no;
 
--- pk, imp_uid ?옄猷뚰삎 ?닔?젙?븿(8/9), pay_statement 而щ읆紐? ?닔?젙
 create table pay (
 	merchant_uid varchar2(16) not null,
 	advertiser_no number not null,
