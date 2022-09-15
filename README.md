@@ -9,7 +9,7 @@
 </details>
 
 ## Member
-![008](https://user-images.githubusercontent.com/94452904/188316308-66cf3308-5b3b-430c-8c90-1ccad330172e.png)
+![member](https://user-images.githubusercontent.com/100772588/190381887-0af34d50-eedb-453f-8831-69dbec3740de.jpg)
 
 ## 구현기능
 - 메인페이지
