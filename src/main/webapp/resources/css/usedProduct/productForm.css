@@ -195,13 +195,6 @@ image_sub > .small {
 	height: 3em;
 	padding: 0px 1rem;
 }
-.subjectSize {
-    margin-left: 40.8rem;
-    font-size: 0.8rem;
-    width: 5rem;
-    text-align: right;
-    color: gray;
-}
 .subjectCancle {
 	position: absolute;
 	background-size: 20px 20px;
@@ -229,8 +222,8 @@ image_sub > .small {
     flex: 1 1 0%;
 }
 .category_con > .contentDiv {
-    display: flex;
-    width: 36%;
+	display: flex;
+    width: 28%;
     height: 19rem;
     overflow: hidden;
     border: 1px solid rgb(220, 219, 228);

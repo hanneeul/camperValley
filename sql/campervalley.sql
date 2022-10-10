@@ -98,7 +98,6 @@ create table admoney (
 );
 create sequence seq_admoney_no;
 
--- pk, imp_uid ?옄猷뚰삎 ?닔?젙?븿(8/9), pay_statement 而щ읆紐? ?닔?젙
 create table pay (
 	merchant_uid varchar2(16) not null,
 	advertiser_no number not null,
@@ -237,11 +236,9 @@ create table chat_room (
 	chatroom_id varchar2(50) not null,
 	buyer_nickname varchar2(30) not null,
 	seller_nickname varchar2(30) not null,
-	last_check number default 0,
-	created_at date default sysdate,
-	deleted_at date,
+	created_at date default sysdate not null,
     
-    	constraint pk_chat_member primary key(chatroom_id),c
+    	constraint pk_chat_member primary key(chatroom_id),
    	constraint fk_chat_member_buyer_nickname foreign key(buyer_nickname) references member(nickname),
     	constraint fk_chat_member_seller_nickname foreign key(seller_nickname) references member(nickname)
 );
@@ -287,7 +284,6 @@ create table review_report (
 );
 create sequence seq_review_report_no;
 
---罹좏븨?옣
 create table campsite (
 	content_id number not null,
 	faclt_nm varchar2(100),
@@ -312,8 +308,6 @@ create table campsite (
   constraint pk_campsite primary key(content_id)
 );
 
-
---罹좏븨?옣?떆?꽕
 create table campsite_facility (
 	content_id number not null,
 	gnrl_site_co number,
@@ -357,8 +351,6 @@ create table campsite_facility (
   	constraint ck_campsite_facility_carav_acmpny_at check(carav_acmpny_at in ('Y', 'N'))
 );
 
-
---罹좏븨?옣?씠誘몄?
 create table campsite_image (
 	serialnum number not null,
 	content_id number not null,
@@ -368,8 +360,6 @@ create table campsite_image (
  	constraint fk_campsite_image_content_id foreign key(content_id) references campsite(content_id) on delete cascade --罹좏븨?옣 ?궘?젣 ?떆 罹좏븨?옣?씠誘몄??룄 ?궘?젣
 );
 
-
---罹좏븨?옣?썑湲?
 create table campsite_review (
 	review_no number not null,
 	member_id varchar2(15),
@@ -390,8 +380,6 @@ create table campsite_review (
 );
 create sequence seq_campsite_review_no;
 
-
---罹좏븨?옣?썑湲곗궗吏?
 create table review_photo (
 	review_photo_no number not null,
 	review_no number not null,
@@ -404,8 +392,6 @@ create table review_photo (
 );
 create sequence seq_review_photo_no;
 
-
---罹좏븨?옣?썑湲곗텛泥?
 create table review_recommend (
 	recommend_no number not null,
 	review_no number not null,
@@ -419,8 +405,6 @@ create table review_recommend (
 );
 create sequence seq_review_recommend_no; --sequence 異붽?
 
-
---罹좏븨?옣?썑湲곕뙎湲?
 create table review_comment (
 	review_comment_no number not null,
 	review_no number not null,

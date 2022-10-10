@@ -75,8 +75,8 @@ public class UsedProductController  {
 	};
 	
 	/* 상품 등록 */
-	@GetMapping("/product/registForm")
-	public void registForm() {};
+	@GetMapping("/product/productEnroll")
+	public void productEnroll() {};
 	
 	@PostMapping("/product/productEnroll")
     @ResponseBody

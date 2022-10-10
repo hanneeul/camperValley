@@ -56,7 +56,7 @@
 										<div class="subjectBox">
 											<input type="text" placeholder="상품 제목을 입력해주세요." class="productTitle" id="productTitle" name="productTitle">
 										</div>
-										<div class="subjectSize"><span>최대 30자</span></div>
+										<div class="subjectSize"><span></span></div>
 									</div>
 									<div class="div-subject" id="div-subject">상품명을 2자 이상 입력해주세요.</div>
 								</div>
