@@ -5,7 +5,7 @@
 </details>
 <details>
 <summary><h4>ERD</h4></summary>
-<img src="https://user-images.githubusercontent.com/100772588/190384161-3300fbf2-5639-44b0-a951-7700e58e70a9.png"/>
+<img src="https://user-images.githubusercontent.com/100772588/194940077-1990ad94-644c-4736-a4ad-9df9094c5393.png"/>
 </details>
 
 ## Member
